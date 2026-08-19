@@ -1,9 +1,83 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+# Next.js 참고 지침
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+이 프로젝트의 Next.js 버전에 맞는 공식 문서와 저장소 내 안내를 우선 확인합니다.
+Next.js API와 디렉터리 규칙을 추측하지 말고, 변경 전에 관련 문서를 확인합니다.
 
 <!-- END:nextjs-agent-rules -->
+
+# 비자부기 웹 프로젝트 지침
+
+## 프로젝트 목적
+
+비자부기는 외국인 주민이 자신의 체류자격 요건과 행정 절차를 이해하고,
+준비해야 할 서류·일정·기관을 추적할 수 있도록 돕는 웹앱입니다.
+
+현재 MVP의 주요 기능은 다음과 같습니다.
+
+- 비자 요건과 진행 단계 확인
+- 개인 일정·마감일 캘린더
+- 주변 행정·교육·노동 지원기관 안내
+- 다국어 UI와 문서 OCR 연계 준비
+
+## 기술 스택
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- Supabase: 데이터베이스·인증·사용자 진행상황 저장
+- Vercel: 웹앱 배포와 API/Cron 실행
+
+## 레포 역할과 데이터 경계
+
+- `visa-data`는 PDF 추출, 공통 스키마 CSV, SQLite 검수, Supabase 적재를 담당합니다.
+- `visa-bugi-web`은 화면, API, OCR 연계, 캘린더, 지도 기능을 담당합니다.
+- 비자·기관 마스터 데이터는 `visa-data`에서 검수한 뒤 Supabase에 적재합니다.
+- 웹 레포에 원본 PDF나 검수 전 CSV를 복사하지 않습니다.
+- 웹앱은 마스터 데이터를 직접 임의 수정하지 않고 Supabase를 통해 조회합니다.
+
+## 개발 명령어
+
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+npm run lint
+npm run typecheck
+npm run build
+```
+
+변경 후 최소한 `npm run lint`, `npm run typecheck`, `npm run build`를 실행합니다.
+
+## 환경변수와 보안
+
+- `.env.local`은 커밋하지 않습니다.
+- `NEXT_PUBLIC_` 변수에는 브라우저에 공개해도 되는 값만 넣습니다.
+- Supabase service role key, OCR·LLM API key는 클라이언트 코드에 넣지 않습니다.
+- 민감한 OCR 원본과 개인정보는 기본적으로 장기 저장하지 않습니다.
+- 환경변수가 없어도 정적 화면과 기본 빌드가 가능하도록 작성합니다.
+
+## 구현 원칙
+
+- 공식 요건에 근거한 계산은 결정론적 규칙으로 처리하고, LLM 응답을 최종 판정으로 사용하지 않습니다.
+- `valid_from`·`valid_to`는 데이터 유효기간이고, 사용자 일정은 `tracked_items`의 일정 필드로 관리합니다.
+- 상대 일정은 기준일과 offset이 정해지기 전까지 자동 날짜를 추정하지 않습니다.
+- 사용자가 누르는 버튼은 실제 동작을 연결하거나, 아직 기능이 없으면 `준비 중` 상태로 명확히 표시합니다.
+- 장식용 이모지와 아이콘은 보조기술에 불필요하게 읽히지 않도록 접근성을 고려합니다.
+- 기관 전화번호·주소·운영시간에는 출처와 확인일을 함께 관리합니다.
+
+## 코드 작성 규칙
+
+- 새 기능은 관련 화면·API·타입을 가능한 한 가까운 위치에 둡니다.
+- 공통 타입과 Supabase 타입은 중복해서 임의 정의하지 않습니다.
+- 서버 전용 로직과 비밀값은 `app/api` 또는 서버 전용 모듈에 둡니다.
+- 사용자 입력은 경계에서 검증하고, 오류 상태를 사용자에게 설명 가능한 형태로 반환합니다.
+- 기존 기능을 깨는 큰 변경은 먼저 이슈나 PR 설명에 범위를 적습니다.
+
+## Git 작업 규칙
+
+- `main`에 직접 커밋하지 않고 기능별 브랜치와 PR을 사용합니다.
+- PR에는 변경 내용, 검증 명령어, 남은 작업을 적습니다.
+- 리뷰 코멘트는 현재 코드와 대조한 뒤 반영합니다.
+- 데이터 스키마나 Supabase 테이블을 변경할 때는 `visa-data` 팀과 계약을 먼저 확인합니다.

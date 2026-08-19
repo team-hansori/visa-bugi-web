@@ -1,4 +1,4 @@
-name: CI
+name: Web CI
 
 on:
   push:
@@ -7,28 +7,26 @@ on:
     branches: [main]
 
 jobs:
-  lint-and-test:
+  lint-and-build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Python 설정
-        uses: actions/setup-python@v5
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
         with:
-          python-version: "3.11"
-          cache: "pip"
+          node-version: "22"
+          cache: "npm"
 
       - name: 의존성 설치
-        run: |
-          pip install --upgrade pip
-          # GIS 패키지(geopandas 등)는 GDAL 시스템 라이브러리 필요 → CI에서는 제외
-          pip install -e ".[dev]"
+        run: npm ci
 
-      - name: Lint (ruff)
-        run: |
-          ruff check src/ tests/
-          ruff format --check src/ tests/
+      - name: Lint
+        run: npm run lint
 
-      - name: 테스트 실행
-        run: pytest tests/ -v --tb=short --cov=src --cov-report=term-missing
+      - name: 타입 검사
+        run: npm run typecheck
+
+      - name: 빌드
+        run: npm run build

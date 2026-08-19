@@ -5,7 +5,7 @@
       "Bash(npm run lint)",
       "Bash(npm run typecheck)",
       "Bash(npm run build)",
-      "Bash(git diff *)",
+      "Bash(git diff --no-ext-diff --no-textconv origin/main...HEAD --)",
       "Bash(git status *)",
       "Bash(git log *)"
     ],
@@ -17,5 +17,20 @@
       "Read(./**/*.pem)",
       "Bash(git push --force*)"
     ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "filesystem": {
+      "denyRead": [
+        "./.env",
+        "./.env.local",
+        "./.env.development",
+        "./.env.test",
+        "./.env.production",
+        "./.env.*.local",
+        "./secrets/**",
+        "./**/*.pem"
+      ]
+    }
   }
 }

@@ -4,7 +4,10 @@ export default function Home() {
       <div className="mx-auto flex max-w-5xl flex-col gap-12">
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#ffcc66] text-2xl shadow-sm">
+            <div
+              aria-hidden="true"
+              className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#ffcc66] text-2xl shadow-sm"
+            >
               🐢
             </div>
             <div>
@@ -28,8 +31,12 @@ export default function Home() {
             공식 요건을 바탕으로 현재 진행상황을 확인하고, 준비해야 할 서류와
             기한을 놓치지 않도록 도와드려요.
           </p>
-          <button className="mt-8 rounded-full bg-[#263238] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#405158]">
-            내 여정 시작하기
+          <button
+            type="button"
+            disabled
+            className="mt-8 cursor-not-allowed rounded-full bg-[#263238] px-6 py-3 text-sm font-semibold text-white opacity-60"
+          >
+            준비 중
           </button>
         </section>
 
@@ -48,7 +55,9 @@ export default function Home() {
               ["🗺️", "기관 안내", "필요한 기관을 가까운 순서로 찾아요"],
             ].map(([icon, title, description]) => (
               <article key={title} className="rounded-2xl bg-white p-5 shadow-sm">
-                <span className="text-2xl">{icon}</span>
+                <span aria-hidden="true" className="text-2xl">
+                  {icon}
+                </span>
                 <h3 className="mt-4 font-bold">{title}</h3>
                 <p className="mt-2 text-sm leading-6 text-[#6b777c]">{description}</p>
               </article>

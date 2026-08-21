@@ -1,19 +1,78 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fffaf2;
-  --foreground: #263238;
+  --background: #f7f8f4;
+  --foreground: #20332c;
+  --app-font-sans: Pretendard, "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+  --app-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--app-font-sans);
+  min-width: 320px;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #bfe0d3;
+  color: #143f34;
+}
+
+.app-main {
+  padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+}
+
+.mobile-safe-bottom {
+  padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
+}
+
+.map-grid {
+  background-color: #dfe9df;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.72) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.72) 2px, transparent 2px),
+    linear-gradient(35deg, transparent 46%, rgba(173, 195, 180, 0.45) 47%, rgba(173, 195, 180, 0.45) 53%, transparent 54%);
+  background-size: 72px 72px, 72px 72px, 180px 180px;
+}
+
+@media (min-width: 48rem) {
+  .app-main {
+    padding-bottom: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

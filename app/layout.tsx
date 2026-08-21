@@ -1,21 +1,19 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { AppShell } from "@/components/app-shell";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "비자부기",
+  title: {
+    default: "비자부기",
+    template: "%s | 비자부기",
+  },
   description: "내 비자 요건과 다음 단계를 추적하는 AI 서비스",
+};
+
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#f7f8f4",
 };
 
 export default function RootLayout({
@@ -24,11 +22,10 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html
-      lang="ko"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="ko" className="h-full antialiased">
+      <body className="min-h-full">
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }

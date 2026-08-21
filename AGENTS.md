@@ -1,9 +1,10 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# Next.js 참고 지침
+# This is NOT the Next.js you know
 
-이 프로젝트의 Next.js 버전에 맞는 공식 문서와 저장소 내 안내를 우선 확인합니다.
-Next.js API와 디렉터리 규칙을 추측하지 말고, 변경 전에 관련 문서를 확인합니다.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
 

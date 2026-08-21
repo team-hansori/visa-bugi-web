@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/icon";
 
 type Answer = { id: string; label: string };
@@ -23,11 +23,21 @@ export function OnboardingForm() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [storageError, setStorageError] = useState("");
+  const questionHeadingRef = useRef<HTMLHeadingElement>(null);
+  const previousStepRef = useRef(step);
   const question = questions[step];
   const selected = answers[question.id];
   const isLastStep = step === questions.length - 1;
 
+  useEffect(() => {
+    if (previousStepRef.current === step) return;
+    previousStepRef.current = step;
+    questionHeadingRef.current?.focus();
+  }, [step]);
+
   function selectAnswer(value: string) {
+    setStorageError("");
     setAnswers((current) => ({ ...current, [question.id]: value }));
   }
 
@@ -37,7 +47,12 @@ export function OnboardingForm() {
       setStep((current) => current + 1);
       return;
     }
-    window.sessionStorage.setItem("visa-bugi-demo-profile", JSON.stringify({ version: 1, ...answers }));
+    try {
+      window.sessionStorage.setItem("visa-bugi-demo-profile", JSON.stringify({ version: 1, ...answers }));
+    } catch {
+      setStorageError("선택 결과를 이 브라우저에 저장하지 못했습니다. 브라우저의 저장소 설정을 확인한 뒤 다시 시도해 주세요.");
+      return;
+    }
     router.push("/");
   }
 
@@ -62,7 +77,7 @@ export function OnboardingForm() {
         </div>
         <div className="mt-8">
           <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">질문 {step + 1}</p>
-          <h2 id="question-title" className="mt-2 text-2xl font-black leading-tight tracking-[-0.04em] sm:text-3xl">{question.title}</h2>
+          <h2 ref={questionHeadingRef} id="question-title" tabIndex={-1} className="mt-2 text-2xl font-black leading-tight tracking-[-0.04em] outline-none sm:text-3xl">{question.title}</h2>
           <p className="mt-3 text-sm leading-6 text-[#6c7873] sm:text-base">{question.description}</p>
         </div>
         <div className="mt-6 grid gap-3 sm:grid-cols-2" role="group" aria-label={question.title}>
@@ -76,6 +91,7 @@ export function OnboardingForm() {
             );
           })}
         </div>
+        {storageError ? <p role="alert" className="mt-5 rounded-xl bg-[#fff0ed] px-4 py-3 text-sm font-semibold leading-6 text-[#9f4038]">{storageError}</p> : null}
         <div className="mt-auto flex gap-3 pt-8">
           <button type="button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0} className="inline-flex min-h-12 items-center justify-center gap-1 rounded-2xl border border-[#dce3df] px-4 text-sm font-extrabold text-[#52615b] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="chevron-left" className="size-4" />이전</button>
           <button type="button" onClick={goNext} disabled={!selected} className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm disabled:cursor-not-allowed disabled:bg-[#c7d1cc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]">

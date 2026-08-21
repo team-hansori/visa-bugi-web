@@ -10,6 +10,13 @@ const categories = [
   { id: "education", label: "교육" },
 ] as const;
 
+const regions = [
+  { id: "cheongju", label: "청주시" },
+  { id: "chungju", label: "충주시" },
+  { id: "jincheon", label: "진천군" },
+  { id: "eumseong", label: "음성군" },
+] as const;
+
 const demoAgencies = [
   { id: 1, category: "admin", name: "행정 지원기관 예시", type: "행정", x: "27%", y: "34%" },
   { id: 2, category: "labor", name: "노동 상담기관 예시", type: "노동", x: "62%", y: "48%" },
@@ -17,6 +24,7 @@ const demoAgencies = [
 ] as const;
 
 type Category = (typeof categories)[number]["id"];
+type Region = (typeof regions)[number]["id"];
 type DemoAgency = (typeof demoAgencies)[number];
 
 function AgencyDetails({ agency, mobile = false }: { agency: DemoAgency; mobile?: boolean }) {
@@ -45,7 +53,7 @@ function AgencyDetails({ agency, mobile = false }: { agency: DemoAgency; mobile?
 export function AgencyMapDemo() {
   const [category, setCategory] = useState<Category>("all");
   const [selectedId, setSelectedId] = useState(1);
-  const [selectedRegion, setSelectedRegion] = useState("cheongju");
+  const [selectedRegion, setSelectedRegion] = useState<Region>("cheongju");
   const [locationStatus, setLocationStatus] = useState("위치 권한을 허용하거나 지역을 직접 선택하세요.");
   const [locating, setLocating] = useState(false);
   const selectedAgency = demoAgencies.find((agency) => agency.id === selectedId) ?? demoAgencies[0];
@@ -77,6 +85,16 @@ export function AgencyMapDemo() {
     );
   }
 
+  function selectRegion(value: string) {
+    const region = regions.find((item) => item.id === value);
+    if (!region) {
+      setLocationStatus("지원하지 않는 지역입니다. 목록에서 지역을 다시 선택해 주세요.");
+      return;
+    }
+    setSelectedRegion(region.id);
+    setLocationStatus(`선택 지역: ${region.label}. 기관 데이터 연결 전에는 지도 예시와 기관 정보가 변경되지 않습니다.`);
+  }
+
   return (
     <div className="space-y-5">
       <header>
@@ -88,8 +106,8 @@ export function AgencyMapDemo() {
       <section className="grid gap-3 rounded-[24px] border border-[#dce5e0] bg-white p-4 sm:grid-cols-[auto_minmax(180px,280px)_1fr] sm:items-center sm:p-5" aria-label="검색 위치 설정">
         <button type="button" onClick={requestLocation} disabled={locating} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#2d6d5d] px-4 text-sm font-extrabold text-white disabled:bg-[#849d93] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] sm:w-fit"><Icon name="navigation" className="size-4" />{locating ? "확인 중" : "현재 위치 사용"}</button>
         <label className="sr-only" htmlFor="region">지역 직접 선택</label>
-        <select id="region" value={selectedRegion} onChange={(event) => { setSelectedRegion(event.target.value); setLocationStatus(`선택 지역: ${event.target.selectedOptions[0].text}. 기관 데이터 연결 전에는 지도 예시와 기관 정보가 변경되지 않습니다.`); }} className="min-h-12 w-full rounded-xl border border-[#d4ddd8] bg-white px-4 text-base font-bold text-[#40534b] outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bdd9ce]">
-          <option value="cheongju">청주시</option><option value="chungju">충주시</option><option value="jincheon">진천군</option><option value="eumseong">음성군</option>
+        <select id="region" value={selectedRegion} onChange={(event) => selectRegion(event.target.value)} className="min-h-12 w-full rounded-xl border border-[#d4ddd8] bg-white px-4 text-base font-bold text-[#40534b] outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bdd9ce]">
+          {regions.map((region) => <option key={region.id} value={region.id}>{region.label}</option>)}
         </select>
         <p className="text-xs leading-5 text-[#71807a] sm:text-sm" aria-live="polite">{locationStatus}</p>
       </section>

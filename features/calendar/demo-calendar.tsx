@@ -28,6 +28,7 @@ export function DemoCalendar() {
   const [eventTitle, setEventTitle] = useState("");
   const [eventDay, setEventDay] = useState("21");
   const [formError, setFormError] = useState("");
+  const [dayError, setDayError] = useState("");
   const selectedEvents = useMemo(() => events.filter((event) => event.day === selectedDay), [events, selectedDay]);
 
   function submitEvent(event: FormEvent<HTMLFormElement>) {
@@ -38,11 +39,15 @@ export function DemoCalendar() {
       setFormError("일정 이름을 입력해 주세요. 공백만 입력할 수는 없습니다.");
       return;
     }
-    if (day < 1 || day > 31) return;
+    if (!Number.isInteger(day) || day < 1 || day > 31) {
+      setDayError("1일부터 31일 사이의 날짜를 선택해 주세요.");
+      return;
+    }
     setEvents((current) => [...current, { id: Date.now(), day, title }]);
     setSelectedDay(day);
     setEventTitle("");
     setFormError("");
+    setDayError("");
     setFormOpen(false);
   }
 
@@ -69,9 +74,10 @@ export function DemoCalendar() {
           </label>
           <label className="grid gap-2 text-sm font-extrabold text-[#34473f]">
             8월 날짜
-            <select value={eventDay} onChange={(event) => setEventDay(event.target.value)} className="min-h-12 rounded-xl border border-[#cddbd4] bg-white px-4 text-base outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bcd9cd]">
+            <select value={eventDay} onChange={(event) => { setEventDay(event.target.value); if (dayError) setDayError(""); }} aria-invalid={Boolean(dayError)} aria-describedby={dayError ? "event-day-error" : undefined} className="min-h-12 rounded-xl border border-[#cddbd4] bg-white px-4 text-base outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bcd9cd]">
               {Array.from({ length: 31 }, (_, index) => index + 1).map((day) => <option key={day} value={day}>{day}일</option>)}
             </select>
+            {dayError ? <span id="event-day-error" role="alert" className="text-xs leading-5 text-[#a0443d]">{dayError}</span> : null}
           </label>
           <button type="submit" className="min-h-12 rounded-xl bg-[#173f36] px-5 text-sm font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173f36]">추가하기</button>
         </form>

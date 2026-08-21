@@ -66,7 +66,7 @@ export function DemoCalendar() {
       </header>
 
       {formOpen ? (
-        <form onSubmit={submitEvent} className="grid gap-4 rounded-[24px] border border-[#dce5e0] bg-[#edf5f1] p-5 sm:grid-cols-[1fr_160px_auto] sm:items-end" aria-label="일정 추가">
+        <form noValidate onSubmit={submitEvent} className="grid gap-4 rounded-[24px] border border-[#dce5e0] bg-[#edf5f1] p-5 sm:grid-cols-[1fr_160px_auto] sm:items-end" aria-label="일정 추가">
           <label className="grid gap-2 text-sm font-extrabold text-[#34473f]">
             일정 이름
             <input value={eventTitle} onChange={(event) => { setEventTitle(event.target.value); if (formError) setFormError(""); }} required maxLength={60} placeholder="예: 서류 확인" aria-invalid={Boolean(formError)} aria-describedby={formError ? "event-title-error" : undefined} className="min-h-12 rounded-xl border border-[#cddbd4] bg-white px-4 text-base outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bcd9cd]" />

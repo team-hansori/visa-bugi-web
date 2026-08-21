@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Icon } from "@/components/ui/icon";
 
 const categories = [
@@ -56,6 +56,7 @@ export function AgencyMapDemo() {
   const [selectedRegion, setSelectedRegion] = useState<Region>("cheongju");
   const [locationStatus, setLocationStatus] = useState("위치 권한을 허용하거나 지역을 직접 선택하세요.");
   const [locating, setLocating] = useState(false);
+  const locationRequestId = useRef(0);
   const selectedAgency = demoAgencies.find((agency) => agency.id === selectedId) ?? demoAgencies[0];
   const visibleAgencies = category === "all" ? demoAgencies : demoAgencies.filter((agency) => agency.category === category);
 
@@ -70,14 +71,18 @@ export function AgencyMapDemo() {
       setLocationStatus("이 브라우저에서는 위치 기능을 사용할 수 없습니다. 지역을 직접 선택해 주세요.");
       return;
     }
+    const requestId = locationRequestId.current + 1;
+    locationRequestId.current = requestId;
     setLocating(true);
     setLocationStatus("현재 위치를 확인하고 있어요…");
     navigator.geolocation.getCurrentPosition(
       () => {
+        if (locationRequestId.current !== requestId) return;
         setLocating(false);
         setLocationStatus("현재 위치를 확인했습니다. 좌표는 저장하지 않으며, 기관 데이터 연결 전에는 지도 예시가 변경되지 않습니다.");
       },
       () => {
+        if (locationRequestId.current !== requestId) return;
         setLocating(false);
         setLocationStatus("위치를 확인하지 못했습니다. 아래에서 지역을 직접 선택해 주세요.");
       },
@@ -91,6 +96,8 @@ export function AgencyMapDemo() {
       setLocationStatus("지원하지 않는 지역입니다. 목록에서 지역을 다시 선택해 주세요.");
       return;
     }
+    locationRequestId.current += 1;
+    setLocating(false);
     setSelectedRegion(region.id);
     setLocationStatus(`선택 지역: ${region.label}. 기관 데이터 연결 전에는 지도 예시와 기관 정보가 변경되지 않습니다.`);
   }

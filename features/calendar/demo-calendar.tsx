@@ -27,16 +27,22 @@ export function DemoCalendar() {
   const [formOpen, setFormOpen] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
   const [eventDay, setEventDay] = useState("21");
+  const [formError, setFormError] = useState("");
   const selectedEvents = useMemo(() => events.filter((event) => event.day === selectedDay), [events, selectedDay]);
 
   function submitEvent(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const day = Number(eventDay);
     const title = eventTitle.trim();
-    if (!title || day < 1 || day > 31) return;
+    if (!title) {
+      setFormError("일정 이름을 입력해 주세요. 공백만 입력할 수는 없습니다.");
+      return;
+    }
+    if (day < 1 || day > 31) return;
     setEvents((current) => [...current, { id: Date.now(), day, title }]);
     setSelectedDay(day);
     setEventTitle("");
+    setFormError("");
     setFormOpen(false);
   }
 
@@ -58,7 +64,8 @@ export function DemoCalendar() {
         <form onSubmit={submitEvent} className="grid gap-4 rounded-[24px] border border-[#dce5e0] bg-[#edf5f1] p-5 sm:grid-cols-[1fr_160px_auto] sm:items-end" aria-label="일정 추가">
           <label className="grid gap-2 text-sm font-extrabold text-[#34473f]">
             일정 이름
-            <input value={eventTitle} onChange={(event) => setEventTitle(event.target.value)} required maxLength={60} placeholder="예: 서류 확인" className="min-h-12 rounded-xl border border-[#cddbd4] bg-white px-4 text-base outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bcd9cd]" />
+            <input value={eventTitle} onChange={(event) => { setEventTitle(event.target.value); if (formError) setFormError(""); }} required maxLength={60} placeholder="예: 서류 확인" aria-invalid={Boolean(formError)} aria-describedby={formError ? "event-title-error" : undefined} className="min-h-12 rounded-xl border border-[#cddbd4] bg-white px-4 text-base outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bcd9cd]" />
+            {formError ? <span id="event-title-error" role="alert" className="text-xs leading-5 text-[#a0443d]">{formError}</span> : null}
           </label>
           <label className="grid gap-2 text-sm font-extrabold text-[#34473f]">
             8월 날짜
@@ -90,7 +97,7 @@ export function DemoCalendar() {
               return day ? (
                 <button key={`${day}-${index}`} type="button" onClick={() => setSelectedDay(day)} aria-pressed={selected} className={`relative min-h-14 bg-white p-1.5 text-left text-sm font-bold outline-none transition-colors focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#2d6d5d] sm:min-h-24 sm:p-2.5 ${selected ? "bg-[#edf6f2] text-[#1f584a]" : "text-[#45554f] hover:bg-[#f8faf8]"}`}>
                   <span className={`grid size-7 place-items-center rounded-full ${day === 21 ? "bg-[#2d6d5d] text-white" : ""}`}>{day}</span>
-                  {dayEvents.length ? <span className="absolute bottom-2 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-[#e59b37] sm:static sm:mt-2 sm:block sm:size-auto sm:translate-x-0 sm:truncate sm:rounded-md sm:bg-[#fff0d3] sm:px-1.5 sm:py-1 sm:text-[0.65rem] sm:text-[#80561d]">{dayEvents[0].title}</span> : null}
+                  {dayEvents.length ? <span className="absolute bottom-2 left-1/2 size-1.5 -translate-x-1/2 overflow-hidden whitespace-nowrap rounded-full bg-[#e59b37] text-[0px] sm:static sm:mt-2 sm:block sm:size-auto sm:translate-x-0 sm:truncate sm:rounded-md sm:bg-[#fff0d3] sm:px-1.5 sm:py-1 sm:text-[0.65rem] sm:text-[#80561d]">{dayEvents[0].title}</span> : null}
                 </button>
               ) : <div key={`empty-${index}`} className="min-h-14 bg-[#fafbf9] sm:min-h-24" aria-hidden="true" />;
             })}

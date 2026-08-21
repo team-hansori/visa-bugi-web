@@ -14,7 +14,7 @@ type Question = {
 
 const questions: Question[] = [
   { id: "locale", title: "어떤 언어가 편한가요?", description: "화면에 표시할 언어를 선택해 주세요.", answers: [{ id: "ko", label: "한국어" }, { id: "vi", label: "Tiếng Việt" }, { id: "zh", label: "中文" }, { id: "en", label: "English" }] },
-  { id: "nationality", title: "국적을 선택해 주세요", description: "맞춤 안내에 필요한 최소 정보만 이 기기에 저장합니다.", answers: [{ id: "VN", label: "베트남" }, { id: "UZ", label: "우즈베키스탄" }, { id: "NP", label: "네팔" }, { id: "KH", label: "캄보디아" }, { id: "OTHER", label: "기타" }] },
+  { id: "nationality", title: "국적을 선택해 주세요", description: "맞춤 안내에 필요한 최소 정보만 현재 브라우저 세션에서 사용합니다.", answers: [{ id: "VN", label: "베트남" }, { id: "UZ", label: "우즈베키스탄" }, { id: "NP", label: "네팔" }, { id: "KH", label: "캄보디아" }, { id: "OTHER", label: "기타" }] },
   { id: "region", title: "현재 생활 지역은 어디인가요?", description: "기관 추천에는 GPS 좌표 대신 선택한 지역을 사용할 수 있습니다.", answers: [{ id: "cheongju", label: "청주시" }, { id: "chungju", label: "충주시" }, { id: "jincheon", label: "진천군" }, { id: "eumseong", label: "음성군" }, { id: "unknown", label: "아직 모르겠어요" }] },
   { id: "visa", title: "확인하려는 체류자격이 있나요?", description: "현재는 화면 시연용 선택지이며 공식 판정에는 사용하지 않습니다.", answers: [{ id: "E-7-4R", label: "E-7-4R" }, { id: "F-2-R", label: "F-2-R" }, { id: "OTHER", label: "다른 체류자격" }, { id: "UNKNOWN", label: "잘 모르겠어요" }] },
 ];
@@ -37,7 +37,7 @@ export function OnboardingForm() {
       setStep((current) => current + 1);
       return;
     }
-    window.localStorage.setItem("visa-bugi-demo-profile", JSON.stringify({ version: 1, ...answers }));
+    window.sessionStorage.setItem("visa-bugi-demo-profile", JSON.stringify({ version: 1, ...answers }));
     router.push("/");
   }
 
@@ -47,11 +47,11 @@ export function OnboardingForm() {
         <div>
           <span className="inline-flex min-h-8 items-center rounded-full bg-white/12 px-3 text-xs font-bold text-[#d9eee5]">간단 설정 · 약 1분</span>
           <h1 className="mt-5 text-3xl font-black leading-tight tracking-[-0.05em] sm:text-4xl">나에게 맞는 안내를 준비할게요</h1>
-          <p className="mt-4 text-sm leading-6 text-[#d1dfda] sm:text-base sm:leading-7">로그인 전에는 선택 결과를 이 브라우저에만 저장합니다. GPS와 문서 이미지는 저장하지 않습니다.</p>
+          <p className="mt-4 text-sm leading-6 text-[#d1dfda] sm:text-base sm:leading-7">로그인 전에는 선택 결과를 현재 브라우저 세션 동안만 보관합니다. GPS와 문서 이미지는 저장하지 않습니다.</p>
         </div>
         <div className="mt-8 rounded-2xl bg-white/10 p-4 text-sm leading-6 text-[#e1ede8]">
           <div className="flex items-center gap-2 font-extrabold text-white"><Icon name="shield" className="size-5" />개인정보 최소 수집</div>
-          <p className="mt-2">언어·국적·지역·관심 체류자격만 선택하며 언제든 브라우저 데이터에서 삭제할 수 있습니다.</p>
+          <p className="mt-2">언어·국적·지역·관심 체류자격만 선택하며 현재 탭을 닫으면 선택 결과가 삭제됩니다.</p>
         </div>
       </aside>
 

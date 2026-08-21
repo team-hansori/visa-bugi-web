@@ -5,12 +5,13 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/icon";
 
 const maxFileSize = 10 * 1024 * 1024;
+const acceptedImageTypes = new Set(["image/jpeg", "image/png", "image/heic", "image/heif"]);
 
 export function DocumentUpload() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [message, setMessage] = useState("JPG, PNG 또는 HEIC 이미지 한 장을 선택해 주세요.");
+  const [message, setMessage] = useState("JPG, PNG 또는 HEIC/HEIF 이미지 한 장을 선택해 주세요.");
 
   useEffect(() => {
     return () => {
@@ -22,8 +23,8 @@ export function DocumentUpload() {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
 
-    if (!selectedFile.type.startsWith("image/")) {
-      setMessage("이미지 파일만 선택할 수 있습니다.");
+    if (!acceptedImageTypes.has(selectedFile.type)) {
+      setMessage("JPG, PNG 또는 HEIC/HEIF 이미지만 선택할 수 있습니다.");
       event.target.value = "";
       return;
     }

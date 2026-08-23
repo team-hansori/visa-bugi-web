@@ -1,0 +1,77 @@
+{
+  "Metadata": {
+    "title": "비자부기",
+    "titleTemplate": "%s | 비자부기",
+    "description": "내 비자 요건과 다음 단계를 추적하는 AI 서비스"
+  },
+  "A11y": {
+    "skipToContent": "본문으로 바로가기"
+  },
+  "Brand": {
+    "name": "비자부기",
+    "tagline": "내 비자 여정의 동반자",
+    "homeAriaLabel": "비자부기 홈"
+  },
+  "Nav": {
+    "home": "홈",
+    "calendar": "일정",
+    "map": "기관",
+    "ocr": "서류",
+    "mainMenuAriaLabel": "주요 메뉴",
+    "mobileMenuAriaLabel": "모바일 주요 메뉴"
+  },
+  "LocaleSwitcher": {
+    "label": "언어 선택"
+  },
+  "Home": {
+    "demoBadge": "로그인 없이 둘러보는 데모",
+    "heroTitle": "오늘 준비할 일을 한눈에 확인하세요",
+    "heroDescription": "현재 화면은 반응형 UI 확인용 예시입니다. 공식 비자 요건과 사용자 진행상황은 검수된 데이터 연결 후 표시됩니다.",
+    "heroCta": "내 정보 설정하기",
+    "progress": {
+      "sectionAriaLabel": "비자 진행 현황",
+      "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
+      "caption": "예시 진행률",
+      "eyebrow": "전체 요건 충족률",
+      "heading": "준비 현황",
+      "demoTag": "DEMO",
+      "selectedVisaLabel": "선택 비자",
+      "selectedVisaValue": "E-7-4R 예시",
+      "baseDateLabel": "기준일",
+      "baseDateValue": "아직 설정되지 않음"
+    },
+    "journey": {
+      "eyebrow": "비자 여정",
+      "heading": "현재 단계",
+      "stepIndicator": "2단계 · 서류 준비",
+      "stagesAriaLabel": "비자 진행 단계 예시",
+      "stageDone": "완료",
+      "stageCurrent": "진행 중",
+      "stageUpcoming": "예정",
+      "stages": {
+        "requirementCheck": "요건 확인",
+        "documentPrep": "서류 준비",
+        "agencyVisit": "기관 방문",
+        "resultCheck": "결과 확인"
+      },
+      "noticeTitle": "상대 일정은 자동으로 추정하지 않아요",
+      "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
+      "viewSchedule": "일정 보기"
+    },
+    "tasks": {
+      "eyebrow": "다음 할 일",
+      "heading": "서류 준비 체크",
+      "items": {
+        "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
+        "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
+        "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+      }
+    },
+    "agencies": {
+      "eyebrow": "주변 기관",
+      "heading": "도움받을 곳을 찾아보세요",
+      "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
+      "cta": "기관 지도 열기"
+    }
+  }
+}

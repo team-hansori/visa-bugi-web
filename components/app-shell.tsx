@@ -138,13 +138,12 @@ function LocaleSwitcher() {
   return (
     <label className="flex min-h-10 items-center gap-1.5 rounded-full border border-[#dfe5e1] bg-white px-3 text-xs font-bold text-[#52615b]">
       <Icon name="globe" className="size-4" aria-hidden="true" />
-      <span className="sr-only">{t("label")}</span>
       <select
         aria-label={t("label")}
+        aria-busy={isPending}
         value={locale}
         onChange={onChange}
-        disabled={isPending}
-        className="bg-transparent focus-visible:outline-none disabled:opacity-60"
+        className={`bg-transparent focus-visible:outline-none ${isPending ? "opacity-60" : ""}`}
       >
         {routing.locales.map((code) => (
           <option key={code} value={code}>

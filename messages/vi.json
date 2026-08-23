@@ -23,6 +23,11 @@
   "LocaleSwitcher": {
     "label": "언어 선택"
   },
+  "NotFound": {
+    "title": "페이지를 찾을 수 없어요",
+    "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",
+    "backHome": "홈으로 돌아가기"
+  },
   "Home": {
     "demoBadge": "로그인 없이 둘러보는 데모",
     "heroTitle": "오늘 준비할 일을 한눈에 확인하세요",

@@ -21,6 +21,7 @@
 - 폼 검증과 위치 상태 경쟁 조건 개선
 - 온보딩 폼 라우터를 locale-aware 네비게이션으로 교체
 - 최종 리뷰 반영 — 온보딩 언어 질문 연동, 404 경계 추가, 접근성 개선
+- App/not-found.tsx 홈 링크가 locale-aware Link 아님 (#8)
 
 ### 📚 Documentation
 
@@ -29,6 +30,7 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - I18n next-intl 라우팅 인프라 구축 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
 
 ### ⚙️ Miscellaneous Tasks
 

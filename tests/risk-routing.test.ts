@@ -1,0 +1,97 @@
+import { describe, expect, it } from "vitest";
+import { buildEscalation, regionMatches, resolveRiskRoute } from "@/features/chat/risk-routing";
+import type { AgencyContactRow, RiskRoutingRow, ScreeningResult } from "@/features/chat/types";
+
+function row(over: Partial<RiskRoutingRow>): RiskRoutingRow {
+  return {
+    routing_id: "r1", keyword_category: "WAGE_ARREARS", user_type: "FOREIGN_WORKER",
+    applies_to_visa_code: null, resolution_type: "EXTERNAL", target_agency_category: null,
+    external_agency_name: "고용노동부 청주지청", external_region_scope: "청주|진천|괴산|증평|보은|옥천|영동",
+    external_phone: "1350", external_url: "https://www.moel.go.kr/cheongju/",
+    escalation_message_template: "임금체불은 저희가 직접 해결해드릴 수 없는 문제입니다.",
+    notes: null, valid_from: null, valid_to: null, ...over,
+  };
+}
+
+function screening(over: Partial<ScreeningResult>): ScreeningResult {
+  return { riskCategory: "WAGE_ARREARS", userType: "FOREIGN_WORKER", region: null, visaCode: null, inScope: true, language: "ko", ...over };
+}
+
+function fakeQueries(rows: RiskRoutingRow[], agencies: AgencyContactRow[] = []) {
+  return {
+    getRiskRoutingRows: async () => rows,
+    findAgency: async () => agencies,
+  };
+}
+
+describe("regionMatches", () => {
+  it("NATIONWIDE는 항상 매칭", () => {
+    expect(regionMatches("NATIONWIDE", "청주")).toBe(true);
+    expect(regionMatches("NATIONWIDE", null)).toBe(true);
+  });
+  it("NULL 스코프(관할 미확인)는 '지역 제한 없음'으로 해석하지 않는다", () => {
+    expect(regionMatches(null, "청주")).toBe(false);
+  });
+  it("파이프 목록은 포함 여부로 판단, 사용자 지역 미상이면 후보 유지", () => {
+    expect(regionMatches("청주|진천", "청주")).toBe(true);
+    expect(regionMatches("충주|제천", "청주")).toBe(false);
+    expect(regionMatches("청주|진천", null)).toBe(true);
+  });
+});
+
+describe("resolveRiskRoute", () => {
+  it("행이 없으면 matched:false", async () => {
+    const r = await resolveRiskRoute(screening({}), fakeQueries([]));
+    expect(r.matched).toBe(false);
+  });
+
+  it("지역이 확정되면 관할 행만 남긴다 (청주 vs 충주)", async () => {
+    const cj = row({ routing_id: "cj" });
+    const chj = row({ routing_id: "chj", external_agency_name: "고용노동부 충주지청", external_region_scope: "충주|제천|음성|단양" });
+    const r = await resolveRiskRoute(screening({ region: "청주" }), fakeQueries([cj, chj]));
+    expect(r.matched && r.rows.map((x) => x.routing_id)).toEqual(["cj"]);
+  });
+
+  it("지역 미상이면 모든 후보를 유지한다", async () => {
+    const cj = row({ routing_id: "cj" });
+    const chj = row({ routing_id: "chj", external_region_scope: "충주|제천|음성|단양" });
+    const r = await resolveRiskRoute(screening({ region: null }), fakeQueries([cj, chj]));
+    expect(r.matched && r.rows).toHaveLength(2);
+  });
+
+  it("지역 필터로 전부 빠지면 전체 행으로 폴백한다(안내 차단 금지)", async () => {
+    const nullScope = row({ external_region_scope: null });
+    const r = await resolveRiskRoute(screening({ region: "청주" }), fakeQueries([nullScope]));
+    expect(r.matched && r.rows).toHaveLength(1);
+  });
+
+  it("user_type이 다르면 재사용하되 verifiedForUserType=false (재사용+한계 고지 정책)", async () => {
+    const r = await resolveRiskRoute(screening({ userType: "STUDENT" }), fakeQueries([row({})]));
+    expect(r.matched && r.verifiedForUserType).toBe(false);
+  });
+
+  it("IN_DOMAIN이면 target_agency_category로 agency_contacts를 조인한다", async () => {
+    const inDomain = row({
+      resolution_type: "IN_DOMAIN", target_agency_category: "VISA_STATUS_CHANGE",
+      external_agency_name: null, external_phone: null, external_url: null, external_region_scope: null,
+    });
+    const agency = {
+      agency_id: "a1", category_major: "FOREIGN_RESIDENT_SETTLEMENT", category_minor: "VISA_STATUS_CHANGE",
+      region: "청주", department_name: "청주출입국·외국인사무소", address: null, phone: "043-000-0000",
+      url: null, target_audience: null, is_user_facing: true, valid_from: null, valid_to: null,
+      source_document: null, last_verified_at: null,
+    } satisfies AgencyContactRow;
+    const r = await resolveRiskRoute(screening({ riskCategory: "ILLEGAL_EMPLOYMENT", region: "청주" }), fakeQueries([inDomain], [agency]));
+    expect(r.matched && r.agencies).toHaveLength(1);
+  });
+});
+
+describe("buildEscalation", () => {
+  it("EXTERNAL 행은 external_* 필드를 verbatim 연락처로 만든다", async () => {
+    const r = await resolveRiskRoute(screening({ region: "청주" }), fakeQueries([row({})]));
+    if (!r.matched) throw new Error("expected match");
+    const e = buildEscalation(r);
+    expect(e.template).toBe("임금체불은 저희가 직접 해결해드릴 수 없는 문제입니다.");
+    expect(e.contacts[0]).toMatchObject({ name: "고용노동부 청주지청", phone: "1350" });
+  });
+});

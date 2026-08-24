@@ -19,13 +19,24 @@ export type ChatQueries = {
   getRiskRoutingRows(category: RiskCategory): Promise<RiskRoutingRow[]>;
 };
 
-function today(): string {
-  return new Date().toISOString().slice(0, 10);
+export function todayInSeoul(now = new Date()): string {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(now);
+  const value = (type: Intl.DateTimeFormatPartTypes) => parts.find((part) => part.type === type)?.value;
+  const year = value("year");
+  const month = value("month");
+  const day = value("day");
+  if (!year || !month || !day) throw new Error("could not format Seoul date");
+  return `${year}-${month}-${day}`;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function withValidWindow(builder: any): any {
-  const d = today();
+  const d = todayInSeoul();
   return builder
     .or(`valid_from.is.null,valid_from.lte.${d}`)
     .or(`valid_to.is.null,valid_to.gte.${d}`);

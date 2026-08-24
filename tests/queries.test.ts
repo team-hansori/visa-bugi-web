@@ -1,8 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { createChatQueries } from "@/features/chat/queries";
+import { createChatQueries, todayInSeoul } from "@/features/chat/queries";
 import { createFakeSupabase } from "./helpers/fake-supabase";
 
-const TODAY = new Date().toISOString().slice(0, 10);
+const TODAY = todayInSeoul();
+
+describe("todayInSeoul", () => {
+  it("uses the Korean calendar date across the UTC day boundary", () => {
+    expect(todayInSeoul(new Date("2026-08-24T14:59:00.000Z"))).toBe("2026-08-24");
+    expect(todayInSeoul(new Date("2026-08-24T15:00:00.000Z"))).toBe("2026-08-25");
+  });
+});
 
 describe("createChatQueries", () => {
   it("getVisaRequirements는 visa_code와 유효기간 필터를 건다", async () => {

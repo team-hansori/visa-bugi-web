@@ -15,7 +15,9 @@
 
 ## 2. 질문 배치 원칙
 
-1단계(온보딩, 로그인 불필요) → 2단계(온보딩, 목표비자별 1~2문항) → 3단계(로그인 후 "내 정보 입력하기", 서류검증이 필요한 나머지 전부).
+1단계(온보딩, 로그인 화면 없이 진행) → 2단계(온보딩, 목표비자별 1~2문항) → 3단계("내 정보 입력하기", 서류검증이 필요한 나머지 전부).
+
+**인증 방식(2026-08-24 결정):** 사용자에게 로그인 화면을 보여주지 않는다. 온보딩 진입 시 Supabase 익명 로그인(`signInAnonymously`)으로 조용히 세션을 발급하고, 답변은 이 익명 계정의 `user_id`로 즉시 저장한다. 탭을 닫아도, 같은 브라우저로 재방문해도 데이터가 유지된다. 사용자가 나중에 이메일·소셜 로그인으로 전환하면 Supabase의 계정 승격(link identity) 기능으로 같은 `user_id`가 그대로 유지되며 데이터 이관이 필요 없다. 이 결정으로 §10의 5번 항목(과거 sessionStorage-only 결정)을 대체한다.
 
 원칙: **2개 이상의 비자에서 재사용되는 자격요건 + 기본 유저 정보만 온보딩**, 단일 비자에만 쓰이거나 서류 확인이 필요한 항목은 온보딩 밖으로 미룬다. 근거: progressive profiling 연구상 폼 필드 1개 추가마다 완료율이 3~5%씩 감소한다.
 
@@ -53,7 +55,7 @@
 
 `academic_status` enum: `LANGUAGE_COURSE`(어학연수) / `ASSOCIATE`(전문학사) / `BACHELOR_1_2` / `BACHELOR_3_4` / `GRADUATE`(석박사) — 리플렛 p.13 표와 1:1 매핑.
 
-### 2.4 로그인 후 "내 정보 입력하기" (3단계, 서류검증 필요)
+### 2.4 "내 정보 입력하기" (3단계, 서류검증 필요)
 
 | 목표비자 | 필드 |
 |---|---|
@@ -77,7 +79,7 @@
 ### 3.2 테이블
 
 ```sql
--- 계정당 1행. 로그인(회원가입) 완료 시점에만 생성. 그 전까지는 sessionStorage.
+-- 계정당 1행. 온보딩 진입 시 발급되는 익명 세션의 user_id로 즉시 생성된다.
 create table profiles (
   user_id     uuid primary key references auth.users(id) on delete cascade,
   locale      text not null,
@@ -236,7 +238,7 @@ F-4-R:   사용자 입력(결격사유 해당 여부)
 
 1. 질문 순서: locale → nationality → gender → birthdate → current_visa_code → address(Kakao 검색) → korean_level → (추천 기반) target_visa_code 선택 → 비자별 1~2문항(§2.3)
 2. 스텝 상태는 URL searchParam(§5)
-3. 저장: 로그인 전에는 `sessionStorage`, 로그인/가입 확인 시점에 Server Action으로 `profiles` + `user_visa_profile`에 flush
+3. 저장: 온보딩 진입 시 익명 세션을 발급하고, 각 스텝 통과 직후 Server Action으로 `profiles` + `user_visa_profile`에 바로 반영한다(§2 인증 방식). 로그인 여부에 따른 분기가 없으므로 "설정 완료" 버튼이 로그인 미완료로 실패하는 경로 자체가 없다.
 4. 접근성: 기존 `questionHeadingRef` 포커스 이동, `aria-pressed` 패턴 유지. `AddressSearchInput` 드롭다운은 키보드 탐색 가능해야 하고 결과 개수를 `aria-live`로 알린다. 진행률 표시("3 / 8")는 유지 — 이탈률 감소 효과가 확인된 패턴이다.
 
 ## 10. 후속 조치 / 알려진 제약
@@ -245,7 +247,8 @@ F-4-R:   사용자 입력(결격사유 해당 여부)
 2. F-2-R은 리플렛 문의처 표(p.5) 기준 옥천군에만 담당부서가 있고 나머지 5개 인구감소지역은 "-"로 비어 있다. 지역별 신청 가능 비자가 다를 수 있으므로 추천서 발급 로직 설계 시 반영한다(이 스펙 범위 밖).
 3. F-2-R·D-2의 결정론적 자격판정은 visa-data 구조화 데이터가 아직 없어 이번 스코프에서는 필드 수집까지만 다루고, 충족률(%) 계산은 visa-data 확장 이후로 미룬다.
 4. E-7-4(전국형, K-point)는 이번 스코프 밖이지만 `e9_e10_h2_residence_years`가 지역형(2년)/전국형(4년) 구분 근거를 담고 있어 나중에 추가해도 스키마 변경이 필요 없다.
-5. Supabase anonymous sign-in은 온보딩 이탈률 관점의 대안이지만, 개인정보 최소수집 원칙과 captcha·orphan user 관리 부담을 고려해 이번에는 sessionStorage 방식을 유지한다. 새로고침 복원이 요구사항이 되면 재검토한다.
+5. **(결정 변경, 2026-08-24)** 당초 온보딩은 sessionStorage만 쓰고 로그인 완료 시점에 DB로 flush하는 방식으로 설계했으나, 이러면 탭을 닫는 순간 데이터가 사라져 "로그인 없이도 서비스를 계속 이용"할 수 없다는 문제가 있었다. Supabase 익명 로그인(`signInAnonymously`)으로 대체한다 — §2의 "인증 방식" 참조. 익명 계정은 정식 로그인과 동일하게 `auth.users`에 실제 행을 가지므로 §3의 RLS 정책·Server Action은 변경 없이 그대로 재사용된다.
+6. 익명 계정이 방치되면 `auth.users`에 누적된다("orphan user"). 이번 스코프에서는 정리 정책을 다루지 않고 후속 과제로 남긴다. 실제 이메일·소셜 로그인 화면과 "익명 → 정식 계정 전환" 플로우도 이번 스코프 밖이다(마이페이지 설계 시 다룬다). Supabase 대시보드에서 Anonymous sign-ins를 활성화하는 설정 작업이 별도로 필요하다.
 
 ## 11. 테스트 계획
 

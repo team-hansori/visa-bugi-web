@@ -15,6 +15,7 @@ export function ChatUi() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [deleteNotice, setDeleteNotice] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   function toHistory(items: Entry[]): ChatMessage[] {
@@ -53,8 +54,18 @@ export function ChatUi() {
 
   async function deleteHistory() {
     if (!window.confirm(t("deleteConfirm"))) return;
-    await fetch("/api/chat/session", { method: "DELETE" });
-    setEntries([]);
+    setDeleteNotice(null);
+    try {
+      const res = await fetch("/api/chat/session", { method: "DELETE" });
+      if (!res.ok) {
+        setDeleteNotice(t("error"));
+        return;
+      }
+      setEntries([]);
+      setDeleteNotice(t("deleted"));
+    } catch {
+      setDeleteNotice(t("error"));
+    }
   }
 
   return (
@@ -74,6 +85,11 @@ export function ChatUi() {
           {t("deleteHistory")}
         </button>
       </header>
+      {deleteNotice && (
+        <p role="status" className="border-b border-[#eef1ee] px-4 py-2 text-xs text-[#66736e]">
+          {deleteNotice}
+        </p>
+      )}
 
       <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4" aria-live="polite">
         {entries.length === 0 && <p className="text-sm text-[#77817d]">{t("empty")}</p>}

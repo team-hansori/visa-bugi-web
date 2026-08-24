@@ -3,7 +3,8 @@ import { createChatLogger, createNoopLogger, hashSessionKey } from "@/features/c
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 /** insert/select/delete 호출을 기록하는 최소 목 (queries용 fake와 별개: 쓰기 경로 검증용) */
-function writeRecordingClient() {
+function writeRecordingClient(opts: { deleteError?: { message: string } | null } = {}) {
+  const deleteError = opts.deleteError ?? null;
   const writes: { table: string; op: string; payload?: unknown }[] = [];
   function from(table: string) {
     const builder = {
@@ -20,7 +21,7 @@ function writeRecordingClient() {
       delete: () => ({
         eq: (col: string, v: unknown) => {
           writes.push({ table, op: "delete", payload: `${col}=${String(v)}` });
-          return Promise.resolve({ error: null });
+          return Promise.resolve({ error: deleteError });
         },
       }),
     };
@@ -55,6 +56,12 @@ describe("createChatLogger", () => {
     const logger = createChatLogger(client);
     await logger.deleteSession("anon-1");
     expect(writes).toContainEqual({ table: "chat_sessions", op: "delete", payload: "anon_key=anon-1" });
+  });
+
+  it("deleteSession은 삭제 실패 시 조용히 넘어가지 않고 던진다 (개인정보 삭제 경로는 실패를 숨기면 안 됨)", async () => {
+    const { client } = writeRecordingClient({ deleteError: { message: "connection reset" } });
+    const logger = createChatLogger(client);
+    await expect(logger.deleteSession("anon-1")).rejects.toThrow(/connection reset/);
   });
 });
 

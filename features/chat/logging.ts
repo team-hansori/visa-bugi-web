@@ -57,7 +57,10 @@ export function createChatLogger(client: SupabaseClient): ChatLogger {
       });
     },
     async deleteSession(anonKey) {
-      await client.from("chat_sessions").delete().eq("anon_key", anonKey);
+      // 개인정보 삭제 경로는 실패를 조용히 삼키면 안 된다 — 호출부(API 라우트)가
+      // 실패를 사용자에게 알릴 수 있도록 에러를 던진다.
+      const { error } = await client.from("chat_sessions").delete().eq("anon_key", anonKey);
+      if (error) throw new Error(`세션 삭제 실패: ${error.message}`);
     },
   };
 }

@@ -42,6 +42,9 @@ export type RiskRoutingRow = {
   notes: string | null;
   valid_from: string | null;
   valid_to: string | null;
+  source_document: string | null;
+  source_page: string | null;
+  last_verified_at: string | null;
 };
 
 /** visa-data reference/agency_contacts.csv 컬럼 그대로 */
@@ -59,6 +62,7 @@ export type AgencyContactRow = {
   valid_from: string | null;
   valid_to: string | null;
   source_document: string | null;
+  source_page: string | null;
   last_verified_at: string | null;
 };
 

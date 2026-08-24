@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildEscalation, regionMatches, resolveRiskRoute } from "@/features/chat/risk-routing";
+import { buildEscalation, regionMatches, resolveRiskRoute, visaCodeMatches } from "@/features/chat/risk-routing";
 import type { AgencyContactRow, RiskRoutingRow, ScreeningResult } from "@/features/chat/types";
 
 function row(over: Partial<RiskRoutingRow>): RiskRoutingRow {
@@ -9,7 +9,8 @@ function row(over: Partial<RiskRoutingRow>): RiskRoutingRow {
     external_agency_name: "고용노동부 청주지청", external_region_scope: "청주|진천|괴산|증평|보은|옥천|영동",
     external_phone: "1350", external_url: "https://www.moel.go.kr/cheongju/",
     escalation_message_template: "임금체불은 저희가 직접 해결해드릴 수 없는 문제입니다.",
-    notes: null, valid_from: null, valid_to: null, ...over,
+    notes: null, valid_from: null, valid_to: null,
+    source_document: null, source_page: null, last_verified_at: null, ...over,
   };
 }
 
@@ -36,6 +37,20 @@ describe("regionMatches", () => {
     expect(regionMatches("청주|진천", "청주")).toBe(true);
     expect(regionMatches("충주|제천", "청주")).toBe(false);
     expect(regionMatches("청주|진천", null)).toBe(true);
+  });
+});
+
+describe("visaCodeMatches", () => {
+  it("applies_to_visa_code가 null이면 모든 비자에 적용된다(제한 없음)", () => {
+    expect(visaCodeMatches(null, "E-9")).toBe(true);
+    expect(visaCodeMatches(null, null)).toBe(true);
+  });
+  it("사용자 visaCode가 불명확하면 후보로 유지한다", () => {
+    expect(visaCodeMatches("F-2-R|E-7-4R|F-4-R", null)).toBe(true);
+  });
+  it("파이프 목록에 있으면 매칭, 없으면 제외한다", () => {
+    expect(visaCodeMatches("F-2-R|E-7-4R|F-4-R", "F-2-R")).toBe(true);
+    expect(visaCodeMatches("F-2-R|E-7-4R|F-4-R", "E-9")).toBe(false);
   });
 });
 
@@ -70,6 +85,31 @@ describe("resolveRiskRoute", () => {
     expect(r.matched && r.verifiedForUserType).toBe(false);
   });
 
+  it("applies_to_visa_code가 있고 사용자 visaCode가 목록 밖이면 매칭에서 제외한다", async () => {
+    // RESIDENCE_CONDITION_VIOLATION은 F-2-R/E-7-4R/F-4-R(지역특화형 비자) 전용 — E-9 사용자에게 노출되면 안 된다.
+    const restricted = row({
+      keyword_category: "RESIDENCE_CONDITION_VIOLATION",
+      applies_to_visa_code: "F-2-R|E-7-4R|F-4-R",
+    });
+    const r = await resolveRiskRoute(
+      screening({ riskCategory: "RESIDENCE_CONDITION_VIOLATION", visaCode: "E-9" }),
+      fakeQueries([restricted]),
+    );
+    expect(r.matched).toBe(false);
+  });
+
+  it("applies_to_visa_code가 있고 사용자 visaCode가 목록 안이면 매칭된다", async () => {
+    const restricted = row({
+      keyword_category: "RESIDENCE_CONDITION_VIOLATION",
+      applies_to_visa_code: "F-2-R|E-7-4R|F-4-R",
+    });
+    const r = await resolveRiskRoute(
+      screening({ riskCategory: "RESIDENCE_CONDITION_VIOLATION", visaCode: "F-4-R" }),
+      fakeQueries([restricted]),
+    );
+    expect(r.matched).toBe(true);
+  });
+
   it("IN_DOMAIN이면 target_agency_category로 agency_contacts를 조인한다", async () => {
     const inDomain = row({
       resolution_type: "IN_DOMAIN", target_agency_category: "VISA_STATUS_CHANGE",
@@ -79,7 +119,7 @@ describe("resolveRiskRoute", () => {
       agency_id: "a1", category_major: "FOREIGN_RESIDENT_SETTLEMENT", category_minor: "VISA_STATUS_CHANGE",
       region: "청주", department_name: "청주출입국·외국인사무소", address: null, phone: "043-000-0000",
       url: null, target_audience: null, is_user_facing: true, valid_from: null, valid_to: null,
-      source_document: null, last_verified_at: null,
+      source_document: null, source_page: null, last_verified_at: null,
     } satisfies AgencyContactRow;
     const r = await resolveRiskRoute(screening({ riskCategory: "ILLEGAL_EMPLOYMENT", region: "청주" }), fakeQueries([inDomain], [agency]));
     expect(r.matched && r.agencies).toHaveLength(1);

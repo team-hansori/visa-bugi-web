@@ -13,6 +13,14 @@ describe("extractContactTokens", () => {
     expect(extractContactTokens("https://www.moel.go.kr/cheongju/ 참고"))
       .toEqual(["https://www.moel.go.kr/cheongju/"]);
   });
+  it("URL 뒤에 공백 없이 조사가 붙어도 조사는 캡처하지 않는다", () => {
+    expect(extractContactTokens("https://www.moel.go.kr/cheongju/를 참고하세요"))
+      .toEqual(["https://www.moel.go.kr/cheongju/"]);
+  });
+  it("하이픈 없이 붙어 쓴 전화번호도 탐지한다", () => {
+    expect(extractContactTokens("전화번호는 0432306700 입니다")).toEqual(["0432306700"]);
+    expect(extractContactTokens("휴대폰 01012345678로 연락주세요")).toEqual(["01012345678"]);
+  });
 });
 
 describe("verbatimViolations", () => {

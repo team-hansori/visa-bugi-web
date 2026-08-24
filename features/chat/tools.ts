@@ -1,3 +1,4 @@
+import "server-only";
 import { tool } from "ai";
 import { z } from "zod";
 import type { ChatQueries } from "./queries";
@@ -54,7 +55,8 @@ export function createChatTools(queries: ChatQueries) {
     find_agency: tool({
       description:
         "충북 시군의 외국인 지원기관(가족센터·외국인지원센터·출입국 관련 부서 등) 연락처를 조회한다. " +
-        "region은 시군명(청주, 충주 등), category_minor는 기관 분류 코드.",
+        "region은 시군명(청주, 충주 등), category_major는 대분류(FOREIGN_EMPLOYMENT_SUPPORT, " +
+        "FOREIGN_RESIDENT_SETTLEMENT, STUDENT_WORK_STUDY_LINKAGE), category_minor는 세부 분류 코드.",
       inputSchema: z.object({
         region: z.string().optional(),
         category_major: z.string().optional(),

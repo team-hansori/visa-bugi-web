@@ -11,6 +11,7 @@ const WAGE_ROW: RiskRoutingRow = {
   external_phone: "1350", external_url: "https://www.moel.go.kr/cheongju/",
   escalation_message_template: "임금체불은 저희가 직접 해결해드릴 수 없는 문제입니다.",
   notes: null, valid_from: null, valid_to: null,
+  source_document: null, source_page: null, last_verified_at: null,
 };
 
 function queriesWith(over: Partial<ChatQueries>): ChatQueries {

@@ -1,4 +1,5 @@
-import { generateObject } from "ai";
+import "server-only";
+import { generateText, Output } from "ai";
 import { z } from "zod";
 import {
   CHUNGBUK_REGIONS, RISK_CATEGORIES, USER_TYPES, type ScreeningResult,
@@ -40,13 +41,14 @@ export const DEFAULT_SCREENING_MODEL = "anthropic/claude-haiku-4.5";
 type GenerateFn = (args: { system: string; prompt: string }) => Promise<unknown>;
 
 async function defaultGenerate(args: { system: string; prompt: string }): Promise<unknown> {
-  const { object } = await generateObject({
+  // generateObject는 ai SDK에서 deprecated — generateText + Output.object로 대체.
+  const { output } = await generateText({
     model: process.env.CHAT_SCREENING_MODEL ?? DEFAULT_SCREENING_MODEL,
-    schema: screeningSchema,
+    output: Output.object({ schema: screeningSchema }),
     system: args.system,
     prompt: args.prompt,
   });
-  return object;
+  return output;
 }
 
 export async function screenMessage(

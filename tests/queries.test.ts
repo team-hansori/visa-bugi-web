@@ -21,7 +21,9 @@ describe("createChatQueries", () => {
     const q = createChatQueries(client);
     await q.findAgency({ region: "청주", categoryMinor: "VISA_STATUS_CHANGE" });
     expect(calls[0].filters).toContain("eq:is_user_facing:true");
-    expect(calls[0].filters).toContain("eq:region:청주");
+    // region은 정확 일치가 아닌 부분일치: agency_contacts.region 실값이
+    // "청주(관할:전지역)", "옥천,영동"처럼 정규화된 시군명과 다르기 때문 (data-contract-reviewer 확인)
+    expect(calls[0].filters).toContain("ilike:region:%청주%");
     expect(calls[0].filters).toContain("eq:category_minor:VISA_STATUS_CHANGE");
     expect(calls[0].filters.some((f) => f.startsWith("eq:category_major"))).toBe(false);
   });

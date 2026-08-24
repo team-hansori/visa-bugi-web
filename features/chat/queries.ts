@@ -1,3 +1,4 @@
+import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AgencyContactRow, RiskCategory, RiskRoutingRow } from "./types";
 
@@ -66,14 +67,21 @@ export function createChatQueries(client: SupabaseClient): ChatQueries {
     },
     findAgency({ region, categoryMajor, categoryMinor, targetAudience }) {
       let b = client.from("agency_contacts").select("*").eq("is_user_facing", true);
-      if (region) b = b.eq("region", region);
+      // region은 부분일치(ilike): 실제 값이 "청주(관할:전지역)", "옥천,영동"처럼
+      // 정규화된 시군명과 정확히 일치하지 않는 자유 텍스트라 eq로는 매칭되지 않는다.
+      if (region) b = b.ilike("region", `%${region}%`);
       if (categoryMajor) b = b.eq("category_major", categoryMajor);
       if (categoryMinor) b = b.eq("category_minor", categoryMinor);
       if (targetAudience) b = b.or(`target_audience.is.null,target_audience.eq.${targetAudience}`);
       return run(withValidWindow(b));
     },
     getRiskRoutingRows(category) {
-      return run(withValidWindow(client.from("risk_routing_table").select("*").eq("keyword_category", category)));
+      // routing_id 정렬로 rows[0] 선택(템플릿 대표행)을 결정론적으로 만든다.
+      return run(
+        withValidWindow(
+          client.from("risk_routing_table").select("*").eq("keyword_category", category),
+        ).order("routing_id", { ascending: true }),
+      );
     },
   };
 }

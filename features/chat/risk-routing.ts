@@ -25,6 +25,20 @@ export function regionMatches(scope: string | null, region: string | null): bool
   return scope.split("|").includes(region);
 }
 
+/**
+ * applies_to_visa_code 매칭.
+ * - null: 제한 없음(모든 비자에 적용) → 항상 매칭 (예: WAGE_ARREARS)
+ * - "F-2-R|E-7-4R|...": 사용자 visaCode가 목록에 있어야 매칭. 사용자 visaCode 미상이면 후보 유지.
+ * 지역과 달리 비자 유형이 확정적으로 다르면(제3의 비자) 하드 제외한다 — 무관한 비자 유형에
+ * 잘못된 유지의무 안내를 노출하면 체류자격 판단에 혼선을 줄 수 있기 때문에 region처럼
+ * "전체 행 폴백"을 적용하지 않는다.
+ */
+export function visaCodeMatches(applies: string | null, visaCode: string | null): boolean {
+  if (applies === null || applies === "") return true;
+  if (visaCode === null) return true;
+  return applies.split("|").includes(visaCode);
+}
+
 export async function resolveRiskRoute(
   screening: ScreeningResult,
   queries: Pick<ChatQueries, "getRiskRoutingRows" | "findAgency">,
@@ -34,12 +48,17 @@ export async function resolveRiskRoute(
   const all = await queries.getRiskRoutingRows(screening.riskCategory);
   if (all.length === 0) return { matched: false };
 
-  const verifiedForUserType = all.some((r) => r.user_type === screening.userType);
+  // 비자 유형 제한 필터. region과 달리 폴백하지 않는다: 확정적으로 다른 비자 유형에는
+  // 해당 카테고리 안내를 아예 보여주지 않는다.
+  const visaFiltered = all.filter((r) => visaCodeMatches(r.applies_to_visa_code, screening.visaCode));
+  if (visaFiltered.length === 0) return { matched: false };
+
+  const verifiedForUserType = visaFiltered.some((r) => r.user_type === screening.userType);
 
   // 지역 필터. 전부 탈락하면 안내를 차단하는 대신 전체 행으로 폴백한다
   // (scope 정보는 UI에 verbatim으로 표기되므로 사용자가 판단 가능).
-  const regionFiltered = all.filter((r) => regionMatches(r.external_region_scope, screening.region));
-  const rows = regionFiltered.length > 0 ? regionFiltered : all;
+  const regionFiltered = visaFiltered.filter((r) => regionMatches(r.external_region_scope, screening.region));
+  const rows = regionFiltered.length > 0 ? regionFiltered : visaFiltered;
 
   // IN_DOMAIN 행이 하나라도 있으면 target_agency_category로 스코프 내 기관을 조인한다.
   const inDomain = rows.filter((r) => r.resolution_type === "IN_DOMAIN" && r.target_agency_category);

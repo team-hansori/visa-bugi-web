@@ -17,6 +17,10 @@ export function createFakeSupabase(fixtures: Record<string, unknown[]>) {
         filters.push(`eq:${col}:${String(v)}`);
         return builder;
       },
+      ilike: (col: string, v: unknown) => {
+        filters.push(`ilike:${col}:${String(v)}`);
+        return builder;
+      },
       or: (expr: string) => {
         filters.push(`or:${expr}`);
         return builder;

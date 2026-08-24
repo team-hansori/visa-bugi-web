@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { cookies } from "next/headers";
 import { staticFallback } from "@/features/chat/fallback";
 import { createDefaultDeps, handleChatTurn } from "@/features/chat/orchestrate";
+import { chatRateLimitKey, checkChatRateLimit } from "@/features/chat/rate-limit";
 import { chatRequestSchema } from "./schema";
 
 const SESSION_COOKIE = "vb_chat_session";
@@ -13,6 +14,14 @@ export async function POST(request: Request) {
     return Response.json(
       { kind: "error", text: "요청 형식이 올바르지 않습니다.", sources: [] },
       { status: 400 },
+    );
+  }
+
+  const rateLimit = checkChatRateLimit(chatRateLimitKey(request));
+  if (!rateLimit.allowed) {
+    return Response.json(
+      { kind: "error", text: "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.", sources: [] },
+      { status: 429, headers: { "Retry-After": String(rateLimit.retryAfterSeconds) } },
     );
   }
 

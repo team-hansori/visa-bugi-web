@@ -2,7 +2,7 @@ import "server-only";
 import { generateText, Output } from "ai";
 import { z } from "zod";
 import {
-  CHUNGBUK_REGIONS, RISK_CATEGORIES, USER_TYPES, type ScreeningResult,
+  CHUNGBUK_REGIONS, RISK_CATEGORIES, USER_TYPES, type RiskCategory, type ScreeningResult,
 } from "./types";
 
 export const screeningSchema = z.object({
@@ -22,7 +22,36 @@ export const FALLBACK_SCREENING: ScreeningResult = {
   visaCode: null,
   inScope: false,
   language: "ko",
+  screeningFailed: true,
 };
+
+const FALLBACK_RISK_PATTERNS: ReadonlyArray<readonly [RiskCategory, readonly RegExp[]]> = [
+  ["WAGE_ARREARS", [
+    /\uC784\uAE08|\uC6D4\uAE09|\uAE09\uC5EC|\uCCB4\uBD88|\uD488\uC0AF|\uC77C\uB2F9|wage|salary|unpaid/i,
+    /(?:\uC0AC\uC7A5|\uD68C\uC0AC|\uACE0\uC6A9\uC8FC)[\s\S]{0,20}(?:\uB3C8|\uC77C\uD55C\s*\uAC12)[\s\S]{0,20}(?:\uC548\s*\uC918|\uBABB\s*\uC918|\uBABB\s*\uBC1B|\uB5BC|\uBC00\uB838)/i,
+    /(?:\uC77C\uD588|\uADFC\uBB34\uD588|\uC77C\uD55C)[\s\S]{0,20}(?:\uB3C8|\uAC12|\uB300\uAE08|\uD488\uC0AF|\uC77C\uB2F9)[\s\S]{0,20}(?:\uC548\s*\uC918|\uBABB\s*\uBC1B|\uB5BC|\uBC00\uB838)/i,
+    /(?:boss|employer|company)[\s\S]{0,20}(?:money|pay|wages)[\s\S]{0,20}(?:didn'?t|did not|won'?t|not)\s*(?:pay|give)/i,
+  ]],
+  ["INDUSTRIAL_ACCIDENT", [
+    /\uC0B0\uC7AC|\uBD80\uC0C1|\uC791\uC5C5\s*\uC911.*\uC0AC\uACE0|industrial accident|injured/i,
+    /(?:\uC77C|\uADFC\uBB34|\uC791\uC5C5)[\s\S]{0,20}(?:\uB2E4\uCCD0|\uC0AC\uACE0)/i,
+  ]],
+  ["ASSAULT", [
+    /\uD3ED\uD589|\uD3ED\uB825|\uAD6C\uD0C0|\uD611\uBC15|\uB9DE\uC558|\uB54C\uB838|assault|violence|attack/i,
+    /(?:\uD68C\uC0AC|\uC0AC\uC7A5|\uC0C1\uC0AC|\uADFC\uBB34\uC9C0)[\s\S]{0,20}(?:\uB9DE|\uB54C\uB9AC|\uC704\uD611)/i,
+  ]],
+  ["ILLEGAL_EMPLOYMENT", [/\uBD88\uBC95\s*\uCDE8\uC5C5|\uBB34\uD5C8\uAC00\s*\uCDE8\uC5C5|unauthorized employment/i]],
+  ["RESIDENCE_CONDITION_VIOLATION", [/\uC2E4\uAC70\uC8FC|\uAC70\uC8FC\uC9C0.*\uC704\uBC18|residence.*violation/i]],
+];
+
+export function classifyFallbackRisk(text: string): ScreeningResult["riskCategory"] {
+  const normalizedText = text.normalize("NFKC").toLowerCase();
+  return FALLBACK_RISK_PATTERNS.find(([, patterns]) => patterns.some((pattern) => pattern.test(normalizedText)))?.[0] ?? "NONE";
+}
+
+function fallbackScreening(text: string): ScreeningResult {
+  return { ...FALLBACK_SCREENING, riskCategory: classifyFallbackRisk(text) };
+}
 
 const SCREENING_SYSTEM = `너는 충청북도 외국인 주민 비자 안내 서비스의 분류기다.
 사용자 메시지를 읽고 다음을 판정해 JSON으로만 답한다.
@@ -61,8 +90,8 @@ export async function screenMessage(
   try {
     const raw = await generate({ system: SCREENING_SYSTEM, prompt: text });
     const parsed = screeningSchema.safeParse(raw);
-    return parsed.success ? parsed.data : FALLBACK_SCREENING;
+    return parsed.success ? parsed.data : fallbackScreening(text);
   } catch {
-    return FALLBACK_SCREENING;
+    return fallbackScreening(text);
   }
 }

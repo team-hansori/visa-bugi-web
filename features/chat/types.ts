@@ -24,6 +24,8 @@ export type ScreeningResult = {
   inScope: boolean;
   /** BCP-47 언어 태그 소문자 (예: "ko", "vi") */
   language: string;
+  /** True when the LLM screening result could not be used safely. */
+  screeningFailed?: boolean;
 };
 
 /** visa-data reference/risk_routing_table.csv 컬럼 그대로 */

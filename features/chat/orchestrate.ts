@@ -89,7 +89,11 @@ export async function handleChatTurn(
     screening = await deps.screen(userText);
 
     // ① 위험 신호 + risk 행 존재 → 결정론 escalation
-    if (screening.riskCategory !== "NONE") {
+    if (screening.screeningFailed && screening.riskCategory === "NONE") {
+      const fallback = await outOfScopeResponse(input.locale, screening, deps);
+      response = fallback.response;
+      usedRowIds = fallback.rowIds;
+    } else if (screening.riskCategory !== "NONE") {
       const route = await resolveRiskRoute(screening, deps.queries);
       if (route.matched) {
         usedRowIds = route.rows.map((r) => r.routing_id).concat(route.agencies.map((a) => a.agency_id));

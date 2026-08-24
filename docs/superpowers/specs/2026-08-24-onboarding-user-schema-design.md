@@ -79,7 +79,7 @@
 ### 3.2 테이블
 
 ```sql
--- 계정당 1행. 온보딩 진입 시 발급되는 익명 세션의 user_id로 즉시 생성된다.
+-- 계정당 1행. 온보딩 진입 시 발급되는 익명 세션의 user_id로 마지막 스텝 제출 시 생성된다.
 create table profiles (
   user_id     uuid primary key references auth.users(id) on delete cascade,
   locale      text not null,
@@ -238,7 +238,7 @@ F-4-R:   사용자 입력(결격사유 해당 여부)
 
 1. 질문 순서: locale → nationality → gender → birthdate → current_visa_code → address(Kakao 검색) → korean_level → (추천 기반) target_visa_code 선택 → 비자별 1~2문항(§2.3)
 2. 스텝 상태는 URL searchParam(§5)
-3. 저장: 온보딩 진입 시 익명 세션을 발급하고, 각 스텝 통과 직후 Server Action으로 `profiles` + `user_visa_profile`에 바로 반영한다(§2 인증 방식). 로그인 여부에 따른 분기가 없으므로 "설정 완료" 버튼이 로그인 미완료로 실패하는 경로 자체가 없다.
+3. 저장: 온보딩 마운트 시 클라이언트에서 조용히 익명 세션을 발급해 둔다(§2 인증 방식). 답변 자체는 각 스텝을 지날 때 `sessionStorage`에 백업만 하다가, 마지막 스텝에서 한 번에 Server Action으로 `profiles` + `user_visa_profile`에 저장한다. 로그인 여부에 따른 분기가 없으므로 "설정 완료" 버튼이 로그인 미완료로 실패하는 경로 자체가 없다.
 4. 접근성: 기존 `questionHeadingRef` 포커스 이동, `aria-pressed` 패턴 유지. `AddressSearchInput` 드롭다운은 키보드 탐색 가능해야 하고 결과 개수를 `aria-live`로 알린다. 진행률 표시("3 / 8")는 유지 — 이탈률 감소 효과가 확인된 패턴이다.
 
 ## 10. 후속 조치 / 알려진 제약

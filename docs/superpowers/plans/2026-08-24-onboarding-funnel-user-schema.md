@@ -1795,19 +1795,125 @@ git commit -m "feat: 주소 자동완성 combobox 컴포넌트 추가"
 
 ---
 
-## Task 8: 온보딩 저장 Server Action
+## Task 8: 익명 세션 보장 + 온보딩 저장 Server Action
+
+**변경 배경(2026-08-24):** 이 앱은 로그인 화면 없이 쓸 수 있어야 한다. Supabase 익명 로그인(`signInAnonymously`)으로 온보딩 진입 시 조용히 세션을 발급하고, 그 `user_id`로 즉시 저장한다. 정식 로그인과 동일하게 `auth.users`에 실제 행이 생기므로 RLS 정책(Task 5)과 아래 Server Action은 변경 없이 그대로 재사용된다. 참고: `docs/superpowers/specs/2026-08-24-onboarding-user-schema-design.md` §2 "인증 방식".
 
 **Files:**
+- Create: `lib/supabase/ensure-anonymous-session.ts`
+- Test: `lib/supabase/ensure-anonymous-session.test.ts`
 - Create: `features/onboarding/actions.ts`
 - Test: `features/onboarding/actions.test.ts`
 
 **Interfaces:**
 - Consumes: `onboardingSubmissionSchema` (Task 3), `lib/supabase/server`의 `createClient`, `database.types.ts`
 - Produces:
+  - `type SessionUser = { id: string }`
+  - `ensureAnonymousSession(supabase: SupabaseClient): Promise<SessionUser | null>`
   - `type SaveOnboardingState = { status: "idle" } | { status: "success" } | { status: "error"; message: string; fieldErrors?: Record<string, string> }`
   - `saveOnboarding(prev: SaveOnboardingState, formData: FormData): Promise<SaveOnboardingState>`
 
-- [ ] **Step 1: 실패하는 테스트 작성**
+- [ ] **Step 1: ensureAnonymousSession 실패하는 테스트 작성**
+
+`lib/supabase/ensure-anonymous-session.test.ts`:
+
+```ts
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { describe, expect, it, vi } from "vitest";
+import { ensureAnonymousSession } from "./ensure-anonymous-session";
+
+function mockClient(overrides: {
+  getUser: ReturnType<typeof vi.fn>;
+  signInAnonymously: ReturnType<typeof vi.fn>;
+}) {
+  return { auth: overrides } as unknown as SupabaseClient;
+}
+
+describe("ensureAnonymousSession", () => {
+  it("이미 세션이 있으면 익명 로그인을 시도하지 않는다", async () => {
+    const signInAnonymously = vi.fn();
+    const client = mockClient({
+      getUser: vi
+        .fn()
+        .mockResolvedValue({ data: { user: { id: "user-1" } } }),
+      signInAnonymously,
+    });
+
+    const result = await ensureAnonymousSession(client);
+
+    expect(result).toEqual({ id: "user-1" });
+    expect(signInAnonymously).not.toHaveBeenCalled();
+  });
+
+  it("세션이 없으면 익명 로그인을 발급한다", async () => {
+    const client = mockClient({
+      getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
+      signInAnonymously: vi.fn().mockResolvedValue({
+        data: { user: { id: "anon-1" } },
+        error: null,
+      }),
+    });
+
+    const result = await ensureAnonymousSession(client);
+
+    expect(result).toEqual({ id: "anon-1" });
+  });
+
+  it("익명 로그인이 실패하면 null을 반환한다", async () => {
+    const client = mockClient({
+      getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
+      signInAnonymously: vi.fn().mockResolvedValue({
+        data: { user: null },
+        error: { message: "Anonymous sign-ins are disabled" },
+      }),
+    });
+
+    const result = await ensureAnonymousSession(client);
+
+    expect(result).toBeNull();
+  });
+});
+```
+
+- [ ] **Step 2: 테스트 실패 확인**
+
+Run: `npm run test`
+Expected: FAIL — `Failed to resolve import "./ensure-anonymous-session"`
+
+- [ ] **Step 3: ensureAnonymousSession 구현**
+
+`lib/supabase/ensure-anonymous-session.ts`:
+
+```ts
+import type { SupabaseClient } from "@supabase/supabase-js";
+
+export type SessionUser = { id: string };
+
+/**
+ * 로그인 화면 없이 Supabase 세션을 보장한다.
+ * 이미 세션(익명이든 정식이든)이 있으면 그대로 두고, 없으면 조용히 익명 로그인을 발급한다.
+ *
+ * Supabase 대시보드에서 "Anonymous sign-ins"가 비활성화되어 있으면 error가 반환되므로
+ * null을 돌려주고, 호출부(Server Action)는 이를 일반적인 저장 실패로 처리한다.
+ */
+export async function ensureAnonymousSession(
+  supabase: SupabaseClient,
+): Promise<SessionUser | null> {
+  const { data: existing } = await supabase.auth.getUser();
+  if (existing.user) return { id: existing.user.id };
+
+  const { data, error } = await supabase.auth.signInAnonymously();
+  if (error || !data.user) return null;
+  return { id: data.user.id };
+}
+```
+
+- [ ] **Step 4: 테스트 통과 확인**
+
+Run: `npm run test`
+Expected: PASS — ensureAnonymousSession 테스트 3건 통과
+
+- [ ] **Step 5: saveOnboarding 실패하는 테스트 작성**
 
 `features/onboarding/actions.test.ts`:
 
@@ -1860,7 +1966,9 @@ beforeEach(() => {
 });
 
 describe("saveOnboarding", () => {
-  it("로그인하지 않았으면 저장하지 않고 오류를 반환한다", async () => {
+  it("익명 세션조차 없으면(부트스트랩 실패) 저장하지 않고 오류를 반환한다", async () => {
+    // 정상 흐름에서는 Task 10의 마운트 훅이 이미 익명 세션을 발급해 둔다.
+    // 이 케이스는 그게 실패했거나 쿠키가 막힌 예외 상황이다.
     getUser.mockResolvedValue({ data: { user: null }, error: null });
     const result = await saveOnboarding({ status: "idle" }, formDataOf(validPayload));
     expect(result.status).toBe("error");
@@ -1964,12 +2072,12 @@ describe("saveOnboarding", () => {
 });
 ```
 
-- [ ] **Step 2: 테스트 실패 확인**
+- [ ] **Step 6: 테스트 실패 확인**
 
 Run: `npm run test`
 Expected: FAIL — `Failed to resolve import "./actions"`
 
-- [ ] **Step 3: Server Action 구현**
+- [ ] **Step 7: Server Action 구현**
 
 `features/onboarding/actions.ts`:
 
@@ -2025,7 +2133,12 @@ export async function saveOnboarding(
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return { status: "error", message: "로그인 후 다시 시도해 주세요." };
+    // 정상 흐름이라면 Task 10의 마운트 훅이 이미 익명 세션을 발급해 두었어야 한다.
+    // 여기 도달했다면 쿠키 차단 등 예외 상황이다.
+    return {
+      status: "error",
+      message: "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+    };
   }
 
   let raw: unknown;
@@ -2096,21 +2209,21 @@ export async function saveOnboarding(
 }
 ```
 
-- [ ] **Step 4: 테스트 통과 확인**
+- [ ] **Step 8: 테스트 통과 확인**
 
 Run: `npm run test`
 Expected: PASS — Server Action 테스트 9건 통과
 
-- [ ] **Step 5: lint·typecheck 확인**
+- [ ] **Step 9: lint·typecheck 확인**
 
 Run: `npm run lint && npm run typecheck`
 Expected: 오류 없음
 
-- [ ] **Step 6: 커밋**
+- [ ] **Step 10: 커밋**
 
 ```bash
-git add features/onboarding/actions.ts features/onboarding/actions.test.ts
-git commit -m "feat: 온보딩 저장 Server Action 추가 (인증·zod 서버 재검증 포함)"
+git add lib/supabase/ensure-anonymous-session.ts lib/supabase/ensure-anonymous-session.test.ts features/onboarding/actions.ts features/onboarding/actions.test.ts
+git commit -m "feat: 익명 세션 보장 유틸 + 온보딩 저장 Server Action 추가"
 ```
 
 ---
@@ -2668,10 +2781,21 @@ vi.mock("./actions", () => ({
   saveOnboarding: vi.fn(async () => ({ status: "success" as const })),
 }));
 
+const mockSupabaseClient = { auth: {} };
+vi.mock("@/lib/supabase/client", () => ({
+  createClient: vi.fn(() => mockSupabaseClient),
+}));
+
+const ensureAnonymousSession = vi.fn(async () => ({ id: "anon-1" }));
+vi.mock("@/lib/supabase/ensure-anonymous-session", () => ({
+  ensureAnonymousSession: (...args: unknown[]) => ensureAnonymousSession(...args),
+}));
+
 const { OnboardingForm } = await import("./onboarding-form");
 
 beforeEach(() => {
   vi.clearAllMocks();
+  ensureAnonymousSession.mockResolvedValue({ id: "anon-1" });
   searchParams = new URLSearchParams();
   window.sessionStorage.clear();
 });
@@ -2797,6 +2921,15 @@ describe("OnboardingForm", () => {
     expect(screen.getByRole("button", { name: /다음/ })).toBeDisabled();
     expect(push).not.toHaveBeenCalled();
   });
+
+  it("마운트 시 로그인 화면 없이 조용히 익명 세션을 발급한다", async () => {
+    render(<OnboardingForm />);
+    await waitFor(() =>
+      expect(ensureAnonymousSession).toHaveBeenCalledWith(mockSupabaseClient),
+    );
+    // 화면에는 로그인 관련 UI가 전혀 없어야 한다.
+    expect(screen.queryByRole("button", { name: /로그인/ })).not.toBeInTheDocument();
+  });
 });
 ```
 
@@ -2818,6 +2951,8 @@ import { Icon } from "@/components/ui/icon";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { localeNames, routing } from "@/i18n/routing";
 import type { AddressSuggestion } from "@/lib/address/normalize";
+import { createClient } from "@/lib/supabase/client";
+import { ensureAnonymousSession } from "@/lib/supabase/ensure-anonymous-session";
 import { saveOnboarding, type SaveOnboardingState } from "./actions";
 import { CURRENT_VISA_OPTIONS, TARGET_VISA_CODES, type TargetVisaCode } from "./constants";
 import {
@@ -2977,6 +3112,13 @@ export function OnboardingForm() {
     } catch {
       // 저장소를 못 읽어도 온보딩은 진행할 수 있어야 한다.
     }
+  }, []);
+
+  // 로그인 화면 없이도 마지막 스텝에서 바로 저장할 수 있도록, 진입하자마자
+  // 조용히 익명 세션을 발급해 둔다. 실패해도 온보딩 자체는 계속 진행된다 —
+  // 마지막 제출에서 saveOnboarding이 다시 시도한다.
+  useEffect(() => {
+    ensureAnonymousSession(createClient());
   }, []);
 
   useEffect(() => {
@@ -3152,8 +3294,8 @@ export function OnboardingForm() {
             나에게 맞는 안내를 준비할게요
           </h1>
           <p className="mt-4 text-sm leading-6 text-[#d1dfda] sm:text-base sm:leading-7">
-            로그인 전에는 선택 결과를 현재 브라우저 세션 동안만 보관합니다. GPS 좌표와
-            문서 이미지는 저장하지 않습니다.
+            로그인 화면 없이 바로 이용할 수 있고, 선택 결과는 이 브라우저에 안전하게
+            보관됩니다. 문서 이미지는 저장하지 않습니다.
           </p>
         </div>
         <div className="mt-8 rounded-2xl bg-white/10 p-4 text-sm leading-6 text-[#e1ede8]">
@@ -3415,7 +3557,7 @@ export function OnboardingForm() {
 - [ ] **Step 4: 테스트 통과 확인**
 
 Run: `npm run test`
-Expected: PASS — OnboardingForm 테스트 13건 통과
+Expected: PASS — OnboardingForm 테스트 14건 통과
 
 일부 테스트가 `useActionState` 관련 오류로 실패하면, 테스트 파일 상단에 `vi.mock("react", ...)` 대신 실제 React 19의 `useActionState`를 그대로 쓰되 `saveOnboarding` 모킹만 유지한다 (이미 그렇게 작성되어 있다).
 
@@ -3476,7 +3618,7 @@ git commit -m "feat: 온보딩 폼을 URL 기반 퍼널로 재작성"
   "Onboarding": {
     "badge": "간단 설정 · 약 2분",
     "heroTitle": "나에게 맞는 안내를 준비할게요",
-    "heroDescription": "로그인 전에는 선택 결과를 현재 브라우저 세션 동안만 보관합니다. GPS 좌표와 문서 이미지는 저장하지 않습니다.",
+    "heroDescription": "로그인 화면 없이 바로 이용할 수 있고, 선택 결과는 이 브라우저에 안전하게 보관됩니다. 문서 이미지는 저장하지 않습니다.",
     "privacyTitle": "개인정보 최소 수집",
     "privacyNotice": "여기서 안내하는 내용은 참고용이며, 최종 자격 판정은 관할 출입국·외국인관서에서 확인해야 합니다.",
     "questionLabel": "질문 {index}",
@@ -3492,9 +3634,11 @@ git commit -m "feat: 온보딩 폼을 URL 기반 퍼널로 재작성"
     "searchResultCount": "검색 결과 {count}건",
     "searchNoResult": "검색 결과가 없습니다.",
     "searchError": "주소를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
-    "loginRequired": "로그인 후 다시 시도해 주세요."
+    "saveError": "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요."
   }
 ```
+
+> `saveError`는 이번 태스크에서 UI에 직접 연결하지 않는다. Server Action(Task 8)의 오류 메시지는 하드코딩된 한국어 문자열이고, Server Action에는 `next-intl`의 요청 로케일이 곧바로 오지 않기 때문이다. 다국어 오류 메시지 연동은 이번 스코프 밖으로 남긴다 — 메시지 키만 미리 준비해 둔다.
 
 - [ ] **Step 2: 나머지 5개 언어에 동일 키 복사**
 
@@ -3550,7 +3694,7 @@ vi.mock("next-intl", () => ({
     const map: Record<string, string> = {
       badge: "간단 설정 · 약 2분",
       heroTitle: "나에게 맞는 안내를 준비할게요",
-      heroDescription: "로그인 전에는 선택 결과를 현재 브라우저 세션 동안만 보관합니다.",
+      heroDescription: "로그인 화면 없이 바로 이용할 수 있고, 선택 결과는 이 브라우저에 안전하게 보관됩니다.",
       privacyTitle: "개인정보 최소 수집",
       privacyNotice: "여기서 안내하는 내용은 참고용이며, 최종 자격 판정은 관할 출입국·외국인관서에서 확인해야 합니다.",
       previous: "이전",
@@ -3602,7 +3746,7 @@ git commit -m "feat: 온보딩 UI 문구를 next-intl 메시지로 연결"
 2. **민감정보 처리** — 스펙 §6: E-7-4R 감점 계산(원본 미저장), F-4-R 결격사유(Y/N만 저장), 자동판정 고지
 3. **요건 충족률(%) 계산** — visa-data의 `visa_requirement_criteria`/`scoring_items` 연동. F-2-R·D-2는 visa-data 추출 완료 후
 4. **스텝 제목·설명 12종 다국어 번역** — 이번엔 UI 프레임 문구만 번역했다
-5. **인증 흐름** — 현재 Server Action은 로그인된 사용자를 전제한다. 로그인/가입 화면과 sessionStorage → DB flush 트리거 연결 필요
+5. **정식 로그인·계정 승격 흐름** — 온보딩 자체는 익명 세션으로 완결되지만, 이메일·소셜 로그인 화면과 "익명 → 정식 계정" 전환(Supabase link identity)은 마이페이지 설계 시 다룬다. Supabase 대시보드에서 Anonymous sign-ins 활성화도 배포 전 별도 설정 필요
 6. **온보딩 이탈률 분석** — URL 스텝이 이미 준비되어 있으므로 분석 도구만 연결하면 된다
 
 ## Self-Review 결과
@@ -3617,7 +3761,7 @@ git commit -m "feat: 온보딩 UI 문구를 next-intl 메시지로 연결"
 | §2.3 비자별 2단계 | Task 3 (`visaDetailSchema`), Task 4, Task 9, Task 10 |
 | §2.4 3단계 | **범위 밖** — 후속 계획 1 |
 | §3 하이브리드 스키마 | Task 5 |
-| §4 Server Action / Route Handler | Task 6 (Route Handler), Task 8 (Server Action) |
+| §4 Server Action / Route Handler | Task 6 (Route Handler), Task 8 (Server Action + 익명 세션 보장) |
 | §5 URL 퍼널 | Task 4, Task 10 |
 | §6 민감정보 | **범위 밖** — 후속 계획 2. 온보딩 1·2단계에는 민감정보 필드가 없음을 확인함 |
 | §7 Kakao 주소 | Task 6, Task 7, Task 9 |
@@ -3634,4 +3778,6 @@ git commit -m "feat: 온보딩 UI 문구를 next-intl 메시지로 연결"
 
 **알려진 편차 (스펙 §8):** `react-hook-form`을 도입하지 않는다. 스텝당 입력 필드가 최대 4개(D-2)라 RHF의 폼 상태 관리 이점이 없고, 미사용 의존성을 남기지 않기 위함이다. 스텝별 검증은 zod 스키마 조각(`pastDateSchema`, `koreanLevelPairSchema`)을 직접 호출해 구현했으므로 §8이 요구한 검증 동작 자체는 충족한다. 필드가 10개 이상인 3단계 "내 정보 입력하기"에서 RHF 도입을 재검토한다.
 
-**검증 한계 (정직한 고지):** Task 5의 SQL은 실행 중인 Supabase 인스턴스 없이는 실제로 적용해볼 수 없다. Task 8의 Server Action 테스트는 Supabase 클라이언트를 모킹하므로 **RLS 정책이 실제로 동작하는지는 검증하지 못한다**. RLS는 스테이징 환경에 마이그레이션을 적용한 뒤 다른 사용자 세션으로 타인의 행을 읽으려 시도해 별도로 확인해야 한다.
+**검증 한계 (정직한 고지):** Task 5의 SQL은 실행 중인 Supabase 인스턴스 없이는 실제로 적용해볼 수 없다. Task 8의 Server Action 테스트는 Supabase 클라이언트를 모킹하므로 **RLS 정책이 실제로 동작하는지는 검증하지 못한다**. RLS는 스테이징 환경에 마이그레이션을 적용한 뒤 다른 사용자 세션으로 타인의 행을 읽으려 시도해 별도로 확인해야 한다. 마찬가지로 Supabase 대시보드에서 "Anonymous sign-ins"를 켜지 않으면 `signInAnonymously()`가 실제로는 실패한다 — 이 설정 여부도 유닛 테스트로는 검증되지 않으므로, 스테이징에서 온보딩을 실제로 완주해 저장까지 되는지 수동 확인이 필요하다.
+
+**중간 설계 변경 (2026-08-24, 실행 중 반영):** 애초 계획은 "로그인 완료 시점에 sessionStorage → DB flush"였다. 사용자가 "로그인 없이도 서비스를 계속 이용할 수 있어야 한다"는 요구를 명확히 하면서, sessionStorage만으로는 탭을 닫으면 데이터가 사라져 이 요구를 충족할 수 없다는 게 드러났다. Supabase 익명 로그인으로 대체했다 — Task 8에 `ensure-anonymous-session.ts`를 추가하고 Task 10 마운트 시 호출한다. RLS(Task 5)·Server Action(Task 8)의 나머지 부분은 무변경으로 재사용된다. 스펙 문서 §2·§9·§10도 함께 갱신했다(커밋 `fce45c3`).

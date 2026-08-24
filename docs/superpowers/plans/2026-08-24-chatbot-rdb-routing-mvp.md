@@ -2507,3 +2507,10 @@ git commit -m "test: golden set 평가 추가 (위험 미탐 0건·verbatim 위�
 - env 미설정 상태에서도 빌드와 `/[locale]/chat` 렌더 성공, API는 503 + 정적 안내
 - (env + 데이터 적재 후) `npm run eval:chat`에서 위험 미탐 0건, verbatim 위반 0건
 - 후속(플랜 밖): 마스터 데이터 Supabase 적재 계약 확정(visa-data 팀), migration 적용, 스트리밍 응답 전환, `search_admin_guide` 구현, 인증 연동 시 chat_sessions에 user_id·RLS 정책 추가
+- 코드 리뷰(Task 7-9 라운드)에서 지적된 known limitation: 클라이언트가 `POST /api/chat`
+  요청의 `messages` 배열에 실제로 서버가 생성한 적 없는 `role: "assistant"` 메시지를
+  자유롭게 주입할 수 있다(역할 스푸핑). 완전한 해결에는 세션 서버측 이력 재구성(클라이언트
+  이력을 신뢰하지 않고 `chat_messages`에서 복원)이 필요해 MVP 범위를 벗어난다고 판단했다.
+  verbatim 위반 응답 치환(redactViolations, 2026-08-24 반영)이 이 벡터의 실질 피해
+  — 조작된 이력으로 모델이 잘못된 연락처를 생성하는 경우 — 를 최종 응답 단계에서
+  걸러내므로 완화되어 있으나, 근본 해결은 아니다. 인증 연동 시 함께 재검토한다.

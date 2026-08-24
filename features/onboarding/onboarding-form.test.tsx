@@ -19,6 +19,27 @@ vi.mock("./actions", () => ({
   saveOnboarding: vi.fn(async () => ({ status: "success" as const })),
 }));
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string, values?: Record<string, unknown>) => {
+    if (key === "questionLabel") return `질문 ${values?.index}`;
+    const map: Record<string, string> = {
+      badge: "간단 설정 · 약 2분",
+      heroTitle: "나에게 맞는 안내를 준비할게요",
+      heroDescription:
+        "로그인 화면 없이 바로 이용할 수 있고, 선택 결과는 이 브라우저에 안전하게 보관됩니다.",
+      privacyTitle: "개인정보 최소 수집",
+      privacyNotice:
+        "여기서 안내하는 내용은 참고용이며, 최종 자격 판정은 관할 출입국·외국인관서에서 확인해야 합니다.",
+      previous: "이전",
+      next: "다음",
+      submit: "설정 완료",
+      submitting: "저장하는 중...",
+      saveSuccess: "설정이 저장되었습니다.",
+    };
+    return map[key] ?? key;
+  },
+}));
+
 const mockSupabaseClient = { auth: {} };
 vi.mock("@/lib/supabase/client", () => ({
   createClient: vi.fn(() => mockSupabaseClient),

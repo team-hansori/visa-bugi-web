@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useActionState, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
@@ -146,6 +147,7 @@ const MIGRATION_TYPE_OPTIONS = [
 ];
 
 export function OnboardingForm() {
+  const t = useTranslations("Onboarding");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -352,25 +354,21 @@ export function OnboardingForm() {
       <aside className="rounded-[28px] bg-[#173f36] p-6 text-white sm:p-8 lg:flex lg:flex-col lg:justify-between lg:p-10">
         <div>
           <span className="inline-flex min-h-8 items-center rounded-full bg-white/12 px-3 text-xs font-bold text-[#d9eee5]">
-            간단 설정 · 약 2분
+            {t("badge")}
           </span>
           <h1 className="mt-5 text-3xl font-black leading-tight tracking-[-0.05em] sm:text-4xl">
-            나에게 맞는 안내를 준비할게요
+            {t("heroTitle")}
           </h1>
           <p className="mt-4 text-sm leading-6 text-[#d1dfda] sm:text-base sm:leading-7">
-            로그인 화면 없이 바로 이용할 수 있고, 선택 결과는 이 브라우저에 안전하게
-            보관됩니다. 문서 이미지는 저장하지 않습니다.
+            {t("heroDescription")}
           </p>
         </div>
         <div className="mt-8 rounded-2xl bg-white/10 p-4 text-sm leading-6 text-[#e1ede8]">
           <div className="flex items-center gap-2 font-extrabold text-white">
             <Icon name="shield" className="size-5" aria-hidden="true" />
-            개인정보 최소 수집
+            {t("privacyTitle")}
           </div>
-          <p className="mt-2">
-            여기서 안내하는 내용은 <strong>참고용</strong>이며, 최종 자격 판정은 관할
-            출입국·외국인관서에서 확인해야 합니다.
-          </p>
+          <p className="mt-2">{t("privacyNotice")}</p>
         </div>
       </aside>
 
@@ -398,7 +396,7 @@ export function OnboardingForm() {
 
         <div className="mt-8">
           <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">
-            질문 {stepIndex + 1}
+            {t("questionLabel", { index: stepIndex + 1 })}
           </p>
           <h2
             id="question-title"
@@ -569,7 +567,7 @@ export function OnboardingForm() {
             role="status"
             className="mt-5 rounded-xl bg-[#e9f3ef] px-4 py-3 text-sm font-semibold leading-6 text-[#1f584a]"
           >
-            설정이 저장되었습니다.
+            {t("saveSuccess")}
           </p>
         ) : null}
 
@@ -581,7 +579,7 @@ export function OnboardingForm() {
             className="inline-flex min-h-12 items-center justify-center gap-1 rounded-2xl border border-[#dce3df] px-4 text-sm font-extrabold text-[#52615b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Icon name="chevron-left" className="size-4" aria-hidden="true" />
-            이전
+            {t("previous")}
           </button>
 
           {isLastStep ? (
@@ -596,7 +594,7 @@ export function OnboardingForm() {
                 disabled={!canSubmit || isPending}
                 className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] disabled:cursor-not-allowed disabled:bg-[#c7d1cc]"
               >
-                {isPending ? "저장하는 중..." : "설정 완료"}
+                {isPending ? t("submitting") : t("submit")}
                 <Icon name="check" className="size-4" aria-hidden="true" />
               </button>
             </form>
@@ -607,7 +605,7 @@ export function OnboardingForm() {
               disabled={!isStepComplete}
               className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] disabled:cursor-not-allowed disabled:bg-[#c7d1cc]"
             >
-              다음
+              {t("next")}
               <Icon name="arrow-right" className="size-4" aria-hidden="true" />
             </button>
           )}

@@ -62,7 +62,7 @@ describe("golden set", () => {
       // 게이트 2: 연락처 verbatim 위반 0건 — 모든 케이스 공통
       // (orchestrate.ts가 이미 응답 단계에서 위반을 치환하므로, 여기서는 치환 누락이 없었는지 재검증한다)
       const allowed = (res.escalation?.contacts ?? []).flatMap((x) => [x.phone ?? "", x.url ?? ""]);
-      const violations = verbatimViolations(res.text, allowed);
+      const violations = verbatimViolations(fullText(res), allowed);
       expect(violations, `verbatim 위반: ${violations.join(", ")}`).toEqual([]);
     }, 60_000);
   }

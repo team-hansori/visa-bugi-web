@@ -23,6 +23,8 @@ export type OrchestratorDeps = {
 };
 
 const DEFAULT_ANSWER_MODEL = "anthropic/claude-sonnet-5";
+const ANSWER_TIMEOUT_MS = 45_000;
+const TRANSLATION_TIMEOUT_MS = 10_000;
 
 function collectSources(toolCalls: ToolCallRecord[]): SourceRef[] {
   const seen = new Set<string>();
@@ -220,6 +222,7 @@ export async function createDefaultDeps(): Promise<OrchestratorDeps | null> {
         messages,
         tools,
         stopWhen: stepCountIs(5),
+        timeout: { totalMs: ANSWER_TIMEOUT_MS },
       });
       const toolCalls: ToolCallRecord[] = [];
       for (const step of result.steps) {
@@ -236,6 +239,7 @@ export async function createDefaultDeps(): Promise<OrchestratorDeps | null> {
       const result = await generateText({
         model: process.env.CHAT_SCREENING_MODEL ?? "anthropic/claude-haiku-4.5",
         prompt,
+        timeout: { totalMs: TRANSLATION_TIMEOUT_MS },
       });
       return result.text;
     },

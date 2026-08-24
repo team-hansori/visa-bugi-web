@@ -37,6 +37,7 @@ const SCREENING_SYSTEM = `너는 충청북도 외국인 주민 비자 안내 서
 확신이 없으면 riskCategory=NONE, inScope=false로 보수적으로 판정한다.`;
 
 export const DEFAULT_SCREENING_MODEL = "anthropic/claude-haiku-4.5";
+const SCREENING_TIMEOUT_MS = 10_000;
 
 type GenerateFn = (args: { system: string; prompt: string }) => Promise<unknown>;
 
@@ -47,6 +48,7 @@ async function defaultGenerate(args: { system: string; prompt: string }): Promis
     output: Output.object({ schema: screeningSchema }),
     system: args.system,
     prompt: args.prompt,
+    timeout: { totalMs: SCREENING_TIMEOUT_MS },
   });
   return output;
 }

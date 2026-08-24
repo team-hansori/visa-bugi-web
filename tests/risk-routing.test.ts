@@ -124,6 +124,17 @@ describe("resolveRiskRoute", () => {
     const r = await resolveRiskRoute(screening({ riskCategory: "ILLEGAL_EMPLOYMENT", region: "청주" }), fakeQueries([inDomain], [agency]));
     expect(r.matched && r.agencies).toHaveLength(1);
   });
+  it("uses matching user_type rows before applying the regional filter", async () => {
+    const worker = row({ routing_id: "worker", user_type: "FOREIGN_WORKER", external_phone: "1350" });
+    const student = row({ routing_id: "student", user_type: "STUDENT", external_phone: "1577-1366" });
+    const r = await resolveRiskRoute(
+      screening({ userType: "FOREIGN_WORKER", region: null }),
+      fakeQueries([worker, student]),
+    );
+
+    expect(r.matched && r.verifiedForUserType).toBe(true);
+    expect(r.matched && r.rows.map((entry) => entry.routing_id)).toEqual(["worker"]);
+  });
 });
 
 describe("buildEscalation", () => {

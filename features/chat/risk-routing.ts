@@ -53,12 +53,14 @@ export async function resolveRiskRoute(
   const visaFiltered = all.filter((r) => visaCodeMatches(r.applies_to_visa_code, screening.visaCode));
   if (visaFiltered.length === 0) return { matched: false };
 
-  const verifiedForUserType = visaFiltered.some((r) => r.user_type === screening.userType);
+  const userTypeRows = visaFiltered.filter((r) => r.user_type === screening.userType);
+  const verifiedForUserType = userTypeRows.length > 0;
+  const rowsForUserType = verifiedForUserType ? userTypeRows : visaFiltered;
 
   // 지역 필터. 전부 탈락하면 안내를 차단하는 대신 전체 행으로 폴백한다
   // (scope 정보는 UI에 verbatim으로 표기되므로 사용자가 판단 가능).
-  const regionFiltered = visaFiltered.filter((r) => regionMatches(r.external_region_scope, screening.region));
-  const rows = regionFiltered.length > 0 ? regionFiltered : visaFiltered;
+  const regionFiltered = rowsForUserType.filter((r) => regionMatches(r.external_region_scope, screening.region));
+  const rows = regionFiltered.length > 0 ? regionFiltered : rowsForUserType;
 
   // IN_DOMAIN 행이 하나라도 있으면 target_agency_category로 스코프 내 기관을 조인한다.
   const inDomain = rows.filter((r) => r.resolution_type === "IN_DOMAIN" && r.target_agency_category);

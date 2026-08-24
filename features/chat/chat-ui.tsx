@@ -17,6 +17,7 @@ export function ChatUi() {
   const [busy, setBusy] = useState(false);
   const [deleteNotice, setDeleteNotice] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const inFlightRef = useRef(false);
 
   function toHistory(items: Entry[]): ChatMessage[] {
     return items.slice(-10).map((e) =>
@@ -28,7 +29,8 @@ export function ChatUi() {
 
   async function send() {
     const question = input.trim();
-    if (!question || busy) return;
+    if (!question || busy || inFlightRef.current) return;
+    inFlightRef.current = true;
     setInput("");
     const next: Entry[] = [...entries, { role: "user", content: question }];
     setEntries(next);
@@ -47,6 +49,7 @@ export function ChatUi() {
         { role: "assistant", response: { kind: "error", text: t("error"), sources: [] } },
       ]);
     } finally {
+      inFlightRef.current = false;
       setBusy(false);
       listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
     }

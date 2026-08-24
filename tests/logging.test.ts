@@ -15,6 +15,7 @@ function writeRecordingClient(opts: { deleteError?: { message: string } | null }
           then: (r: (x: { error: null }) => unknown) => Promise.resolve({ error: null }).then(r),
         };
       },
+      upsert: () => Promise.resolve({ error: null }),
       select: () => builder,
       eq: () => builder,
       single: async () => ({ data: null, error: { code: "PGRST116", message: "no rows" } }),
@@ -62,6 +63,57 @@ describe("createChatLogger", () => {
     const { client } = writeRecordingClient({ deleteError: { message: "connection reset" } });
     const logger = createChatLogger(client);
     await expect(logger.deleteSession("anon-1")).rejects.toThrow(/connection reset/);
+  });
+});
+
+describe("createChatLogger concurrent sessions", () => {
+  it("persists both conversations when requests share an anonymous session", async () => {
+    const sessions = new Map<string, string>();
+    const messages: Record<string, unknown>[] = [];
+    const client = {
+      from(table: string) {
+        if (table === "chat_sessions") {
+          return {
+            upsert: async ({ anon_key }: { anon_key: string }) => {
+              await Promise.resolve();
+              if (!sessions.has(anon_key)) sessions.set(anon_key, "session-1");
+              return { error: null };
+            },
+            select: () => ({
+              eq: (_column: string, anonKey: string) => ({
+                single: async () => ({ data: { id: sessions.get(anonKey) }, error: null }),
+              }),
+            }),
+          };
+        }
+        if (table === "chat_messages") {
+          return {
+            insert: async (rows: Record<string, unknown>[]) => {
+              messages.push(...rows);
+              return { error: null };
+            },
+          };
+        }
+        throw new Error(`unexpected table: ${table}`);
+      },
+    } as unknown as SupabaseClient;
+    const logger = createChatLogger(client);
+    const answer = { kind: "answer" as const, text: "answer", sources: [] };
+
+    const [firstSession, secondSession] = await Promise.all([
+      logger.ensureSession("anon-1", "ko"),
+      logger.ensureSession("anon-1", "ko"),
+    ]);
+    await Promise.all([
+      logger.saveTurn(firstSession, "first question", answer),
+      logger.saveTurn(secondSession, "second question", answer),
+    ]);
+
+    expect(firstSession).toBe("session-1");
+    expect(secondSession).toBe("session-1");
+    expect(messages).toHaveLength(4);
+    expect(messages.filter((message) => message.role === "user").map((message) => message.content))
+      .toEqual(["first question", "second question"]);
   });
 });
 

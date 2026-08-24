@@ -28,14 +28,14 @@ export function hashSessionKey(anonKey: string): string {
 export function createChatLogger(client: SupabaseClient): ChatLogger {
   return {
     async ensureSession(anonKey, locale) {
-      const existing = await client.from("chat_sessions").select("id").eq("anon_key", anonKey).single();
-      if (existing.data?.id) return existing.data.id as string;
-      const inserted = await client
+      const { error: upsertError } = await client
         .from("chat_sessions")
-        .insert({ anon_key: anonKey, locale })
-        .select()
-        .single();
-      return (inserted.data?.id as string | undefined) ?? null;
+        .upsert({ anon_key: anonKey, locale }, { onConflict: "anon_key", ignoreDuplicates: true });
+      if (upsertError) throw new Error(`chat session upsert failed: ${upsertError.message}`);
+
+      const { data, error } = await client.from("chat_sessions").select("id").eq("anon_key", anonKey).single();
+      if (error || !data?.id) throw new Error(`chat session lookup failed: ${error?.message ?? "missing id"}`);
+      return data.id as string;
     },
     async saveTurn(sessionId, userText, assistant) {
       if (!sessionId) return;

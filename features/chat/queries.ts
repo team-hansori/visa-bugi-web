@@ -73,7 +73,9 @@ export function createChatQueries(client: SupabaseClient): ChatQueries {
       if (categoryMajor) b = b.eq("category_major", categoryMajor);
       if (categoryMinor) b = b.eq("category_minor", categoryMinor);
       if (targetAudience) b = b.or(`target_audience.is.null,target_audience.eq.${targetAudience}`);
-      return run(withValidWindow(b));
+      // 명시적 정렬: ORDER BY 없이는 반환 순서가 보장되지 않아, 폴백 시 "처음 N개"
+      // 선택(예: 범용 접점 안내)이 호출마다 달라질 수 있다 — agency_id로 고정한다.
+      return run(withValidWindow(b).order("agency_id", { ascending: true }));
     },
     getRiskRoutingRows(category) {
       // routing_id 정렬로 rows[0] 선택(템플릿 대표행)을 결정론적으로 만든다.

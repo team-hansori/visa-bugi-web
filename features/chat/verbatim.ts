@@ -33,3 +33,17 @@ export function verbatimViolations(text: string, allowed: string[]): string[] {
   const allowedSet = new Set(allowed.filter(Boolean).map(normalize));
   return extractContactTokens(text).filter((t) => !allowedSet.has(normalize(t)));
 }
+
+/**
+ * 위반 토큰을 응답에서 안전 표기로 치환한다. verbatim 위반은 로그만 남기고 그대로
+ * 내보내면 잘못된 연락처가 사용자에게 도달할 수 있으므로(스펙 §5 verbatim 원칙),
+ * 감지 즉시 최종 응답에서도 제거한다. 정규식 특수문자를 피하기 위해 split/join을 쓴다.
+ */
+export function redactViolations(text: string, violations: string[]): string {
+  let result = text;
+  for (const v of violations) {
+    if (!v) continue;
+    result = result.split(v).join("[확인 필요]");
+  }
+  return result;
+}

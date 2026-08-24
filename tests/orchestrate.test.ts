@@ -108,13 +108,57 @@ describe("handleChatTurn — 폴백 사다리", () => {
     expect(res.text.length).toBeGreaterThan(0);
   });
 
-  it("verbatim 위반이 로그에 집계된다", async () => {
+  it("verbatim 위반이 로그에 집계되고, 최종 응답 텍스트에서도 안전 표기로 치환된다", async () => {
     const logged: number[] = [];
     const deps = depsWith({
       generateAnswer: async () => ({ text: "010-1234-5678로 전화하세요", toolCalls: [{ toolName: "find_agency", output: { table: "agency_contacts", rows: [{ agency_id: "a1", phone: "1350" }] } }] }),
       logger: { ...createNoopLogger(), logTurn: async (e) => { logged.push(e.verbatimViolationCount); } },
     });
-    await handleChatTurn(input, deps);
+    const res = await handleChatTurn(input, deps);
     expect(logged[0]).toBeGreaterThan(0);
+    expect(res.text).not.toContain("010-1234-5678");
+    expect(res.text).toContain("[확인 필요]");
+  });
+
+  it("escalation 경로는 사용된 risk_routing_table·agency_contacts 행 ID를 로그에 남긴다", async () => {
+    const logged: string[][] = [];
+    const inDomainRow: RiskRoutingRow = {
+      ...WAGE_ROW, routing_id: "rid-1", keyword_category: "ILLEGAL_EMPLOYMENT",
+      resolution_type: "IN_DOMAIN", target_agency_category: "VISA_STATUS_CHANGE",
+      external_agency_name: null, external_phone: null, external_url: null, external_region_scope: null,
+    };
+    const deps = depsWith({
+      screen: async () => ({ riskCategory: "ILLEGAL_EMPLOYMENT", userType: "FOREIGN_WORKER", region: "청주", visaCode: null, inScope: true, language: "ko" }),
+      queries: queriesWith({
+        getRiskRoutingRows: async () => [inDomainRow],
+        findAgency: async () => [{
+          agency_id: "aid-1", category_major: "FOREIGN_EMPLOYMENT_SUPPORT", category_minor: "VISA_STATUS_CHANGE",
+          region: "청주(관할:전지역)", department_name: "청주출입국·외국인사무소", address: null, phone: "043-230-9010",
+          url: null, target_audience: null, is_user_facing: true, valid_from: null, valid_to: null,
+          source_document: null, source_page: null, last_verified_at: null,
+        }],
+      }),
+      logger: { ...createNoopLogger(), logTurn: async (e) => { logged.push(e.rowIds); } },
+    });
+    await handleChatTurn(input, deps);
+    expect(logged[0]).toEqual(expect.arrayContaining(["rid-1", "aid-1"]));
+  });
+
+  it("out_of_scope 경로는 폴백으로 찾은 agency_contacts 행 ID를 로그에 남긴다", async () => {
+    const logged: string[][] = [];
+    const deps = depsWith({
+      generateAnswer: async () => ({ text: "정보가 없습니다", toolCalls: [{ toolName: "get_visa_requirements", output: { table: "visa_requirements", rows: [] } }] }),
+      queries: queriesWith({
+        findAgency: async () => [{
+          agency_id: "aid-fallback", category_major: "FOREIGN_RESIDENT_SETTLEMENT", category_minor: "FOREIGN_SUPPORT_CENTER",
+          region: "청주", department_name: "청주 외국인지원센터", address: null, phone: "043-000-1111",
+          url: null, target_audience: null, is_user_facing: true, valid_from: null, valid_to: null,
+          source_document: null, source_page: null, last_verified_at: null,
+        }],
+      }),
+      logger: { ...createNoopLogger(), logTurn: async (e) => { logged.push(e.rowIds); } },
+    });
+    await handleChatTurn(input, deps);
+    expect(logged[0]).toEqual(["aid-fallback"]);
   });
 });

@@ -8,8 +8,8 @@ import { createChatQueries, type ChatQueries } from "./queries";
 import { buildEscalation, resolveRiskRoute } from "./risk-routing";
 import { screenMessage } from "./screening";
 import { createChatTools, type ChatTools } from "./tools";
-import type { ChatMessage, ChatResponse, ScreeningResult, SourceRef } from "./types";
-import { verbatimViolations } from "./verbatim";
+import type { AgencyContactRow, ChatMessage, ChatResponse, ScreeningResult, SourceRef } from "./types";
+import { redactViolations, verbatimViolations } from "./verbatim";
 
 type ToolCallRecord = { toolName: string; output: { table: string; rows: unknown[] } };
 
@@ -79,6 +79,9 @@ export async function handleChatTurn(
   let response: ChatResponse;
   let screening: ScreeningResult | null = null;
   let toolCalls: ToolCallRecord[] = [];
+  // 로깅용 근거 행 ID. Stage 2 tool 호출(toolCalls)뿐 아니라 escalation/out_of_scope
+  // 경로에서 직접 조회한 risk_routing_table·agency_contacts 행도 감사 로그에 남긴다.
+  let usedRowIds: string[] = [];
 
   try {
     screening = await deps.screen(userText);
@@ -87,6 +90,7 @@ export async function handleChatTurn(
     if (screening.riskCategory !== "NONE") {
       const route = await resolveRiskRoute(screening, deps.queries);
       if (route.matched) {
+        usedRowIds = route.rows.map((r) => r.routing_id).concat(route.agencies.map((a) => a.agency_id));
         const escalation = buildEscalation(route);
         let text = escalation.template;
         if (screening.language !== "ko") {
@@ -101,7 +105,9 @@ export async function handleChatTurn(
         response = { kind: "escalation", text, escalation, sources: [] };
       } else {
         // 위험 신호인데 검증된 행이 없으면 ③으로: 스코프 내 기관 안내
-        response = await outOfScopeResponse(input.locale, screening, deps);
+        const fallback = await outOfScopeResponse(input.locale, screening, deps);
+        response = fallback.response;
+        usedRowIds = fallback.rowIds;
       }
     } else {
       // ② 응답 LLM + tools
@@ -115,21 +121,29 @@ export async function handleChatTurn(
 
       if (toolCalls.length > 0 && totalRows === 0) {
         // ③ 조회했지만 전부 빈 결과 → out_of_scope + 범용 접점
-        response = await outOfScopeResponse(input.locale, screening, deps, result.text);
+        const fallback = await outOfScopeResponse(input.locale, screening, deps, result.text);
+        response = fallback.response;
+        usedRowIds = fallback.rowIds;
       } else {
         response = { kind: "answer", text: result.text, sources: collectSources(toolCalls) };
+        usedRowIds = collectRowIds(toolCalls);
       }
     }
   } catch {
     response = { kind: "error", text: staticFallback(input.locale), sources: [] };
   }
 
+  // verbatim 위반은 로그만 남기지 않고 최종 응답에서도 안전 표기로 치환한다(스펙 §5).
+  const allowed = collectAllowedContacts(toolCalls).concat(
+    response.escalation?.contacts.flatMap((c) => [c.phone ?? "", c.url ?? ""]) ?? [],
+  );
+  const violations = verbatimViolations(response.text, allowed);
+  if (violations.length > 0) {
+    response = { ...response, text: redactViolations(response.text, violations) };
+  }
+
   // 로깅 (2층). 로깅 실패가 응답을 막으면 안 된다.
   try {
-    const allowed = collectAllowedContacts(toolCalls).concat(
-      response.escalation?.contacts.flatMap((c) => [c.phone ?? "", c.url ?? ""]) ?? [],
-    );
-    const violations = verbatimViolations(response.text, allowed);
     const sessionId = await deps.logger.ensureSession(input.anonKey, input.locale);
     await deps.logger.saveTurn(sessionId, userText, response);
     await deps.logger.logTurn({
@@ -137,7 +151,7 @@ export async function handleChatTurn(
       route: response.kind,
       riskCategory: screening && screening.riskCategory !== "NONE" ? screening.riskCategory : null,
       toolCalls: toolCalls.map((c) => c.toolName),
-      rowIds: collectRowIds(toolCalls),
+      rowIds: usedRowIds,
       model: deps.answerModel,
       latencyMs: Date.now() - started,
       verbatimViolationCount: violations.length,
@@ -155,7 +169,7 @@ async function outOfScopeResponse(
   screening: ScreeningResult,
   deps: OrchestratorDeps,
   llmText?: string,
-): Promise<ChatResponse> {
+): Promise<{ response: ChatResponse; rowIds: string[] }> {
   let agencies = await deps.queries.findAgency({
     region: screening.region ?? undefined,
     categoryMinor: "FOREIGN_SUPPORT_CENTER",
@@ -163,7 +177,8 @@ async function outOfScopeResponse(
   if (agencies.length === 0) {
     agencies = await deps.queries.findAgency({ region: "충청북도" });
   }
-  const contacts = agencies.slice(0, 3).map((a) => ({
+  const picked: AgencyContactRow[] = agencies.slice(0, 3);
+  const contacts = picked.map((a) => ({
     name: a.department_name ?? a.category_minor,
     phone: a.phone,
     url: a.url,
@@ -171,18 +186,19 @@ async function outOfScopeResponse(
     department: a.department_name,
     address: a.address,
   }));
-  return {
+  const response: ChatResponse = {
     kind: "out_of_scope",
     text: llmText ?? staticFallback(locale),
     escalation: contacts.length > 0
       ? { template: "", verifiedForUserType: true, contacts }
       : undefined,
-    sources: agencies.slice(0, 3).map((a) => ({
+    sources: picked.map((a) => ({
       table: "agency_contacts",
       sourceDocument: a.source_document,
       lastVerifiedAt: a.last_verified_at,
     })),
   };
+  return { response, rowIds: picked.map((a) => a.agency_id) };
 }
 
 /** 실제 운영 의존성 조립. env 미설정이면 null — 라우트가 503으로 응답한다. */

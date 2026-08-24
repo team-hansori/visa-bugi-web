@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { extractContactTokens, verbatimViolations } from "@/features/chat/verbatim";
+import { extractContactTokens, redactViolations, verbatimViolations } from "@/features/chat/verbatim";
 
 describe("extractContactTokens", () => {
   it("하이픈 전화번호와 특수번호를 추출한다", () => {
@@ -30,5 +30,19 @@ describe("verbatimViolations", () => {
   });
   it("허용 목록에 없는 번호는 위반이다", () => {
     expect(verbatimViolations("043-230-6700으로 전화하세요", ["1350"])).toEqual(["043-230-6700"]);
+  });
+});
+
+describe("redactViolations", () => {
+  it("위반 토큰을 안전 표기로 치환한다", () => {
+    expect(redactViolations("043-230-6700으로 전화하세요", ["043-230-6700"]))
+      .toBe("[확인 필요]으로 전화하세요");
+  });
+  it("URL처럼 정규식 특수문자가 섞인 위반도 안전하게 치환한다", () => {
+    expect(redactViolations("https://fake.example.com/x 참고", ["https://fake.example.com/x"]))
+      .toBe("[확인 필요] 참고");
+  });
+  it("위반이 없으면 원문을 그대로 반환한다", () => {
+    expect(redactViolations("1350으로 전화하세요", [])).toBe("1350으로 전화하세요");
   });
 });

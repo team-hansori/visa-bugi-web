@@ -62,14 +62,29 @@ beforeEach(() => {
 });
 
 describe("OnboardingForm", () => {
-  it("첫 진입 시 언어 선택 스텝을 보여준다", () => {
+  it("첫 진입 시(step 파라미터 없음) 시작 화면을 보여준다", () => {
     render(<OnboardingForm />);
     expect(
-      screen.getByRole("heading", { name: /어떤 언어가 편한가요/ }),
+      screen.getByRole("button", { name: "로그인 없이 시작하기" }),
     ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: /어떤 언어가 편한가요/ }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("시작 화면에서 로그인 없이 시작하기를 누르면 첫 스텝으로 이동한다", async () => {
+    const user = userEvent.setup();
+    render(<OnboardingForm />);
+
+    await user.click(screen.getByRole("button", { name: "로그인 없이 시작하기" }));
+
+    await waitFor(() =>
+      expect(push).toHaveBeenCalledWith(expect.stringContaining("step=locale")),
+    );
   });
 
   it("진행률을 표시한다", () => {
+    searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
     expect(screen.getByText("1 / 8")).toBeInTheDocument();
   });
@@ -89,12 +104,14 @@ describe("OnboardingForm", () => {
   });
 
   it("선택하지 않으면 다음 버튼이 비활성화된다", () => {
+    searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
     expect(screen.getByRole("button", { name: /다음/ })).toBeDisabled();
   });
 
   it("선택 후 다음을 누르면 URL 스텝을 갱신한다", async () => {
     const user = userEvent.setup();
+    searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
 
     await user.click(screen.getByRole("button", { name: "한국어" }));
@@ -108,12 +125,14 @@ describe("OnboardingForm", () => {
   });
 
   it("첫 스텝에서는 이전 버튼이 비활성화된다", () => {
+    searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
     expect(screen.getByRole("button", { name: /이전/ })).toBeDisabled();
   });
 
   it("답변을 sessionStorage에 보존한다", async () => {
     const user = userEvent.setup();
+    searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
 
     await user.click(screen.getByRole("button", { name: "한국어" }));
@@ -215,12 +234,14 @@ describe("OnboardingForm", () => {
     expect(screen.getByRole("button", { name: /다음/ })).toBeEnabled();
   });
 
-  it("마운트 시 로그인 화면 없이 조용히 익명 세션을 발급한다", async () => {
+  it("시작 화면이 보이는 동안에도 조용히 익명 세션을 발급해 둔다", async () => {
     render(<OnboardingForm />);
     await waitFor(() =>
       expect(ensureAnonymousSession).toHaveBeenCalledWith(mockSupabaseClient),
     );
-    // 화면에는 로그인 관련 UI가 전혀 없어야 한다.
-    expect(screen.queryByRole("button", { name: /로그인/ })).not.toBeInTheDocument();
+    // Google 로그인 없이도 항상 진행할 수 있는 경로가 있어야 한다 — 로그인을 강제하지 않는다.
+    expect(
+      screen.getByRole("button", { name: "로그인 없이 시작하기" }),
+    ).toBeEnabled();
   });
 });

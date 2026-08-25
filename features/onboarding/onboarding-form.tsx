@@ -11,6 +11,7 @@ import { createClient } from "@/lib/supabase/client";
 import { ensureAnonymousSession } from "@/lib/supabase/ensure-anonymous-session";
 import { saveOnboarding, type SaveOnboardingState } from "./actions";
 import { CURRENT_VISA_OPTIONS, TARGET_VISA_CODES, type TargetVisaCode } from "./constants";
+import { OnboardingWelcome } from "./onboarding-welcome";
 import { onboardingSubmissionSchema, pastDateSchema } from "./schema";
 import { getStepIndex, getStepSequence, type StepId } from "./steps";
 import { AddressStep } from "./steps/address-step";
@@ -343,6 +344,10 @@ export function OnboardingForm() {
     isStepComplete &&
     onboardingSubmissionSchema.safeParse(submissionPayload).success;
 
+  // URL에 step 파라미터가 전혀 없으면(첫 진입) 로그인/비로그인 시작 화면을
+  // 먼저 보여준다. "로그인 없이 시작하기"를 누르면 첫 스텝으로 이동한다.
+  const hasStepParam = searchParams.get("step") !== null;
+
   return (
     <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch">
       <aside className="rounded-[28px] bg-[#173f36] p-6 text-white sm:p-8 lg:flex lg:flex-col lg:justify-between lg:p-10">
@@ -366,6 +371,9 @@ export function OnboardingForm() {
         </div>
       </aside>
 
+      {!hasStepParam ? (
+        <OnboardingWelcome onContinueWithoutLogin={() => goToStep(0)} />
+      ) : (
       <section
         className="flex min-h-[480px] flex-col rounded-[28px] border border-[#e0e7e2] bg-white p-5 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-8 lg:p-10"
         aria-labelledby="question-title"
@@ -608,6 +616,7 @@ export function OnboardingForm() {
           )}
         </div>
       </section>
+      )}
     </div>
   );
 }

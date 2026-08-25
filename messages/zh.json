@@ -96,22 +96,43 @@
     "upload": {
       "step": "第1步",
       "title": "选择申请表照片",
-      "chooseTitle": "拍照或选择照片",
+      "chooseTitle": "准备申请表照片",
       "chooseDescription": "请确保整份文件清晰可见，文字没有晃动模糊。",
       "choose": "选择图片",
       "inputLabel": "选择申请表照片",
+      "capture": "拍照",
+      "select": "从相册选择",
+      "cameraInputLabel": "拍摄申请表照片",
+      "galleryInputLabel": "从相册选择申请表照片",
       "types": "请选择一张 JPG、PNG 或 WebP 图片（原图最大 16MB）。",
       "ready": "已准备分析文件 {name}。",
+      "checking": "在调用 API 之前，正在此设备上免费检查照片质量。",
       "optimizing": "正在此设备上缩小照片，以便安全传输。",
       "optimized": "已在此设备上将 {name} 缩小至 4MB 以下，可以开始分析。",
       "removed": "照片已删除，您可以选择其他图片。",
+      "retakeHint": "请重新拍摄或选择一张整页清晰可见的申请表照片。",
       "previewAlt": "已选择的申请表图片 {name}",
       "remove": "删除照片",
+      "retake": "重新拍照",
       "replace": "选择其他照片"
+    },
+    "imageCheck": {
+      "title": "这张照片难以用于检查申请表",
+      "tooSmall": "照片分辨率太低。请靠近文件重新拍摄，确保文字清晰。",
+      "tooDark": "照片太暗。请在明亮且没有阴影的地方重新拍摄。",
+      "tooBright": "照片过亮，文字不可见。请避开反光后重新拍摄。",
+      "lowContrast": "文字与纸张的区分不清。请对焦并调整光线。",
+      "blurry": "照片抖动或没有对焦。请固定手机后重新拍摄。",
+      "notDocument": "请确认照片中完整显示一页签证申请表。其他图片或被裁切的照片无法分析。"
     },
     "actions": {
       "analyze": "检查填写项目",
       "analyzing": "正在分析照片"
+    },
+    "retake": {
+      "title": "请重新确认申请表照片",
+      "description": "申请表类型可能不同，或照片模糊、被裁切。请让四个角和文字都清晰可见后重新拍摄。",
+      "action": "重新拍照"
     },
     "privacy": {
       "title": "照片处理原则",
@@ -192,7 +213,7 @@
       "imageGlare": "部分项目被反光遮挡。",
       "handwritingUnclear": "手写不清的项目请直接与原件核对。",
       "multiplePages": "其余页面也需要按顺序检查。",
-      "demoData": "由于未设置 OCR 密钥，当前显示的是示例结果，并非真实识别内容。",
+      "demoData": "当前为免费测试模式，显示的是示例结果。未调用 OpenAI API，也不是真实识别内容。",
       "unknown": "请再次比较原申请表和识别结果。"
     }
   }

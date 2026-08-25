@@ -19,6 +19,7 @@ export const maxDuration = 60;
 
 const maxFileSize = 4 * 1024 * 1024;
 const supportedImageTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+const forceDemoMode = process.env.OCR_MODE?.trim().toLowerCase() === "demo";
 const templateKeys = applicationFormTemplates.map((template) => template.templateKey);
 const warningCodes = [
   "FORM_NOT_CONFIRMED",
@@ -79,10 +80,12 @@ export async function POST(request: Request) {
     return errorResponse("지원하지 않는 신청서 유형입니다.", "UNSUPPORTED_TEMPLATE", 400);
   }
 
-  if (!process.env.OPENAI_API_KEY) {
+  if (forceDemoMode || !process.env.OPENAI_API_KEY) {
     if (!allowDemo) {
       return errorResponse(
-        "OCR 연결이 아직 설정되지 않았습니다. OPENAI_API_KEY를 설정해 주세요.",
+        forceDemoMode
+          ? "OCR 무료 테스트 모드가 활성화되어 있습니다."
+          : "OCR 연결이 아직 설정되지 않았습니다. OPENAI_API_KEY를 설정해 주세요.",
         "OCR_NOT_CONFIGURED",
         503,
       );

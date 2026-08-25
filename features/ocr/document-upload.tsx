@@ -4,6 +4,10 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import {
+  type ClientImageIssue,
+  inspectApplicationFormImage,
+} from "./image-quality";
 import type {
   ApplicationFormAnalysis,
   ApplicationFormCatalog,
@@ -27,13 +31,16 @@ type DocumentUploadProps = {
 
 export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
   const t = useTranslations("Ocr");
-  const inputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [templateKey, setTemplateKey] = useState("auto");
   const [analysis, setAnalysis] = useState<ApplicationFormAnalysis | null>(null);
   const [message, setMessage] = useState(t("upload.types"));
+  const [photoIssue, setPhotoIssue] = useState<ClientImageIssue | null>(null);
   const [error, setError] = useState("");
+  const [isPreparing, setIsPreparing] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
@@ -46,6 +53,9 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     const input = event.currentTarget;
     const selectedFile = input.files?.[0];
     if (!selectedFile) return;
+
+    setPhotoIssue(null);
+    setError("");
 
     if (!acceptedImageTypes.has(selectedFile.type)) {
       setMessage(t("errors.fileType"));
@@ -60,17 +70,34 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     }
 
     try {
+      setIsPreparing(true);
       const shouldOptimize = selectedFile.size > maxUploadFileSize;
-      if (shouldOptimize) setMessage(t("upload.optimizing"));
+      setMessage(
+        shouldOptimize ? t("upload.optimizing") : t("upload.checking"),
+      );
       const uploadFile = shouldOptimize
         ? await optimizeImageForUpload(selectedFile)
         : selectedFile;
+      if (shouldOptimize) setMessage(t("upload.checking"));
+
+      const inspection = await inspectApplicationFormImage(uploadFile);
+      if (!inspection.accepted) {
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        setFile(null);
+        setPreviewUrl(null);
+        setAnalysis(null);
+        setPhotoIssue(inspection.issue);
+        setMessage(t("upload.retakeHint"));
+        input.value = "";
+        return;
+      }
 
       if (previewUrl) URL.revokeObjectURL(previewUrl);
       setFile(uploadFile);
       setPreviewUrl(URL.createObjectURL(uploadFile));
       setAnalysis(null);
       setError("");
+      setPhotoIssue(null);
       setMessage(
         shouldOptimize
           ? t("upload.optimized", { name: selectedFile.name })
@@ -79,7 +106,23 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     } catch {
       input.value = "";
       setMessage(t("errors.optimize"));
+    } finally {
+      setIsPreparing(false);
     }
+  }
+
+  function openFileInput(input: HTMLInputElement | null) {
+    if (!input) return;
+    input.value = "";
+    input.click();
+  }
+
+  function openCamera() {
+    openFileInput(cameraInputRef.current);
+  }
+
+  function openGallery() {
+    openFileInput(galleryInputRef.current);
   }
 
   function removeFile() {
@@ -88,8 +131,15 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     setPreviewUrl(null);
     setAnalysis(null);
     setError("");
+    setPhotoIssue(null);
     setMessage(t("upload.removed"));
-    if (inputRef.current) inputRef.current.value = "";
+    if (cameraInputRef.current) cameraInputRef.current.value = "";
+    if (galleryInputRef.current) galleryInputRef.current.value = "";
+  }
+
+  function retakePhoto() {
+    removeFile();
+    openCamera();
   }
 
   async function analyzeFile() {
@@ -176,25 +226,41 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
                 </button>
               </div>
             ) : (
-              <button type="button" onClick={() => inputRef.current?.click()} className="flex min-h-[360px] w-full flex-col items-center justify-center rounded-[22px] border-2 border-dashed border-[#b9cbc2] bg-[#f7faf8] px-6 text-center transition-colors hover:border-[#2d6d5d] hover:bg-[#f0f7f4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] sm:min-h-[500px]">
+              <div className="flex min-h-[360px] w-full flex-col items-center justify-center rounded-[22px] border-2 border-dashed border-[#b9cbc2] bg-[#f7faf8] px-6 text-center sm:min-h-[500px]">
                 <span className="grid size-16 place-items-center rounded-[22px] bg-[#e5f1ec] text-[#2d6d5d]"><Icon name="camera" className="size-8" /></span>
                 <strong className="mt-5 text-lg font-black text-[#294038]">{t("upload.chooseTitle")}</strong>
                 <span className="mt-2 max-w-sm text-sm leading-6 text-[#71807a]">{t("upload.chooseDescription")}</span>
-                <span className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-4 text-sm font-extrabold text-[#255e4f] shadow-sm"><Icon name="upload" className="size-4" />{t("upload.choose")}</span>
-              </button>
+                <div className="mt-5 grid w-full max-w-md gap-3 sm:grid-cols-2">
+                  <button type="button" onClick={openCamera} disabled={isPreparing} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#266452] px-4 text-sm font-extrabold text-white transition-colors hover:bg-[#1f5546] disabled:cursor-wait disabled:bg-[#91aaa1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="camera" className="size-5" />{t("upload.capture")}</button>
+                  <button type="button" onClick={openGallery} disabled={isPreparing} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#cddbd4] bg-white px-4 text-sm font-extrabold text-[#255e4f] transition-colors hover:bg-[#edf5f1] disabled:cursor-wait disabled:text-[#91aaa1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="upload" className="size-5" />{t("upload.select")}</button>
+                </div>
+              </div>
             )}
-            <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseFile} className="sr-only" aria-label={t("upload.inputLabel")} />
+            <input ref={cameraInputRef} type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseFile} className="sr-only" aria-label={t("upload.cameraInputLabel")} />
+            <input ref={galleryInputRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={chooseFile} className="sr-only" aria-label={t("upload.galleryInputLabel")} />
             <p className="mt-3 text-sm leading-6 text-[#6c7a74]" aria-live="polite">{message}</p>
           </div>
 
+          {photoIssue ? (
+            <div role="alert" className="mt-4 rounded-2xl border border-[#f0c7bf] bg-[#fff0ed] p-4 text-[#8b392f]">
+              <p className="font-black">{t("imageCheck.title")}</p>
+              <p className="mt-1 text-sm font-bold leading-6">{t(`imageCheck.${photoIssue}`)}</p>
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                <button type="button" onClick={openCamera} className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-[#8f3e34] px-4 text-sm font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8f3e34]"><Icon name="camera" className="size-4" />{t("upload.capture")}</button>
+                <button type="button" onClick={openGallery} className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-[#d7a9a1] bg-white px-4 text-sm font-extrabold text-[#824037] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8f3e34]"><Icon name="upload" className="size-4" />{t("upload.select")}</button>
+              </div>
+            </div>
+          ) : null}
+
           {file ? (
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <button type="button" onClick={() => inputRef.current?.click()} className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="camera" className="size-4" />{t("upload.replace")}</button>
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              <button type="button" onClick={openCamera} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="camera" className="size-4" />{t("upload.retake")}</button>
+              <button type="button" onClick={openGallery} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="upload" className="size-4" />{t("upload.replace")}</button>
               <button
                 type="button"
                 onClick={analyzeFile}
                 disabled={isAnalyzing}
-                className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-[#266452] px-4 text-sm font-extrabold text-white transition-colors hover:bg-[#1f5546] disabled:cursor-wait disabled:bg-[#91aaa1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#266452] px-4 text-sm font-extrabold text-white transition-colors hover:bg-[#1f5546] disabled:cursor-wait disabled:bg-[#91aaa1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
               >
                 <Icon name={isAnalyzing ? "clock" : "check"} className="size-4" />
                 {isAnalyzing ? t("actions.analyzing") : t("actions.analyze")}
@@ -227,12 +293,18 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
         </aside>
       </div>
 
-      {analysis ? <AnalysisResult analysis={analysis} /> : null}
+      {analysis ? <AnalysisResult analysis={analysis} onRetake={retakePhoto} /> : null}
     </div>
   );
 }
 
-function AnalysisResult({ analysis }: { analysis: ApplicationFormAnalysis }) {
+function AnalysisResult({
+  analysis,
+  onRetake,
+}: {
+  analysis: ApplicationFormAnalysis;
+  onRetake: () => void;
+}) {
   const t = useTranslations("Ocr");
   const summaryCards = [
     { key: "complete", value: analysis.summary.complete, tone: "bg-[#e8f4ee] text-[#27624f]" },
@@ -240,6 +312,17 @@ function AnalysisResult({ analysis }: { analysis: ApplicationFormAnalysis }) {
     { key: "missing", value: analysis.summary.missing, tone: "bg-[#fff0ed] text-[#923c32]" },
     { key: "manual", value: analysis.summary.manual, tone: "bg-[#edf0f7] text-[#4f5876]" },
   ] as const;
+  const shouldRetake =
+    analysis.imageQuality !== "clear" ||
+    analysis.warnings.some((warning) =>
+      [
+        "FORM_NOT_CONFIRMED",
+        "FORM_MISMATCH",
+        "IMAGE_BLURRED",
+        "IMAGE_CROPPED",
+        "IMAGE_GLARE",
+      ].includes(warning),
+    );
 
   return (
     <section className="rounded-[28px] border border-[#dce5e0] bg-white p-4 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-6" aria-labelledby="analysis-title">
@@ -275,6 +358,16 @@ function AnalysisResult({ analysis }: { analysis: ApplicationFormAnalysis }) {
               {warningLabel(warning, t)}
             </p>
           ))}
+        </div>
+      ) : null}
+
+      {shouldRetake ? (
+        <div role="alert" className="mt-5 flex flex-col gap-4 rounded-2xl border border-[#efc2ba] bg-[#fff0ed] p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-black text-[#8a382f]">{t("retake.title")}</p>
+            <p className="mt-1 text-sm font-bold leading-6 text-[#985148]">{t("retake.description")}</p>
+          </div>
+          <button type="button" onClick={onRetake} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#8f3e34] px-4 text-sm font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8f3e34]"><Icon name="camera" className="size-4" />{t("retake.action")}</button>
         </div>
       ) : null}
 

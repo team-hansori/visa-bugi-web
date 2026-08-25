@@ -33,6 +33,15 @@ OPENAI_API_KEY=your-server-only-key
 OPENAI_OCR_MODEL=gpt-5.4-mini
 ```
 
+API 비용 없이 화면과 업로드 흐름을 테스트하려면 `OCR_MODE=demo`를 설정합니다.
+이 값이 `demo`이면 `OPENAI_API_KEY`가 함께 설정되어 있어도 외부 OCR API를
+호출하지 않습니다. Vercel에서는 Preview 환경에 이 값을 추가한 뒤 다시
+배포하면 됩니다.
+
+```env
+OCR_MODE=demo
+```
+
 `/api/health`에서 서비스 상태를 확인할 수 있습니다.
 
 ## 명령어
@@ -60,6 +69,7 @@ npm run build     # 프로덕션 빌드
 서식 내부 필드 정의는 검수된 웹 OCR 템플릿을 사용합니다.
 
 - JPG, PNG, WebP 한 장 분석(16MB 이하 원본을 기기에서 4MB 이하로 축소)
+- 촬영과 앨범 선택을 분리하고, 전송 전에 해상도·노출·대비·흐림을 기기에서 점검
 - 앱에서 선택한 6개 언어로 항목별 작성 안내
 - OCR 값의 확신도에 따른 확인 필요 상태 표시
 - 서명, 동의, 기관 작성란은 자동 인식·자동 입력하지 않음

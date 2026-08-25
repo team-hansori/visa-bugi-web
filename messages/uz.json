@@ -96,22 +96,43 @@
     "upload": {
       "step": "1-bosqich",
       "title": "Ariza rasmini tanlash",
-      "chooseTitle": "Rasmga oling yoki rasm tanlang",
+      "chooseTitle": "Ariza rasmini tayyorlang",
       "chooseDescription": "Hujjat to‘liq ko‘rinadigan va matni xira bo‘lmagan rasmni tanlang.",
       "choose": "Rasm tanlash",
       "inputLabel": "Viza arizasi rasmini tanlash",
+      "capture": "Rasmga olish",
+      "select": "Galereyadan tanlash",
+      "cameraInputLabel": "Viza arizasini rasmga olish",
+      "galleryInputLabel": "Viza arizasi rasmini galereyadan tanlash",
       "types": "Bitta JPG, PNG yoki WebP rasmini tanlang (asl fayl ko‘pi bilan 16MB).",
       "ready": "{name} fayli tahlilga tayyor.",
+      "checking": "API chaqirilishidan oldin rasm sifati qurilmada bepul tekshirilmoqda.",
       "optimizing": "Xavfsiz yuborish uchun rasm hajmi shu qurilmada kichraytirilmoqda.",
       "optimized": "{name} fayli shu qurilmada 4MB dan kichik qilindi va tahlilga tayyor.",
       "removed": "Rasm o‘chirildi. Boshqa rasm tanlashingiz mumkin.",
+      "retakeHint": "Arizaning butun sahifasi aniq ko‘rinadigan qilib qayta rasmga oling yoki boshqa rasm tanlang.",
       "previewAlt": "Tanlangan ariza rasmi {name}",
       "remove": "Rasmni o‘chirish",
+      "retake": "Qayta rasmga olish",
       "replace": "Boshqa rasm tanlash"
+    },
+    "imageCheck": {
+      "title": "Bu rasm bilan arizani tekshirish qiyin",
+      "tooSmall": "Rasm o‘lchami juda kichik. Matn aniq ko‘rinishi uchun hujjatga yaqinroqdan qayta oling.",
+      "tooDark": "Rasm juda qorong‘i. Yorug‘ va soyasiz joyda qayta oling.",
+      "tooBright": "Rasm juda yorug‘ va matn ko‘rinmaydi. Yorug‘lik aksidan saqlanib qayta oling.",
+      "lowContrast": "Matnni qog‘ozdan ajratish qiyin. Fokus va yoritishni sozlang.",
+      "blurry": "Rasm qimirlagan yoki fokuslanmagan. Telefonni qimirlatmay qayta oling.",
+      "notDocument": "Rasmda viza arizasining bitta to‘liq sahifasi ko‘rinayotganini tekshiring. Boshqa yoki kesilgan rasm tahlil qilinmaydi."
     },
     "actions": {
       "analyze": "To‘ldirilgan joylarni tekshirish",
       "analyzing": "Rasm tahlil qilinmoqda"
+    },
+    "retake": {
+      "title": "Ariza rasmini qayta tekshiring",
+      "description": "Ariza turi boshqa bo‘lishi yoki rasm xira va kesilgan bo‘lishi mumkin. To‘rt burchak va matn to‘liq ko‘rinadigan qilib qayta oling.",
+      "action": "Qayta rasmga olish"
     },
     "privacy": {
       "title": "Rasmni qayta ishlash qoidalari",
@@ -192,7 +213,7 @@
       "imageGlare": "Ayrim maydonlar yorug‘lik aksi bilan yopilgan.",
       "handwritingUnclear": "Noaniq qo‘l yozuvi bo‘lgan maydonlarni asl nusxa bilan tekshiring.",
       "multiplePages": "Qolgan sahifalarni ham tartib bilan tekshirish kerak.",
-      "demoData": "OCR kaliti sozlanmagan, shuning uchun namuna natijasi ko‘rsatilmoqda. Bu haqiqiy aniqlangan ma’lumot emas.",
+      "demoData": "Bepul sinov rejimida namuna natijasi ko‘rsatilmoqda. OpenAI API chaqirilmagan va bu haqiqiy aniqlangan ma’lumot emas.",
       "unknown": "Asl ariza va aniqlangan natijani qayta solishtiring."
     }
   }

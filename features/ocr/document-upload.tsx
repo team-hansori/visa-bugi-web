@@ -52,7 +52,7 @@ export function DocumentUpload() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <header>
-        <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">개인정보를 저장하지 않는 흐름</p>
+        <p className="text-xs font-extrabold text-[#2d6d5d]">개인정보를 저장하지 않는 흐름</p>
         <h1 className="mt-2 text-3xl font-black tracking-[-0.05em] sm:text-4xl">서류 사진 사전 점검</h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6d7974] sm:text-base">사진 촬영과 미리보기 화면을 먼저 확인할 수 있습니다. OCR 분석과 자동 마스킹은 아직 연결되지 않았습니다.</p>
       </header>
@@ -61,7 +61,7 @@ export function DocumentUpload() {
         <section className="rounded-[28px] border border-[#e0e7e2] bg-white p-4 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-6" aria-labelledby="upload-title">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">1단계</p>
+              <p className="text-xs font-extrabold text-[#2d6d5d]">1단계</p>
               <h2 id="upload-title" className="mt-1 text-xl font-black tracking-[-0.035em]">서류 사진 선택</h2>
             </div>
             <span className="rounded-full bg-[#fff0d4] px-2.5 py-1 text-[0.68rem] font-extrabold text-[#8a5910]">미리보기만 제공</span>
@@ -104,7 +104,7 @@ export function DocumentUpload() {
             </ul>
           </section>
           <section className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 sm:p-6">
-            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">촬영 도움말</p>
+            <p className="text-xs font-extrabold text-[#2d6d5d]">촬영 도움말</p>
             <ol className="mt-4 space-y-4">
               {["문서의 네 모서리가 모두 보이게 촬영하세요.", "빛 반사와 그림자를 피해 글자를 선명하게 찍으세요.", "주민등록번호 등 불필요한 정보는 가린 뒤 촬영하세요."].map((tip, index) => (
                 <li key={tip} className="flex gap-3 text-sm leading-6 text-[#5f6d67]"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#edf3ef] text-xs font-black text-[#2d6d5d]">{index + 1}</span><span>{tip}</span></li>

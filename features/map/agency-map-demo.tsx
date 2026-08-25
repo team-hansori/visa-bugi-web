@@ -105,7 +105,7 @@ export function AgencyMapDemo() {
   return (
     <div className="space-y-5">
       <header>
-        <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">위치 기반 기관 안내</p>
+        <p className="text-xs font-extrabold text-[#2d6d5d]">위치 기반 기관 안내</p>
         <h1 className="mt-2 text-3xl font-black tracking-[-0.05em] sm:text-4xl">주변 기관</h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6d7974] sm:text-base">현재 위치는 화면을 벗어나면 폐기하며 저장하지 않습니다. 위치를 거부해도 지역을 직접 선택할 수 있습니다.</p>
       </header>

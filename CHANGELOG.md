@@ -34,6 +34,7 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -43,3 +44,4 @@
 - Add transparent Bugi brand assets
 - Add final Bugi app logo
 - Add transparent Visa Bugi wordmark
+- Replace Visa Bugi wordmark PNGs with SVG

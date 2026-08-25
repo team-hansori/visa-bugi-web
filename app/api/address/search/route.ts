@@ -34,8 +34,10 @@ export async function GET(request: Request): Promise<Response> {
   try {
     const response = await fetch(url, {
       headers: { Authorization: `KakaoAK ${apiKey}` },
-      // 같은 검색어는 1시간 동안 캐시한다. 주소 데이터는 자주 바뀌지 않는다.
-      next: { revalidate: 3600 },
+      // 캐시하지 않는다. next.revalidate로 캐시했더니 배포 직후 첫 요청이
+      // 어떤 이유로 빈 결과를 받으면 그 빈 응답이 1시간 동안 굳어버려서,
+      // 사용자 입력값(검색어)마다 다른 이 엔드포인트엔 득보다 실이 컸다.
+      cache: "no-store",
     });
 
     if (!response.ok) {

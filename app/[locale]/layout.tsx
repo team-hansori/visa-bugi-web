@@ -32,6 +32,13 @@ export async function generateMetadata({
       template: t("titleTemplate"),
     },
     description: t("description"),
+    icons: {
+      icon: [
+        { url: "/brand/app-icon/bugi-app-icon-192.png", sizes: "192x192", type: "image/png" },
+        { url: "/brand/app-icon/bugi-app-icon-512.png", sizes: "512x512", type: "image/png" },
+      ],
+      apple: [{ url: "/brand/app-icon/apple-touch-icon.png" }],
+    },
   };
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { hasLocale, useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
 import type { ChangeEvent, ReactNode } from "react";
 import { useTransition } from "react";
 import { Icon, type IconName } from "@/components/ui/icon";
@@ -30,31 +31,19 @@ function Brand() {
   return (
     <Link
       href="/"
-      className="group flex min-h-11 items-center gap-2.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2d6d5d]"
+      className="group flex min-h-11 items-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2d6d5d]"
       aria-label={t("homeAriaLabel")}
     >
-      <span
+      <Image
+        src="/brand/wordmark/visa-bugi-wordmark.svg"
+        alt=""
         aria-hidden="true"
-        className="grid size-10 place-items-center rounded-[14px] bg-[#ffca68] text-[#173f36] shadow-[0_6px_18px_rgba(86,64,21,0.14)] transition-transform group-hover:-translate-y-0.5"
-      >
-        <svg viewBox="0 0 32 32" className="size-7" fill="none">
-          <path
-            d="M8.5 13.5a7.5 7.5 0 0 1 15 0v4a6 6 0 0 1-6 6h-3a6 6 0 0 1-6-6v-4Z"
-            fill="currentColor"
-          />
-          <path d="M12 16h8M16 12v8" stroke="#ffca68" strokeWidth="2" strokeLinecap="round" />
-          <circle cx="6" cy="17" r="2" fill="currentColor" />
-          <circle cx="26" cy="17" r="2" fill="currentColor" />
-        </svg>
-      </span>
-      <span>
-        <span className="block text-[1.05rem] font-extrabold tracking-[-0.035em] text-[#173f36]">
-          {t("name")}
-        </span>
-        <span className="hidden text-[0.7rem] font-medium tracking-[-0.01em] text-[#73807b] sm:block">
-          {t("tagline")}
-        </span>
-      </span>
+        width={704}
+        height={160}
+        unoptimized
+        priority
+        className="h-auto w-24 max-w-[45vw] transition-transform group-hover:-translate-y-0.5 sm:w-28 md:w-32"
+      />
     </Link>
   );
 }

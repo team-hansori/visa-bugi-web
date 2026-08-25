@@ -10,6 +10,7 @@
 - App 라우트를 [locale] 세그먼트 아래로 재구성
 - 랜딩 페이지에 next-intl 번역 연결
 - AppShell에 locale 네비게이션과 언어 선택 UI 연결
+- 헤더 브랜드 워드마크·앱 아이콘 자산 적용 (#17)
 
 ### 🐛 Bug Fixes
 
@@ -22,6 +23,8 @@
 - 온보딩 폼 라우터를 locale-aware 네비게이션으로 교체
 - 최종 리뷰 반영 — 온보딩 언어 질문 연동, 404 경계 추가, 접근성 개선
 - App/not-found.tsx 홈 링크가 locale-aware Link 아님 (#8)
+- 헤더 워드마크 크기를 네비게이션 라인에 맞춤
+- 한글 라벨의 과도한 자간(letter-spacing) 제거
 
 ### 📚 Documentation
 
@@ -30,6 +33,7 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - I18n next-intl 라우팅 인프라 구축 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

@@ -1,12 +1,11 @@
 "use client";
 
-import { hasLocale, useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import type { ChangeEvent, ReactNode } from "react";
-import { useTransition } from "react";
+import type { ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { localeNames, routing } from "@/i18n/routing";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { Link, usePathname } from "@/i18n/navigation";
 
 type NavItem = {
   href: string;
@@ -104,43 +103,6 @@ function MobileNavigation({ pathname }: { pathname: string }) {
         })}
       </div>
     </nav>
-  );
-}
-
-function LocaleSwitcher() {
-  const t = useTranslations("LocaleSwitcher");
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
-
-  function onChange(event: ChangeEvent<HTMLSelectElement>) {
-    const nextLocale = event.target.value;
-    if (!hasLocale(routing.locales, nextLocale)) {
-      return;
-    }
-    startTransition(() => {
-      router.replace(pathname, { locale: nextLocale });
-    });
-  }
-
-  return (
-    <label className="flex min-h-10 items-center gap-1.5 rounded-full border border-[#dfe5e1] bg-white px-3 text-xs font-bold text-[#52615b]">
-      <Icon name="globe" className="size-4" aria-hidden="true" />
-      <select
-        aria-label={t("label")}
-        aria-busy={isPending}
-        value={locale}
-        onChange={onChange}
-        className={`bg-transparent focus-visible:outline-none ${isPending ? "opacity-60" : ""}`}
-      >
-        {routing.locales.map((code) => (
-          <option key={code} value={code}>
-            {localeNames[code]}
-          </option>
-        ))}
-      </select>
-    </label>
   );
 }
 

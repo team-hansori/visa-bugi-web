@@ -29,4 +29,11 @@ describe("messages", () => {
     expect(keyPaths(byLocale.ko)).toContain("Chat.deleteConfirm");
     expect(keyPaths(byLocale.ko)).toContain("Chat.unverifiedNotice");
   });
+
+  it("localizes the chat labels for the translated locales", () => {
+    for (const locale of ["zh", "uz", "ne", "km"]) {
+      expect(byLocale[locale].Nav.chat).not.toBe(byLocale.ko.Nav.chat);
+      expect(byLocale[locale].Chat.title).not.toBe(byLocale.ko.Chat.title);
+    }
+  });
 });

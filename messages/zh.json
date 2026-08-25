@@ -17,7 +17,7 @@
     "calendar": "일정",
     "map": "기관",
     "ocr": "서류",
-    "chat": "상담",
+    "chat": "咨询",
     "mainMenuAriaLabel": "주요 메뉴",
     "mobileMenuAriaLabel": "모바일 주요 메뉴"
   },
@@ -81,22 +81,22 @@
     }
   },
   "Chat": {
-    "title": "비자 상담",
-    "description": "검수된 비자 데이터를 근거로 답하고, 범위 밖 문제는 담당 기관을 안내해 드려요.",
-    "disclaimer": "안내는 참고용입니다. 최종 확인은 관할 기관에 문의해 주세요.",
-    "inputPlaceholder": "비자 요건, 절차, 서류에 대해 물어보세요",
-    "inputAriaLabel": "질문 입력",
-    "send": "보내기",
-    "sending": "답변 작성 중…",
-    "deleteHistory": "대화 삭제",
-    "deleteConfirm": "저장된 대화를 모두 삭제할까요? 되돌릴 수 없습니다.",
-    "deleted": "대화가 삭제되었습니다.",
-    "error": "오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-    "empty": "궁금한 점을 입력하면 상담이 시작됩니다.",
-    "sourcesLabel": "출처",
-    "verifiedAtLabel": "확인일",
-    "contactsLabel": "안내 기관",
-    "unverifiedNotice": "이 안내는 이주노동자 기준으로 확인된 정보입니다. 상황에 따라 다를 수 있으니 기관에 직접 확인해 주세요.",
-    "outOfScopeContacts": "아래 기관에서 도움을 받을 수 있어요."
+    "title": "签证咨询",
+    "description": "我们依据经核验的签证数据答复，并为超出服务范围的问题提供相关机构指引。",
+    "disclaimer": "本信息仅供参考。请向主管机构确认最终信息。",
+    "inputPlaceholder": "请询问签证条件、流程或所需材料",
+    "inputAriaLabel": "输入问题",
+    "send": "发送",
+    "sending": "正在生成回复…",
+    "deleteHistory": "删除对话",
+    "deleteConfirm": "要删除所有已保存的对话吗？此操作无法撤销。",
+    "deleted": "对话已删除。",
+    "error": "发生错误。请稍后重试。",
+    "empty": "输入您的问题即可开始咨询。",
+    "sourcesLabel": "来源",
+    "verifiedAtLabel": "核验日期",
+    "contactsLabel": "指引机构",
+    "unverifiedNotice": "此信息按外来务工人员情况核验。具体情况可能不同，请直接向机构确认。",
+    "outOfScopeContacts": "您可以从以下机构获得帮助。"
   }
 }

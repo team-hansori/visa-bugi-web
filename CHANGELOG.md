@@ -33,6 +33,7 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -41,3 +42,4 @@
 - Next-intl 설치 및 Next.js 플러그인 연결
 - Add transparent Bugi brand assets
 - Add final Bugi app logo
+- Add transparent Visa Bugi wordmark

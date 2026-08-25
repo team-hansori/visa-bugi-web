@@ -11,9 +11,11 @@ export type IconName =
   | "document"
   | "globe"
   | "home"
+  | "mail"
   | "map-pin"
   | "navigation"
   | "phone"
+  | "settings"
   | "shield"
   | "upload"
   | "user";
@@ -68,6 +70,12 @@ const paths: Record<IconName, ReactNode> = {
       <path d="M5 10v10h14V10M9 20v-6h6v6" />
     </>
   ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3 7 9 6 9-6" />
+    </>
+  ),
   "map-pin": (
     <>
       <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
@@ -76,6 +84,12 @@ const paths: Record<IconName, ReactNode> = {
   ),
   navigation: <path d="m3 11 18-8-8 18-2-8-8-2Z" />,
   phone: <path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-1-1.5 3a15.8 15.8 0 0 1-9.5-9.5L8 8 7 3Z" />,
+  settings: (
+    <>
+      <circle cx="12" cy="12" r="3.5" />
+      <path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M3 12h3M18 12h3M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5M7.5 19.8 9 17.2M15 6.8l1.5-2.6" />
+    </>
+  ),
   shield: (
     <>
       <path d="M12 3 5 6v5c0 4.7 2.8 8.2 7 10 4.2-1.8 7-5.3 7-10V6l-7-3Z" />

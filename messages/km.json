@@ -110,5 +110,12 @@
       "policyLinkLabel": "위치정보 이용약관",
       "policyLinkStatus": "준비 중"
     }
+  },
+  "Contact": {
+    "eyebrow": "문의",
+    "pageTitle": "문의하기",
+    "heading": "문의 채널을 준비하고 있어요",
+    "description": "확정된 문의 이메일이나 문의 폼이 아직 없습니다. 채널이 열리면 이 화면에서 바로 연결할 수 있도록 안내할게요.",
+    "buttonLabel": "문의 준비 중"
   }
 }

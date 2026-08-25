@@ -19,13 +19,15 @@ create table if not exists public.user_visa_profile (
   target_visa_code  text,
 
   -- 공통 판정 필드 (2개 이상 비자에서 재사용)
-  korean_level_type  text,
-  korean_level_value smallint,
-  address_road       text,
-  address_jibun      text,
-  region_sigungu     text,
-  lat                double precision,
-  lng                double precision,
+  -- TOPIK·사회통합프로그램(KIIP)을 동시에 가진 사용자가 있을 수 있어
+  -- 서로 독립된 컬럼으로 둔다(단일 유형 enum이 아님).
+  topik_level    smallint,
+  kiip_level     smallint,
+  address_road   text,
+  address_jibun  text,
+  region_sigungu text,
+  lat            double precision,
+  lng            double precision,
 
   -- 3단계("내 정보 입력하기")에서 채워질 필드. 온보딩 단계에서는 NULL.
   annual_income_krw integer,
@@ -40,12 +42,10 @@ create table if not exists public.user_visa_profile (
   constraint user_visa_profile_target_visa_code_check
     check (target_visa_code is null
            or target_visa_code in ('F-2-R', 'E-7-4R', 'F-4-R', 'D-2')),
-  constraint user_visa_profile_korean_level_type_check
-    check (korean_level_type is null
-           or korean_level_type in ('TOPIK', 'KIIP', 'NONE')),
-  constraint user_visa_profile_korean_level_value_check
-    check (korean_level_value is null
-           or (korean_level_value between 1 and 6))
+  constraint user_visa_profile_topik_level_check
+    check (topik_level is null or (topik_level between 1 and 6)),
+  constraint user_visa_profile_kiip_level_check
+    check (kiip_level is null or (kiip_level between 1 and 6))
 );
 
 create index if not exists user_visa_profile_region_sigungu_idx

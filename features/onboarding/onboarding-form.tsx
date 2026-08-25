@@ -11,17 +11,13 @@ import { createClient } from "@/lib/supabase/client";
 import { ensureAnonymousSession } from "@/lib/supabase/ensure-anonymous-session";
 import { saveOnboarding, type SaveOnboardingState } from "./actions";
 import { CURRENT_VISA_OPTIONS, TARGET_VISA_CODES, type TargetVisaCode } from "./constants";
-import {
-  koreanLevelPairSchema,
-  onboardingSubmissionSchema,
-  pastDateSchema,
-} from "./schema";
+import { onboardingSubmissionSchema, pastDateSchema } from "./schema";
 import { getStepIndex, getStepSequence, type StepId } from "./steps";
 import { AddressStep } from "./steps/address-step";
 import { BirthdateStep } from "./steps/birthdate-step";
 import { ChoiceStep } from "./steps/choice-step";
 import { D2DetailStep } from "./steps/d2-detail-step";
-import { KoreanLevelStep } from "./steps/korean-level-step";
+import { KoreanLevelStep, type KoreanCredential } from "./steps/korean-level-step";
 import { recommendTargetVisas } from "./visa-recommendation";
 
 const STORAGE_KEY = "visa-bugi-onboarding";
@@ -34,8 +30,10 @@ type FormValues = {
   birthdate: string;
   currentVisaCode: string | null;
   address: AddressSuggestion | null;
-  koreanLevelType: string | null;
-  koreanLevelValue: number | null;
+  koreanCredentials: KoreanCredential[];
+  koreanNone: boolean;
+  topikLevel: number | null;
+  kiipLevel: number | null;
   targetVisaCode: TargetVisaCode | null;
   educationLevel: string | null;
   e9E10H2ResidenceYears: number | null;
@@ -53,8 +51,10 @@ const EMPTY_VALUES: FormValues = {
   birthdate: "",
   currentVisaCode: null,
   address: null,
-  koreanLevelType: null,
-  koreanLevelValue: null,
+  koreanCredentials: [],
+  koreanNone: false,
+  topikLevel: null,
+  kiipLevel: null,
   targetVisaCode: null,
   educationLevel: null,
   e9E10H2ResidenceYears: null,
@@ -87,7 +87,7 @@ const STEP_DESCRIPTIONS: Record<StepId, string> = {
   birthdate: "나이 요건 확인에 사용합니다.",
   currentVisa: "이 답변으로 준비 가능한 체류자격을 좁혀서 보여드립니다.",
   address: "지역특화형 비자는 인구감소지역 거주(희망)가 조건입니다.",
-  koreanLevel: "TOPIK 급수나 사회통합프로그램 단계를 선택해 주세요.",
+  koreanLevel: "해당하는 자격을 모두 선택해 주세요. TOPIK과 사회통합프로그램을 둘 다 가지고 계셔도 괜찮습니다.",
   targetVisa: "현재 체류자격을 기준으로 준비 가능한 자격만 보여드립니다.",
   f2rDetail: "학위 또는 생활임금 요건 중 하나를 충족하면 됩니다.",
   e74rDetail: "대략적인 기간이면 충분합니다.",
@@ -239,9 +239,10 @@ export function OnboardingForm() {
       case "address":
         return values.address !== null;
       case "koreanLevel":
-        return (
-          values.koreanLevelType === "NONE" ||
-          (values.koreanLevelType !== null && values.koreanLevelValue !== null)
+        if (values.koreanNone) return true;
+        if (values.koreanCredentials.length === 0) return false;
+        return values.koreanCredentials.every((credential) =>
+          credential === "TOPIK" ? values.topikLevel !== null : values.kiipLevel !== null,
         );
       case "targetVisa":
         return values.targetVisaCode !== null;
@@ -275,8 +276,8 @@ export function OnboardingForm() {
       regionSigungu: values.address?.regionSigungu,
       lat: values.address?.lat,
       lng: values.address?.lng,
-      koreanLevelType: values.koreanLevelType,
-      koreanLevelValue: values.koreanLevelValue,
+      topikLevel: values.topikLevel,
+      kiipLevel: values.kiipLevel,
       targetVisaCode: values.targetVisaCode,
     };
     switch (values.targetVisaCode) {
@@ -307,13 +308,6 @@ export function OnboardingForm() {
   function validateCurrentStep(): string | null {
     if (currentStep === "birthdate") {
       const result = pastDateSchema.safeParse(values.birthdate);
-      return result.success ? null : (result.error.issues[0]?.message ?? null);
-    }
-    if (currentStep === "koreanLevel") {
-      const result = koreanLevelPairSchema.safeParse({
-        koreanLevelType: values.koreanLevelType,
-        koreanLevelValue: values.koreanLevelValue,
-      });
       return result.success ? null : (result.error.issues[0]?.message ?? null);
     }
     if (currentStep === "d2Detail") {
@@ -474,17 +468,20 @@ export function OnboardingForm() {
 
           {currentStep === "koreanLevel" ? (
             <KoreanLevelStep
-              type={values.koreanLevelType}
-              value={values.koreanLevelValue}
+              credentials={values.koreanCredentials}
+              none={values.koreanNone}
+              topikLevel={values.topikLevel}
+              kiipLevel={values.kiipLevel}
               onChange={(next) => {
                 setStepError("");
                 setValues((current) => ({
                   ...current,
-                  koreanLevelType: next.type,
-                  koreanLevelValue: next.value,
+                  koreanCredentials: next.credentials,
+                  koreanNone: next.none,
+                  topikLevel: next.topikLevel,
+                  kiipLevel: next.kiipLevel,
                 }));
               }}
-              error={stepError || undefined}
             />
           ) : null}
 
@@ -544,7 +541,7 @@ export function OnboardingForm() {
           ) : null}
         </div>
 
-        {stepError && currentStep !== "birthdate" && currentStep !== "koreanLevel" ? (
+        {stepError && currentStep !== "birthdate" ? (
           <p
             role="alert"
             className="mt-5 rounded-xl bg-[#fff0ed] px-4 py-3 text-sm font-semibold leading-6 text-[#9f4038]"

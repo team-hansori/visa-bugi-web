@@ -26,8 +26,8 @@ const validPayload = {
   regionSigungu: "제천시",
   lat: 37.1326,
   lng: 128.1909,
-  koreanLevelType: "TOPIK",
-  koreanLevelValue: 3,
+  topikLevel: 3,
+  kiipLevel: null,
   targetVisaCode: "E-7-4R",
   e9E10H2ResidenceYears: 3,
 };
@@ -93,11 +93,22 @@ describe("saveOnboarding", () => {
         user_id: "user-1",
         current_visa_code: "E-9",
         target_visa_code: "E-7-4R",
-        korean_level_type: "TOPIK",
-        korean_level_value: 3,
+        topik_level: 3,
+        kiip_level: null,
         region_sigungu: "제천시",
         visa_details: { e9E10H2ResidenceYears: 3 },
       }),
+      { onConflict: "user_id" },
+    );
+  });
+
+  it("TOPIK·사회통합프로그램을 둘 다 가진 경우 두 컬럼 모두 저장한다", async () => {
+    await saveOnboarding(
+      { status: "idle" },
+      formDataOf({ ...validPayload, topikLevel: 4, kiipLevel: 2 }),
+    );
+    expect(upsertVisaProfile).toHaveBeenCalledWith(
+      expect.objectContaining({ topik_level: 4, kiip_level: 2 }),
       { onConflict: "user_id" },
     );
   });

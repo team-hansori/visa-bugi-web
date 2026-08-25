@@ -37,8 +37,10 @@ export type UserVisaProfileRow = {
   user_id: string;
   current_visa_code: string | null;
   target_visa_code: TargetVisaCode | null;
-  korean_level_type: "TOPIK" | "KIIP" | "NONE" | null;
-  korean_level_value: number | null;
+  // TOPIK·사회통합프로그램(KIIP)을 동시에 가진 사용자가 있을 수 있어
+  // 서로 독립된 컬럼으로 둔다(단일 유형 enum이 아님).
+  topik_level: number | null;
+  kiip_level: number | null;
   address_road: string | null;
   address_jibun: string | null;
   region_sigungu: string | null;

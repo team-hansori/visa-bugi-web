@@ -188,6 +188,33 @@ describe("OnboardingForm", () => {
     expect(push).not.toHaveBeenCalled();
   });
 
+  it("TOPIK과 사회통합프로그램 급수를 둘 다 채우면 다음으로 넘어간다", async () => {
+    const user = userEvent.setup();
+    searchParams = new URLSearchParams("step=koreanLevel");
+    render(<OnboardingForm />);
+
+    await user.click(screen.getByRole("button", { name: /^TOPIK/ }));
+    await user.selectOptions(screen.getByLabelText("TOPIK 급수"), "3");
+    await user.click(screen.getByRole("button", { name: /사회통합프로그램/ }));
+    await user.selectOptions(screen.getByLabelText("사회통합프로그램 단계"), "2");
+
+    expect(screen.getByRole("button", { name: /다음/ })).toBeEnabled();
+
+    await user.click(screen.getByRole("button", { name: /다음/ }));
+    await waitFor(() =>
+      expect(push).toHaveBeenCalledWith(expect.stringContaining("step=targetVisa")),
+    );
+  });
+
+  it("'아직 없어요'를 고르면 급수 없이도 다음으로 넘어간다", async () => {
+    const user = userEvent.setup();
+    searchParams = new URLSearchParams("step=koreanLevel");
+    render(<OnboardingForm />);
+
+    await user.click(screen.getByRole("button", { name: "아직 없어요" }));
+    expect(screen.getByRole("button", { name: /다음/ })).toBeEnabled();
+  });
+
   it("마운트 시 로그인 화면 없이 조용히 익명 세션을 발급한다", async () => {
     render(<OnboardingForm />);
     await waitFor(() =>

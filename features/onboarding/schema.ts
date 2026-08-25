@@ -24,53 +24,33 @@ export const pastDateSchema = z
     message: "미래 날짜는 입력할 수 없습니다.",
   });
 
-/** 한국어능력 유형과 급수의 조합만 따로 검증한다 (koreanLevel 스텝용). */
-export const koreanLevelPairSchema = z
-  .object({
-    koreanLevelType: z.enum(["TOPIK", "KIIP", "NONE"]),
-    koreanLevelValue: z.number().int().min(1).max(6).nullable(),
-  })
-  .refine(
-    (value) =>
-      value.koreanLevelType === "NONE"
-        ? value.koreanLevelValue === null
-        : value.koreanLevelValue !== null,
-    {
-      message: "급수를 선택해 주세요.",
-      path: ["koreanLevelValue"],
-    },
-  );
-
-/** 모든 목표비자에서 공통으로 수집하는 1단계 답변 (스펙 §2.1). */
-export const commonAnswersSchema = z
-  .object({
-    locale: z.enum(["ko", "zh", "vi", "uz", "ne", "km"]),
-    gender: z.enum(["male", "female", "unspecified"]),
-    birthdate: pastDateSchema,
-    nationality: z
-      .string()
-      .regex(/^[A-Z]{2}$/, "국가 코드는 대문자 2자리입니다."),
-    currentVisaCode: z.enum(CURRENT_VISA_OPTIONS),
-    addressRoad: z.string().min(1, "주소를 선택해 주세요."),
-    addressJibun: z.string().min(1),
-    regionSigungu: z.string().min(1),
-    // 대한민국 본토·제주를 넉넉히 감싸는 범위. 오입력·좌표계 혼동을 걸러낸다.
-    // 주소를 직접 입력한 경우(Kakao 검색 불가 시 대체 경로) 좌표를 알 수 없어 null이다.
-    lat: z.number().min(33).max(39).nullable(),
-    lng: z.number().min(124).max(132).nullable(),
-    koreanLevelType: z.enum(["TOPIK", "KIIP", "NONE"]),
-    koreanLevelValue: z.number().int().min(1).max(6).nullable(),
-  })
-  .refine(
-    (value) =>
-      value.koreanLevelType === "NONE"
-        ? value.koreanLevelValue === null
-        : value.koreanLevelValue !== null,
-    {
-      message: "급수를 선택해 주세요.",
-      path: ["koreanLevelValue"],
-    },
-  );
+/**
+ * 모든 목표비자에서 공통으로 수집하는 1단계 답변 (스펙 §2.1).
+ *
+ * 한국어능력은 TOPIK·사회통합프로그램(KIIP)을 동시에 가진 사용자도 있을 수
+ * 있어 두 필드를 서로 독립적인 nullable 값으로 둔다(단일 enum이 아님).
+ * "선택했지만 급수를 아직 안 골랐다"는 중간 상태는 UI 쪽 상태(스텝 완료
+ * 여부 판단)에서만 다루고, 제출 스키마에는 최종 급수 값만 들어오므로
+ * 여기엔 별도 refine이 필요 없다 — null/1~6 조합은 전부 유효하다.
+ */
+export const commonAnswersSchema = z.object({
+  locale: z.enum(["ko", "zh", "vi", "uz", "ne", "km"]),
+  gender: z.enum(["male", "female", "unspecified"]),
+  birthdate: pastDateSchema,
+  nationality: z
+    .string()
+    .regex(/^[A-Z]{2}$/, "국가 코드는 대문자 2자리입니다."),
+  currentVisaCode: z.enum(CURRENT_VISA_OPTIONS),
+  addressRoad: z.string().min(1, "주소를 선택해 주세요."),
+  addressJibun: z.string().min(1),
+  regionSigungu: z.string().min(1),
+  // 대한민국 본토·제주를 넉넉히 감싸는 범위. 오입력·좌표계 혼동을 걸러낸다.
+  // 주소를 직접 입력한 경우(Kakao 검색 불가 시 대체 경로) 좌표를 알 수 없어 null이다.
+  lat: z.number().min(33).max(39).nullable(),
+  lng: z.number().min(124).max(132).nullable(),
+  topikLevel: z.number().int().min(1).max(6).nullable(),
+  kiipLevel: z.number().int().min(1).max(6).nullable(),
+});
 
 /** 목표비자별 2단계 답변 (스펙 §2.3). targetVisaCode로 판별한다. */
 export const visaDetailSchema = z.discriminatedUnion("targetVisaCode", [

@@ -22,8 +22,8 @@
 | 실제 Google OAuth 로그인 구현 | [#10](https://github.com/team-hansori/visa-bugi-web/issues/10) (코멘트로 이번 설계 맥락 공유) |
 | 온보딩 "현재 비자/목표 비자" 필드 분리 | [#5](https://github.com/team-hansori/visa-bugi-web/issues/5) (코멘트로 이번 설계 맥락 공유) |
 | 개인 일정(`tracked_items`) 실제 영속 저장·Supabase 스키마 | [#6](https://github.com/team-hansori/visa-bugi-web/issues/6) (코멘트로 이번 설계 맥락 공유) |
-| `visa_process_stages` Supabase 적재 (visa-data 책임) | 신규 이슈 |
-| 캘린더 문구 다국어 번역 (`messages/*.json`) | 신규 이슈 |
+| `visa_process_stages` Supabase 적재 (visa-data 책임) | [#20](https://github.com/team-hansori/visa-bugi-web/issues/20) |
+| 캘린더 문구 다국어 번역 (`messages/*.json`) | [#21](https://github.com/team-hansori/visa-bugi-web/issues/21) |
 
 이번 브랜치는 위 항목이 완료되기 전에도 동작하도록 mock 인증 상태와 mock 비자 절차 데이터로 UI·데이터 흐름을 완성한다.
 

@@ -4,7 +4,7 @@ import type { AgencyContactRow, RiskRoutingRow, ScreeningResult } from "@/featur
 
 function row(over: Partial<RiskRoutingRow>): RiskRoutingRow {
   return {
-    routing_id: "r1", keyword_category: "WAGE_ARREARS", user_type: "FOREIGN_WORKER",
+    routing_id: "r1", keyword_category: "ILLEGAL_EMPLOYMENT", user_type: "FOREIGN_WORKER",
     applies_to_visa_code: null, resolution_type: "EXTERNAL", target_agency_category: null,
     external_agency_name: "고용노동부 청주지청", external_region_scope: "청주|진천|괴산|증평|보은|옥천|영동",
     external_phone: "1350", external_url: "https://www.moel.go.kr/cheongju/",
@@ -15,13 +15,24 @@ function row(over: Partial<RiskRoutingRow>): RiskRoutingRow {
 }
 
 function screening(over: Partial<ScreeningResult>): ScreeningResult {
-  return { riskCategory: "WAGE_ARREARS", userType: "FOREIGN_WORKER", region: null, visaCode: null, inScope: true, language: "ko", ...over };
+  return { riskCategory: "ILLEGAL_EMPLOYMENT", userType: "FOREIGN_WORKER", region: null, visaCode: null, inScope: true, language: "ko", ...over };
 }
 
 function fakeQueries(rows: RiskRoutingRow[], agencies: AgencyContactRow[] = []) {
+  const calls = {
+    riskCategories: [] as ScreeningResult["riskCategory"][],
+    agencyParams: [] as Array<{ region?: string; categoryMinor?: string; categoryMajor?: string }>,
+  };
   return {
-    getRiskRoutingRows: async () => rows,
-    findAgency: async () => agencies,
+    getRiskRoutingRows: async (category: ScreeningResult["riskCategory"]) => {
+      calls.riskCategories.push(category);
+      return rows;
+    },
+    findAgency: async (params: { region?: string; categoryMinor?: string; categoryMajor?: string }) => {
+      calls.agencyParams.push(params);
+      return agencies;
+    },
+    calls,
   };
 }
 
@@ -135,6 +146,32 @@ describe("resolveRiskRoute", () => {
     expect(r.matched && r.verifiedForUserType).toBe(true);
     expect(r.matched && r.rows.map((entry) => entry.routing_id)).toEqual(["worker"]);
   });
+});
+
+it("passes the risk category and in-domain agency filters to queries", async () => {
+  const inDomain = row({
+    resolution_type: "IN_DOMAIN",
+    target_agency_category: "VISA_STATUS_CHANGE",
+    external_agency_name: null,
+    external_phone: null,
+    external_url: null,
+    external_region_scope: null,
+  });
+  const agency = {
+    agency_id: "a1", category_major: "FOREIGN_RESIDENT_SETTLEMENT", category_minor: "VISA_STATUS_CHANGE",
+    region: "\uCCAD\uC8FC", department_name: null, address: null, phone: "043-000-0000",
+    url: null, target_audience: null, is_user_facing: true, valid_from: null, valid_to: null,
+    source_document: null, source_page: null, last_verified_at: null,
+  } satisfies AgencyContactRow;
+  const queries = fakeQueries([inDomain], [agency]);
+
+  await resolveRiskRoute(screening({ region: "\uCCAD\uC8FC" }), queries);
+
+  expect(queries.calls.riskCategories).toEqual(["ILLEGAL_EMPLOYMENT"]);
+  expect(queries.calls.agencyParams).toEqual([{
+    region: "\uCCAD\uC8FC",
+    categoryMinor: "VISA_STATUS_CHANGE",
+  }]);
 });
 
 describe("buildEscalation", () => {

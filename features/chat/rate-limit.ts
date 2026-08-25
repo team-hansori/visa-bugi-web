@@ -1,5 +1,6 @@
 const WINDOW_MS = 60_000;
 const MAX_REQUESTS_PER_WINDOW = 10;
+const MAX_ENTRIES = 10_000;
 
 type Entry = { count: number; resetAt: number };
 
@@ -9,13 +10,23 @@ export type RateLimitResult =
   | { allowed: true }
   | { allowed: false; retryAfterSeconds: number };
 
+function removeExpiredEntries(now: number) {
+  for (const [key, entry] of entries) {
+    if (entry.resetAt <= now) entries.delete(key);
+  }
+}
+
 /**
  * Best-effort per-instance limiter for the public chat route. A shared store is
  * still required for a deployment-wide limit when the service scales out.
  */
 export function checkChatRateLimit(key: string, now = Date.now()): RateLimitResult {
+  removeExpiredEntries(now);
   const current = entries.get(key);
   if (!current || current.resetAt <= now) {
+    if (entries.size >= MAX_ENTRIES) {
+      return { allowed: false, retryAfterSeconds: Math.ceil(WINDOW_MS / 1000) };
+    }
     entries.set(key, { count: 1, resetAt: now + WINDOW_MS });
     return { allowed: true };
   }

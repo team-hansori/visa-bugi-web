@@ -26,6 +26,19 @@ describe("checkChatRateLimit", () => {
 
     expect(checkChatRateLimit("session:test", now + 60_000)).toEqual({ allowed: true });
   });
+
+  it("removes expired entries before accepting a new key", () => {
+    const now = 1_000_000;
+    for (let i = 0; i < 10_000; i += 1) {
+      expect(checkChatRateLimit(`session:${i}`, now)).toEqual({ allowed: true });
+    }
+
+    expect(checkChatRateLimit("session:new", now)).toEqual({
+      allowed: false,
+      retryAfterSeconds: 60,
+    });
+    expect(checkChatRateLimit("session:new", now + 60_000)).toEqual({ allowed: true });
+  });
 });
 
 describe("chatRateLimitKey", () => {

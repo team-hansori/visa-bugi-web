@@ -42,6 +42,13 @@ describe("verbatimViolations", () => {
 });
 
 describe("redactViolations", () => {
+  it("redacts a URL returned by verbatim validation without changing surrounding text", () => {
+    const text = "See https://fake.example.com/x for details";
+    const violations = verbatimViolations(text, []);
+
+    expect(redactViolations(text, violations)).toBe("See [\uD655\uC778 \uD544\uC694] for details");
+  });
+
   it("위반 토큰을 안전 표기로 치환한다", () => {
     expect(redactViolations("043-230-6700으로 전화하세요", ["043-230-6700"]))
       .toBe("[확인 필요]으로 전화하세요");

@@ -17,13 +17,17 @@ export type KakaoAddressDocument = {
   road_address: { address_name: string; region_2depth_name: string } | null;
 };
 
-/** 화면과 DB가 쓰는 주소 표현. */
+/**
+ * 화면과 DB가 쓰는 주소 표현.
+ * lat/lng는 Kakao 검색 결과에서는 항상 숫자지만, 검색이 안 되는 환경(API 키
+ * 미설정 등)에서 사용자가 직접 입력하면 좌표를 알 수 없으므로 null이 된다.
+ */
 export type AddressSuggestion = {
   roadAddress: string;
   jibunAddress: string;
   regionSigungu: string;
-  lat: number;
-  lng: number;
+  lat: number | null;
+  lng: number | null;
 };
 
 /** Kakao 문서를 앱 도메인 표현으로 바꾼다. 좌표가 없으면 null을 반환한다. */

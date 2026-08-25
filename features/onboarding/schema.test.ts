@@ -136,6 +136,17 @@ describe("onboardingSubmissionSchema", () => {
     });
     expect(result.success).toBe(false);
   });
+
+  it("좌표가 null이어도 통과한다 (주소 직접 입력 경로)", () => {
+    const result = onboardingSubmissionSchema.safeParse({
+      ...validBase,
+      lat: null,
+      lng: null,
+      targetVisaCode: "E-7-4R",
+      e9E10H2ResidenceYears: 3,
+    });
+    expect(result.success).toBe(true);
+  });
 });
 
 describe("koreanLevelPairSchema는 제출 스키마와 같은 규칙을 쓴다", () => {

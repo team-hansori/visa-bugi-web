@@ -55,8 +55,9 @@ export const commonAnswersSchema = z
     addressJibun: z.string().min(1),
     regionSigungu: z.string().min(1),
     // 대한민국 본토·제주를 넉넉히 감싸는 범위. 오입력·좌표계 혼동을 걸러낸다.
-    lat: z.number().min(33).max(39),
-    lng: z.number().min(124).max(132),
+    // 주소를 직접 입력한 경우(Kakao 검색 불가 시 대체 경로) 좌표를 알 수 없어 null이다.
+    lat: z.number().min(33).max(39).nullable(),
+    lng: z.number().min(124).max(132).nullable(),
     koreanLevelType: z.enum(["TOPIK", "KIIP", "NONE"]),
     koreanLevelValue: z.number().int().min(1).max(6).nullable(),
   })

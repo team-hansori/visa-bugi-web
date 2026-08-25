@@ -10,7 +10,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 type NavItem = {
   href: string;
   icon: IconName;
-  key: "home" | "calendar" | "map" | "ocr";
+  key: "home" | "calendar" | "map" | "ocr" | "my";
 };
 
 const navItems: NavItem[] = [
@@ -18,6 +18,7 @@ const navItems: NavItem[] = [
   { href: "/calendar", icon: "calendar", key: "calendar" },
   { href: "/map", icon: "map-pin", key: "map" },
   { href: "/ocr", icon: "document", key: "ocr" },
+  { href: "/my", icon: "user", key: "my" },
 ];
 
 function isCurrentPath(pathname: string, href: string) {
@@ -83,7 +84,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
       aria-label={t("mobileMenuAriaLabel")}
       className="mobile-safe-bottom fixed inset-x-0 bottom-0 z-50 border-t border-[#dfe6e1] bg-white/95 px-3 pt-2 shadow-[0_-8px_28px_rgba(34,54,46,0.08)] backdrop-blur-xl md:hidden"
     >
-      <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
+      <div className="mx-auto grid max-w-md grid-cols-5 gap-1">
         {navItems.map((item) => {
           const current = isCurrentPath(pathname, item.href);
 

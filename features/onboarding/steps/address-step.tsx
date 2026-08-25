@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { AddressSearchInput } from "@/components/address/address-search-input";
 import type { AddressSuggestion } from "@/lib/address/normalize";
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export function AddressStep({ value, onSelect }: Props) {
+  const t = useTranslations("Onboarding");
   const [manualMode, setManualMode] = useState(false);
   const eligible = value !== null && isPopulationDeclineRegion(value.regionSigungu);
 
@@ -23,29 +25,31 @@ export function AddressStep({ value, onSelect }: Props) {
         />
       ) : (
         <>
-          <AddressSearchInput value={value} onSelect={onSelect} label="거주(희망) 주소" />
+          <AddressSearchInput
+            value={value}
+            onSelect={onSelect}
+            label={t("addressLabel")}
+          />
           <button
             type="button"
             onClick={() => setManualMode(true)}
             className="justify-self-start text-sm font-extrabold text-[#2d6d5d] underline underline-offset-2"
           >
-            검색이 안 되나요? 직접 입력할게요
+            {t("addressManualPrompt")}
           </button>
         </>
       )}
 
       {value === null ? null : eligible ? (
         <p className="rounded-xl bg-[#e9f3ef] px-4 py-3 text-sm font-semibold leading-6 text-[#1f584a]">
-          {value.regionSigungu}는 지역특화형 비자 대상 지역입니다.
+          {t("addressEligible", { region: value.regionSigungu })}
         </p>
       ) : (
         <p
           role="alert"
           className="rounded-xl bg-[#fff7ed] px-4 py-3 text-sm font-semibold leading-6 text-[#9a5b1d]"
         >
-          {value.regionSigungu}는 지역특화형 비자(F-2-R·E-7-4R·F-4-R) 대상 지역이
-          아닙니다. 참고용 안내이며 최종 판정은 관할 출입국·외국인관서에서 확인해
-          주세요.
+          {t("addressNotEligible", { region: value.regionSigungu })}
         </p>
       )}
     </div>
@@ -62,6 +66,7 @@ type ManualAddressFormProps = {
  * 쓰는 대체 경로. 좌표를 알 수 없으므로 lat/lng는 null로 저장한다.
  */
 function ManualAddressForm({ onSubmit, onCancel }: ManualAddressFormProps) {
+  const t = useTranslations("Onboarding");
   const [road, setRoad] = useState("");
   const [sigungu, setSigungu] = useState("");
   const roadId = useId();
@@ -72,25 +77,25 @@ function ManualAddressForm({ onSubmit, onCancel }: ManualAddressFormProps) {
     <div className="grid gap-4">
       <div>
         <label htmlFor={roadId} className="block text-sm font-extrabold text-[#33453e]">
-          주소 (도로명 또는 지번)
+          {t("addressManualRoadLabel")}
         </label>
         <input
           id={roadId}
           value={road}
           onChange={(event) => setRoad(event.target.value)}
-          placeholder="예: 충북 제천시 내토로 295"
+          placeholder={t("addressManualRoadPlaceholder")}
           className="mt-2 min-h-14 w-full rounded-2xl border border-[#dfe5e1] px-4 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
         />
       </div>
       <div>
         <label htmlFor={sigunguId} className="block text-sm font-extrabold text-[#33453e]">
-          사는 시/군
+          {t("addressManualSigunguLabel")}
         </label>
         <input
           id={sigunguId}
           value={sigungu}
           onChange={(event) => setSigungu(event.target.value)}
-          placeholder="예: 제천시"
+          placeholder={t("addressManualSigunguPlaceholder")}
           className="mt-2 min-h-14 w-full rounded-2xl border border-[#dfe5e1] px-4 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
         />
       </div>
@@ -100,7 +105,7 @@ function ManualAddressForm({ onSubmit, onCancel }: ManualAddressFormProps) {
           onClick={onCancel}
           className="text-sm font-extrabold text-[#6c7873] underline underline-offset-2"
         >
-          주소 검색으로 돌아가기
+          {t("addressManualBack")}
         </button>
         <button
           type="button"
@@ -116,7 +121,7 @@ function ManualAddressForm({ onSubmit, onCancel }: ManualAddressFormProps) {
           }
           className="ml-auto inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2d6d5d] px-4 text-sm font-extrabold text-white disabled:cursor-not-allowed disabled:bg-[#c7d1cc]"
         >
-          이 주소로 설정
+          {t("addressManualSubmit")}
         </button>
       </div>
     </div>

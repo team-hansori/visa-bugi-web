@@ -1,14 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId } from "react";
-
-const ACADEMIC_STATUS_OPTIONS = [
-  { value: "LANGUAGE_COURSE", label: "어학연수" },
-  { value: "ASSOCIATE", label: "전문학사" },
-  { value: "BACHELOR_1_2", label: "학사 1~2학년" },
-  { value: "BACHELOR_3_4", label: "학사 3~4학년" },
-  { value: "GRADUATE", label: "석사·박사" },
-];
 
 export type D2Values = {
   universityName: string;
@@ -23,7 +16,16 @@ type Props = {
   errors: Partial<Record<keyof D2Values, string>>;
 };
 
+const ACADEMIC_STATUS_KEYS = [
+  "LANGUAGE_COURSE",
+  "ASSOCIATE",
+  "BACHELOR_1_2",
+  "BACHELOR_3_4",
+  "GRADUATE",
+] as const;
+
 export function D2DetailStep({ values, onChange, errors }: Props) {
+  const t = useTranslations("Onboarding");
   const universityId = useId();
   const departmentId = useId();
   const statusId = useId();
@@ -38,7 +40,7 @@ export function D2DetailStep({ values, onChange, errors }: Props) {
     <div className="grid gap-5">
       <div>
         <label htmlFor={universityId} className={labelClass}>
-          재학 중인 대학
+          {t("d2UniversityLabel")}
         </label>
         <input
           id={universityId}
@@ -58,7 +60,7 @@ export function D2DetailStep({ values, onChange, errors }: Props) {
 
       <div>
         <label htmlFor={departmentId} className={labelClass}>
-          학과
+          {t("d2DepartmentLabel")}
         </label>
         <input
           id={departmentId}
@@ -78,7 +80,7 @@ export function D2DetailStep({ values, onChange, errors }: Props) {
 
       <div>
         <label htmlFor={statusId} className={labelClass}>
-          현재 과정
+          {t("d2AcademicStatusLabel")}
         </label>
         <select
           id={statusId}
@@ -89,10 +91,10 @@ export function D2DetailStep({ values, onChange, errors }: Props) {
           }
           className={fieldClass}
         >
-          <option value="">선택해 주세요</option>
-          {ACADEMIC_STATUS_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
+          <option value="">{t("d2SelectPlaceholder")}</option>
+          {ACADEMIC_STATUS_KEYS.map((key) => (
+            <option key={key} value={key}>
+              {t(`academicStatusOptions.${key}`)}
             </option>
           ))}
         </select>
@@ -105,7 +107,7 @@ export function D2DetailStep({ values, onChange, errors }: Props) {
 
       <div>
         <label htmlFor={startDateId} className={labelClass}>
-          입학(또는 어학연수 시작)일
+          {t("d2ProgramStartDateLabel")}
         </label>
         <input
           id={startDateId}

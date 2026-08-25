@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
 import type { AddressSuggestion } from "@/lib/address/normalize";
 
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export function AddressSearchInput({ value, onSelect, label }: Props) {
+  const t = useTranslations("Onboarding");
   const [query, setQuery] = useState(value?.roadAddress ?? "");
   const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -54,14 +56,14 @@ export function AddressSearchInput({ value, onSelect, label }: Props) {
         setMessage(
           payload.message ??
             (documents.length > 0
-              ? `검색 결과 ${documents.length}건`
-              : "검색 결과가 없습니다."),
+              ? t("searchResultCount", { count: documents.length })
+              : t("searchNoResult")),
         );
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") return;
         setSuggestions([]);
         setIsOpen(false);
-        setMessage("주소를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+        setMessage(t("searchError"));
       }
     }, DEBOUNCE_MS);
 
@@ -69,7 +71,9 @@ export function AddressSearchInput({ value, onSelect, label }: Props) {
       clearTimeout(timer);
       controller.abort();
     };
-  }, [query]);
+    // t도 넣는다 — 안 넣으면 검색 중 언어를 바꿔도 결과 메시지가 이전 언어로
+    // 남는 실제 버그가 있었다(query가 그대로면 이펙트가 재실행되지 않으므로).
+  }, [query, t]);
 
   function handleQueryChange(next: string) {
     setQuery(next);
@@ -135,7 +139,7 @@ export function AddressSearchInput({ value, onSelect, label }: Props) {
         value={query}
         onChange={(event) => handleQueryChange(event.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="도로명 또는 지번을 입력하세요"
+        placeholder={t("addressPlaceholder")}
         className="mt-2 min-h-14 w-full rounded-2xl border border-[#dfe5e1] px-4 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
       />
 

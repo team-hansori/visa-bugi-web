@@ -1,7 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { createTestTranslator } from "@/lib/test-utils/next-intl-mock";
 import { AddressStep } from "./address-step";
+
+vi.mock("next-intl", () => ({
+  useTranslations: (namespace: string) => createTestTranslator(namespace),
+}));
 
 const inDecline = {
   roadAddress: "충북 제천시 내토로 295",

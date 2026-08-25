@@ -1,7 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { createTestTranslator } from "@/lib/test-utils/next-intl-mock";
 import { KoreanLevelStep } from "./korean-level-step";
+
+vi.mock("next-intl", () => ({
+  useTranslations: (namespace: string) => createTestTranslator(namespace),
+}));
 
 describe("KoreanLevelStep", () => {
   it("아무것도 선택 안 된 상태에서 TOPIK을 누르면 credentials에 TOPIK만 담긴다", async () => {

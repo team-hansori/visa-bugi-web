@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -13,6 +14,7 @@ type Props = {
  * 항상 진행할 수 있는 경로를 유지한다 — 로그인은 강제하지 않는다.
  */
 export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
+  const t = useTranslations("Onboarding");
   const [showGoogleNotice, setShowGoogleNotice] = useState(false);
 
   return (
@@ -34,10 +36,10 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
           id="welcome-title"
           className="text-2xl font-black leading-tight tracking-[-0.04em] text-[#20332c] sm:text-3xl"
         >
-          비자부기와 함께 시작해요
+          {t("welcomeTitle")}
         </h2>
         <p className="mt-3 text-sm leading-6 text-[#6c7873] sm:text-base">
-          내 비자 요건과 다음 단계를 추적해 드릴게요.
+          {t("welcomeDescription")}
         </p>
       </div>
 
@@ -47,12 +49,12 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
           onClick={() => setShowGoogleNotice(true)}
           className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-[#dfe5e1] bg-white px-5 text-sm font-extrabold text-[#33453e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
         >
-          Google로 시작하기
+          {t("googleStart")}
         </button>
 
         {showGoogleNotice ? (
           <p role="status" className="text-sm font-semibold text-[#6c7873]">
-            Google 로그인은 준비 중입니다. 아래 버튼으로 바로 이용하실 수 있어요.
+            {t("googleComingSoon")}
           </p>
         ) : null}
 
@@ -61,7 +63,7 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
           onClick={onContinueWithoutLogin}
           className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
         >
-          로그인 없이 시작하기
+          {t("continueWithoutLogin")}
         </button>
       </div>
     </section>

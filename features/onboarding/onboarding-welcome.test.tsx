@@ -1,7 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { createTestTranslator } from "@/lib/test-utils/next-intl-mock";
 import { OnboardingWelcome } from "./onboarding-welcome";
+
+vi.mock("next-intl", () => ({
+  useTranslations: (namespace: string) => createTestTranslator(namespace),
+}));
 
 describe("OnboardingWelcome", () => {
   it("로그인 없이 시작하기 버튼이 있다", () => {

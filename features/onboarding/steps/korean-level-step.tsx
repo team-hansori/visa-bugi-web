@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { Icon } from "@/components/ui/icon";
 
@@ -16,11 +17,6 @@ type Props = KoreanLevelValues & {
   onChange: (next: KoreanLevelValues) => void;
 };
 
-const CREDENTIAL_OPTIONS: { id: KoreanCredential; label: string; description: string }[] = [
-  { id: "TOPIK", label: "TOPIK", description: "한국어능력시험 급수" },
-  { id: "KIIP", label: "사회통합프로그램", description: "이수 단계" },
-];
-
 const LEVEL_SELECT_CLASS =
   "mt-2 min-h-14 w-full rounded-2xl border border-[#dfe5e1] px-4 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]";
 
@@ -29,8 +25,14 @@ const LEVEL_SELECT_CLASS =
  * 있어 둘 다 복수 선택 가능하다. "아직 없어요"는 나머지와 배타적이다.
  */
 export function KoreanLevelStep({ credentials, none, topikLevel, kiipLevel, onChange }: Props) {
+  const t = useTranslations("Onboarding");
   const topikSelectId = useId();
   const kiipSelectId = useId();
+
+  const credentialOptions: { id: KoreanCredential; label: string; description: string }[] = [
+    { id: "TOPIK", label: t("koreanTopikLabel"), description: t("koreanTopikDescription") },
+    { id: "KIIP", label: t("koreanKiipLabel"), description: t("koreanKiipDescription") },
+  ];
 
   function toggleCredential(id: KoreanCredential) {
     const isSelected = credentials.includes(id);
@@ -90,18 +92,18 @@ export function KoreanLevelStep({ credentials, none, topikLevel, kiipLevel, onCh
       <div
         className="grid gap-3 sm:grid-cols-2"
         role="group"
-        aria-label="한국어능력 유형(복수 선택 가능)"
+        aria-label={`${t("koreanTopikLabel")}/${t("koreanKiipLabel")}`}
       >
-        {CREDENTIAL_OPTIONS.map((option) =>
+        {credentialOptions.map((option) =>
           renderToggle(option.id, option.label, option.description),
         )}
-        <div className="sm:col-span-2">{renderToggle("NONE", "아직 없어요")}</div>
+        <div className="sm:col-span-2">{renderToggle("NONE", t("koreanNoneLabel"))}</div>
       </div>
 
       {credentials.includes("TOPIK") ? (
         <div>
           <label htmlFor={topikSelectId} className="block text-sm font-extrabold text-[#33453e]">
-            TOPIK 급수
+            {t("koreanTopikSelectLabel")}
           </label>
           <select
             id={topikSelectId}
@@ -116,10 +118,11 @@ export function KoreanLevelStep({ credentials, none, topikLevel, kiipLevel, onCh
             }
             className={LEVEL_SELECT_CLASS}
           >
-            <option value="">선택해 주세요</option>
+            <option value="">{t("koreanSelectPlaceholder")}</option>
             {[1, 2, 3, 4, 5, 6].map((level) => (
               <option key={level} value={level}>
-                {level}급
+                {level}
+                {t("koreanTopikUnit")}
               </option>
             ))}
           </select>
@@ -129,7 +132,7 @@ export function KoreanLevelStep({ credentials, none, topikLevel, kiipLevel, onCh
       {credentials.includes("KIIP") ? (
         <div>
           <label htmlFor={kiipSelectId} className="block text-sm font-extrabold text-[#33453e]">
-            사회통합프로그램 단계
+            {t("koreanKiipSelectLabel")}
           </label>
           <select
             id={kiipSelectId}
@@ -144,10 +147,11 @@ export function KoreanLevelStep({ credentials, none, topikLevel, kiipLevel, onCh
             }
             className={LEVEL_SELECT_CLASS}
           >
-            <option value="">선택해 주세요</option>
+            <option value="">{t("koreanSelectPlaceholder")}</option>
             {[1, 2, 3, 4, 5, 6].map((level) => (
               <option key={level} value={level}>
-                {level}단계
+                {level}
+                {t("koreanKiipUnit")}
               </option>
             ))}
           </select>

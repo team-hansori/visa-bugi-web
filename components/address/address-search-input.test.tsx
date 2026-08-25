@@ -1,7 +1,12 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createTestTranslator } from "@/lib/test-utils/next-intl-mock";
 import { AddressSearchInput } from "./address-search-input";
+
+vi.mock("next-intl", () => ({
+  useTranslations: (namespace: string) => createTestTranslator(namespace),
+}));
 
 const suggestion = {
   roadAddress: "충북 제천시 내토로 295",

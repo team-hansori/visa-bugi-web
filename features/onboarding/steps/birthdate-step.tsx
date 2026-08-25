@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 
 type Props = {
@@ -9,13 +10,14 @@ type Props = {
 };
 
 export function BirthdateStep({ value, onChange, error }: Props) {
+  const t = useTranslations("Onboarding");
   const inputId = useId();
   const errorId = useId();
 
   return (
     <div>
       <label htmlFor={inputId} className="block text-sm font-extrabold text-[#33453e]">
-        생년월일
+        {t("birthdateLabel")}
       </label>
       <input
         id={inputId}

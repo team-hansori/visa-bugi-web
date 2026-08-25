@@ -66,89 +66,131 @@ const EMPTY_VALUES: FormValues = {
   programStartDate: "",
 };
 
-const STEP_TITLES: Record<StepId, string> = {
-  locale: "어떤 언어가 편한가요?",
-  nationality: "국적을 선택해 주세요",
-  gender: "성별을 선택해 주세요",
-  birthdate: "생년월일이 어떻게 되나요?",
-  currentVisa: "지금 가지고 계신 체류자격은 무엇인가요?",
-  address: "어디에 살고 계신가요?",
-  koreanLevel: "한국어능력 자격이 있으신가요?",
-  targetVisa: "어떤 체류자격을 준비하고 계신가요?",
-  f2rDetail: "국내 전문학사 이상 학위가 있으신가요?",
-  e74rDetail: "최근 10년 내 E-9·E-10·H-2로 몇 년 체류하셨나요?",
-  f4rDetail: "다음 중 어떤 상황에 가까우신가요?",
-  d2Detail: "재학 정보를 알려주세요",
-};
+type Translator = ReturnType<typeof useTranslations<"Onboarding">>;
 
-const STEP_DESCRIPTIONS: Record<StepId, string> = {
-  locale: "화면에 표시할 언어를 선택해 주세요.",
-  nationality: "맞춤 안내를 준비하는 데 사용합니다.",
-  gender: "선택하지 않아도 다음 단계로 넘어갈 수 있습니다.",
-  birthdate: "나이 요건 확인에 사용합니다.",
-  currentVisa: "이 답변으로 준비 가능한 체류자격을 좁혀서 보여드립니다.",
-  address: "지역특화형 비자는 인구감소지역 거주(희망)가 조건입니다.",
-  koreanLevel: "해당하는 자격을 모두 선택해 주세요. TOPIK과 사회통합프로그램을 둘 다 가지고 계셔도 괜찮습니다.",
-  targetVisa: "현재 체류자격을 기준으로 준비 가능한 자격만 보여드립니다.",
-  f2rDetail: "학위 또는 생활임금 요건 중 하나를 충족하면 됩니다.",
-  e74rDetail: "대략적인 기간이면 충분합니다.",
-  f4rDetail: "이주 유형에 따라 필요한 서류가 달라집니다.",
-  d2Detail: "광역형 비자 대상 학과인지 확인하는 데 사용합니다.",
-};
+/** 스텝 제목/설명 등 다국어 문구를 t()로부터 조립한다. 컴포넌트 안에서만 호출한다. */
+function buildStepTitles(t: Translator): Record<StepId, string> {
+  return {
+    locale: t("stepTitles.locale"),
+    nationality: t("stepTitles.nationality"),
+    gender: t("stepTitles.gender"),
+    birthdate: t("stepTitles.birthdate"),
+    currentVisa: t("stepTitles.currentVisa"),
+    address: t("stepTitles.address"),
+    koreanLevel: t("stepTitles.koreanLevel"),
+    targetVisa: t("stepTitles.targetVisa"),
+    f2rDetail: t("stepTitles.f2rDetail"),
+    e74rDetail: t("stepTitles.e74rDetail"),
+    f4rDetail: t("stepTitles.f4rDetail"),
+    d2Detail: t("stepTitles.d2Detail"),
+  };
+}
 
-const GENDER_OPTIONS = [
-  { id: "female", label: "여성" },
-  { id: "male", label: "남성" },
-  { id: "unspecified", label: "선택하지 않음" },
-];
+function buildStepDescriptions(t: Translator): Record<StepId, string> {
+  return {
+    locale: t("stepDescriptions.locale"),
+    nationality: t("stepDescriptions.nationality"),
+    gender: t("stepDescriptions.gender"),
+    birthdate: t("stepDescriptions.birthdate"),
+    currentVisa: t("stepDescriptions.currentVisa"),
+    address: t("stepDescriptions.address"),
+    koreanLevel: t("stepDescriptions.koreanLevel"),
+    targetVisa: t("stepDescriptions.targetVisa"),
+    f2rDetail: t("stepDescriptions.f2rDetail"),
+    e74rDetail: t("stepDescriptions.e74rDetail"),
+    f4rDetail: t("stepDescriptions.f4rDetail"),
+    d2Detail: t("stepDescriptions.d2Detail"),
+  };
+}
 
-const NATIONALITY_OPTIONS = [
-  { id: "VN", label: "베트남" },
-  { id: "UZ", label: "우즈베키스탄" },
-  { id: "NP", label: "네팔" },
-  { id: "KH", label: "캄보디아" },
-  { id: "CN", label: "중국" },
-  { id: "OT", label: "기타" },
-];
+function buildGenderOptions(t: Translator) {
+  return [
+    { id: "female", label: t("genderOptions.female") },
+    { id: "male", label: t("genderOptions.male") },
+    { id: "unspecified", label: t("genderOptions.unspecified") },
+  ];
+}
 
-const CURRENT_VISA_LABELS: Record<string, string> = {
-  "D-2": "D-2 (유학)",
-  "D-10": "D-10 (구직)",
-  "E-9": "E-9 (비전문취업)",
-  "E-10": "E-10 (선원취업)",
-  "H-2": "H-2 (방문취업)",
-  "F-4": "F-4 (재외동포)",
-  OTHER: "다른 체류자격",
-  UNKNOWN: "잘 모르겠어요",
-};
+function buildNationalityOptions(t: Translator) {
+  return [
+    { id: "VN", label: t("nationalityOptions.VN") },
+    { id: "UZ", label: t("nationalityOptions.UZ") },
+    { id: "NP", label: t("nationalityOptions.NP") },
+    { id: "KH", label: t("nationalityOptions.KH") },
+    { id: "CN", label: t("nationalityOptions.CN") },
+    { id: "OT", label: t("nationalityOptions.OT") },
+  ];
+}
 
-const TARGET_VISA_LABELS: Record<TargetVisaCode, string> = {
-  "F-2-R": "F-2-R (지역특화 우수인재)",
-  "E-7-4R": "E-7-4R (지역특화 숙련기능인력)",
-  "F-4-R": "F-4-R (지역특화 재외동포)",
-  "D-2": "D-2 (충북 광역형 유학)",
-};
+function buildCurrentVisaLabels(t: Translator): Record<string, string> {
+  return {
+    "D-2": t("currentVisaOptions.D-2"),
+    "D-10": t("currentVisaOptions.D-10"),
+    "E-9": t("currentVisaOptions.E-9"),
+    "E-10": t("currentVisaOptions.E-10"),
+    "H-2": t("currentVisaOptions.H-2"),
+    "F-4": t("currentVisaOptions.F-4"),
+    OTHER: t("currentVisaOptions.OTHER"),
+    UNKNOWN: t("currentVisaOptions.UNKNOWN"),
+  };
+}
 
-const EDUCATION_OPTIONS = [
-  { id: "ASSOCIATE_OR_ABOVE", label: "전문학사 이상 있음" },
-  { id: "BELOW_ASSOCIATE", label: "없음" },
-];
+function buildTargetVisaLabels(t: Translator): Record<TargetVisaCode, string> {
+  return {
+    "F-2-R": t("targetVisaOptions.F-2-R"),
+    "E-7-4R": t("targetVisaOptions.E-7-4R"),
+    "F-4-R": t("targetVisaOptions.F-4-R"),
+    "D-2": t("targetVisaOptions.D-2"),
+  };
+}
 
-const RESIDENCE_YEAR_OPTIONS = [
-  { id: "1", label: "1년 미만" },
-  { id: "2", label: "2년 이상" },
-  { id: "3", label: "3년 이상" },
-  { id: "4", label: "4년 이상" },
-];
+function buildEducationOptions(t: Translator) {
+  return [
+    { id: "ASSOCIATE_OR_ABOVE", label: t("educationOptions.ASSOCIATE_OR_ABOVE") },
+    { id: "BELOW_ASSOCIATE", label: t("educationOptions.BELOW_ASSOCIATE") },
+  ];
+}
 
-const MIGRATION_TYPE_OPTIONS = [
-  { id: "EXISTING_RESIDENT", label: "기존 거주자", description: "이미 인구감소지역에 2년 이상 거주" },
-  { id: "DOMESTIC_TRANSFER", label: "국내 전입자", description: "국내 다른 지역에서 가족과 함께 이주" },
-  { id: "OVERSEAS_TRANSFER", label: "해외 전입자", description: "해외에서 가족과 함께 이주" },
-];
+function buildResidenceYearOptions(t: Translator) {
+  return [
+    { id: "1", label: t("residenceYearOptions.1") },
+    { id: "2", label: t("residenceYearOptions.2") },
+    { id: "3", label: t("residenceYearOptions.3") },
+    { id: "4", label: t("residenceYearOptions.4") },
+  ];
+}
+
+function buildMigrationTypeOptions(t: Translator) {
+  return [
+    {
+      id: "EXISTING_RESIDENT",
+      label: t("migrationTypeLabels.EXISTING_RESIDENT"),
+      description: t("migrationTypeDescriptions.EXISTING_RESIDENT"),
+    },
+    {
+      id: "DOMESTIC_TRANSFER",
+      label: t("migrationTypeLabels.DOMESTIC_TRANSFER"),
+      description: t("migrationTypeDescriptions.DOMESTIC_TRANSFER"),
+    },
+    {
+      id: "OVERSEAS_TRANSFER",
+      label: t("migrationTypeLabels.OVERSEAS_TRANSFER"),
+      description: t("migrationTypeDescriptions.OVERSEAS_TRANSFER"),
+    },
+  ];
+}
 
 export function OnboardingForm() {
   const t = useTranslations("Onboarding");
+  const STEP_TITLES = buildStepTitles(t);
+  const STEP_DESCRIPTIONS = buildStepDescriptions(t);
+  const GENDER_OPTIONS = buildGenderOptions(t);
+  const NATIONALITY_OPTIONS = buildNationalityOptions(t);
+  const CURRENT_VISA_LABELS = buildCurrentVisaLabels(t);
+  const TARGET_VISA_LABELS = buildTargetVisaLabels(t);
+  const EDUCATION_OPTIONS = buildEducationOptions(t);
+  const RESIDENCE_YEAR_OPTIONS = buildResidenceYearOptions(t);
+  const MIGRATION_TYPE_OPTIONS = buildMigrationTypeOptions(t);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -337,7 +379,9 @@ export function OnboardingForm() {
         )
       : [...TARGET_VISA_CODES];
     return recommended.map((code) => ({ id: code, label: TARGET_VISA_LABELS[code] }));
-  }, [values.currentVisaCode]);
+    // TARGET_VISA_LABELS도 넣는다 — 안 넣으면 언어를 바꿔도(currentVisaCode는
+    // 그대로인데) 목표비자 라벨이 이전 언어로 굳어 있는 실제 버그가 있었다.
+  }, [values.currentVisaCode, TARGET_VISA_LABELS]);
 
   const canSubmit =
     isLastStep &&

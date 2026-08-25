@@ -24,7 +24,7 @@ export async function MyHub() {
         <p className="mt-1 text-sm leading-6 text-[#5d7068]">{t("loginBanner.body")}</p>
       </section>
 
-      <nav aria-label={t("linksAriaLabel")} className="grid gap-3 sm:grid-cols-2">
+      <nav aria-label={t("linksAriaLabel")} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {links.map((link) => (
           <Link
             key={link.href}

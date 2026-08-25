@@ -92,5 +92,23 @@
       "terms": { "label": "이용약관", "description": "서비스 이용 조건을 확인해요" },
       "privacy": { "label": "개인정보처리방침", "description": "개인정보 처리 방식을 확인해요" }
     }
+  },
+  "Settings": {
+    "eyebrow": "설정",
+    "pageTitle": "설정",
+    "language": {
+      "eyebrow": "언어",
+      "heading": "화면 언어",
+      "description": "선택한 언어로 화면 문구가 바뀝니다."
+    },
+    "location": {
+      "eyebrow": "위치 기반 기능",
+      "heading": "위치 사용",
+      "toggleLabel": "위치 기반 기관 추천",
+      "statusPreparing": "준비 중",
+      "description": "위치 기반 기능은 아직 준비 중입니다. 이 화면의 표시만으로는 브라우저나 기기에 이미 허용한 위치 권한이 해제되지 않아요. 위치 권한을 바꾸려면 브라우저 또는 기기 설정에서 직접 변경해 주세요.",
+      "policyLinkLabel": "위치정보 이용약관",
+      "policyLinkStatus": "준비 중"
+    }
   }
 }

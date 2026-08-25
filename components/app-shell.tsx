@@ -42,7 +42,7 @@ function Brand() {
         height={160}
         unoptimized
         priority
-        className="h-auto w-32 max-w-[45vw] transition-transform group-hover:-translate-y-0.5 sm:w-40 md:w-48"
+        className="h-auto w-24 max-w-[45vw] transition-transform group-hover:-translate-y-0.5 sm:w-28 md:w-32"
       />
     </Link>
   );

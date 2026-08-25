@@ -77,5 +77,20 @@
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "My": {
+    "eyebrow": "MY",
+    "pageTitle": "마이",
+    "linksAriaLabel": "마이 메뉴",
+    "loginBanner": {
+      "title": "로그인 준비 중입니다",
+      "body": "로그인 기능이 추가되면 계정 정보와 진행 상황을 이 화면에서 확인할 수 있어요."
+    },
+    "links": {
+      "settings": { "label": "설정", "description": "언어와 위치 기반 기능 상태를 확인해요" },
+      "contact": { "label": "문의하기", "description": "궁금한 점을 남겨주세요" },
+      "terms": { "label": "이용약관", "description": "서비스 이용 조건을 확인해요" },
+      "privacy": { "label": "개인정보처리방침", "description": "개인정보 처리 방식을 확인해요" }
+    }
   }
 }

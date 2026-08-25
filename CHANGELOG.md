@@ -31,9 +31,11 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - I18n next-intl 라우팅 인프라 구축 계획 추가
 - CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
 
 ### ⚙️ Miscellaneous Tasks
 
 - Initialize web repository GitHub settings
 - Add Claude Code project configuration
 - Next-intl 설치 및 Next.js 플러그인 연결
+- Add transparent Bugi brand assets

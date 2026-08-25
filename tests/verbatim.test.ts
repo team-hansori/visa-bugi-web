@@ -3,8 +3,16 @@ import { extractContactTokens, redactViolations, verbatimViolations } from "@/fe
 
 describe("extractContactTokens", () => {
   it("하이픈 전화번호와 특수번호를 추출한다", () => {
-    expect(extractContactTokens("고용노동부 1350 또는 043-840-4000, 공단 1588-0075"))
+    expect(extractContactTokens("고용노동부 전화 1350 또는 043-840-4000, 공단 1588-0075"))
       .toEqual(["1350", "043-840-4000", "1588-0075"]);
+  });
+  it("연락처 문맥이 없는 4자리 쿼터 값은 추출하지 않는다", () => {
+    expect(extractContactTokens("잔여 인원은 1350명이고 쿼터는 1200명입니다")).toEqual([]);
+    expect(verbatimViolations("쿼터는 1350명입니다", [])).toEqual([]);
+  });
+  it("연락처 문맥이 있는 4자리 특수번호는 추출한다", () => {
+    expect(extractContactTokens("☎ 1350, 전화: 1200, tel 1588"))
+      .toEqual(["1350", "1200", "1588"]);
   });
   it("연도(1900~2099)는 전화번호로 보지 않는다", () => {
     expect(extractContactTokens("2026년 공고 기준입니다")).toEqual([]);

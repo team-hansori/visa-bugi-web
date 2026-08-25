@@ -3,7 +3,8 @@ export type VisaCode = "COMMON" | "F-2-R" | "E-7-4R" | "F-4-R" | "D-2";
 export type ApplicationFormTemplateKey =
   | "common_integrated_application"
   | "f2r_recommendation_application"
-  | "e74_self_assessment";
+  | "e74_self_assessment"
+  | "generic_application_form";
 
 export type FormFieldKind =
   | "text"

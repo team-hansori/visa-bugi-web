@@ -81,8 +81,8 @@
   },
   "Ocr": {
     "eyebrow": "신청서 작성 도우미",
-    "title": "비자 신청서 사진 점검",
-    "description": "신청서 사진에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다. 결과는 자동 제출되지 않습니다.",
+    "title": "비자 신청서 작성 항목 점검",
+    "description": "신청서 사진 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다. 결과는 자동 제출되지 않습니다.",
     "languageNotice": "서식의 한국어를 읽은 뒤 안내는 현재 선택한 앱 언어로 제공합니다.",
     "catalog": {
       "supabase": "Supabase 스키마 v2 연결",
@@ -90,31 +90,34 @@
     },
     "form": {
       "label": "신청서 종류",
-      "auto": "사진에서 자동으로 찾기",
+      "auto": "첨부 파일에서 자동으로 찾기",
+      "count": "현재 {count}개 서식을 선택할 수 있습니다.",
       "hint": "잘못 인식될 수 있으므로 신청서 종류를 알고 있다면 직접 선택해 주세요."
     },
     "upload": {
       "step": "1단계",
-      "title": "신청서 사진 선택",
-      "chooseTitle": "신청서 사진을 준비하세요",
-      "chooseDescription": "문서 전체가 보이고 글자가 흔들리지 않은 사진이 좋아요.",
+      "title": "신청서 사진·파일 첨부",
+      "chooseTitle": "신청서 사진 또는 HWPX 파일을 준비하세요",
+      "chooseDescription": "사진은 문서 전체와 글자가 선명하게 보여야 하며, 원본 HWPX 파일도 첨부할 수 있어요.",
       "choose": "이미지 선택",
       "inputLabel": "신청서 사진 선택",
       "capture": "사진 촬영",
-      "select": "앨범에서 선택",
+      "select": "파일 첨부하기",
       "cameraInputLabel": "신청서 사진 촬영",
-      "galleryInputLabel": "앨범에서 신청서 사진 선택",
-      "types": "JPG, PNG 또는 WebP 이미지 한 장(원본 최대 16MB)을 선택해 주세요.",
+      "galleryInputLabel": "신청서 사진 또는 HWPX 파일 첨부",
+      "types": "JPG·PNG·WebP 사진 한 장 또는 HWPX 파일 한 개를 첨부해 주세요(원본 최대 16MB).",
       "ready": "{name} 파일을 분석할 준비가 되었습니다.",
+      "hwpxReady": "{name} HWPX 파일을 읽을 준비가 되었습니다.",
+      "hwpxDescription": "사진 OCR 대신 HWPX 내부의 문서 내용을 안전하게 읽어 작성 항목을 점검합니다.",
       "checking": "API를 호출하기 전에 이 기기에서 사진 상태를 무료로 확인하는 중입니다.",
       "optimizing": "사진을 안전하게 전송할 수 있도록 이 기기에서 크기를 줄이는 중입니다.",
       "optimized": "{name} 파일을 이 기기에서 4MB 이하로 줄였습니다. 분석할 준비가 되었습니다.",
-      "removed": "사진을 삭제했습니다. 다른 이미지를 선택할 수 있습니다.",
+      "removed": "첨부 파일을 삭제했습니다. 다른 사진이나 파일을 선택할 수 있습니다.",
       "retakeHint": "신청서 전체가 선명하게 보이도록 다시 촬영하거나 다른 사진을 선택해 주세요.",
       "previewAlt": "선택한 신청서 이미지 {name}",
-      "remove": "사진 삭제",
+      "remove": "첨부 삭제",
       "retake": "다시 촬영",
-      "replace": "다른 사진 선택"
+      "replace": "다른 파일 첨부"
     },
     "imageCheck": {
       "title": "이 사진으로는 신청서를 확인하기 어려워요",
@@ -127,7 +130,7 @@
     },
     "actions": {
       "analyze": "작성 항목 점검",
-      "analyzing": "사진을 분석하는 중"
+      "analyzing": "신청서를 분석하는 중"
     },
     "retake": {
       "title": "신청서 사진을 다시 확인해 주세요",
@@ -135,9 +138,9 @@
       "action": "다시 촬영하기"
     },
     "privacy": {
-      "title": "사진 처리 원칙",
-      "temporary": "사진은 OCR 분석을 위해서만 일시 전송",
-      "noDatabase": "원본 사진과 분석 결과를 데이터베이스에 저장하지 않음",
+      "title": "첨부 파일 처리 원칙",
+      "temporary": "사진·HWPX는 분석을 위해서만 일시 전송",
+      "noDatabase": "원본 첨부 파일과 분석 결과를 데이터베이스에 저장하지 않음",
       "reviewFirst": "인식 결과를 사용자가 확인한 뒤에만 활용"
     },
     "tips": {
@@ -148,8 +151,9 @@
     },
     "errors": {
       "generic": "신청서 분석 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-      "fileType": "JPG, PNG 또는 WebP 이미지만 선택할 수 있습니다.",
-      "fileSize": "원본 파일 크기는 16MB 이하여야 합니다.",
+      "fileType": "JPG, PNG, WebP 사진 또는 HWPX 파일만 첨부할 수 있습니다.",
+      "fileSize": "사진 또는 HWPX 원본 파일 크기는 16MB 이하여야 합니다.",
+      "hwpx": "올바른 HWPX 파일인지 확인해 주세요. 손상되었거나 다른 파일의 확장자만 바꾼 경우에는 분석할 수 없습니다.",
       "optimize": "사진 크기를 줄이지 못했습니다. 더 작은 사진을 선택해 주세요.",
       "rateLimit": "짧은 시간에 너무 많이 요청했습니다. 잠시 후 다시 시도해 주세요."
     },

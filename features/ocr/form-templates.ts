@@ -80,6 +80,30 @@ export const applicationFormTemplates: ApplicationFormTemplate[] = [
       field("applicant_signature", "작성자 서명", "signature", true, "SIGNER", { manualOnly: true }),
     ],
   },
+  {
+    templateKey: "generic_application_form",
+    visaCode: "COMMON",
+    titleKr: "기타 비자 신청·확인 서류",
+    revision: "data-catalog-v2",
+    documentNamePatterns: [],
+    fields: [
+      field("application_type", "신청·신고 유형", "choice", false, "APPLICANT"),
+      field("full_name", "성명", "text", false, "APPLICANT"),
+      field("birth_date", "생년월일", "date", false, "APPLICANT"),
+      field("sex", "성별", "choice", false, "APPLICANT"),
+      field("nationality", "국적", "text", false, "APPLICANT"),
+      field("alien_registration_number", "외국인등록번호", "identifier", false, "APPLICANT", { sensitive: true }),
+      field("passport_number", "여권번호", "identifier", false, "APPLICANT", { sensitive: true }),
+      field("address_korea", "주소", "address", false, "APPLICANT"),
+      field("mobile_phone", "연락처", "text", false, "APPLICANT"),
+      field("email", "전자우편", "text", false, "APPLICANT"),
+      field("employer_name", "근무처·기관명", "text", false, "EMPLOYER"),
+      field("business_registration_number", "사업자등록번호", "identifier", false, "EMPLOYER", { sensitive: true }),
+      field("application_date", "작성·신청일", "date", false, "APPLICANT"),
+      field("applicant_signature", "서명 또는 인", "signature", false, "SIGNER", { manualOnly: true }),
+      field("official_use_only", "기관 작성란", "text", false, "OFFICIAL", { manualOnly: true }),
+    ],
+  },
 ];
 
 type FieldOptions = Pick<FormFieldDefinition, "manualOnly" | "sensitive" | "example">;

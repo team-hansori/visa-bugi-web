@@ -23,11 +23,39 @@ import type {
 const maxUploadFileSize = 4 * 1024 * 1024;
 const maxSourceFileSize = 16 * 1024 * 1024;
 const acceptedImageTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+const attachmentAccept = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  ".hwpx",
+  "application/vnd.hancom.hwpx",
+  "application/haansofthwpx",
+].join(",");
 
 type DocumentUploadProps = {
   forms: ApplicationFormOption[];
   catalogSource: ApplicationFormCatalog["source"];
 };
+
+function groupForms(forms: ApplicationFormOption[]) {
+  const groups = new Map<
+    string,
+    { key: string; label: string; forms: ApplicationFormOption[] }
+  >();
+
+  for (const form of forms) {
+    const key = `${form.visaCode}:${form.visaNameKr}`;
+    const group = groups.get(key) ?? {
+      key,
+      label: `${form.visaCode} · ${form.visaNameKr}`,
+      forms: [],
+    };
+    group.forms.push(form);
+    groups.set(key, group);
+  }
+
+  return [...groups.values()];
+}
 
 export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
   const t = useTranslations("Ocr");
@@ -35,7 +63,7 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
   const galleryInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [templateKey, setTemplateKey] = useState("auto");
+  const [selectedFormId, setSelectedFormId] = useState("auto");
   const [analysis, setAnalysis] = useState<ApplicationFormAnalysis | null>(null);
   const [message, setMessage] = useState(t("upload.types"));
   const [photoIssue, setPhotoIssue] = useState<ClientImageIssue | null>(null);
@@ -57,7 +85,9 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     setPhotoIssue(null);
     setError("");
 
-    if (!acceptedImageTypes.has(selectedFile.type)) {
+    const imageFile = acceptedImageTypes.has(selectedFile.type);
+    const hwpxFile = isHwpxFile(selectedFile);
+    if (!imageFile && !hwpxFile) {
       setMessage(t("errors.fileType"));
       input.value = "";
       return;
@@ -71,6 +101,16 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
 
     try {
       setIsPreparing(true);
+      if (hwpxFile) {
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        setFile(selectedFile);
+        setPreviewUrl(null);
+        setAnalysis(null);
+        setPhotoIssue(null);
+        setMessage(t("upload.hwpxReady", { name: selectedFile.name }));
+        return;
+      }
+
       const shouldOptimize = selectedFile.size > maxUploadFileSize;
       setMessage(
         shouldOptimize ? t("upload.optimizing") : t("upload.checking"),
@@ -150,9 +190,14 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     setAnalysis(null);
 
     try {
+      const selectedForm = forms.find(
+        (form) => form.documentRequirementId === selectedFormId,
+      );
       const formData = new FormData();
       formData.set("file", file);
-      formData.set("templateKey", templateKey);
+      formData.set("templateKey", selectedForm?.templateKey ?? "auto");
+      formData.set("documentName", selectedForm?.documentName ?? "");
+      formData.set("visaCode", selectedForm?.visaCode ?? "");
       formData.set("allowDemo", "true");
 
       const response = await fetch("/api/ocr/application-form", {
@@ -201,30 +246,48 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           </label>
           <select
             id="form-template"
-            value={templateKey}
+            value={selectedFormId}
             onChange={(event) => {
-              setTemplateKey(event.target.value);
+              setSelectedFormId(event.target.value);
               setAnalysis(null);
             }}
             className="mt-2 min-h-12 w-full rounded-2xl border border-[#cfdad4] bg-white px-4 text-sm font-bold text-[#31463d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
           >
             <option value="auto">{t("form.auto")}</option>
-            {forms.map((form) => (
-              <option key={`${form.documentRequirementId}:${form.templateKey}`} value={form.templateKey}>
-                {form.visaCode} · {form.documentName}
-              </option>
+            {groupForms(forms).map((group) => (
+              <optgroup key={group.key} label={group.label}>
+                {group.forms.map((form) => (
+                  <option key={form.documentRequirementId} value={form.documentRequirementId}>
+                    {form.documentName}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
-          <p className="mt-2 text-xs leading-5 text-[#71807a]">{t("form.hint")}</p>
+          <p className="mt-2 text-xs leading-5 text-[#71807a]">
+            {t("form.count", { count: forms.length })} {t("form.hint")}
+          </p>
 
           <div className="mt-5">
-            {previewUrl && file ? (
-              <div className="relative min-h-[360px] overflow-hidden rounded-[22px] bg-[#e9eeeb] sm:min-h-[500px]">
-                <Image src={previewUrl} alt={t("upload.previewAlt", { name: file.name })} fill unoptimized className="object-contain p-3 sm:p-5" />
-                <button type="button" onClick={removeFile} className="absolute right-3 top-3 z-10 min-h-11 rounded-xl bg-[#27342f]/90 px-4 text-xs font-extrabold text-white shadow-lg backdrop-blur focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                  {t("upload.remove")}
-                </button>
-              </div>
+            {file ? (
+              previewUrl ? (
+                <div className="relative min-h-[360px] overflow-hidden rounded-[22px] bg-[#e9eeeb] sm:min-h-[500px]">
+                  <Image src={previewUrl} alt={t("upload.previewAlt", { name: file.name })} fill unoptimized className="object-contain p-3 sm:p-5" />
+                  <button type="button" onClick={removeFile} className="absolute right-3 top-3 z-10 min-h-11 rounded-xl bg-[#27342f]/90 px-4 text-xs font-extrabold text-white shadow-lg backdrop-blur focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                    {t("upload.remove")}
+                  </button>
+                </div>
+              ) : (
+                <div className="relative flex min-h-[260px] flex-col items-center justify-center rounded-[22px] border border-[#cddbd4] bg-[#f3f8f5] px-6 text-center sm:min-h-[320px]">
+                  <span className="grid size-16 place-items-center rounded-[22px] bg-white text-[#2d6d5d] shadow-sm"><Icon name="document" className="size-8" /></span>
+                  <strong className="mt-5 max-w-xl break-all text-base font-black text-[#294038]">{file.name}</strong>
+                  <span className="mt-2 rounded-full bg-[#dcece5] px-3 py-1 text-xs font-extrabold text-[#2d6d5d]">HWPX</span>
+                  <p className="mt-3 max-w-lg text-sm leading-6 text-[#66756e]">{t("upload.hwpxDescription")}</p>
+                  <button type="button" onClick={removeFile} className="absolute right-3 top-3 min-h-11 rounded-xl bg-[#27342f] px-4 text-xs font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                    {t("upload.remove")}
+                  </button>
+                </div>
+              )
             ) : (
               <div className="flex min-h-[360px] w-full flex-col items-center justify-center rounded-[22px] border-2 border-dashed border-[#b9cbc2] bg-[#f7faf8] px-6 text-center sm:min-h-[500px]">
                 <span className="grid size-16 place-items-center rounded-[22px] bg-[#e5f1ec] text-[#2d6d5d]"><Icon name="camera" className="size-8" /></span>
@@ -237,7 +300,7 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
               </div>
             )}
             <input ref={cameraInputRef} type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseFile} className="sr-only" aria-label={t("upload.cameraInputLabel")} />
-            <input ref={galleryInputRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={chooseFile} className="sr-only" aria-label={t("upload.galleryInputLabel")} />
+            <input ref={galleryInputRef} type="file" accept={attachmentAccept} onChange={chooseFile} className="sr-only" aria-label={t("upload.galleryInputLabel")} />
             <p className="mt-3 text-sm leading-6 text-[#6c7a74]" aria-live="polite">{message}</p>
           </div>
 
@@ -253,8 +316,10 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           ) : null}
 
           {file ? (
-            <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              <button type="button" onClick={openCamera} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="camera" className="size-4" />{t("upload.retake")}</button>
+            <div className={`mt-5 grid gap-3 ${isHwpxFile(file) ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+              {!isHwpxFile(file) ? (
+                <button type="button" onClick={openCamera} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="camera" className="size-4" />{t("upload.retake")}</button>
+              ) : null}
               <button type="button" onClick={openGallery} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="upload" className="size-4" />{t("upload.replace")}</button>
               <button
                 type="button"
@@ -293,7 +358,13 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
         </aside>
       </div>
 
-      {analysis ? <AnalysisResult analysis={analysis} onRetake={retakePhoto} /> : null}
+      {analysis ? (
+        <AnalysisResult
+          analysis={analysis}
+          onRetake={retakePhoto}
+          allowRetake={!file || !isHwpxFile(file)}
+        />
+      ) : null}
     </div>
   );
 }
@@ -301,9 +372,11 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
 function AnalysisResult({
   analysis,
   onRetake,
+  allowRetake,
 }: {
   analysis: ApplicationFormAnalysis;
   onRetake: () => void;
+  allowRetake: boolean;
 }) {
   const t = useTranslations("Ocr");
   const summaryCards = [
@@ -313,16 +386,17 @@ function AnalysisResult({
     { key: "manual", value: analysis.summary.manual, tone: "bg-[#edf0f7] text-[#4f5876]" },
   ] as const;
   const shouldRetake =
-    analysis.imageQuality !== "clear" ||
-    analysis.warnings.some((warning) =>
-      [
-        "FORM_NOT_CONFIRMED",
-        "FORM_MISMATCH",
-        "IMAGE_BLURRED",
-        "IMAGE_CROPPED",
-        "IMAGE_GLARE",
-      ].includes(warning),
-    );
+    allowRetake &&
+    (analysis.imageQuality !== "clear" ||
+      analysis.warnings.some((warning) =>
+        [
+          "FORM_NOT_CONFIRMED",
+          "FORM_MISMATCH",
+          "IMAGE_BLURRED",
+          "IMAGE_CROPPED",
+          "IMAGE_GLARE",
+        ].includes(warning),
+      ));
 
   return (
     <section className="rounded-[28px] border border-[#dce5e0] bg-white p-4 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-6" aria-labelledby="analysis-title">
@@ -485,8 +559,13 @@ function warningLabel(warning: string, t: Translator) {
 function apiErrorMessage(code: string, t: Translator) {
   if (code === "UNSUPPORTED_FILE_TYPE") return t("errors.fileType");
   if (code === "FILE_TOO_LARGE") return t("errors.fileSize");
+  if (code === "INVALID_HWPX") return t("errors.hwpx");
   if (code === "TOO_MANY_REQUESTS") return t("errors.rateLimit");
   return t("errors.generic");
+}
+
+function isHwpxFile(file: File) {
+  return file.name.toLocaleLowerCase().endsWith(".hwpx");
 }
 
 async function optimizeImageForUpload(source: File) {

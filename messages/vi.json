@@ -81,8 +81,8 @@
   },
   "Ocr": {
     "eyebrow": "Trợ lý điền đơn",
-    "title": "Kiểm tra ảnh đơn xin visa",
-    "description": "Đọc các mục đã điền trong ảnh đơn và hướng dẫn những mục còn trống hoặc cần kiểm tra lại. Kết quả không được tự động nộp.",
+    "title": "Kiểm tra các mục trong đơn xin visa",
+    "description": "Đọc các mục đã điền từ ảnh đơn hoặc tệp HWPX và hướng dẫn những mục còn trống hoặc cần kiểm tra lại. Kết quả không được tự động nộp.",
     "languageNotice": "Hệ thống đọc tiếng Hàn trên biểu mẫu và hướng dẫn bằng ngôn ngữ ứng dụng bạn đang chọn.",
     "catalog": {
       "supabase": "Đã kết nối lược đồ Supabase v2",
@@ -90,31 +90,34 @@
     },
     "form": {
       "label": "Loại đơn",
-      "auto": "Tự nhận diện từ ảnh",
+      "auto": "Tự nhận diện từ tệp đính kèm",
+      "count": "Hiện có thể chọn {count} biểu mẫu.",
       "hint": "Kết quả có thể bị nhận diện sai. Nếu biết loại đơn, hãy chọn trực tiếp."
     },
     "upload": {
       "step": "Bước 1",
-      "title": "Chọn ảnh đơn",
-      "chooseTitle": "Chuẩn bị ảnh đơn xin visa",
-      "chooseDescription": "Nên dùng ảnh thấy toàn bộ tài liệu và chữ không bị rung, nhòe.",
+      "title": "Đính kèm ảnh hoặc tệp đơn",
+      "chooseTitle": "Chuẩn bị ảnh đơn hoặc tệp HWPX",
+      "chooseDescription": "Ảnh cần thấy rõ toàn bộ tài liệu và chữ; bạn cũng có thể đính kèm tệp HWPX gốc.",
       "choose": "Chọn ảnh",
       "inputLabel": "Chọn ảnh đơn xin visa",
       "capture": "Chụp ảnh",
-      "select": "Chọn từ thư viện",
+      "select": "Đính kèm tệp",
       "cameraInputLabel": "Chụp ảnh đơn xin visa",
-      "galleryInputLabel": "Chọn ảnh đơn xin visa từ thư viện",
-      "types": "Chọn một ảnh JPG, PNG hoặc WebP (ảnh gốc tối đa 16MB).",
+      "galleryInputLabel": "Đính kèm ảnh đơn hoặc tệp HWPX",
+      "types": "Đính kèm một ảnh JPG, PNG, WebP hoặc một tệp HWPX (tệp gốc tối đa 16MB).",
       "ready": "Tệp {name} đã sẵn sàng để phân tích.",
+      "hwpxReady": "Tệp HWPX {name} đã sẵn sàng để đọc.",
+      "hwpxDescription": "Hệ thống đọc an toàn nội dung bên trong HWPX để kiểm tra các mục thay vì OCR ảnh.",
       "checking": "Đang kiểm tra chất lượng ảnh miễn phí trên thiết bị trước khi gọi API.",
       "optimizing": "Đang giảm kích thước ảnh trên thiết bị này để truyền an toàn.",
       "optimized": "Đã giảm tệp {name} xuống dưới 4MB trên thiết bị này. Ảnh đã sẵn sàng để phân tích.",
-      "removed": "Đã xóa ảnh. Bạn có thể chọn ảnh khác.",
+      "removed": "Đã xóa tệp đính kèm. Bạn có thể chọn ảnh hoặc tệp khác.",
       "retakeHint": "Hãy chụp lại hoặc chọn ảnh khác sao cho thấy rõ toàn bộ trang đơn.",
       "previewAlt": "Ảnh đơn đã chọn {name}",
-      "remove": "Xóa ảnh",
+      "remove": "Xóa tệp",
       "retake": "Chụp lại",
-      "replace": "Chọn ảnh khác"
+      "replace": "Đính kèm tệp khác"
     },
     "imageCheck": {
       "title": "Ảnh này khó dùng để kiểm tra đơn",
@@ -127,7 +130,7 @@
     },
     "actions": {
       "analyze": "Kiểm tra các mục",
-      "analyzing": "Đang phân tích ảnh"
+      "analyzing": "Đang phân tích đơn"
     },
     "retake": {
       "title": "Hãy kiểm tra lại ảnh đơn",
@@ -135,9 +138,9 @@
       "action": "Chụp lại"
     },
     "privacy": {
-      "title": "Nguyên tắc xử lý ảnh",
-      "temporary": "Ảnh chỉ được gửi tạm thời để phân tích OCR",
-      "noDatabase": "Không lưu ảnh gốc hoặc kết quả vào cơ sở dữ liệu",
+      "title": "Nguyên tắc xử lý tệp đính kèm",
+      "temporary": "Ảnh hoặc HWPX chỉ được gửi tạm thời để phân tích",
+      "noDatabase": "Không lưu tệp gốc hoặc kết quả vào cơ sở dữ liệu",
       "reviewFirst": "Chỉ sử dụng kết quả sau khi người dùng kiểm tra"
     },
     "tips": {
@@ -148,8 +151,9 @@
     },
     "errors": {
       "generic": "Có lỗi khi phân tích đơn. Vui lòng thử lại sau.",
-      "fileType": "Chỉ có thể chọn ảnh JPG, PNG hoặc WebP.",
-      "fileSize": "Dung lượng ảnh gốc phải từ 16MB trở xuống.",
+      "fileType": "Chỉ có thể đính kèm ảnh JPG, PNG, WebP hoặc tệp HWPX.",
+      "fileSize": "Ảnh hoặc tệp HWPX gốc phải từ 16MB trở xuống.",
+      "hwpx": "Hãy kiểm tra đây là tệp HWPX hợp lệ. Không thể phân tích tệp bị hỏng hoặc chỉ đổi phần mở rộng.",
       "optimize": "Không thể giảm kích thước ảnh. Vui lòng chọn ảnh nhỏ hơn.",
       "rateLimit": "Bạn đã gửi quá nhiều yêu cầu trong thời gian ngắn. Vui lòng thử lại sau."
     },

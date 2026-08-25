@@ -78,5 +78,122 @@
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "Ocr": {
+    "eyebrow": "Ariza to‘ldirish yordamchisi",
+    "title": "Viza arizasi rasmini tekshirish",
+    "description": "Ariza rasmidagi to‘ldirilgan maydonlarni o‘qiydi va bo‘sh yoki qayta tekshirilishi kerak bo‘lgan joylarni ko‘rsatadi. Natija avtomatik yuborilmaydi.",
+    "languageNotice": "Tizim shakldagi koreyscha matnni o‘qiydi va yo‘riqnomani ilovada tanlangan tilda beradi.",
+    "catalog": {
+      "supabase": "Supabase v2 sxemasi ulangan",
+      "builtIn": "Tekshirilgan shablon demo"
+    },
+    "form": {
+      "label": "Ariza turi",
+      "auto": "Rasmdan avtomatik aniqlash",
+      "hint": "Noto‘g‘ri aniqlanishi mumkin. Ariza turini bilsangiz, uni bevosita tanlang."
+    },
+    "upload": {
+      "step": "1-bosqich",
+      "title": "Ariza rasmini tanlash",
+      "chooseTitle": "Rasmga oling yoki rasm tanlang",
+      "chooseDescription": "Hujjat to‘liq ko‘rinadigan va matni xira bo‘lmagan rasmni tanlang.",
+      "choose": "Rasm tanlash",
+      "inputLabel": "Viza arizasi rasmini tanlash",
+      "types": "Bitta JPG, PNG yoki WebP rasmini tanlang (asl fayl ko‘pi bilan 16MB).",
+      "ready": "{name} fayli tahlilga tayyor.",
+      "optimizing": "Xavfsiz yuborish uchun rasm hajmi shu qurilmada kichraytirilmoqda.",
+      "optimized": "{name} fayli shu qurilmada 4MB dan kichik qilindi va tahlilga tayyor.",
+      "removed": "Rasm o‘chirildi. Boshqa rasm tanlashingiz mumkin.",
+      "previewAlt": "Tanlangan ariza rasmi {name}",
+      "remove": "Rasmni o‘chirish",
+      "replace": "Boshqa rasm tanlash"
+    },
+    "actions": {
+      "analyze": "To‘ldirilgan joylarni tekshirish",
+      "analyzing": "Rasm tahlil qilinmoqda"
+    },
+    "privacy": {
+      "title": "Rasmni qayta ishlash qoidalari",
+      "temporary": "Rasm faqat OCR tahlili uchun vaqtincha yuboriladi",
+      "noDatabase": "Asl rasm va tahlil natijasi ma’lumotlar bazasida saqlanmaydi",
+      "reviewFirst": "Natija faqat foydalanuvchi tekshirganidan keyin ishlatiladi"
+    },
+    "tips": {
+      "eyebrow": "Rasmga olish bo‘yicha maslahat",
+      "edges": "Hujjatning to‘rt burchagi ham ko‘rinsin.",
+      "light": "Matn aniq chiqishi uchun yorug‘lik aksi va soyadan saqlaning.",
+      "onePage": "Ko‘p sahifali arizani har bir sahifa bo‘yicha tartib bilan tekshiring."
+    },
+    "errors": {
+      "generic": "Arizani tahlil qilishda muammo yuz berdi. Keyinroq qayta urinib ko‘ring.",
+      "fileType": "Faqat JPG, PNG yoki WebP rasmini tanlash mumkin.",
+      "fileSize": "Asl fayl hajmi 16MB dan oshmasligi kerak.",
+      "optimize": "Rasm hajmini kichraytirib bo‘lmadi. Kichikroq rasm tanlang.",
+      "rateLimit": "Qisqa vaqtda juda ko‘p so‘rov yuborildi. Birozdan keyin qayta urinib ko‘ring."
+    },
+    "result": {
+      "eyebrow": "2-bosqich",
+      "title": "To‘ldirish holatini tekshirish",
+      "live": "OCR tahlili",
+      "demo": "Demo natija",
+      "page": "Sahifa",
+      "imageQuality": "Rasm holati"
+    },
+    "summary": {
+      "complete": "Aniqlandi",
+      "review": "Tekshirish kerak",
+      "missing": "To‘ldirish kerak",
+      "manual": "Qo‘lda tekshirish"
+    },
+    "field": {
+      "required": "Majburiy",
+      "optional": "Ixtiyoriy",
+      "empty": "Matn aniqlanmadi",
+      "example": "Masalan: {value}",
+      "lowConfidence": "Aniqlash ishonchi {percent}% · Asl nusxa bilan solishtiring."
+    },
+    "owner": {
+      "applicant": "Arizachi to‘ldiradi",
+      "employer": "Ish beruvchi to‘ldiradi",
+      "school": "Ta’lim muassasasi to‘ldiradi",
+      "official": "Mas’ul idora to‘ldiradi",
+      "signer": "Imzolovchi shaxsan to‘ldiradi"
+    },
+    "guide": {
+      "text": "Arizada ko‘rsatilgan maydon nomiga mos ma’lumotni aniq kiriting.",
+      "date": "Shaklda talab qilingan sana tartibini tekshirib, raqamlarda yozing.",
+      "number": "Tasdiqlovchi hujjatdagi raqam bilan bir xil ekanini tekshirib, faqat raqam kiriting.",
+      "choice": "Holatingizga mos bitta variantni belgilang.",
+      "checkbox": "Izohni o‘qib, mos katakka belgi qo‘ying.",
+      "address": "Hozirgi haqiqiy manzilingizni pochta indeksi va batafsil manzil bilan yozing.",
+      "identifier": "Rasmiy shaxsiy yoki korxona hujjatidagi raqam bilan har bir belgisini solishtiring.",
+      "manual": "Imzo, rozilik va idora uchun maydonlarni OCR to‘ldirmaydi. Ularni asl nusxada shaxsan to‘ldiring."
+    },
+    "status": {
+      "complete": "Aniqlandi",
+      "review": "Qayta tekshiring",
+      "missing": "To‘ldirish kerak",
+      "manual": "Shaxsan to‘ldiring",
+      "optional": "Ixtiyoriy maydon"
+    },
+    "quality": {
+      "clear": "Aniq",
+      "blurred": "Xira",
+      "cropped": "Bir qismi kesilgan",
+      "glare": "Yorug‘lik aksi bor",
+      "unknown": "Tekshirish kerak"
+    },
+    "warnings": {
+      "formNotConfirmed": "Ariza turi aniqlanmadi. Tanlangan turni asl nusxa bilan solishtiring.",
+      "formMismatch": "Tanlangan ariza turi rasmdan aniqlangan turga mos kelmaydi.",
+      "imageBlurred": "Rasm xira, ayrim matnlarni o‘qish qiyin. Qayta rasmga oling.",
+      "imageCropped": "Hujjatning bir qismi kesilgan. To‘rt burchagi ko‘rinadigan qilib qayta rasmga oling.",
+      "imageGlare": "Ayrim maydonlar yorug‘lik aksi bilan yopilgan.",
+      "handwritingUnclear": "Noaniq qo‘l yozuvi bo‘lgan maydonlarni asl nusxa bilan tekshiring.",
+      "multiplePages": "Qolgan sahifalarni ham tartib bilan tekshirish kerak.",
+      "demoData": "OCR kaliti sozlanmagan, shuning uchun namuna natijasi ko‘rsatilmoqda. Bu haqiqiy aniqlangan ma’lumot emas.",
+      "unknown": "Asl ariza va aniqlangan natijani qayta solishtiring."
+    }
   }
 }

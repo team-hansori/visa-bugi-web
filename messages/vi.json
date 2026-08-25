@@ -78,5 +78,122 @@
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "Ocr": {
+    "eyebrow": "Trợ lý điền đơn",
+    "title": "Kiểm tra ảnh đơn xin visa",
+    "description": "Đọc các mục đã điền trong ảnh đơn và hướng dẫn những mục còn trống hoặc cần kiểm tra lại. Kết quả không được tự động nộp.",
+    "languageNotice": "Hệ thống đọc tiếng Hàn trên biểu mẫu và hướng dẫn bằng ngôn ngữ ứng dụng bạn đang chọn.",
+    "catalog": {
+      "supabase": "Đã kết nối lược đồ Supabase v2",
+      "builtIn": "Bản mẫu đã kiểm duyệt"
+    },
+    "form": {
+      "label": "Loại đơn",
+      "auto": "Tự nhận diện từ ảnh",
+      "hint": "Kết quả có thể bị nhận diện sai. Nếu biết loại đơn, hãy chọn trực tiếp."
+    },
+    "upload": {
+      "step": "Bước 1",
+      "title": "Chọn ảnh đơn",
+      "chooseTitle": "Chụp hoặc chọn ảnh",
+      "chooseDescription": "Nên dùng ảnh thấy toàn bộ tài liệu và chữ không bị rung, nhòe.",
+      "choose": "Chọn ảnh",
+      "inputLabel": "Chọn ảnh đơn xin visa",
+      "types": "Chọn một ảnh JPG, PNG hoặc WebP (ảnh gốc tối đa 16MB).",
+      "ready": "Tệp {name} đã sẵn sàng để phân tích.",
+      "optimizing": "Đang giảm kích thước ảnh trên thiết bị này để truyền an toàn.",
+      "optimized": "Đã giảm tệp {name} xuống dưới 4MB trên thiết bị này. Ảnh đã sẵn sàng để phân tích.",
+      "removed": "Đã xóa ảnh. Bạn có thể chọn ảnh khác.",
+      "previewAlt": "Ảnh đơn đã chọn {name}",
+      "remove": "Xóa ảnh",
+      "replace": "Chọn ảnh khác"
+    },
+    "actions": {
+      "analyze": "Kiểm tra các mục",
+      "analyzing": "Đang phân tích ảnh"
+    },
+    "privacy": {
+      "title": "Nguyên tắc xử lý ảnh",
+      "temporary": "Ảnh chỉ được gửi tạm thời để phân tích OCR",
+      "noDatabase": "Không lưu ảnh gốc hoặc kết quả vào cơ sở dữ liệu",
+      "reviewFirst": "Chỉ sử dụng kết quả sau khi người dùng kiểm tra"
+    },
+    "tips": {
+      "eyebrow": "Mẹo chụp ảnh",
+      "edges": "Chụp sao cho thấy đủ bốn góc của tài liệu.",
+      "light": "Tránh ánh sáng phản chiếu và bóng đổ để chữ rõ nét.",
+      "onePage": "Với đơn nhiều trang, hãy kiểm tra từng trang theo thứ tự."
+    },
+    "errors": {
+      "generic": "Có lỗi khi phân tích đơn. Vui lòng thử lại sau.",
+      "fileType": "Chỉ có thể chọn ảnh JPG, PNG hoặc WebP.",
+      "fileSize": "Dung lượng ảnh gốc phải từ 16MB trở xuống.",
+      "optimize": "Không thể giảm kích thước ảnh. Vui lòng chọn ảnh nhỏ hơn.",
+      "rateLimit": "Bạn đã gửi quá nhiều yêu cầu trong thời gian ngắn. Vui lòng thử lại sau."
+    },
+    "result": {
+      "eyebrow": "Bước 2",
+      "title": "Kiểm tra trạng thái điền",
+      "live": "Phân tích OCR",
+      "demo": "Kết quả minh họa",
+      "page": "Trang",
+      "imageQuality": "Chất lượng ảnh"
+    },
+    "summary": {
+      "complete": "Đã nhận diện",
+      "review": "Cần kiểm tra",
+      "missing": "Cần điền",
+      "manual": "Kiểm tra thủ công"
+    },
+    "field": {
+      "required": "Bắt buộc",
+      "optional": "Không bắt buộc",
+      "empty": "Không nhận diện được nội dung",
+      "example": "Ví dụ: {value}",
+      "lowConfidence": "Độ tin cậy {percent}% · Hãy đối chiếu với bản gốc."
+    },
+    "owner": {
+      "applicant": "Người nộp đơn điền",
+      "employer": "Chủ sử dụng lao động điền",
+      "school": "Nhà trường điền",
+      "official": "Cơ quan phụ trách điền",
+      "signer": "Người ký tự điền"
+    },
+    "guide": {
+      "text": "Điền chính xác theo tên mục ghi trên đơn.",
+      "date": "Kiểm tra thứ tự ngày mà biểu mẫu yêu cầu và điền bằng số.",
+      "number": "Đối chiếu với giấy tờ chứng minh và chỉ điền số.",
+      "choice": "Đánh dấu một lựa chọn phù hợp với trường hợp của bạn.",
+      "checkbox": "Đọc nội dung và đánh dấu vào ô phù hợp.",
+      "address": "Điền địa chỉ đang ở, gồm mã bưu chính và địa chỉ chi tiết.",
+      "identifier": "Kiểm tra từng ký tự để khớp với số trên giấy tờ chính thức hoặc giấy tờ doanh nghiệp.",
+      "manual": "OCR không điền thay chữ ký, đồng ý hoặc phần dành cho cơ quan. Hãy tự điền trên bản gốc."
+    },
+    "status": {
+      "complete": "Đã nhận diện",
+      "review": "Kiểm tra lại",
+      "missing": "Cần điền",
+      "manual": "Tự điền",
+      "optional": "Mục tùy chọn"
+    },
+    "quality": {
+      "clear": "Rõ nét",
+      "blurred": "Bị mờ",
+      "cropped": "Bị cắt một phần",
+      "glare": "Bị phản sáng",
+      "unknown": "Cần kiểm tra"
+    },
+    "warnings": {
+      "formNotConfirmed": "Không xác định được loại đơn. Hãy so sánh loại đã chọn với bản gốc.",
+      "formMismatch": "Loại đơn đã chọn khác với loại nhận diện trong ảnh.",
+      "imageBlurred": "Ảnh bị mờ nên khó đọc một số chữ. Hãy chụp lại.",
+      "imageCropped": "Một phần tài liệu bị cắt. Hãy chụp lại để thấy đủ bốn góc.",
+      "imageGlare": "Một số mục bị che bởi ánh sáng phản chiếu.",
+      "handwritingUnclear": "Hãy đối chiếu trực tiếp với bản gốc ở các mục chữ viết tay không rõ.",
+      "multiplePages": "Cần kiểm tra các trang còn lại theo thứ tự.",
+      "demoData": "Chưa có khóa OCR nên đây là kết quả minh họa, không phải nội dung được nhận diện thật.",
+      "unknown": "Hãy so sánh lại đơn gốc với kết quả nhận diện."
+    }
   }
 }

@@ -24,6 +24,15 @@ NEXT_PUBLIC_SUPABASE_URL=your-project-url
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```
 
+신청서 OCR을 실제 분석 모드로 사용할 때는 서버 전용 키를 추가합니다. 키가
+없으면 `/ocr` 화면은 업로드·검수 흐름을 확인할 수 있는 명시적인 데모 결과를
+표시합니다.
+
+```env
+OPENAI_API_KEY=your-server-only-key
+OPENAI_OCR_MODEL=gpt-5.4-mini
+```
+
 `/api/health`에서 서비스 상태를 확인할 수 있습니다.
 
 ## 명령어
@@ -42,6 +51,23 @@ npm run build     # 프로덕션 빌드
 
 비자·기관 마스터 데이터는 `visa-data`에서 검수한 뒤 Supabase에 적재하고,
 웹앱은 Supabase를 통해 조회합니다.
+
+## 신청서 OCR
+
+`/ocr`에서는 통합신청서, F-2-R 추천서 발급 신청서, E-7-4 자체 심사표를
+우선 지원합니다. 신청서 목록은 `visa-data` 공통 스키마 v2의
+`document_requirements`, `visa_process_stages`, `visa_requirements`를 조회하고,
+서식 내부 필드 정의는 검수된 웹 OCR 템플릿을 사용합니다.
+
+- JPG, PNG, WebP 한 장 분석(16MB 이하 원본을 기기에서 4MB 이하로 축소)
+- 앱에서 선택한 6개 언어로 항목별 작성 안내
+- OCR 값의 확신도에 따른 확인 필요 상태 표시
+- 서명, 동의, 기관 작성란은 자동 인식·자동 입력하지 않음
+- 원본 사진과 분석 결과를 웹 데이터베이스에 저장하지 않음
+
+스키마 연결 경계와 보안 원칙은
+[`docs/ocr-schema-v2-integration.md`](docs/ocr-schema-v2-integration.md)에 정리되어
+있습니다.
 
 ## Vercel 배포
 

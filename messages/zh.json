@@ -78,5 +78,122 @@
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "Ocr": {
+    "eyebrow": "申请表填写助手",
+    "title": "签证申请表照片检查",
+    "description": "读取申请表照片中已填写的内容，并提示空白或需要再次确认的项目。结果不会自动提交。",
+    "languageNotice": "系统读取表格中的韩文，并以当前选择的应用语言提供说明。",
+    "catalog": {
+      "supabase": "已连接 Supabase 架构 v2",
+      "builtIn": "已审核模板演示"
+    },
+    "form": {
+      "label": "申请表类型",
+      "auto": "从照片自动识别",
+      "hint": "识别可能有误。如果您知道申请表类型，请直接选择。"
+    },
+    "upload": {
+      "step": "第1步",
+      "title": "选择申请表照片",
+      "chooseTitle": "拍照或选择照片",
+      "chooseDescription": "请确保整份文件清晰可见，文字没有晃动模糊。",
+      "choose": "选择图片",
+      "inputLabel": "选择申请表照片",
+      "types": "请选择一张 JPG、PNG 或 WebP 图片（原图最大 16MB）。",
+      "ready": "已准备分析文件 {name}。",
+      "optimizing": "正在此设备上缩小照片，以便安全传输。",
+      "optimized": "已在此设备上将 {name} 缩小至 4MB 以下，可以开始分析。",
+      "removed": "照片已删除，您可以选择其他图片。",
+      "previewAlt": "已选择的申请表图片 {name}",
+      "remove": "删除照片",
+      "replace": "选择其他照片"
+    },
+    "actions": {
+      "analyze": "检查填写项目",
+      "analyzing": "正在分析照片"
+    },
+    "privacy": {
+      "title": "照片处理原则",
+      "temporary": "照片仅为 OCR 分析而临时传输",
+      "noDatabase": "原图和分析结果不会保存到数据库",
+      "reviewFirst": "识别结果须经用户确认后才使用"
+    },
+    "tips": {
+      "eyebrow": "拍摄提示",
+      "edges": "拍摄时请让文件四个角全部可见。",
+      "light": "避开反光和阴影，确保文字清晰。",
+      "onePage": "多页申请表请按顺序逐页检查。"
+    },
+    "errors": {
+      "generic": "分析申请表时出现问题，请稍后重试。",
+      "fileType": "只能选择 JPG、PNG 或 WebP 图片。",
+      "fileSize": "原图大小必须不超过 16MB。",
+      "optimize": "无法缩小照片，请选择更小的图片。",
+      "rateLimit": "短时间内请求次数过多，请稍后重试。"
+    },
+    "result": {
+      "eyebrow": "第2步",
+      "title": "确认填写状态",
+      "live": "OCR 分析",
+      "demo": "演示结果",
+      "page": "页码",
+      "imageQuality": "照片状态"
+    },
+    "summary": {
+      "complete": "识别完成",
+      "review": "需要确认",
+      "missing": "需要填写",
+      "manual": "手动确认"
+    },
+    "field": {
+      "required": "必填",
+      "optional": "选填",
+      "empty": "未识别到内容",
+      "example": "例如：{value}",
+      "lowConfidence": "识别置信度 {percent}% · 请与原件核对。"
+    },
+    "owner": {
+      "applicant": "由申请人填写",
+      "employer": "由雇主填写",
+      "school": "由学校填写",
+      "official": "由受理机关填写",
+      "signer": "由签署人亲自填写"
+    },
+    "guide": {
+      "text": "请按照申请表中的项目名称准确填写。",
+      "date": "确认表格要求的日期顺序，并用数字填写。",
+      "number": "请确认与证明材料中的数字一致，并只填写数字。",
+      "choice": "请选择并标记一个符合情况的选项。",
+      "checkbox": "阅读说明后，在符合情况的方框内打勾。",
+      "address": "请填写当前实际地址，包括邮政编码和详细地址。",
+      "identifier": "请逐字核对，确保与正式身份证明或企业文件中的号码一致。",
+      "manual": "签名、同意和机关填写栏不会由 OCR 代填，请在原件上亲自填写。"
+    },
+    "status": {
+      "complete": "识别完成",
+      "review": "再次确认",
+      "missing": "需要填写",
+      "manual": "亲自填写",
+      "optional": "选填项目"
+    },
+    "quality": {
+      "clear": "清晰",
+      "blurred": "模糊",
+      "cropped": "部分被裁切",
+      "glare": "有反光",
+      "unknown": "需要确认"
+    },
+    "warnings": {
+      "formNotConfirmed": "无法确定申请表类型，请将所选类型与原件比较。",
+      "formMismatch": "所选申请表类型与照片中识别到的类型不同。",
+      "imageBlurred": "照片模糊，部分文字难以读取，请重新拍摄。",
+      "imageCropped": "文件部分被裁切，请让四个角全部可见后重新拍摄。",
+      "imageGlare": "部分项目被反光遮挡。",
+      "handwritingUnclear": "手写不清的项目请直接与原件核对。",
+      "multiplePages": "其余页面也需要按顺序检查。",
+      "demoData": "由于未设置 OCR 密钥，当前显示的是示例结果，并非真实识别内容。",
+      "unknown": "请再次比较原申请表和识别结果。"
+    }
   }
 }

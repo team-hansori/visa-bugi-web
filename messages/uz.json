@@ -7,8 +7,9 @@
   "A11y": {
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
-    "openSettings": "설정 열기",
-    "backToHome": "홈으로 돌아가기"
+    "openSettings": "Sozlamalarni ochish",
+    "backToHome": "Bosh sahifaga qaytish",
+    "closeDialog": "Yopish"
   },
   "Brand": {
     "homeAriaLabel": "비자부기 홈"
@@ -18,12 +19,37 @@
     "calendar": "Jadval",
     "map": "Muassasalar",
     "ocr": "Hujjatlar",
-    "my": "Sozlamalar",
+    "chat": "Maslahat",
+    "my": "Ko‘proq",
     "mainMenuAriaLabel": "Asosiy menyu",
     "mobileMenuAriaLabel": "Mobil asosiy menyu"
   },
   "LocaleSwitcher": {
-    "label": "언어 선택"
+    "label": "Tilni tanlang"
+  },
+  "Calendar": {
+    "search": {
+      "open": "Taqvimdan qidirish",
+      "placeholder": "Viza jarayoni, tadbir, turkum yoki joyni qidiring",
+      "ariaLabel": "Taqvim qidiruv so‘zi",
+      "close": "Yopish",
+      "resultCount": "{count} ta natija",
+      "noResults": "Qidiruv natijasi topilmadi.",
+      "dateUndecided": "Sana belgilanmagan"
+    },
+    "visaPicker": {
+      "label": "Ko‘riladigan viza turi",
+      "placeholder": "Viza turini tanlang",
+      "selectedCount": "{count} ta tanlandi",
+      "clear": "Tanlovni tozalash",
+      "optionsAriaLabel": "Bir nechta viza turini tanlash",
+      "visas": {
+        "f4r": "Hududiy maxsus xorijdagi koreyslar vizasi",
+        "e74r": "Hududiy maxsus malakali ishchi vizasi",
+        "f2r": "Hududiy maxsus iqtidorli mutaxassis vizasi",
+        "d2": "Hududiy talaba vizasi"
+      }
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
@@ -220,6 +246,25 @@
       "GRADUATE": "Magistr·Doktorantura"
     }
   },
+  "Chat": {
+    "title": "Viza bo‘yicha maslahat",
+    "description": "Biz tekshirilgan viza ma’lumotlariga asoslanib javob beramiz va doiradan tashqari masalalar uchun mas’ul tashkilotlarni ko‘rsatamiz.",
+    "disclaimer": "Bu ma’lumot faqat ma’lumot uchun berilgan. Yakuniy tasdiq uchun vakolatli tashkilotga murojaat qiling.",
+    "inputPlaceholder": "Viza talablari, tartiblari yoki hujjatlari haqida so‘rang",
+    "inputAriaLabel": "Savolni kiriting",
+    "send": "Yuborish",
+    "sending": "Javob tayyorlanmoqda…",
+    "deleteHistory": "Suhbatni o‘chirish",
+    "deleteConfirm": "Barcha saqlangan suhbatlar o‘chirilsinmi? Buni qaytarib bo‘lmaydi.",
+    "deleted": "Suhbat o‘chirildi.",
+    "error": "Xatolik yuz berdi. Iltimos, birozdan keyin qayta urinib ko‘ring.",
+    "empty": "Maslahatni boshlash uchun savolingizni kiriting.",
+    "sourcesLabel": "Manbalar",
+    "verifiedAtLabel": "Tasdiqlangan sana",
+    "contactsLabel": "Yo‘naltiriladigan tashkilotlar",
+    "unverifiedNotice": "Bu ma’lumot migrant ishchilar uchun tasdiqlangan. Vaziyatga qarab farq qilishi mumkin, shuning uchun tashkilot bilan bevosita tasdiqlang.",
+    "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin."
+  },
   "My": {
     "eyebrow": "MY",
     "pageTitle": "Mening sahifam",
@@ -273,17 +318,26 @@
     "description": "Hozircha tasdiqlangan aloqa elektron pochtasi yoki forma mavjud emas. Kanal ochilgach, ushbu ekranda to'g'ridan-to'g'ri bog'lanish imkonini beramiz.",
     "buttonLabel": "Aloqa tayyorlanmoqda"
   },
+  "Legal": {
+    "viewFullPage": "To'liq sahifada ko'rish",
+    "viewOriginal": "Koreyscha asl nusxani ko'rish",
+    "revisionLabel": "Oxirgi tahrirlangan sana"
+  },
   "Terms": {
     "pageTitle": "Foydalanish shartlari",
-    "heading": "Foydalanish shartlari tayyorlanmoqda",
-    "description": "Jamoa tomonidan tasdiqlangan foydalanish shartlarining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",
-    "badge": "Tayyorlanmoqda"
+    "badge": "Tarjima tayyorlanmoqda",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Ushbu hujjatning rasmiy asl matni koreys tilida bo'lib, ushbu tildagi to'liq tarjima tayyorlanmoqda. Quyidagi havola orqali koreyscha asl matnni ko'rishingiz mumkin."
+    }
   },
   "Privacy": {
     "pageTitle": "Maxfiylik siyosati",
-    "heading": "Maxfiylik siyosati tayyorlanmoqda",
-    "description": "Jamoa tomonidan tasdiqlangan maxfiylik siyosatining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",
-    "badge": "Tayyorlanmoqda",
+    "badge": "Tarjima tayyorlanmoqda",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Ushbu hujjatning rasmiy asl matni koreys tilida bo'lib, ushbu tildagi to'liq tarjima tayyorlanmoqda. Quyidagi havola orqali koreyscha asl matnni ko'rishingiz mumkin."
+    },
     "locationNotice": "Joylashuv ma'lumotlarini yig'ish va foydalanish bo'yicha alohida siyosat, joylashuv siyosati tasdiqlangach ushbu ekranga qo'shiladi."
   }
 }

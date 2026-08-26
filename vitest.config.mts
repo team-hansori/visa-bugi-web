@@ -8,9 +8,12 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
     include: ["**/*.test.{ts,tsx}"],
-    exclude: ["node_modules/**", ".next/**"],
+    exclude: ["node_modules/**", ".next/**", "evals/**"],
   },
   resolve: {
-    alias: { "@": path.resolve(import.meta.dirname, "./") },
+    alias: {
+      "@": path.resolve(import.meta.dirname, "./"),
+      "server-only": path.resolve(import.meta.dirname, "tests/helpers/server-only-stub.ts"),
+    },
   },
 });

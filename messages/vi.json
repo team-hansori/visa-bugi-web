@@ -11,7 +11,9 @@
     "closeDialog": "Đóng"
   },
   "Brand": {
-    "homeAriaLabel": "비자부기 홈"
+    "homeAriaLabel": "비자부기 홈",
+    "name": "비자부기",
+    "tagline": "Người đồng hành trên hành trình thị thực của tôi"
   },
   "Nav": {
     "home": "Trang chủ",
@@ -45,7 +47,14 @@
       "selectedVisaLabel": "선택 비자",
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
-      "baseDateValue": "아직 설정되지 않음"
+      "baseDateValue": "아직 설정되지 않음",
+      "savedAriaLabel": "Tiến trình điền tài liệu đã lưu {percent} phần trăm",
+      "savedCaption": "Tiến trình điền tài liệu",
+      "eyebrow": "Tỷ lệ đáp ứng tổng yêu cầu",
+      "savedEyebrow": "Tiến trình điền tài liệu đã lưu",
+      "savedTag": "Đã lưu",
+      "commonVisaValue": "Đơn đăng ký chung",
+      "lastUpdatedLabel": "Lưu gần đây"
     },
     "journey": {
       "heading": "현재 단계",
@@ -62,7 +71,9 @@
       },
       "noticeTitle": "상대 일정은 자동으로 추정하지 않아요",
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
-      "viewSchedule": "일정 보기"
+      "viewSchedule": "일정 보기",
+      "eyebrow": "Hành trình thị thực",
+      "savedStepIndicator": "Đã chuẩn bị {ready}/{total} tài liệu"
     },
     "tasks": {
       "heading": "서류 준비 체크",
@@ -79,13 +90,31 @@
           "label": "가까운 지원기관 확인",
           "meta": "기관 지도 · 위치 사용 선택"
         }
+      },
+      "eyebrow": "Việc cần làm tiếp theo",
+      "saved": {
+        "missing": {
+          "label": "{document}: điền {count} mục bắt buộc",
+          "meta": "Kết quả OCR · cần điền"
+        },
+        "review": {
+          "label": "{document}: kiểm tra lại {count} mục",
+          "meta": "Kết quả OCR · đối chiếu với bản gốc"
+        },
+        "ready": {
+          "label": "{document}: kiểm tra cuối trước khi nộp",
+          "meta": "Kết quả OCR · đã sẵn sàng"
+        }
       }
     },
     "agencies": {
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
-      "cta": "기관 지도 열기"
-    }
+      "cta": "기관 지도 열기",
+      "eyebrow": "Cơ quan gần đây"
+    },
+    "savedBadge": "Tiến trình đã lưu",
+    "savedHeroDescription": "Chúng tôi hiển thị tình trạng chuẩn bị và việc cần làm tiếp theo dựa trên kết quả OCR của {count} tài liệu đã lưu."
   },
   "Chat": {
     "title": "비자 상담",
@@ -180,5 +209,195 @@
       "notice": "Văn bản chính thức của tài liệu này là tiếng Hàn, và bản dịch đầy đủ sang ngôn ngữ này đang được chuẩn bị. Bạn có thể xem văn bản gốc tiếng Hàn qua liên kết bên dưới."
     },
     "locationNotice": "Chính sách riêng về việc thu thập và sử dụng thông tin vị trí sẽ được bổ sung vào màn hình này sau khi chính sách vị trí được xác định."
+  },
+  "Ocr": {
+    "eyebrow": "Trợ lý điền đơn",
+    "title": "Kiểm tra các mục trong đơn xin visa",
+    "description": "Đọc các mục đã điền từ ảnh đơn, tệp PDF hoặc HWPX và hướng dẫn những mục còn trống hoặc cần kiểm tra lại. Kết quả không được tự động nộp.",
+    "languageNotice": "Hệ thống đọc tiếng Hàn trên biểu mẫu và hướng dẫn bằng ngôn ngữ ứng dụng bạn đang chọn.",
+    "catalog": {
+      "supabase": "Đã kết nối lược đồ Supabase v2",
+      "builtIn": "Bản mẫu đã kiểm duyệt"
+    },
+    "form": {
+      "label": "Loại đơn",
+      "auto": "Tự nhận diện từ tệp đính kèm",
+      "count": "Hiện có thể chọn {count} biểu mẫu.",
+      "hint": "Kết quả có thể bị nhận diện sai. Nếu biết loại đơn, hãy chọn trực tiếp."
+    },
+    "upload": {
+      "step": "Bước 1",
+      "title": "Đính kèm ảnh hoặc tệp đơn",
+      "chooseTitle": "Chuẩn bị ảnh đơn, tệp PDF hoặc HWPX",
+      "chooseDescription": "Ảnh cần thấy rõ toàn bộ tài liệu và chữ; bạn cũng có thể đính kèm tệp PDF hoặc HWPX gốc.",
+      "choose": "Chọn ảnh",
+      "inputLabel": "Chọn ảnh đơn xin visa",
+      "capture": "Chụp ảnh",
+      "select": "Đính kèm tệp",
+      "cameraInputLabel": "Chụp ảnh đơn xin visa",
+      "galleryInputLabel": "Đính kèm ảnh đơn, tệp PDF hoặc HWPX",
+      "types": "Đính kèm một ảnh JPG, PNG, WebP hoặc một tệp PDF, HWPX (tệp gốc tối đa 16MB).",
+      "ready": "Tệp {name} đã sẵn sàng để phân tích.",
+      "pdfReady": "Tệp PDF {name} đã sẵn sàng để đọc.",
+      "pdfDescription": "Hệ thống đọc cả văn bản và hình ảnh từng trang PDF để kiểm tra các mục. Tệp nhiều trang có thể tăng mức sử dụng.",
+      "hwpxReady": "Tệp HWPX {name} đã sẵn sàng để đọc.",
+      "hwpxDescription": "Hệ thống đọc an toàn nội dung bên trong HWPX để kiểm tra các mục thay vì OCR ảnh.",
+      "checking": "Đang kiểm tra chất lượng ảnh miễn phí trên thiết bị trước khi gọi API.",
+      "optimizing": "Đang giảm kích thước ảnh trên thiết bị này để truyền an toàn.",
+      "optimized": "Đã giảm tệp {name} xuống dưới 4MB trên thiết bị này. Ảnh đã sẵn sàng để phân tích.",
+      "removed": "Đã xóa tệp đính kèm. Bạn có thể chọn ảnh hoặc tệp khác.",
+      "retakeHint": "Hãy chụp lại hoặc chọn ảnh khác sao cho thấy rõ toàn bộ trang đơn.",
+      "previewAlt": "Ảnh đơn đã chọn {name}",
+      "remove": "Xóa tệp",
+      "retake": "Chụp lại",
+      "replace": "Đính kèm tệp khác"
+    },
+    "imageCheck": {
+      "title": "Ảnh này khó dùng để kiểm tra đơn",
+      "tooSmall": "Độ phân giải ảnh quá thấp. Hãy chụp gần hơn để chữ rõ nét.",
+      "tooDark": "Ảnh quá tối. Hãy chụp lại ở nơi đủ sáng và không có bóng đổ.",
+      "tooBright": "Ảnh quá sáng nên không nhìn thấy chữ. Hãy tránh ánh sáng phản chiếu và chụp lại.",
+      "lowContrast": "Khó phân biệt chữ với nền giấy. Hãy lấy nét và điều chỉnh ánh sáng.",
+      "blurry": "Ảnh bị rung hoặc chưa lấy nét. Hãy giữ điện thoại cố định và chụp lại.",
+      "notDocument": "Hãy kiểm tra ảnh có hiển thị toàn bộ một trang đơn xin visa. Không thể phân tích ảnh khác hoặc ảnh bị cắt."
+    },
+    "actions": {
+      "analyze": "Kiểm tra các mục",
+      "analyzing": "Đang phân tích đơn"
+    },
+    "save": {
+      "title": "Cập nhật tiến độ của tôi",
+      "description": "Không lưu tệp gốc hoặc nội dung thực tế đã nhận dạng; chỉ lưu trạng thái hoàn tất, cần kiểm tra và chưa điền của từng mục.",
+      "demoDescription": "Kết quả minh họa không phải dữ liệu nhận dạng thực nên không thể lưu.",
+      "action": "Lưu kết quả này",
+      "saving": "Đang lưu",
+      "saved": "Đã lưu",
+      "error": "Không thể lưu kết quả OCR. Vui lòng thử lại sau.",
+      "notConfigured": "Kho lưu tiến độ Supabase chưa được kết nối.",
+      "sessionError": "Không thể tạo phiên lưu. Hãy kiểm tra đăng nhập ẩn danh của Supabase.",
+      "requiredMissing": "Có {count} mục bắt buộc chưa điền. Hãy điền vào đơn gốc và phân tích lại trước khi lưu.",
+      "requiredMissingServer": "Không thể lưu vì còn mục bắt buộc chưa điền. Hãy điền đơn gốc và phân tích lại.",
+      "blocked": "Điền mục bắt buộc để lưu"
+    },
+    "chat": {
+      "open": "Hỏi chatbot",
+      "eyebrow": "Trợ lý hỏi đáp OCR",
+      "title": "Hỏi ngay về mục bạn chưa rõ",
+      "description": "Chọn câu hỏi gợi ý hoặc hỏi trực tiếp cách điền đơn.",
+      "fieldContext": "Mục đang hỏi: {field}",
+      "fieldDefaultQuestion": "Tôi cần điền gì vào mục {field}?",
+      "privacy": "Chỉ tên tài liệu, tên mục và trạng thái điền được gửi cho chatbot; nội dung thực tế OCR nhận diện sẽ không được gửi.",
+      "sensitiveWarning": "Không nhập số hộ chiếu, số đăng ký người nước ngoài, địa chỉ hoặc thông tin cá nhân khác vào câu hỏi.",
+      "close": "Đóng",
+      "inputLabel": "Hỏi về kết quả OCR",
+      "placeholder": "Ví dụ: Tôi có phải điền mục này không?",
+      "characterCount": "{count}/500 ký tự",
+      "send": "Gửi câu hỏi",
+      "sending": "Đang chuẩn bị câu trả lời",
+      "disclaimer": "Câu trả lời chỉ hỗ trợ điền đơn, không đánh giá khả năng được cấp visa và không phải tư vấn pháp lý. Hãy kiểm tra thông báo chính thức mới nhất và cơ quan phụ trách.",
+      "suggestions": {
+        "what": "Điền gì vào mục {field}?",
+        "who": "Ai phải điền mục {field}?",
+        "why": "Vì sao cần kiểm tra lại mục {field}?",
+        "first": "Tôi nên kiểm tra mục nào trước?",
+        "applicant": "Những mục nào tôi phải tự điền?",
+        "manual": "Những mục nào OCR không thể kiểm tra?"
+      },
+      "errors": {
+        "notConfigured": "Chatbot chưa được kết nối. Hãy kiểm tra OPENAI_API_KEY.",
+        "rateLimit": "Bạn đã gửi quá nhiều câu hỏi trong thời gian ngắn. Vui lòng thử lại sau.",
+        "invalid": "Hãy kiểm tra nội dung câu hỏi rồi gửi lại.",
+        "generic": "Không thể tải câu trả lời. Vui lòng thử lại sau."
+      }
+    },
+    "retake": {
+      "title": "Hãy kiểm tra lại ảnh đơn",
+      "description": "Loại đơn có thể không đúng hoặc ảnh bị mờ, bị cắt. Hãy chụp lại để thấy rõ bốn góc và toàn bộ chữ.",
+      "action": "Chụp lại"
+    },
+    "privacy": {
+      "title": "Nguyên tắc xử lý tệp đính kèm",
+      "temporary": "Ảnh, PDF hoặc HWPX chỉ được gửi tạm thời để phân tích",
+      "noDatabase": "Không lưu tệp gốc hay nội dung nhận dạng, chỉ lưu trạng thái tiến độ do người dùng chọn",
+      "reviewFirst": "Chỉ sử dụng kết quả sau khi người dùng kiểm tra"
+    },
+    "tips": {
+      "eyebrow": "Mẹo chụp ảnh",
+      "edges": "Chụp sao cho thấy đủ bốn góc của tài liệu.",
+      "light": "Tránh ánh sáng phản chiếu và bóng đổ để chữ rõ nét.",
+      "onePage": "Với đơn nhiều trang, hãy kiểm tra từng trang theo thứ tự."
+    },
+    "errors": {
+      "generic": "Có lỗi khi phân tích đơn. Vui lòng thử lại sau.",
+      "fileType": "Chỉ có thể đính kèm ảnh JPG, PNG, WebP hoặc tệp PDF, HWPX.",
+      "fileSize": "Ảnh, tệp PDF hoặc HWPX gốc phải từ 16MB trở xuống.",
+      "pdf": "Hãy kiểm tra đây là tệp PDF hợp lệ. Không thể phân tích tệp bị hỏng hoặc chỉ đổi phần mở rộng.",
+      "hwpx": "Hãy kiểm tra đây là tệp HWPX hợp lệ. Không thể phân tích tệp bị hỏng hoặc chỉ đổi phần mở rộng.",
+      "optimize": "Không thể giảm kích thước ảnh. Vui lòng chọn ảnh nhỏ hơn.",
+      "rateLimit": "Bạn đã gửi quá nhiều yêu cầu trong thời gian ngắn. Vui lòng thử lại sau."
+    },
+    "result": {
+      "eyebrow": "Bước 2",
+      "title": "Kiểm tra trạng thái điền",
+      "live": "Phân tích OCR",
+      "demo": "Kết quả minh họa",
+      "page": "Trang",
+      "imageQuality": "Chất lượng ảnh"
+    },
+    "summary": {
+      "complete": "Đã nhận diện",
+      "review": "Cần kiểm tra",
+      "missing": "Cần điền",
+      "manual": "Kiểm tra thủ công"
+    },
+    "field": {
+      "required": "Bắt buộc",
+      "optional": "Không bắt buộc",
+      "empty": "Không nhận diện được nội dung",
+      "example": "Ví dụ: {value}",
+      "lowConfidence": "Độ tin cậy {percent}% · Hãy đối chiếu với bản gốc."
+    },
+    "owner": {
+      "applicant": "Người nộp đơn điền",
+      "employer": "Chủ sử dụng lao động điền",
+      "school": "Nhà trường điền",
+      "official": "Cơ quan phụ trách điền",
+      "signer": "Người ký tự điền"
+    },
+    "guide": {
+      "text": "Điền chính xác theo tên mục ghi trên đơn.",
+      "date": "Kiểm tra thứ tự ngày mà biểu mẫu yêu cầu và điền bằng số.",
+      "number": "Đối chiếu với giấy tờ chứng minh và chỉ điền số.",
+      "choice": "Đánh dấu một lựa chọn phù hợp với trường hợp của bạn.",
+      "checkbox": "Đọc nội dung và đánh dấu vào ô phù hợp.",
+      "address": "Điền địa chỉ đang ở, gồm mã bưu chính và địa chỉ chi tiết.",
+      "identifier": "Kiểm tra từng ký tự để khớp với số trên giấy tờ chính thức hoặc giấy tờ doanh nghiệp.",
+      "manual": "OCR không điền thay chữ ký, đồng ý hoặc phần dành cho cơ quan. Hãy tự điền trên bản gốc."
+    },
+    "status": {
+      "complete": "Đã nhận diện",
+      "review": "Kiểm tra lại",
+      "missing": "Cần điền",
+      "manual": "Tự điền",
+      "optional": "Mục tùy chọn"
+    },
+    "quality": {
+      "clear": "Rõ nét",
+      "blurred": "Bị mờ",
+      "cropped": "Bị cắt một phần",
+      "glare": "Bị phản sáng",
+      "unknown": "Cần kiểm tra"
+    },
+    "warnings": {
+      "formNotConfirmed": "Không xác định được loại đơn. Hãy so sánh loại đã chọn với bản gốc.",
+      "formMismatch": "Loại đơn đã chọn khác với loại nhận diện trong ảnh.",
+      "imageBlurred": "Ảnh bị mờ nên khó đọc một số chữ. Hãy chụp lại.",
+      "imageCropped": "Một phần tài liệu bị cắt. Hãy chụp lại để thấy đủ bốn góc.",
+      "imageGlare": "Một số mục bị che bởi ánh sáng phản chiếu.",
+      "handwritingUnclear": "Hãy đối chiếu trực tiếp với bản gốc ở các mục chữ viết tay không rõ.",
+      "multiplePages": "Cần kiểm tra các trang còn lại theo thứ tự.",
+      "demoData": "Đây là kết quả mẫu trong chế độ thử nghiệm miễn phí. OpenAI API không được gọi và đây không phải dữ liệu nhận diện thật.",
+      "unknown": "Hãy so sánh lại đơn gốc với kết quả nhận diện."
+    }
   }
 }

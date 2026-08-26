@@ -19,7 +19,7 @@ const navItems: NavItem[] = [
   { href: "/map", icon: "map-pin", key: "map" },
   { href: "/chat", icon: "chat", key: "chat" },
   { href: "/ocr", icon: "document", key: "ocr" },
-  { href: "/my", icon: "settings", key: "my" },
+  { href: "/my", icon: "menu", key: "my" },
 ];
 
 const mySubPagePaths = new Set(["/contact", "/terms", "/privacy"]);
@@ -88,7 +88,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
             key={item.href}
             href={item.href}
             aria-current={current ? "page" : undefined}
-            className={`flex min-h-11 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
+            className={`flex min-h-11 min-w-20 items-center justify-center gap-2 rounded-xl px-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               current
                 ? "bg-[#e6f1ec] text-[#1e5a4b]"
                 : "text-[#66736e] hover:bg-[#f2f5f2] hover:text-[#27443b]"
@@ -111,7 +111,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
       aria-label={t("mobileMenuAriaLabel")}
       className="mobile-safe-bottom fixed inset-x-0 bottom-0 z-50 border-t border-[#dfe6e1] bg-white/95 px-3 pt-2 shadow-[0_-8px_28px_rgba(34,54,46,0.08)] backdrop-blur-xl md:hidden"
     >
-      <div className="mx-auto grid max-w-md grid-cols-5 gap-1">
+      <div className="mx-auto grid max-w-md grid-cols-6 gap-1">
         {navItems.map((item) => {
           const current = isCurrentPath(pathname, item.href);
 
@@ -120,7 +120,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
               key={item.href}
               href={item.href}
               aria-current={current ? "page" : undefined}
-              className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-2 text-[0.7rem] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#2d6d5d] ${
+              className={`flex min-h-12 min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[0.7rem] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#2d6d5d] ${
                 current ? "bg-[#e6f1ec] text-[#1e5a4b]" : "text-[#77817d]"
               }`}
             >

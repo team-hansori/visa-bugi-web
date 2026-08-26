@@ -21,12 +21,36 @@
     "map": "Muassasalar",
     "ocr": "Hujjatlar",
     "chat": "Maslahat",
-    "my": "Sozlamalar",
+    "my": "Ko‘proq",
     "mainMenuAriaLabel": "Asosiy menyu",
     "mobileMenuAriaLabel": "Mobil asosiy menyu"
   },
   "LocaleSwitcher": {
-    "label": "언어 선택"
+    "label": "Tilni tanlang"
+  },
+  "Calendar": {
+    "search": {
+      "open": "Taqvimdan qidirish",
+      "placeholder": "Viza jarayoni, tadbir, turkum yoki joyni qidiring",
+      "ariaLabel": "Taqvim qidiruv so‘zi",
+      "close": "Yopish",
+      "resultCount": "{count} ta natija",
+      "noResults": "Qidiruv natijasi topilmadi.",
+      "dateUndecided": "Sana belgilanmagan"
+    },
+    "visaPicker": {
+      "label": "Ko‘riladigan viza turi",
+      "placeholder": "Viza turini tanlang",
+      "selectedCount": "{count} ta tanlandi",
+      "clear": "Tanlovni tozalash",
+      "optionsAriaLabel": "Bir nechta viza turini tanlash",
+      "visas": {
+        "f4r": "Hududiy maxsus xorijdagi koreyslar vizasi",
+        "e74r": "Hududiy maxsus malakali ishchi vizasi",
+        "f2r": "Hududiy maxsus iqtidorli mutaxassis vizasi",
+        "d2": "Hududiy talaba vizasi"
+      }
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",

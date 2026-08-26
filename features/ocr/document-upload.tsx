@@ -60,8 +60,7 @@ export function DocumentUpload() {
         <section className="rounded-[28px] border border-[#e0e7e2] bg-white p-4 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-6" aria-labelledby="upload-title">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-extrabold text-[#2d6d5d]">1단계</p>
-              <h2 id="upload-title" className="mt-1 text-xl font-black tracking-[-0.035em]">서류 사진 선택</h2>
+              <h2 id="upload-title" className="text-xl font-black tracking-[-0.035em]">서류 사진 선택</h2>
             </div>
             <span className="rounded-full bg-[#fff0d4] px-2.5 py-1 text-[0.68rem] font-extrabold text-[#8a5910]">미리보기만 제공</span>
           </div>

@@ -155,11 +155,13 @@
       "saved": "保存完成",
       "error": "无法保存 OCR 结果，请稍后重试。",
       "notConfigured": "Supabase 进度存储尚未连接。",
-      "sessionError": "无法创建保存会话，请确认 Supabase 已启用匿名登录。"
+      "sessionError": "无法创建保存会话，请确认 Supabase 已启用匿名登录。",
+      "requiredMissing": "有 {count} 个必填项目尚未填写。请在原申请表中填写并重新分析后再保存。",
+      "requiredMissingServer": "仍有必填项目未填写，无法保存。请填写原申请表后重新分析。",
+      "blocked": "填写必填项目后保存"
     },
     "chat": {
       "open": "询问聊天助手",
-      "askField": "询问此项目",
       "eyebrow": "OCR 问答助手",
       "title": "不明白的项目可直接提问",
       "description": "可选择推荐问题，或直接询问申请表的填写方法。",

@@ -155,11 +155,13 @@
       "saved": "Saqlandi",
       "error": "OCR natijasini saqlab bo‘lmadi. Keyinroq qayta urinib ko‘ring.",
       "notConfigured": "Supabase jarayon saqlash ombori hali ulanmagan.",
-      "sessionError": "Saqlash seansini yaratib bo‘lmadi. Supabase anonim kirishini tekshiring."
+      "sessionError": "Saqlash seansini yaratib bo‘lmadi. Supabase anonim kirishini tekshiring.",
+      "requiredMissing": "{count} ta majburiy band bo‘sh. Asl arizani to‘ldirib, qayta tahlil qilgandan keyin saqlash mumkin.",
+      "requiredMissingServer": "Majburiy bandlar bo‘shligi sababli saqlab bo‘lmaydi. Asl arizani to‘ldirib, qayta tahlil qiling.",
+      "blocked": "Majburiy bandlardan keyin saqlash"
     },
     "chat": {
       "open": "Chatbotdan so‘rash",
-      "askField": "Bu band haqida so‘rash",
       "eyebrow": "OCR savol yordamchisi",
       "title": "Tushunmagan bandingizni darhol so‘rang",
       "description": "Tavsiya etilgan savolni tanlang yoki arizani qanday to‘ldirishni yozib so‘rang.",

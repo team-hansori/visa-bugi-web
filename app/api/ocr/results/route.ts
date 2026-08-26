@@ -70,6 +70,17 @@ export async function POST(request: Request) {
     );
   }
 
+  const requiredMissingCount = input.fields.filter(
+    (field) => field.required && field.status === "missing",
+  ).length;
+  if (requiredMissingCount > 0) {
+    return errorResponse(
+      `필수 미작성 항목 ${requiredMissingCount}개를 작성한 뒤 다시 분석해 주세요.`,
+      "REQUIRED_FIELDS_MISSING",
+      422,
+    );
+  }
+
   const summary = summarizeFields(input.fields);
   const reviewStatus = getReviewStatus(summary);
   const documentKey = createDocumentKey(input);

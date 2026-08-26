@@ -155,11 +155,13 @@
       "saved": "저장 완료",
       "error": "OCR 결과를 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
       "notConfigured": "Supabase 진행상황 저장소가 아직 연결되지 않았습니다.",
-      "sessionError": "사용자 저장 세션을 만들지 못했습니다. Supabase 익명 로그인을 확인해 주세요."
+      "sessionError": "사용자 저장 세션을 만들지 못했습니다. Supabase 익명 로그인을 확인해 주세요.",
+      "requiredMissing": "필수 미작성 항목 {count}개를 원본 신청서에 작성하고 다시 분석해야 저장할 수 있습니다.",
+      "requiredMissingServer": "필수 미작성 항목이 있어 저장할 수 없습니다. 원본을 작성한 뒤 다시 분석해 주세요.",
+      "blocked": "필수 항목 작성 후 저장"
     },
     "chat": {
       "open": "챗봇에게 물어보기",
-      "askField": "이 항목 질문하기",
       "eyebrow": "OCR 질문 도우미",
       "title": "모르는 항목을 바로 물어보세요",
       "description": "추천 질문을 선택하거나 신청서 작성 방법을 직접 질문할 수 있습니다.",

@@ -155,11 +155,13 @@
       "saved": "Đã lưu",
       "error": "Không thể lưu kết quả OCR. Vui lòng thử lại sau.",
       "notConfigured": "Kho lưu tiến độ Supabase chưa được kết nối.",
-      "sessionError": "Không thể tạo phiên lưu. Hãy kiểm tra đăng nhập ẩn danh của Supabase."
+      "sessionError": "Không thể tạo phiên lưu. Hãy kiểm tra đăng nhập ẩn danh của Supabase.",
+      "requiredMissing": "Có {count} mục bắt buộc chưa điền. Hãy điền vào đơn gốc và phân tích lại trước khi lưu.",
+      "requiredMissingServer": "Không thể lưu vì còn mục bắt buộc chưa điền. Hãy điền đơn gốc và phân tích lại.",
+      "blocked": "Điền mục bắt buộc để lưu"
     },
     "chat": {
       "open": "Hỏi chatbot",
-      "askField": "Hỏi về mục này",
       "eyebrow": "Trợ lý hỏi đáp OCR",
       "title": "Hỏi ngay về mục bạn chưa rõ",
       "description": "Chọn câu hỏi gợi ý hoặc hỏi trực tiếp cách điền đơn.",

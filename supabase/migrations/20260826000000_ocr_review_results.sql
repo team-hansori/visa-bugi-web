@@ -34,6 +34,12 @@ create table if not exists public.user_document_reviews (
     complete_count >= 0 and review_count >= 0 and missing_count >= 0 and manual_count >= 0
   ),
   constraint user_document_reviews_field_statuses_array check (jsonb_typeof(field_statuses) = 'array'),
+  constraint user_document_reviews_no_required_missing check (
+    not jsonb_path_exists(
+      field_statuses,
+      '$[*] ? (@.required == true && @.status == "missing")'
+    )
+  ),
   constraint user_document_reviews_warning_codes_array check (jsonb_typeof(warning_codes) = 'array')
 );
 

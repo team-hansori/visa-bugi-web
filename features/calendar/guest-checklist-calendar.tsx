@@ -1,39 +1,37 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { CalendarGrid, type CalendarGridEvent } from "./calendar-grid";
-import { getDefaultChecklist, type ChecklistItem } from "@/lib/visa-schedule/default-checklist";
-import { SUPPORTED_VISA_OPTIONS, useTargetVisaId } from "./use-target-visa";
-
-function todayIso(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-}
-
-function buildEventsByDate(checklist: ChecklistItem[]): Record<string, CalendarGridEvent[]> {
-  const map: Record<string, CalendarGridEvent[]> = {};
-  function push(date: string, event: CalendarGridEvent) {
-    map[date] = [...(map[date] ?? []), event];
-  }
-  for (const item of checklist) {
-    if (item.startDate) push(item.startDate, { id: `${item.id}-start`, label: `${item.title} 시작` });
-    if (item.endDate && item.endDate !== item.startDate) push(item.endDate, { id: `${item.id}-end`, label: `${item.title} 마감` });
-  }
-  return map;
-}
+import { useEffect, useState } from "react";
+import { CalendarGrid } from "./calendar-grid";
+import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
+import { useTargetVisaId } from "./use-target-visa";
+import { useToday } from "./use-today";
+import { VisaPicker } from "./visa-picker";
+import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
 
 export function GuestChecklistCalendar() {
   const { targetVisaId, setManualVisaId } = useTargetVisaId();
-  const today = useMemo(() => {
-    const now = new Date();
-    return { year: now.getFullYear(), month: now.getMonth() + 1, date: todayIso() };
-  }, []);
-  const [view, setView] = useState({ year: today.year, month: today.month });
+  const today = useToday();
+  const [view, setView] = useState<{ year: number; month: number } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
+  useEffect(() => {
+    // Intentional: seeds the initial view month once `today` becomes
+    // available on the client, avoiding a `new Date()` read during render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (today && !view) setView({ year: today.year, month: today.month });
+  }, [today, view]);
+
+  if (!today || !view) {
+    return (
+      <div role="status" className="rounded-[24px] border border-dashed border-[#d6dfda] p-8 text-center text-sm text-[#77837e]">
+        불러오는 중…
+      </div>
+    );
+  }
+
   const checklist = targetVisaId ? getDefaultChecklist(targetVisaId) : [];
-  const eventsByDate = useMemo(() => buildEventsByDate(checklist), [checklist]);
-  const selectedItems = checklist.filter((item) => item.startDate === selectedDate || item.endDate === selectedDate);
+  const eventsByDate = buildChecklistEvents(checklist, null);
+  const selectedItems = findChecklistItemsForDate(checklist, null, selectedDate);
 
   return (
     <div className="space-y-6">
@@ -49,16 +47,7 @@ export function GuestChecklistCalendar() {
       </header>
 
       {!targetVisaId ? (
-        <div className="rounded-[24px] border border-dashed border-[#d6dfda] p-5" role="group" aria-label="비자 유형 선택">
-          <p className="text-sm font-extrabold text-[#34473f]">확인할 비자 유형을 선택해 주세요</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {SUPPORTED_VISA_OPTIONS.map((option) => (
-              <button key={option.id} type="button" onClick={() => setManualVisaId(option.id)} className="min-h-11 rounded-full border border-[#dce4df] bg-white px-4 text-sm font-extrabold text-[#33453e] hover:border-[#9bb9ac]">
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        <VisaPicker onSelect={setManualVisaId} />
       ) : (
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <CalendarGrid
@@ -73,16 +62,22 @@ export function GuestChecklistCalendar() {
           <aside className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-6" aria-labelledby="checklist-title">
             <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaId} 비자 기본 절차</p>
             <h2 id="checklist-title" className="mt-1 text-xl font-black tracking-[-0.035em]">전체 체크리스트</h2>
-            <ul className="mt-4 space-y-3">
-              {checklist.map((item) => (
-                <li key={item.id} className="rounded-2xl bg-[#f4f7f4] p-4">
-                  <p className="font-extrabold text-[#30433b]">{item.title}</p>
-                  <p className="mt-1 text-xs text-[#7a8580]">
-                    {item.startDate ? `${item.startDate}${item.endDate && item.endDate !== item.startDate ? ` ~ ${item.endDate}` : ""}` : "날짜 미정 · 로그인 후 기준일 입력 시 계산"}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            {checklist.length ? (
+              <ul className="mt-4 space-y-3">
+                {checklist.map((item) => (
+                  <li key={item.id} className="rounded-2xl bg-[#f4f7f4] p-4">
+                    <p className="font-extrabold text-[#30433b]">{item.title}</p>
+                    <p className="mt-1 text-xs text-[#7a8580]">
+                      {item.startDate ? `${item.startDate}${item.endDate && item.endDate !== item.startDate ? ` ~ ${item.endDate}` : ""}` : "날짜 미정 · 로그인 후 기준일 입력 시 계산"}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="mt-4 rounded-2xl border border-dashed border-[#d6dfda] p-5 text-center text-sm leading-6 text-[#77837e]">
+                이 비자 유형의 기본 절차 데이터가 아직 없습니다.
+              </div>
+            )}
             {selectedDate && selectedItems.length ? (
               <div className="mt-5 rounded-2xl border border-[#dce5e0] bg-[#edf5f1] p-4">
                 <p className="text-xs font-extrabold text-[#2d6d5d]">{selectedDate}</p>

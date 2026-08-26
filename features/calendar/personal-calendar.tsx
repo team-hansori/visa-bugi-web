@@ -1,11 +1,13 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Icon } from "@/components/ui/icon";
-import { CalendarGrid, type CalendarGridEvent } from "./calendar-grid";
+import { CalendarGrid } from "./calendar-grid";
 import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
-import { resolveChecklistDate } from "./reference-date";
-import { SUPPORTED_VISA_OPTIONS, useTargetVisaId } from "./use-target-visa";
+import { useTargetVisaId } from "./use-target-visa";
+import { useToday } from "./use-today";
+import { VisaPicker } from "./visa-picker";
+import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
 
 type PersonalEvent = {
   id: string;
@@ -18,24 +20,21 @@ type PersonalEvent = {
 
 const DEFAULT_CATEGORIES = ["관공서 방문", "비자 인터뷰·서류 제출", "교육·상담 참석"];
 
-function todayIso(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+function monthOf(dateIso: string): { year: number; month: number } {
+  const [year, month] = dateIso.split("-").map(Number);
+  return { year, month };
 }
 
 export function PersonalCalendar() {
   const { targetVisaId, setManualVisaId } = useTargetVisaId();
-  const today = useMemo(() => {
-    const now = new Date();
-    return { year: now.getFullYear(), month: now.getMonth() + 1, date: todayIso() };
-  }, []);
-  const [view, setView] = useState({ year: today.year, month: today.month });
-  const [selectedDate, setSelectedDate] = useState<string>(today.date);
+  const today = useToday();
+  const [view, setView] = useState<{ year: number; month: number } | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [referenceDate, setReferenceDate] = useState("");
   const [events, setEvents] = useState<PersonalEvent[]>([]);
   const [formOpen, setFormOpen] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
-  const [eventDate, setEventDate] = useState(today.date);
+  const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [eventLocation, setEventLocation] = useState("");
   const [category, setCategory] = useState(DEFAULT_CATEGORIES[0]);
@@ -43,35 +42,48 @@ export function PersonalCalendar() {
   const [customCategoryOpen, setCustomCategoryOpen] = useState(false);
   const [formError, setFormError] = useState("");
 
+  useEffect(() => {
+    // Intentional: seeds the initial view/selection once `today` becomes
+    // available on the client, avoiding a `new Date()` read during render.
+    if (today && !view) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setView({ year: today.year, month: today.month });
+      setSelectedDate(today.date);
+      setEventDate(today.date);
+    }
+  }, [today, view]);
+
   const checklist = useMemo(() => (targetVisaId ? getDefaultChecklist(targetVisaId) : []), [targetVisaId]);
-  const resolvedChecklist = useMemo(
-    () => checklist.map((item) => ({ item, resolvedDate: resolveChecklistDate(item, referenceDate || null) })),
-    [checklist, referenceDate],
-  );
   const hasUnresolvedItems = checklist.some((item) => !item.startDate);
 
   const eventsByDate = useMemo(() => {
-    const map: Record<string, CalendarGridEvent[]> = {};
-    function push(date: string, event: CalendarGridEvent) {
-      map[date] = [...(map[date] ?? []), event];
-    }
-    for (const { item, resolvedDate } of resolvedChecklist) {
-      if (resolvedDate) push(resolvedDate, { id: item.id, label: item.title });
-    }
+    const map = buildChecklistEvents(checklist, referenceDate || null);
     for (const event of events) {
-      push(event.date, { id: event.id, label: event.title });
+      map[event.date] = [...(map[event.date] ?? []), { id: event.id, label: event.title }];
     }
     return map;
-  }, [resolvedChecklist, events]);
+  }, [checklist, referenceDate, events]);
 
+  const selectedChecklistItems = findChecklistItemsForDate(checklist, referenceDate || null, selectedDate);
   const selectedPersonalEvents = events.filter((event) => event.date === selectedDate);
-  const selectedChecklistItems = resolvedChecklist.filter(({ resolvedDate }) => resolvedDate === selectedDate);
+
+  if (!today || !view) {
+    return (
+      <div role="status" className="rounded-[24px] border border-dashed border-[#d6dfda] p-8 text-center text-sm text-[#77837e]">
+        불러오는 중…
+      </div>
+    );
+  }
 
   function submitEvent(formEvent: FormEvent<HTMLFormElement>) {
     formEvent.preventDefault();
     const title = eventTitle.trim();
     if (!title) {
       setFormError("일정 이름을 입력해 주세요. 공백만 입력할 수는 없습니다.");
+      return;
+    }
+    if (!eventDate) {
+      setFormError("날짜를 선택해 주세요.");
       return;
     }
     const finalCategory = customCategoryOpen ? customCategory.trim() : category;
@@ -84,6 +96,7 @@ export function PersonalCalendar() {
       { id: `${Date.now()}`, title, category: finalCategory, date: eventDate, time: eventTime || undefined, location: eventLocation.trim() || undefined },
     ]);
     setSelectedDate(eventDate);
+    setView(monthOf(eventDate));
     setEventTitle("");
     setEventTime("");
     setEventLocation("");
@@ -107,18 +120,7 @@ export function PersonalCalendar() {
         </button>
       </header>
 
-      {!targetVisaId ? (
-        <div className="rounded-[24px] border border-dashed border-[#d6dfda] p-5" role="group" aria-label="비자 유형 선택">
-          <p className="text-sm font-extrabold text-[#34473f]">확인할 비자 유형을 선택해 주세요</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {SUPPORTED_VISA_OPTIONS.map((option) => (
-              <button key={option.id} type="button" onClick={() => setManualVisaId(option.id)} className="min-h-11 rounded-full border border-[#dce4df] bg-white px-4 text-sm font-extrabold text-[#33453e] hover:border-[#9bb9ac]">
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      ) : null}
+      {!targetVisaId ? <VisaPicker onSelect={setManualVisaId} /> : null}
 
       {hasUnresolvedItems ? (
         <div className="rounded-[24px] border border-[#dce5e0] bg-[#edf5f1] p-5">
@@ -137,7 +139,7 @@ export function PersonalCalendar() {
           </label>
           <label className="grid gap-2 text-sm font-extrabold text-[#34473f]">
             날짜
-            <input type="date" value={eventDate} onChange={(event) => setEventDate(event.target.value)} required className="min-h-12 rounded-xl border border-[#cddbd4] bg-white px-4 text-base outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bcd9cd]" />
+            <input type="date" value={eventDate} onChange={(event) => { setEventDate(event.target.value); if (formError) setFormError(""); }} required className="min-h-12 rounded-xl border border-[#cddbd4] bg-white px-4 text-base outline-none focus:border-[#2d6d5d] focus:ring-2 focus:ring-[#bcd9cd]" />
           </label>
           <label className="grid gap-2 text-sm font-extrabold text-[#34473f]">
             시간 (선택)
@@ -182,7 +184,7 @@ export function PersonalCalendar() {
           <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">선택한 날짜</p>
           <h2 id="selected-date" className="mt-1 text-xl font-black tracking-[-0.035em]">{selectedDate}</h2>
           <div className="mt-5 space-y-3">
-            {selectedChecklistItems.map(({ item }) => (
+            {selectedChecklistItems.map((item) => (
               <div key={item.id} className="rounded-2xl bg-[#eef4f1] p-4">
                 <p className="font-extrabold text-[#1f584a]">{item.title}</p>
                 <p className="mt-1 text-xs text-[#5f8072]">비자 절차</p>

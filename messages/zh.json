@@ -68,9 +68,18 @@
       "eyebrow": "다음 할 일",
       "heading": "서류 준비 체크",
       "items": {
-        "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
-        "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
-        "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+        "passport": {
+          "label": "여권 사본 상태 확인",
+          "meta": "서류 준비 · 예시 항목"
+        },
+        "schedule": {
+          "label": "방문 일정 직접 추가",
+          "meta": "캘린더 · 날짜 미정"
+        },
+        "agency": {
+          "label": "가까운 지원기관 확인",
+          "meta": "기관 지도 · 위치 사용 선택"
+        }
       }
     },
     "agencies": {
@@ -82,50 +91,71 @@
   },
   "My": {
     "eyebrow": "MY",
-    "pageTitle": "마이",
-    "linksAriaLabel": "마이 메뉴",
+    "pageTitle": "我的",
+    "linksAriaLabel": "我的菜单",
     "loginBanner": {
-      "title": "로그인 준비 중입니다",
-      "body": "로그인 기능이 추가되면 계정 정보와 진행 상황을 이 화면에서 확인할 수 있어요."
+      "title": "登录功能即将上线",
+      "body": "登录功能上线后，您可以在此查看账户信息和进度。"
     },
     "links": {
-      "contact": { "label": "문의하기", "description": "궁금한 점을 남겨주세요" },
-      "terms": { "label": "이용약관", "description": "서비스 이용 조건을 확인해요" },
-      "privacy": { "label": "개인정보 처리방침", "description": "개인정보 처리 방식을 확인해요" }
+      "contact": {
+        "label": "联系我们",
+        "description": "有疑问请告诉我们"
+      },
+      "terms": {
+        "label": "服务条款",
+        "description": "查看服务使用条件"
+      },
+      "privacy": {
+        "label": "隐私政策",
+        "description": "查看个人信息处理方式"
+      }
     }
   },
   "Settings": {
-    "pageTitle": "설정",
-    "language": { "label": "언어" },
-    "push": { "label": "푸시 알림" },
-    "location": { "label": "내 위치 사용", "statusPreparing": "준비 중" },
-    "policy": {
-      "sectionLabel": "약관 및 정책",
-      "locationTerms": "위치기반서비스 이용약관"
+    "pageTitle": "设置",
+    "language": {
+      "label": "语言"
     },
-    "account": { "logout": "로그아웃", "withdraw": "회원 탈퇴" },
-    "footer": { "appName": "비자부기" }
+    "push": {
+      "label": "推送通知"
+    },
+    "location": {
+      "label": "使用我的位置",
+      "statusPreparing": "即将推出"
+    },
+    "policy": {
+      "sectionLabel": "条款与政策",
+      "locationTerms": "基于位置服务条款"
+    },
+    "account": {
+      "logout": "退出登录",
+      "withdraw": "注销账户"
+    },
+    "footer": {
+      "appName": "비자부기"
+    }
   },
   "Contact": {
-    "eyebrow": "문의",
-    "pageTitle": "문의하기",
-    "heading": "문의 채널을 준비하고 있어요",
-    "description": "확정된 문의 이메일이나 문의 폼이 아직 없습니다. 채널이 열리면 이 화면에서 바로 연결할 수 있도록 안내할게요.",
-    "buttonLabel": "문의 준비 중"
+    "eyebrow": "咨询",
+    "pageTitle": "联系我们",
+    "heading": "咨询渠道筹备中",
+    "description": "目前还没有确定的咨询邮箱或表单。渠道开通后，我们会在此页面提供直接联系方式。",
+    "buttonLabel": "咨询功能筹备中"
   },
   "Terms": {
-    "eyebrow": "정책",
-    "pageTitle": "이용약관",
-    "heading": "이용약관을 준비하고 있어요",
-    "description": "팀에서 확정한 이용약관 원문을 게시할 예정입니다. 아직 임의로 작성한 문구를 표시하지 않습니다.",
-    "badge": "준비 중"
+    "eyebrow": "政策",
+    "pageTitle": "服务条款",
+    "heading": "服务条款筹备中",
+    "description": "团队确定的服务条款正式文本即将发布。目前不会显示任何临时编写的内容。",
+    "badge": "筹备中"
   },
   "Privacy": {
-    "eyebrow": "정책",
-    "pageTitle": "개인정보 처리방침",
-    "heading": "개인정보처리방침을 준비하고 있어요",
-    "description": "팀에서 확정한 개인정보처리방침 원문을 게시할 예정입니다. 아직 임의로 작성한 문구를 표시하지 않습니다.",
-    "badge": "준비 중",
-    "locationNotice": "위치정보 수집·이용에 대한 별도 처리방침은 위치정보 정책이 확정된 뒤 이 화면에 추가됩니다."
+    "eyebrow": "政策",
+    "pageTitle": "隐私政策",
+    "heading": "隐私政策筹备中",
+    "description": "团队确定的隐私政策正式文本即将发布。目前不会显示任何临时编写的内容。",
+    "badge": "筹备中",
+    "locationNotice": "有关位置信息收集和使用的单独政策，将在位置信息政策确定后添加到此页面。"
   }
 }

@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Link, usePathname } from "@/i18n/navigation";
 
 type NavItem = {
@@ -21,8 +20,23 @@ const navItems: NavItem[] = [
   { href: "/my", icon: "user", key: "my" },
 ];
 
+const mySubPagePaths = new Set(["/settings", "/contact", "/terms", "/privacy"]);
+
+const headerTitleKeyByPath: Record<string, string> = {
+  "/calendar": "Nav.calendar",
+  "/map": "Nav.map",
+  "/ocr": "Nav.ocr",
+  "/my": "Nav.my",
+  "/settings": "Settings.pageTitle",
+  "/contact": "Contact.pageTitle",
+  "/terms": "Terms.pageTitle",
+  "/privacy": "Privacy.pageTitle",
+};
+
 function isCurrentPath(pathname: string, href: string) {
-  return href === "/" ? pathname === href : pathname.startsWith(href);
+  if (href === "/") return pathname === href;
+  if (href === "/my") return pathname === href || mySubPagePaths.has(pathname);
+  return pathname.startsWith(href);
 }
 
 function Brand() {
@@ -44,6 +58,47 @@ function Brand() {
         priority
         className="h-auto w-24 max-w-[45vw] transition-transform group-hover:-translate-y-0.5 sm:w-28 md:w-32"
       />
+    </Link>
+  );
+}
+
+function HeaderTitle({ pathname }: { pathname: string }) {
+  const t = useTranslations();
+  const titleKey = headerTitleKeyByPath[pathname];
+
+  if (pathname === "/" || !titleKey) {
+    return <Brand />;
+  }
+
+  return (
+    <div className="flex min-h-11 min-w-0 items-center gap-1.5">
+      {mySubPagePaths.has(pathname) ? (
+        <Link
+          href="/my"
+          aria-label={t("A11y.backToMy")}
+          className="grid size-9 shrink-0 place-items-center rounded-xl text-[#3a4a44] hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+        >
+          <Icon name="chevron-left" className="size-5" />
+        </Link>
+      ) : null}
+      <span className="truncate text-base font-extrabold tracking-[-0.02em] text-[#20332c] sm:text-lg">
+        {t(titleKey)}
+      </span>
+    </div>
+  );
+}
+
+function SettingsEntry({ pathname }: { pathname: string }) {
+  const t = useTranslations("A11y");
+
+  return (
+    <Link
+      href="/settings"
+      aria-label={t("openSettings")}
+      aria-current={pathname === "/settings" ? "page" : undefined}
+      className="grid size-10 shrink-0 place-items-center rounded-full border border-[#dfe5e1] bg-white text-[#52615b] transition-colors hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+    >
+      <Icon name="settings" className="size-5" />
     </Link>
   );
 }
@@ -122,9 +177,9 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <header className="sticky top-0 z-40 border-b border-[#e2e7e3] bg-[#f7f8f4]/94 backdrop-blur-xl">
         <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <Brand />
+          <HeaderTitle pathname={pathname} />
           <DesktopNavigation pathname={pathname} />
-          <LocaleSwitcher />
+          <SettingsEntry pathname={pathname} />
         </div>
       </header>
 

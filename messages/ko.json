@@ -5,7 +5,9 @@
     "description": "내 비자 요건과 다음 단계를 추적하는 AI 서비스"
   },
   "A11y": {
-    "skipToContent": "본문으로 바로가기"
+    "skipToContent": "본문으로 바로가기",
+    "backToMy": "MY로 돌아가기",
+    "openSettings": "설정 열기"
   },
   "Brand": {
     "homeAriaLabel": "비자부기 홈"
@@ -90,26 +92,20 @@
       "settings": { "label": "설정", "description": "언어와 위치 기반 기능 상태를 확인해요" },
       "contact": { "label": "문의하기", "description": "궁금한 점을 남겨주세요" },
       "terms": { "label": "이용약관", "description": "서비스 이용 조건을 확인해요" },
-      "privacy": { "label": "개인정보처리방침", "description": "개인정보 처리 방식을 확인해요" }
+      "privacy": { "label": "개인정보 처리방침", "description": "개인정보 처리 방식을 확인해요" }
     }
   },
   "Settings": {
-    "eyebrow": "설정",
     "pageTitle": "설정",
-    "language": {
-      "eyebrow": "언어",
-      "heading": "화면 언어",
-      "description": "선택한 언어로 화면 문구가 바뀝니다."
+    "language": { "label": "언어" },
+    "push": { "label": "푸시 알림" },
+    "location": { "label": "내 위치 사용", "statusPreparing": "준비 중" },
+    "policy": {
+      "sectionLabel": "약관 및 정책",
+      "locationTerms": "위치기반서비스 이용약관"
     },
-    "location": {
-      "eyebrow": "위치 기반 기능",
-      "heading": "위치 사용",
-      "toggleLabel": "위치 기반 기관 추천",
-      "statusPreparing": "준비 중",
-      "description": "위치 기반 기능은 아직 준비 중입니다. 이 화면의 표시만으로는 브라우저나 기기에 이미 허용한 위치 권한이 해제되지 않아요. 위치 권한을 바꾸려면 브라우저 또는 기기 설정에서 직접 변경해 주세요.",
-      "policyLinkLabel": "위치정보 이용약관",
-      "policyLinkStatus": "준비 중"
-    }
+    "account": { "logout": "로그아웃", "withdraw": "회원 탈퇴" },
+    "footer": { "appName": "비자부기" }
   },
   "Contact": {
     "eyebrow": "문의",
@@ -127,7 +123,7 @@
   },
   "Privacy": {
     "eyebrow": "정책",
-    "pageTitle": "개인정보처리방침",
+    "pageTitle": "개인정보 처리방침",
     "heading": "개인정보처리방침을 준비하고 있어요",
     "description": "팀에서 확정한 개인정보처리방침 원문을 게시할 예정입니다. 아직 임의로 작성한 문구를 표시하지 않습니다.",
     "badge": "준비 중",

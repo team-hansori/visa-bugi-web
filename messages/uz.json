@@ -17,6 +17,7 @@
     "calendar": "Jadval",
     "map": "Muassasalar",
     "ocr": "Hujjatlar",
+    "chat": "Maslahat",
     "my": "Sozlamalar",
     "mainMenuAriaLabel": "Asosiy menyu",
     "mobileMenuAriaLabel": "Mobil asosiy menyu"
@@ -217,6 +218,25 @@
       "BACHELOR_3_4": "Bakalavr 3-4 kurs",
       "GRADUATE": "Magistr·Doktorantura"
     }
+  },
+  "Chat": {
+    "title": "Viza bo‘yicha maslahat",
+    "description": "Biz tekshirilgan viza ma’lumotlariga asoslanib javob beramiz va doiradan tashqari masalalar uchun mas’ul tashkilotlarni ko‘rsatamiz.",
+    "disclaimer": "Bu ma’lumot faqat ma’lumot uchun berilgan. Yakuniy tasdiq uchun vakolatli tashkilotga murojaat qiling.",
+    "inputPlaceholder": "Viza talablari, tartiblari yoki hujjatlari haqida so‘rang",
+    "inputAriaLabel": "Savolni kiriting",
+    "send": "Yuborish",
+    "sending": "Javob tayyorlanmoqda…",
+    "deleteHistory": "Suhbatni o‘chirish",
+    "deleteConfirm": "Barcha saqlangan suhbatlar o‘chirilsinmi? Buni qaytarib bo‘lmaydi.",
+    "deleted": "Suhbat o‘chirildi.",
+    "error": "Xatolik yuz berdi. Iltimos, birozdan keyin qayta urinib ko‘ring.",
+    "empty": "Maslahatni boshlash uchun savolingizni kiriting.",
+    "sourcesLabel": "Manbalar",
+    "verifiedAtLabel": "Tasdiqlangan sana",
+    "contactsLabel": "Yo‘naltiriladigan tashkilotlar",
+    "unverifiedNotice": "Bu ma’lumot migrant ishchilar uchun tasdiqlangan. Vaziyatga qarab farq qilishi mumkin, shuning uchun tashkilot bilan bevosita tasdiqlang.",
+    "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin."
   },
   "My": {
     "eyebrow": "MY",

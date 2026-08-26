@@ -17,6 +17,7 @@
     "calendar": "日程",
     "map": "机构",
     "ocr": "文件",
+    "chat": "咨询",
     "my": "设置",
     "mainMenuAriaLabel": "主菜单",
     "mobileMenuAriaLabel": "移动端主菜单"
@@ -217,6 +218,25 @@
       "BACHELOR_3_4": "本科3~4年级",
       "GRADUATE": "硕士·博士"
     }
+  },
+  "Chat": {
+    "title": "签证咨询",
+    "description": "我们依据经核验的签证数据答复，并为超出服务范围的问题提供相关机构指引。",
+    "disclaimer": "本信息仅供参考。请向主管机构确认最终信息。",
+    "inputPlaceholder": "请询问签证条件、流程或所需材料",
+    "inputAriaLabel": "输入问题",
+    "send": "发送",
+    "sending": "正在生成回复…",
+    "deleteHistory": "删除对话",
+    "deleteConfirm": "要删除所有已保存的对话吗？此操作无法撤销。",
+    "deleted": "对话已删除。",
+    "error": "发生错误。请稍后重试。",
+    "empty": "输入您的问题即可开始咨询。",
+    "sourcesLabel": "来源",
+    "verifiedAtLabel": "核验日期",
+    "contactsLabel": "指引机构",
+    "unverifiedNotice": "此信息按外来务工人员情况核验。具体情况可能不同，请直接向机构确认。",
+    "outOfScopeContacts": "您可以从以下机构获得帮助。"
   },
   "My": {
     "eyebrow": "MY",

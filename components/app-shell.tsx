@@ -10,13 +10,14 @@ import { Link, usePathname } from "@/i18n/navigation";
 type NavItem = {
   href: string;
   icon: IconName;
-  key: "home" | "calendar" | "map" | "ocr" | "my";
+  key: "home" | "calendar" | "map" | "ocr" | "chat" | "my";
 };
 
 const navItems: NavItem[] = [
   { href: "/", icon: "home", key: "home" },
   { href: "/calendar", icon: "calendar", key: "calendar" },
   { href: "/map", icon: "map-pin", key: "map" },
+  { href: "/chat", icon: "chat", key: "chat" },
   { href: "/ocr", icon: "document", key: "ocr" },
   { href: "/my", icon: "settings", key: "my" },
 ];

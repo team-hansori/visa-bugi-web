@@ -18,7 +18,7 @@ team-hansori 팀은 제13회 전국 ICT융합 공모전(2026년 지역주도 디
 2. **평가기준**: 사용자 제공 이미지. 1차 서면평가(100점: 독창성·기술성·사업화·적합성) + 2차 발표평가 + 가점 3점(시제품 적용분야).
 3. **노션 기획서**: `충북살이 + 한소리 (충청북도 외국인정책 지원 사업 PDF 반영 및 서비스 기능 구체화)` (2026-08-08 기준) — 기획 배경 통계·출처, 서비스 차별점, 핵심기능 7개, 기술스택, 페르소나 2종, 스코프 정의, 참고 출처 목록.
 4. **visa-data 레포**(`team-hansori/visa-data`, GitHub) — `docs/schema-v2.md`: 공통 스키마 v2, 서비스 코어 10개 + 근거·이관용 3개 = 총 13개 테이블. 핵심은 `visa_requirements` + `visa_criterion_groups`(AND/OR 논리 트리) + `visa_requirement_criteria` + `visa_process_stages` + `document_requirements` + `source_documents`.
-5. **visa-bugi-web 레포**(현재 워킹트리) — `app/[locale]/{calendar,contact,map,my,ocr,onboarding}`, `features/{calendar/demo-calendar.tsx, map/agency-map-demo.tsx, my/my-hub.tsx, ocr/document-upload.tsx, onboarding/onboarding-form.tsx, legal/*}`, `lib/supabase/{client,server}.ts`. calendar·map은 데모 컴포넌트 단계, 규칙기반 계산엔진·LLM·RAG·벡터DB 관련 코드는 아직 없음.
+5. **visa-bugi-web 레포**(현재 워킹트리) — `app/[locale]/{calendar,contact,map,my,ocr,onboarding}`, `features/{calendar/demo-calendar.tsx, map/agency-map-demo.tsx, my/my-hub.tsx, ocr/document-upload.tsx, onboarding/onboarding-form.tsx, legal/*}`, `lib/supabase/{client,server}.ts`. OCR은 이미지 선택·로컬 미리보기 UI까지만 구현되어 있고 분석·서버 전송은 미연동 상태다. calendar·map은 데모 컴포넌트 단계이며, 규칙기반 계산엔진·LLM·RAG·벡터DB 관련 코드는 아직 없음.
 
 ## 평가기준 대응 매핑
 
@@ -68,7 +68,7 @@ team-hansori 팀은 제13회 전국 ICT융합 공모전(2026년 지역주도 디
   7. 단계별 피드백 집계 → 정책진단 데이터 전달
 - **3-3 핵심 기술 스택** (표: 기술 / 역할) — LLM(다국어) · OCR · RAG · 벡터DB 기반 이력 관리 · 규칙 기반 자격요건 계산 엔진 · 키워드 기반 위험 감지+라우팅. 규칙 기반 계산 엔진은 **visa-data의 공통 스키마 v2(13개 테이블, `visa_criterion_groups`의 AND/OR 논리 트리)를 실제 데이터 기반으로 명시**해 기술적 이해도를 근거로 뒷받침한다.
 - **3-4 안전장치 설계**: 계산 로직은 공식 고시 요건표를 구조화한 규칙 기반 엔진만 사용(LLM은 자연어→구조화 값 변환만 담당) · 요건표 정기 갱신 · 화면 내 참고용 안내 문구 상시 표시 · HITL(최종 판단은 항상 사람) 원칙
-- **3-5 서비스 스코프 정의**: Tier1(체류자격 트래커·행정 서식 — 직접 구축) / Tier2(건강·직장내괴롭힘·보험 등 — 라우팅만) 구분표, 라이프사이클 4단계(추적→준비→제출→판정) 책임 경계표(충북살이 vs 하이코리아/시군담당부서/출입국사무소/법무부)
+- **3-5 서비스 스코프 정의**: Tier1(체류자격 트래커·행정 서식 — 직접 구축) / Tier2(건강·직장내괴롭힘·보험 등 — 라우팅만) 구분표, 라이프사이클 4단계(추적→준비→제출→판정) 책임 경계표(비자부기 vs 하이코리아/시군담당부서/출입국사무소/법무부)
 
 #### Part 2. 시나리오별 사용자 여정
 
@@ -89,7 +89,7 @@ team-hansori 팀은 제13회 전국 ICT융합 공모전(2026년 지역주도 디
 3부에서 완성형 비전으로 서술한 내용을 현실의 구현 상태와 연결하는 절 — 심사항목 "사업화"의 완성도·타당성에 대응.
 
 1. **현재 구현 상태 (정직하게 구분)**
-   - 완료: onboarding, my-hub, OCR 업로드 UI, Supabase 클라이언트/서버 연동 스캐폴딩, visa-data 공통 스키마 v2(13개 테이블) 설계
+   - 완료: onboarding, my-hub, OCR 이미지 선택·로컬 미리보기 UI(분석·서버 전송 미연동), Supabase 클라이언트/서버 연동 스캐폴딩, visa-data 공통 스키마 v2(13개 테이블) 설계
    - 데모 단계: calendar(`demo-calendar.tsx`), map(`agency-map-demo.tsx`)
    - 설계 완료·구현 예정: 규칙 기반 자격요건 계산 엔진, LLM 다국어 대화, RAG, 벡터DB 이력 관리, 위험 키워드 라우팅
 2. **실현 단계의 예상 문제점과 해결 방안** — 요건표 개정 시 데이터 갱신 체계(visa-data 검수 프로세스), 개인정보 리스크(원본 미저장·사본만 옵트인 보관), 정부 시스템 미연동(하이코리아 등 공개 API 부재 → 딥링크 방식으로 대체)

@@ -1,13 +1,13 @@
 "use client";
 
-import { SUPPORTED_VISA_OPTIONS } from "./use-target-visa";
+import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
 
 export function VisaPicker({ selectedVisaId, onSelect }: { selectedVisaId: string | null; onSelect: (visaId: string) => void }) {
   return (
     <div className="rounded-[24px] border border-dashed border-[#d6dfda] p-5" role="group" aria-label="비자 유형 선택">
       <p className="text-sm font-extrabold text-[#34473f]">확인할 비자 유형을 선택해 주세요</p>
       <div className="mt-3 flex flex-wrap gap-2">
-        {SUPPORTED_VISA_OPTIONS.map((option) => (
+        {SUPPORTED_VISAS.map((option) => (
           <button
             key={option.id}
             type="button"

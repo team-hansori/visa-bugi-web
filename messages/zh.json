@@ -37,6 +37,7 @@
       "label": "要查看的签证类型",
       "placeholder": "请选择签证类型",
       "selectedCount": "已选 {count} 项",
+      "clear": "清除选择",
       "optionsAriaLabel": "多选签证类型",
       "visas": {
         "f4r": "地区特化型海外同胞",

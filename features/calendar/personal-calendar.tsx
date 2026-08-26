@@ -28,7 +28,7 @@ function monthOf(dateIso: string): { year: number; month: number } {
 }
 
 export function PersonalCalendar() {
-  const { targetVisaIds, toggleVisaId } = useTargetVisaIds();
+  const { targetVisaIds, toggleVisaId, clearVisaIds } = useTargetVisaIds();
   const today = useToday();
   const [view, setView] = useState<{ year: number; month: number } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -143,7 +143,7 @@ export function PersonalCalendar() {
 
       <div className="grid gap-3">
         <CalendarSearch value={searchQuery} results={searchResults} onChange={setSearchQuery} onSelectResult={selectSearchResult} />
-        <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
+        <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} onClear={clearVisaIds} />
       </div>
 
       {hasUnresolvedItems ? (

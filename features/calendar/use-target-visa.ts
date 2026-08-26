@@ -16,7 +16,7 @@ function resolveProfileVisaId(): string | null {
  * directly during render would return different values on the server vs. the
  * client's hydration render and cause a hydration mismatch.
  */
-export function useTargetVisaIds(): { targetVisaIds: string[]; toggleVisaId: (visaId: string) => void } {
+export function useTargetVisaIds(): { targetVisaIds: string[]; toggleVisaId: (visaId: string) => void; clearVisaIds: () => void } {
   const [profileVisaId, setProfileVisaId] = useState<string | null>(null);
   const [manualVisaIds, setManualVisaIds] = useState<string[] | null>(null);
 
@@ -36,5 +36,5 @@ export function useTargetVisaIds(): { targetVisaIds: string[]; toggleVisaId: (vi
     });
   }
 
-  return { targetVisaIds, toggleVisaId };
+  return { targetVisaIds, toggleVisaId, clearVisaIds: () => setManualVisaIds([]) };
 }

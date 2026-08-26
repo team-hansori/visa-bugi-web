@@ -4,7 +4,14 @@ import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icon";
 import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
 
-export function VisaPicker({ selectedVisaIds, onToggle }: { selectedVisaIds: string[]; onToggle: (visaId: string) => void }) {
+const VISA_CHIP_CLASSES: Record<string, string> = {
+  "F-4-R": "border-[#164E63] bg-[#164E63] text-white",
+  "E-7-4R": "border-[#0F766E] bg-[#0F766E] text-white",
+  "F-2-R": "border-[#5BC0A8] bg-[#5BC0A8] text-[#17302F]",
+  "D-2": "border-[#F4C95D] bg-[#F4C95D] text-[#17302F]",
+};
+
+export function VisaPicker({ selectedVisaIds, onToggle, onClear }: { selectedVisaIds: string[]; onToggle: (visaId: string) => void; onClear: () => void }) {
   const t = useTranslations("Calendar.visaPicker");
   const selectedVisas = SUPPORTED_VISAS.filter((visa) => selectedVisaIds.includes(visa.id));
 
@@ -19,7 +26,7 @@ export function VisaPicker({ selectedVisaIds, onToggle }: { selectedVisaIds: str
             {selectedVisas.length ? (
               <span className="flex flex-wrap gap-2 text-sm font-semibold text-[#30433b]">
                 {selectedVisas.map((visa) => (
-                  <span key={visa.id} className="rounded-lg border border-[#cfe0d8] bg-[#edf5f1] px-2.5 py-1.5">
+                  <span key={visa.id} className={`rounded-lg border px-2.5 py-1.5 ${VISA_CHIP_CLASSES[visa.id]}`}>
                     <strong>{visa.id}</strong> <span aria-hidden="true">|</span> {t(`visas.${visa.messageKey}`)}
                   </span>
                 ))}
@@ -34,6 +41,13 @@ export function VisaPicker({ selectedVisaIds, onToggle }: { selectedVisaIds: str
           </span>
         </summary>
         <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-[#d6dfda] bg-white p-2 shadow-[0_14px_36px_rgba(40,63,53,0.14)]" role="group" aria-label={t("optionsAriaLabel")}>
+          {selectedVisaIds.length ? (
+            <div className="mb-1 flex justify-end border-b border-[#edf0ee] px-1 pb-2">
+              <button type="button" onClick={onClear} className="min-h-10 rounded-lg px-3 text-xs font-extrabold text-[#52615b] hover:bg-[#f4f7f4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]">
+                {t("clear")}
+              </button>
+            </div>
+          ) : null}
           {SUPPORTED_VISAS.map((option) => (
             <button
               key={option.id}

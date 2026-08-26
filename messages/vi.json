@@ -37,6 +37,7 @@
       "label": "Loại thị thực cần xem",
       "placeholder": "Chọn loại thị thực",
       "selectedCount": "Đã chọn {count}",
+      "clear": "Xóa lựa chọn",
       "optionsAriaLabel": "Chọn nhiều loại thị thực",
       "visas": {
         "f4r": "Kiều bào diện chuyên biệt theo khu vực",

@@ -37,6 +37,7 @@
       "label": "Ko‘riladigan viza turi",
       "placeholder": "Viza turini tanlang",
       "selectedCount": "{count} ta tanlandi",
+      "clear": "Tanlovni tozalash",
       "optionsAriaLabel": "Bir nechta viza turini tanlash",
       "visas": {
         "f4r": "Hududiy maxsus xorijdagi koreyslar vizasi",

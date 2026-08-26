@@ -11,7 +11,7 @@ import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-eve
 import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
 
 export function GuestChecklistCalendar() {
-  const { targetVisaIds, toggleVisaId } = useTargetVisaIds();
+  const { targetVisaIds, toggleVisaId, clearVisaIds } = useTargetVisaIds();
   const today = useToday();
   const [view, setView] = useState<{ year: number; month: number } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -65,7 +65,7 @@ export function GuestChecklistCalendar() {
 
       <div className="grid gap-3">
         <CalendarSearch value={searchQuery} results={searchResults} onChange={setSearchQuery} onSelectResult={selectSearchResult} />
-        <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
+        <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} onClear={clearVisaIds} />
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Icon } from "@/components/ui/icon";
+import { getSavedDocumentProgress } from "@/features/ocr/saved-progress";
 import { Link } from "@/i18n/navigation";
 
 const stages = [
@@ -14,18 +15,22 @@ const sampleTasks = ["passport", "schedule", "agency"] as const;
 function ProgressRing({
   ariaLabel,
   caption,
+  percentage,
 }: {
   ariaLabel: string;
   caption: string;
+  percentage: number;
 }) {
+  const safePercentage = Math.max(0, Math.min(100, percentage));
+
   return (
     <div className="relative grid size-36 shrink-0 place-items-center sm:size-40" role="img" aria-label={ariaLabel}>
       <svg className="size-full -rotate-90" viewBox="0 0 120 120" aria-hidden="true">
         <circle cx="60" cy="60" r="51" fill="none" stroke="#e5ebe7" strokeWidth="10" />
-        <circle cx="60" cy="60" r="51" fill="none" pathLength="100" stroke="#2d6d5d" strokeDasharray="68 32" strokeLinecap="round" strokeWidth="10" />
+        <circle cx="60" cy="60" r="51" fill="none" pathLength="100" stroke="#2d6d5d" strokeDasharray={`${safePercentage} ${100 - safePercentage}`} strokeLinecap="round" strokeWidth="10" />
       </svg>
       <div className="absolute text-center">
-        <strong className="block text-3xl font-black tracking-[-0.06em] text-[#173f36] sm:text-4xl">68%</strong>
+        <strong className="block text-3xl font-black tracking-[-0.06em] text-[#173f36] sm:text-4xl">{safePercentage}%</strong>
         <span className="mt-1 block text-xs font-semibold text-[#73807b]">{caption}</span>
       </div>
     </div>
@@ -40,17 +45,62 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Home");
+  const savedProgress = await getSavedDocumentProgress();
+  const progressPercentage = savedProgress?.percentage ?? 68;
+  const selectedVisa = savedProgress
+    ? savedProgress.visaCodes.length
+      ? savedProgress.visaCodes.join(", ")
+      : t("progress.commonVisaValue")
+    : t("progress.selectedVisaValue");
+  const baseDate = savedProgress
+    ? new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(
+        new Date(savedProgress.lastUpdatedAt),
+      )
+    : t("progress.baseDateValue");
+  const taskItems = savedProgress
+    ? savedProgress.tasks.map((task, index) => ({
+        key: `${task.kind}:${task.documentTitle}:${index}`,
+        label:
+          task.kind === "missing"
+            ? t("tasks.saved.missing.label", {
+                document: task.documentTitle,
+                count: task.count,
+              })
+            : task.kind === "review"
+              ? t("tasks.saved.review.label", {
+                  document: task.documentTitle,
+                  count: task.count,
+                })
+              : t("tasks.saved.ready.label", {
+                  document: task.documentTitle,
+                }),
+        meta:
+          task.kind === "missing"
+            ? t("tasks.saved.missing.meta")
+            : task.kind === "review"
+              ? t("tasks.saved.review.meta")
+              : t("tasks.saved.ready.meta"),
+      }))
+    : sampleTasks.map((taskId) => ({
+        key: taskId,
+        label: t(`tasks.items.${taskId}.label`),
+        meta: t(`tasks.items.${taskId}.meta`),
+      }));
 
   return (
     <div className="space-y-6 sm:space-y-8">
       <section className="flex flex-col gap-5 rounded-[28px] bg-[#173f36] px-5 py-7 text-white shadow-[0_18px_50px_rgba(23,63,54,0.18)] sm:px-8 sm:py-9 lg:flex-row lg:items-end lg:justify-between lg:px-10">
         <div className="max-w-2xl">
-          <span className="inline-flex min-h-8 items-center rounded-full bg-white/12 px-3 text-xs font-bold text-[#d9eee5]">{t("demoBadge")}</span>
+          <span className="inline-flex min-h-8 items-center rounded-full bg-white/12 px-3 text-xs font-bold text-[#d9eee5]">{savedProgress ? t("savedBadge") : t("demoBadge")}</span>
           <h1 className="mt-4 text-[clamp(1.75rem,7vw,3.25rem)] font-black leading-[1.12] tracking-[-0.055em]">
             {t("heroTitle")}
           </h1>
           <p className="mt-3 max-w-xl text-sm leading-6 text-[#d1dfda] sm:text-base sm:leading-7">
-            {t("heroDescription")}
+            {savedProgress
+              ? t("savedHeroDescription", {
+                  count: savedProgress.totalDocuments,
+                })
+              : t("heroDescription")}
           </p>
         </div>
         <Link href="/onboarding" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#ffca68] px-5 text-sm font-extrabold text-[#173f36] shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-fit">
@@ -63,20 +113,25 @@ export default async function Home({
         <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 xl:col-span-4">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-xl font-black tracking-[-0.035em] text-[#20332c]">{t("progress.heading")}</h2>
+              <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{savedProgress ? t("progress.savedEyebrow") : t("progress.eyebrow")}</p>
+              <h2 className="mt-1 text-xl font-black tracking-[-0.035em] text-[#20332c]">{t("progress.heading")}</h2>
             </div>
-            <span className="rounded-full bg-[#fff1d4] px-2.5 py-1 text-[0.68rem] font-extrabold text-[#8a5910]">{t("progress.demoTag")}</span>
+            <span className="rounded-full bg-[#fff1d4] px-2.5 py-1 text-[0.68rem] font-extrabold text-[#8a5910]">{savedProgress ? t("progress.savedTag") : t("progress.demoTag")}</span>
           </div>
           <div className="mt-6 flex flex-col items-center gap-5 sm:flex-row sm:justify-center xl:flex-col">
-            <ProgressRing ariaLabel={t("progress.ariaLabel")} caption={t("progress.caption")} />
+            <ProgressRing
+              ariaLabel={savedProgress ? t("progress.savedAriaLabel", { percent: progressPercentage }) : t("progress.ariaLabel")}
+              caption={savedProgress ? t("progress.savedCaption") : t("progress.caption")}
+              percentage={progressPercentage}
+            />
             <div className="w-full rounded-2xl bg-[#f5f7f4] p-4">
               <div className="flex items-center justify-between gap-4 text-sm">
                 <span className="font-semibold text-[#64716c]">{t("progress.selectedVisaLabel")}</span>
-                <strong className="text-[#20332c]">{t("progress.selectedVisaValue")}</strong>
+                <strong className="text-[#20332c]">{selectedVisa}</strong>
               </div>
               <div className="mt-3 flex items-center justify-between gap-4 text-sm">
-                <span className="font-semibold text-[#64716c]">{t("progress.baseDateLabel")}</span>
-                <strong className="text-[#8a5910]">{t("progress.baseDateValue")}</strong>
+                <span className="font-semibold text-[#64716c]">{savedProgress ? t("progress.lastUpdatedLabel") : t("progress.baseDateLabel")}</span>
+                <strong className="text-[#8a5910]">{baseDate}</strong>
               </div>
             </div>
           </div>
@@ -87,7 +142,14 @@ export default async function Home({
             <div>
               <h2 className="text-xl font-black tracking-[-0.035em]">{t("journey.heading")}</h2>
             </div>
-            <span className="text-sm font-bold text-[#2d6d5d]">{t("journey.stepIndicator")}</span>
+            <span className="text-sm font-bold text-[#2d6d5d]">
+              {savedProgress
+                ? t("journey.savedStepIndicator", {
+                    ready: savedProgress.readyDocuments,
+                    total: savedProgress.totalDocuments,
+                  })
+                : t("journey.stepIndicator")}
+            </span>
           </div>
 
           <ol className="relative mt-7 grid gap-0 md:grid-cols-4" aria-label={t("journey.stagesAriaLabel")}>
@@ -138,12 +200,12 @@ export default async function Home({
             <Icon name="document" className="size-6 text-[#2d6d5d]" />
           </div>
           <ul className="mt-5 divide-y divide-[#edf0ee]">
-            {sampleTasks.map((taskId, index) => (
-              <li key={taskId} className="flex items-start gap-3 py-4 first:pt-0 last:pb-0">
+            {taskItems.map((task, index) => (
+              <li key={task.key} className="flex items-start gap-3 py-4 first:pt-0 last:pb-0">
                 <span className={`mt-0.5 grid size-7 shrink-0 place-items-center rounded-full text-xs font-black ${index === 0 ? "bg-[#fff0cf] text-[#8a5910]" : "bg-[#edf2ef] text-[#65716c]"}`}>{index + 1}</span>
                 <div className="min-w-0">
-                  <p className="font-extrabold text-[#2a3c35]">{t(`tasks.items.${taskId}.label`)}</p>
-                  <p className="mt-1 text-sm text-[#76817c]">{t(`tasks.items.${taskId}.meta`)}</p>
+                  <p className="font-extrabold text-[#2a3c35]">{task.label}</p>
+                  <p className="mt-1 text-sm text-[#76817c]">{task.meta}</p>
                 </div>
               </li>
             ))}

@@ -76,9 +76,9 @@ export function CalendarGrid({ year, month, eventsByDate, selectedDate, onSelect
               aria-pressed={selected}
               className={`relative min-h-14 bg-white p-1.5 text-left text-sm font-bold outline-none transition-colors focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#2d6d5d] sm:min-h-24 sm:p-2.5 ${selected ? "bg-[#edf6f2] text-[#1f584a]" : "text-[#45554f] hover:bg-[#f8faf8]"}`}
             >
-              <span className={`grid size-7 place-items-center rounded-full ${isToday ? "bg-[#2d6d5d] text-white" : ""}`}>{cell.day}</span>
+              <span className={`absolute left-1.5 top-1.5 grid size-7 place-items-center rounded-full sm:left-2.5 sm:top-2.5 ${isToday ? "bg-[#2d6d5d] text-white" : ""}`}>{cell.day}</span>
               {dayEvents.length ? (
-                <span className="absolute bottom-2 left-1/2 size-1.5 -translate-x-1/2 overflow-hidden whitespace-nowrap rounded-full bg-[#e59b37] text-[0px] sm:static sm:mt-2 sm:block sm:size-auto sm:translate-x-0 sm:truncate sm:rounded-md sm:bg-[#fff0d3] sm:px-1.5 sm:py-1 sm:text-[0.65rem] sm:text-[#80561d]">
+                <span className="absolute bottom-2 left-1/2 size-1.5 -translate-x-1/2 overflow-hidden whitespace-nowrap rounded-full bg-[#e59b37] text-[0px] sm:bottom-auto sm:left-2.5 sm:right-2.5 sm:top-11 sm:block sm:size-auto sm:translate-x-0 sm:truncate sm:rounded-md sm:bg-[#fff0d3] sm:px-1.5 sm:py-1 sm:text-[0.65rem] sm:text-[#80561d]">
                   {dayEvents[0].label}
                 </span>
               ) : null}

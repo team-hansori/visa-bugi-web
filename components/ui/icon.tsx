@@ -15,6 +15,7 @@ export type IconName =
   | "home"
   | "mail"
   | "map-pin"
+  | "menu"
   | "navigation"
   | "phone"
   | "search"
@@ -89,6 +90,13 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <path d="m3 7 9 6 9-6" />
+    </>
+  ),
+  menu: (
+    <>
+      <path d="M4 6h16" />
+      <path d="M4 12h16" />
+      <path d="M4 18h16" />
     </>
   ),
   "map-pin": (

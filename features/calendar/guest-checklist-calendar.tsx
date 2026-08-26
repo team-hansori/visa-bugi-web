@@ -78,8 +78,7 @@ export function GuestChecklistCalendar() {
             todayDate={today.date}
           />
           <aside className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-6" aria-labelledby="checklist-title">
-            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaIds.length ? `${targetVisaIds.join(", ")} 비자 기본 절차` : "전체 비자 기본 절차"}</p>
-            <h2 id="checklist-title" className="mt-1 text-xl font-black tracking-[-0.035em]">전체 체크리스트</h2>
+            <h2 id="checklist-title" className="text-xl font-black tracking-[-0.035em]">전체 체크리스트</h2>
             {checklist.length ? (
               <ul className="mt-4 space-y-3">
                 {checklist.map((item) => (

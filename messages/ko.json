@@ -24,6 +24,12 @@
     "label": "언어 선택"
   },
   "Calendar": {
+    "search": {
+      "open": "캘린더 내 일정 검색",
+      "placeholder": "비자 절차, 일정, 카테고리, 위치 검색",
+      "ariaLabel": "캘린더 내 일정 검색어",
+      "close": "닫기"
+    },
     "visaPicker": {
       "label": "확인할 비자 유형",
       "placeholder": "비자 유형을 선택해 주세요",

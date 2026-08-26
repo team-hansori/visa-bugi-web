@@ -13,6 +13,7 @@ type VisaProcessStageRow = {
 
 export type ChecklistItem = {
   id: string;
+  visaId: string;
   order: number;
   title: string;
   startDate?: string;
@@ -60,6 +61,7 @@ const MOCK_STAGE_ROWS: VisaProcessStageRow[] = [
 function toChecklistItem(row: VisaProcessStageRow): ChecklistItem {
   return {
     id: row.stage_id,
+    visaId: row.visa_id,
     order: row.stage_order,
     title: row.stage_name_kr,
     startDate: row.stage_start_date ?? undefined,

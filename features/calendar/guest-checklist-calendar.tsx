@@ -6,6 +6,7 @@ import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
 import { useTargetVisaIds } from "./use-target-visa";
 import { useToday } from "./use-today";
 import { VisaPicker } from "./visa-picker";
+import { CalendarSearch } from "./calendar-search";
 import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
 
 export function GuestChecklistCalendar() {
@@ -13,6 +14,7 @@ export function GuestChecklistCalendar() {
   const today = useToday();
   const [view, setView] = useState<{ year: number; month: number } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Intentional: seeds the initial view month once `today` becomes
@@ -29,7 +31,10 @@ export function GuestChecklistCalendar() {
     );
   }
 
-  const checklist = targetVisaIds.flatMap(getDefaultChecklist);
+  const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
+  const checklist = targetVisaIds
+    .flatMap(getDefaultChecklist)
+    .filter((item) => !normalizedQuery || [item.visaId, item.title].some((value) => value.toLocaleLowerCase().includes(normalizedQuery)));
   const eventsByDate = buildChecklistEvents(checklist, null);
   const selectedItems = findChecklistItemsForDate(checklist, null, selectedDate);
 
@@ -46,7 +51,10 @@ export function GuestChecklistCalendar() {
         </button>
       </header>
 
-      <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
+      <div className="grid gap-3">
+        <CalendarSearch value={searchQuery} onChange={setSearchQuery} />
+        <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
+      </div>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <CalendarGrid

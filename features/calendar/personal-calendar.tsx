@@ -7,6 +7,7 @@ import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
 import { useTargetVisaIds } from "./use-target-visa";
 import { useToday } from "./use-today";
 import { VisaPicker } from "./visa-picker";
+import { CalendarSearch } from "./calendar-search";
 import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
 
 type PersonalEvent = {
@@ -41,6 +42,7 @@ export function PersonalCalendar() {
   const [customCategory, setCustomCategory] = useState("");
   const [customCategoryOpen, setCustomCategoryOpen] = useState(false);
   const [formError, setFormError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Intentional: seeds the initial view/selection once `today` becomes
@@ -53,19 +55,23 @@ export function PersonalCalendar() {
     }
   }, [today, view]);
 
-  const checklist = useMemo(() => targetVisaIds.flatMap(getDefaultChecklist), [targetVisaIds]);
+  const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
+  const checklist = useMemo(
+    () => targetVisaIds.flatMap(getDefaultChecklist).filter((item) => !normalizedQuery || [item.visaId, item.title].some((value) => value.toLocaleLowerCase().includes(normalizedQuery))),
+    [normalizedQuery, targetVisaIds],
+  );
   const hasUnresolvedItems = checklist.some((item) => !item.startDate);
 
   const eventsByDate = useMemo(() => {
     const map = buildChecklistEvents(checklist, referenceDate || null);
-    for (const event of events) {
+    for (const event of events.filter((item) => !normalizedQuery || [item.title, item.category, item.location ?? ""].some((value) => value.toLocaleLowerCase().includes(normalizedQuery)))) {
       map[event.date] = [...(map[event.date] ?? []), { id: event.id, label: event.title }];
     }
     return map;
-  }, [checklist, referenceDate, events]);
+  }, [checklist, referenceDate, events, normalizedQuery]);
 
   const selectedChecklistItems = findChecklistItemsForDate(checklist, referenceDate || null, selectedDate);
-  const selectedPersonalEvents = events.filter((event) => event.date === selectedDate);
+  const selectedPersonalEvents = events.filter((event) => event.date === selectedDate && (!normalizedQuery || [event.title, event.category, event.location ?? ""].some((value) => value.toLocaleLowerCase().includes(normalizedQuery))));
 
   if (!today || !view) {
     return (
@@ -120,7 +126,10 @@ export function PersonalCalendar() {
         </button>
       </header>
 
-      <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
+      <div className="grid gap-3">
+        <CalendarSearch value={searchQuery} onChange={setSearchQuery} />
+        <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
+      </div>
 
       {hasUnresolvedItems ? (
         <div className="rounded-[24px] border border-[#dce5e0] bg-[#edf5f1] p-5">

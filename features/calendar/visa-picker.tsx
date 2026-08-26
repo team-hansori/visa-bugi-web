@@ -10,10 +10,9 @@ export function VisaPicker({ selectedVisaIds, onToggle }: { selectedVisaIds: str
 
   return (
     <div>
-      <label id="visa-picker-label" className="mb-2 block text-sm font-extrabold text-[#34473f]">{t("label")}</label>
       <details className="group relative">
         <summary
-          aria-labelledby="visa-picker-label"
+          aria-label={t("label")}
           className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-2xl border border-[#d6dfda] bg-white px-4 py-3 text-left shadow-sm marker:content-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] [&::-webkit-details-marker]:hidden"
         >
           <span className="min-w-0">

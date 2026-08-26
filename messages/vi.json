@@ -24,6 +24,12 @@
     "label": "언어 선택"
   },
   "Calendar": {
+    "search": {
+      "open": "Tìm trong lịch",
+      "placeholder": "Tìm thủ tục, lịch, danh mục hoặc địa điểm",
+      "ariaLabel": "Từ khóa tìm kiếm trong lịch",
+      "close": "Đóng"
+    },
     "visaPicker": {
       "label": "Loại thị thực cần xem",
       "placeholder": "Chọn loại thị thực",

@@ -24,6 +24,12 @@
     "label": "언어 선택"
   },
   "Calendar": {
+    "search": {
+      "open": "搜索日历内容",
+      "placeholder": "搜索签证流程、日程、类别或地点",
+      "ariaLabel": "日历搜索词",
+      "close": "关闭"
+    },
     "visaPicker": {
       "label": "要查看的签证类型",
       "placeholder": "请选择签证类型",

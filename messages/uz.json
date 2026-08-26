@@ -24,6 +24,12 @@
     "label": "언어 선택"
   },
   "Calendar": {
+    "search": {
+      "open": "Taqvimdan qidirish",
+      "placeholder": "Viza jarayoni, tadbir, turkum yoki joyni qidiring",
+      "ariaLabel": "Taqvim qidiruv so‘zi",
+      "close": "Yopish"
+    },
     "visaPicker": {
       "label": "Ko‘riladigan viza turi",
       "placeholder": "Viza turini tanlang",

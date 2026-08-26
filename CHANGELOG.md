@@ -73,6 +73,8 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- 웹 프로젝트 README 정리
 
 ### ⚙️ Miscellaneous Tasks
 

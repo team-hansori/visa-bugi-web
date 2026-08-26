@@ -46,7 +46,10 @@ export function createTestTranslator(namespace: string) {
       }
       const [, tagName, inner] = match;
       const render = values[tagName];
-      parts.push(createElement(Fragment, { key: partIndex++ }, render ? render(inner) : inner));
+      if (!render) {
+        throw new Error(`Missing rich text handler for <${tagName}>`);
+      }
+      parts.push(createElement(Fragment, { key: partIndex++ }, render(inner)));
       lastIndex = tagPattern.lastIndex;
     }
     if (lastIndex < raw.length) {

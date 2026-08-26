@@ -106,7 +106,7 @@
     "searchNoResult": "Qidiruv natijasi topilmadi.",
     "searchError": "Manzilni yuklab bo'lmadi. Birozdan so'ng qayta urinib ko'ring.",
     "saveError": "Vaqtinchalik xatolik tufayli saqlanmadi. Birozdan so'ng qayta urinib ko'ring.",
-    "consentNotice": "Davom etsangiz, <terms>Foydalanish shartlari</terms> va <privacy>Maxfiylik siyosati</privacy>ga rozilik bildirgan hisoblanasiz.",
+    "consentNotice": "<terms>Foydalanish shartlari</terms> va <privacy>Maxfiylik siyosati</privacy> tayyorlanmoqda. E'lon qilingach shu yerda ko'rishingiz mumkin.",
     "welcomeTitle": "Visa-bugi bilan boshlaymiz",
     "welcomeDescription": "Viza talablaringiz va keyingi bosqichni kuzatib boramiz.",
     "googleStart": "Google orqali boshlash",

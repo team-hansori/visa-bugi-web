@@ -106,7 +106,7 @@
     "searchNoResult": "没有搜索结果。",
     "searchError": "无法加载地址。请稍后重试。",
     "saveError": "因临时错误未能保存。请稍后重试。",
-    "consentNotice": "继续操作即表示您同意<terms>服务条款</terms>及<privacy>隐私政策</privacy>。",
+    "consentNotice": "<terms>服务条款</terms>和<privacy>隐私政策</privacy>正在准备中，发布后可在此查看。",
     "welcomeTitle": "与Visa-bugi一起开始吧",
     "welcomeDescription": "我们将为您追踪签证要求和下一步。",
     "googleStart": "使用Google开始",

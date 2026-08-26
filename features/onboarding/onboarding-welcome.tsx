@@ -19,7 +19,7 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
   const [showGoogleNotice, setShowGoogleNotice] = useState(false);
 
   function handleGoogleLogin() {
-    // 실제 Google OAuth 연동 시 이 자리를 아래로 교체한다.
+    // 실제 Google OAuth 연동 시 이 함수를 async로 바꾸고 이 자리를 아래로 교체한다.
     // (Supabase에 Google 프로바이더 설정 + 아래 호출로 대체 — 익명 세션과
     //  동일하게 Supabase Auth를 쓰므로 별도 인증 라이브러리를 추가하지 않는다.)
     //

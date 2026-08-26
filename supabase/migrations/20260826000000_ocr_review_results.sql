@@ -1,4 +1,4 @@
--- OCR 검토 결과만 저장한다. 원본 사진/HWPX와 인식된 실제 값(raw value)은 저장하지 않는다.
+-- OCR 검토 결과만 저장한다. 원본 사진/PDF/HWPX와 인식된 실제 값(raw value)은 저장하지 않는다.
 -- user_id는 온보딩 PR #16의 익명 로그인/정식 로그인 세션과 동일하게 auth.users를 기준으로 한다.
 
 create table if not exists public.user_document_reviews (
@@ -27,7 +27,7 @@ create table if not exists public.user_document_reviews (
   constraint user_document_reviews_template_key_length check (char_length(template_key) between 1 and 120),
   constraint user_document_reviews_visa_code_length check (char_length(visa_code) between 1 and 30),
   constraint user_document_reviews_document_title_length check (char_length(document_title) between 1 and 200),
-  constraint user_document_reviews_source_kind_check check (source_kind in ('image', 'hwpx')),
+  constraint user_document_reviews_source_kind_check check (source_kind in ('image', 'pdf', 'hwpx')),
   constraint user_document_reviews_review_status_check check (review_status in ('READY', 'NEEDS_REVIEW', 'INCOMPLETE')),
   constraint user_document_reviews_image_quality_check check (image_quality in ('clear', 'blurred', 'cropped', 'glare', 'unknown')),
   constraint user_document_reviews_counts_nonnegative check (

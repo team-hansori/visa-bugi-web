@@ -96,7 +96,7 @@
   "Ocr": {
     "eyebrow": "申请表填写助手",
     "title": "检查签证申请表填写项目",
-    "description": "读取申请表照片或 HWPX 文件中已填写的内容，并提示空白或需要再次确认的项目。结果不会自动提交。",
+    "description": "读取申请表照片、PDF 或 HWPX 文件中已填写的内容，并提示空白或需要再次确认的项目。结果不会自动提交。",
     "languageNotice": "系统读取表格中的韩文，并以当前选择的应用语言提供说明。",
     "catalog": {
       "supabase": "已连接 Supabase 架构 v2",
@@ -111,16 +111,18 @@
     "upload": {
       "step": "第1步",
       "title": "添加申请表照片或文件",
-      "chooseTitle": "准备申请表照片或 HWPX 文件",
-      "chooseDescription": "照片应清晰显示整份文件和文字，也可以添加原始 HWPX 文件。",
+      "chooseTitle": "准备申请表照片、PDF 或 HWPX 文件",
+      "chooseDescription": "照片应清晰显示整份文件和文字，也可以添加原始 PDF 或 HWPX 文件。",
       "choose": "选择图片",
       "inputLabel": "选择申请表照片",
       "capture": "拍照",
       "select": "添加文件",
       "cameraInputLabel": "拍摄申请表照片",
-      "galleryInputLabel": "添加申请表照片或 HWPX 文件",
-      "types": "请添加一张 JPG、PNG、WebP 照片或一个 HWPX 文件（原文件最大 16MB）。",
+      "galleryInputLabel": "添加申请表照片、PDF 或 HWPX 文件",
+      "types": "请添加一张 JPG、PNG、WebP 照片，或一个 PDF、HWPX 文件（原文件最大 16MB）。",
       "ready": "已准备分析文件 {name}。",
+      "pdfReady": "已准备读取 PDF 文件 {name}。",
+      "pdfDescription": "系统会同时读取 PDF 文本和页面图像来检查填写项目。分析多页文件可能会增加用量。",
       "hwpxReady": "已准备读取 HWPX 文件 {name}。",
       "hwpxDescription": "系统不会对其进行照片 OCR，而是安全读取 HWPX 内部内容并检查填写项目。",
       "checking": "在调用 API 之前，正在此设备上免费检查照片质量。",
@@ -198,7 +200,7 @@
     },
     "privacy": {
       "title": "附件处理原则",
-      "temporary": "照片或 HWPX 仅为分析而临时传输",
+      "temporary": "照片、PDF 或 HWPX 仅为分析而临时传输",
       "noDatabase": "不保存原始文件和识别内容，仅保存用户选择的进度状态",
       "reviewFirst": "识别结果须经用户确认后才使用"
     },
@@ -210,8 +212,9 @@
     },
     "errors": {
       "generic": "分析申请表时出现问题，请稍后重试。",
-      "fileType": "只能添加 JPG、PNG、WebP 照片或 HWPX 文件。",
-      "fileSize": "照片或 HWPX 原文件必须不超过 16MB。",
+      "fileType": "只能添加 JPG、PNG、WebP 照片、PDF 或 HWPX 文件。",
+      "fileSize": "照片、PDF 或 HWPX 原文件必须不超过 16MB。",
+      "pdf": "请确认这是有效的 PDF 文件。文件损坏或仅更改扩展名时无法分析。",
       "hwpx": "请确认这是有效的 HWPX 文件。文件损坏或仅更改扩展名时无法分析。",
       "optimize": "无法缩小照片，请选择更小的图片。",
       "rateLimit": "短时间内请求次数过多，请稍后重试。"

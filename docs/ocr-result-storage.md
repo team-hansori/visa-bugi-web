@@ -12,7 +12,7 @@
 
 다음 정보는 저장하지 않는다.
 
-- 업로드한 사진 또는 HWPX 원본
+- 업로드한 사진, PDF 또는 HWPX 원본
 - 파일명과 Storage 경로
 - OCR로 읽은 이름, 주소, 식별번호 등의 실제 값(`rawValue`)
 
@@ -33,7 +33,7 @@ upsert한다.
 | `template_key` | `text` | OCR 필드 템플릿 키 |
 | `visa_code` | `text` | `COMMON`, `F-2-R` 등의 비자 코드 |
 | `document_title` | `text` | 화면과 다음 할 일에 표시할 문서명 |
-| `source_kind` | `text` | `image` 또는 `hwpx` |
+| `source_kind` | `text` | `image`, `pdf` 또는 `hwpx` |
 | `review_status` | `text` | `READY`, `NEEDS_REVIEW`, `INCOMPLETE` |
 | `page_number` | `integer` nullable | 분석한 페이지 번호 |
 | `image_quality` | `text` | `clear`, `blurred`, `cropped`, `glare`, `unknown` |
@@ -84,8 +84,9 @@ upsert한다.
 
 1. 공통 스키마 v2의 `document_requirements` 테이블을 먼저 적용한다.
 2. `supabase/migrations/20260826000000_ocr_review_results.sql`을 적용한다.
-3. Supabase Dashboard의 Authentication 설정에서 Anonymous sign-ins를 활성화한다.
-4. Vercel Preview/Production에 `NEXT_PUBLIC_SUPABASE_URL`과 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`를 설정한다.
+3. 이미 2번 마이그레이션을 적용한 환경은 `supabase/migrations/20260826010000_add_pdf_source_kind.sql`도 적용한다.
+4. Supabase Dashboard의 Authentication 설정에서 Anonymous sign-ins를 활성화한다.
+5. Vercel Preview/Production에 `NEXT_PUBLIC_SUPABASE_URL`과 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`를 설정한다.
 
 온보딩 PR #16이 사용하는 익명 사용자와 같은 `auth.users.id`를 사용한다. RLS는 모든 읽기·쓰기·삭제를 `auth.uid() = user_id`인 행으로 제한한다.
 

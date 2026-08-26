@@ -96,7 +96,7 @@
   "Ocr": {
     "eyebrow": "신청서 작성 도우미",
     "title": "비자 신청서 작성 항목 점검",
-    "description": "신청서 사진 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다. 결과는 자동 제출되지 않습니다.",
+    "description": "신청서 사진, PDF 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다. 결과는 자동 제출되지 않습니다.",
     "languageNotice": "서식의 한국어를 읽은 뒤 안내는 현재 선택한 앱 언어로 제공합니다.",
     "catalog": {
       "supabase": "Supabase 스키마 v2 연결",
@@ -111,16 +111,18 @@
     "upload": {
       "step": "1단계",
       "title": "신청서 사진·파일 첨부",
-      "chooseTitle": "신청서 사진 또는 HWPX 파일을 준비하세요",
-      "chooseDescription": "사진은 문서 전체와 글자가 선명하게 보여야 하며, 원본 HWPX 파일도 첨부할 수 있어요.",
+      "chooseTitle": "신청서 사진, PDF 또는 HWPX 파일을 준비하세요",
+      "chooseDescription": "사진은 문서 전체와 글자가 선명하게 보여야 하며, 원본 PDF와 HWPX 파일도 첨부할 수 있어요.",
       "choose": "이미지 선택",
       "inputLabel": "신청서 사진 선택",
       "capture": "사진 촬영",
       "select": "파일 첨부하기",
       "cameraInputLabel": "신청서 사진 촬영",
-      "galleryInputLabel": "신청서 사진 또는 HWPX 파일 첨부",
-      "types": "JPG·PNG·WebP 사진 한 장 또는 HWPX 파일 한 개를 첨부해 주세요(원본 최대 16MB).",
+      "galleryInputLabel": "신청서 사진, PDF 또는 HWPX 파일 첨부",
+      "types": "JPG·PNG·WebP 사진 한 장, PDF 또는 HWPX 파일 한 개를 첨부해 주세요(원본 최대 16MB).",
       "ready": "{name} 파일을 분석할 준비가 되었습니다.",
+      "pdfReady": "{name} PDF 파일을 읽을 준비가 되었습니다.",
+      "pdfDescription": "PDF의 텍스트와 각 페이지 이미지를 함께 읽어 작성 항목을 점검합니다. 여러 페이지를 분석하면 사용량이 늘 수 있습니다.",
       "hwpxReady": "{name} HWPX 파일을 읽을 준비가 되었습니다.",
       "hwpxDescription": "사진 OCR 대신 HWPX 내부의 문서 내용을 안전하게 읽어 작성 항목을 점검합니다.",
       "checking": "API를 호출하기 전에 이 기기에서 사진 상태를 무료로 확인하는 중입니다.",
@@ -198,7 +200,7 @@
     },
     "privacy": {
       "title": "첨부 파일 처리 원칙",
-      "temporary": "사진·HWPX는 분석을 위해서만 일시 전송",
+      "temporary": "사진·PDF·HWPX는 분석을 위해서만 일시 전송",
       "noDatabase": "원본 파일·인식값은 저장하지 않고 사용자가 선택한 진행 상태만 저장",
       "reviewFirst": "인식 결과를 사용자가 확인한 뒤에만 활용"
     },
@@ -210,8 +212,9 @@
     },
     "errors": {
       "generic": "신청서 분석 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-      "fileType": "JPG, PNG, WebP 사진 또는 HWPX 파일만 첨부할 수 있습니다.",
-      "fileSize": "사진 또는 HWPX 원본 파일 크기는 16MB 이하여야 합니다.",
+      "fileType": "JPG, PNG, WebP 사진, PDF 또는 HWPX 파일만 첨부할 수 있습니다.",
+      "fileSize": "사진, PDF 또는 HWPX 원본 파일 크기는 16MB 이하여야 합니다.",
+      "pdf": "올바른 PDF 파일인지 확인해 주세요. 손상되었거나 다른 파일의 확장자만 바꾼 경우에는 분석할 수 없습니다.",
       "hwpx": "올바른 HWPX 파일인지 확인해 주세요. 손상되었거나 다른 파일의 확장자만 바꾼 경우에는 분석할 수 없습니다.",
       "optimize": "사진 크기를 줄이지 못했습니다. 더 작은 사진을 선택해 주세요.",
       "rateLimit": "짧은 시간에 너무 많이 요청했습니다. 잠시 후 다시 시도해 주세요."

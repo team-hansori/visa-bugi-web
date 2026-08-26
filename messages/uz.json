@@ -96,7 +96,7 @@
   "Ocr": {
     "eyebrow": "Ariza to‘ldirish yordamchisi",
     "title": "Viza arizasidagi maydonlarni tekshirish",
-    "description": "Ariza rasmi yoki HWPX faylidagi to‘ldirilgan maydonlarni o‘qiydi va bo‘sh yoki qayta tekshirilishi kerak bo‘lgan joylarni ko‘rsatadi. Natija avtomatik yuborilmaydi.",
+    "description": "Ariza rasmi, PDF yoki HWPX faylidagi to‘ldirilgan maydonlarni o‘qiydi va bo‘sh yoki qayta tekshirilishi kerak bo‘lgan joylarni ko‘rsatadi. Natija avtomatik yuborilmaydi.",
     "languageNotice": "Tizim shakldagi koreyscha matnni o‘qiydi va yo‘riqnomani ilovada tanlangan tilda beradi.",
     "catalog": {
       "supabase": "Supabase v2 sxemasi ulangan",
@@ -111,16 +111,18 @@
     "upload": {
       "step": "1-bosqich",
       "title": "Ariza rasmi yoki faylini biriktirish",
-      "chooseTitle": "Ariza rasmi yoki HWPX faylini tayyorlang",
-      "chooseDescription": "Rasmda hujjat va matn to‘liq, aniq ko‘rinsin; asl HWPX faylini ham biriktirish mumkin.",
+      "chooseTitle": "Ariza rasmi, PDF yoki HWPX faylini tayyorlang",
+      "chooseDescription": "Rasmda hujjat va matn to‘liq, aniq ko‘rinsin; asl PDF yoki HWPX faylini ham biriktirish mumkin.",
       "choose": "Rasm tanlash",
       "inputLabel": "Viza arizasi rasmini tanlash",
       "capture": "Rasmga olish",
       "select": "Fayl biriktirish",
       "cameraInputLabel": "Viza arizasini rasmga olish",
-      "galleryInputLabel": "Ariza rasmi yoki HWPX faylini biriktirish",
-      "types": "Bitta JPG, PNG, WebP rasmi yoki bitta HWPX faylini biriktiring (asl fayl ko‘pi bilan 16MB).",
+      "galleryInputLabel": "Ariza rasmi, PDF yoki HWPX faylini biriktirish",
+      "types": "Bitta JPG, PNG, WebP rasmi yoki bitta PDF, HWPX faylini biriktiring (asl fayl ko‘pi bilan 16MB).",
       "ready": "{name} fayli tahlilga tayyor.",
+      "pdfReady": "{name} PDF fayli o‘qishga tayyor.",
+      "pdfDescription": "Maydonlarni tekshirish uchun PDF matni va sahifa rasmlari birga o‘qiladi. Ko‘p sahifali fayl ko‘proq foydalanishga olib kelishi mumkin.",
       "hwpxReady": "{name} HWPX fayli o‘qishga tayyor.",
       "hwpxDescription": "Rasm OCR o‘rniga HWPX ichidagi hujjat matni xavfsiz o‘qilib, maydonlar tekshiriladi.",
       "checking": "API chaqirilishidan oldin rasm sifati qurilmada bepul tekshirilmoqda.",
@@ -198,7 +200,7 @@
     },
     "privacy": {
       "title": "Biriktirmani qayta ishlash qoidalari",
-      "temporary": "Rasm yoki HWPX faqat tahlil uchun vaqtincha yuboriladi",
+      "temporary": "Rasm, PDF yoki HWPX faqat tahlil uchun vaqtincha yuboriladi",
       "noDatabase": "Asl fayl va tanilgan qiymatlar saqlanmaydi, faqat foydalanuvchi tanlagan jarayon holati saqlanadi",
       "reviewFirst": "Natija faqat foydalanuvchi tekshirganidan keyin ishlatiladi"
     },
@@ -210,8 +212,9 @@
     },
     "errors": {
       "generic": "Arizani tahlil qilishda muammo yuz berdi. Keyinroq qayta urinib ko‘ring.",
-      "fileType": "Faqat JPG, PNG, WebP rasmi yoki HWPX faylini biriktirish mumkin.",
-      "fileSize": "Rasm yoki HWPX asl fayli 16MB dan oshmasligi kerak.",
+      "fileType": "Faqat JPG, PNG, WebP rasmi, PDF yoki HWPX faylini biriktirish mumkin.",
+      "fileSize": "Rasm, PDF yoki HWPX asl fayli 16MB dan oshmasligi kerak.",
+      "pdf": "Bu to‘g‘ri PDF fayli ekanini tekshiring. Buzilgan yoki faqat kengaytmasi o‘zgartirilgan fayl tahlil qilinmaydi.",
       "hwpx": "Bu to‘g‘ri HWPX fayli ekanini tekshiring. Buzilgan yoki faqat kengaytmasi o‘zgartirilgan fayl tahlil qilinmaydi.",
       "optimize": "Rasm hajmini kichraytirib bo‘lmadi. Kichikroq rasm tanlang.",
       "rateLimit": "Qisqa vaqtda juda ko‘p so‘rov yuborildi. Birozdan keyin qayta urinib ko‘ring."

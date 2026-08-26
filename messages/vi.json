@@ -96,7 +96,7 @@
   "Ocr": {
     "eyebrow": "Trợ lý điền đơn",
     "title": "Kiểm tra các mục trong đơn xin visa",
-    "description": "Đọc các mục đã điền từ ảnh đơn hoặc tệp HWPX và hướng dẫn những mục còn trống hoặc cần kiểm tra lại. Kết quả không được tự động nộp.",
+    "description": "Đọc các mục đã điền từ ảnh đơn, tệp PDF hoặc HWPX và hướng dẫn những mục còn trống hoặc cần kiểm tra lại. Kết quả không được tự động nộp.",
     "languageNotice": "Hệ thống đọc tiếng Hàn trên biểu mẫu và hướng dẫn bằng ngôn ngữ ứng dụng bạn đang chọn.",
     "catalog": {
       "supabase": "Đã kết nối lược đồ Supabase v2",
@@ -111,16 +111,18 @@
     "upload": {
       "step": "Bước 1",
       "title": "Đính kèm ảnh hoặc tệp đơn",
-      "chooseTitle": "Chuẩn bị ảnh đơn hoặc tệp HWPX",
-      "chooseDescription": "Ảnh cần thấy rõ toàn bộ tài liệu và chữ; bạn cũng có thể đính kèm tệp HWPX gốc.",
+      "chooseTitle": "Chuẩn bị ảnh đơn, tệp PDF hoặc HWPX",
+      "chooseDescription": "Ảnh cần thấy rõ toàn bộ tài liệu và chữ; bạn cũng có thể đính kèm tệp PDF hoặc HWPX gốc.",
       "choose": "Chọn ảnh",
       "inputLabel": "Chọn ảnh đơn xin visa",
       "capture": "Chụp ảnh",
       "select": "Đính kèm tệp",
       "cameraInputLabel": "Chụp ảnh đơn xin visa",
-      "galleryInputLabel": "Đính kèm ảnh đơn hoặc tệp HWPX",
-      "types": "Đính kèm một ảnh JPG, PNG, WebP hoặc một tệp HWPX (tệp gốc tối đa 16MB).",
+      "galleryInputLabel": "Đính kèm ảnh đơn, tệp PDF hoặc HWPX",
+      "types": "Đính kèm một ảnh JPG, PNG, WebP hoặc một tệp PDF, HWPX (tệp gốc tối đa 16MB).",
       "ready": "Tệp {name} đã sẵn sàng để phân tích.",
+      "pdfReady": "Tệp PDF {name} đã sẵn sàng để đọc.",
+      "pdfDescription": "Hệ thống đọc cả văn bản và hình ảnh từng trang PDF để kiểm tra các mục. Tệp nhiều trang có thể tăng mức sử dụng.",
       "hwpxReady": "Tệp HWPX {name} đã sẵn sàng để đọc.",
       "hwpxDescription": "Hệ thống đọc an toàn nội dung bên trong HWPX để kiểm tra các mục thay vì OCR ảnh.",
       "checking": "Đang kiểm tra chất lượng ảnh miễn phí trên thiết bị trước khi gọi API.",
@@ -198,7 +200,7 @@
     },
     "privacy": {
       "title": "Nguyên tắc xử lý tệp đính kèm",
-      "temporary": "Ảnh hoặc HWPX chỉ được gửi tạm thời để phân tích",
+      "temporary": "Ảnh, PDF hoặc HWPX chỉ được gửi tạm thời để phân tích",
       "noDatabase": "Không lưu tệp gốc hay nội dung nhận dạng, chỉ lưu trạng thái tiến độ do người dùng chọn",
       "reviewFirst": "Chỉ sử dụng kết quả sau khi người dùng kiểm tra"
     },
@@ -210,8 +212,9 @@
     },
     "errors": {
       "generic": "Có lỗi khi phân tích đơn. Vui lòng thử lại sau.",
-      "fileType": "Chỉ có thể đính kèm ảnh JPG, PNG, WebP hoặc tệp HWPX.",
-      "fileSize": "Ảnh hoặc tệp HWPX gốc phải từ 16MB trở xuống.",
+      "fileType": "Chỉ có thể đính kèm ảnh JPG, PNG, WebP hoặc tệp PDF, HWPX.",
+      "fileSize": "Ảnh, tệp PDF hoặc HWPX gốc phải từ 16MB trở xuống.",
+      "pdf": "Hãy kiểm tra đây là tệp PDF hợp lệ. Không thể phân tích tệp bị hỏng hoặc chỉ đổi phần mở rộng.",
       "hwpx": "Hãy kiểm tra đây là tệp HWPX hợp lệ. Không thể phân tích tệp bị hỏng hoặc chỉ đổi phần mở rộng.",
       "optimize": "Không thể giảm kích thước ảnh. Vui lòng chọn ảnh nhỏ hơn.",
       "rateLimit": "Bạn đã gửi quá nhiều yêu cầu trong thời gian ngắn. Vui lòng thử lại sau."

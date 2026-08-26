@@ -32,6 +32,8 @@ const attachmentAccept = [
   "image/jpeg",
   "image/png",
   "image/webp",
+  ".pdf",
+  "application/pdf",
   ".hwpx",
   "application/vnd.hancom.hwpx",
   "application/haansofthwpx",
@@ -95,8 +97,9 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     setSaveError("");
 
     const imageFile = acceptedImageTypes.has(selectedFile.type);
+    const pdfFile = isPdfFile(selectedFile);
     const hwpxFile = isHwpxFile(selectedFile);
-    if (!imageFile && !hwpxFile) {
+    if (!imageFile && !pdfFile && !hwpxFile) {
       setMessage(t("errors.fileType"));
       input.value = "";
       return;
@@ -110,13 +113,17 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
 
     try {
       setIsPreparing(true);
-      if (hwpxFile) {
+      if (pdfFile || hwpxFile) {
         if (previewUrl) URL.revokeObjectURL(previewUrl);
         setFile(selectedFile);
         setPreviewUrl(null);
         setAnalysis(null);
         setPhotoIssue(null);
-        setMessage(t("upload.hwpxReady", { name: selectedFile.name }));
+        setMessage(
+          t(pdfFile ? "upload.pdfReady" : "upload.hwpxReady", {
+            name: selectedFile.name,
+          }),
+        );
         return;
       }
 
@@ -264,7 +271,7 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           selectedFormId === "auto" || !isUuid(selectedFormId)
             ? null
             : selectedFormId,
-        sourceKind: file && isHwpxFile(file) ? "hwpx" : "image",
+        sourceKind: getSourceKind(file),
         analysis: {
           mode: analysis.mode,
           templateKey: analysis.templateKey,
@@ -365,8 +372,10 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
                 <div className="relative flex min-h-[260px] flex-col items-center justify-center rounded-[22px] border border-[#cddbd4] bg-[#f3f8f5] px-6 text-center sm:min-h-[320px]">
                   <span className="grid size-16 place-items-center rounded-[22px] bg-white text-[#2d6d5d] shadow-sm"><Icon name="document" className="size-8" /></span>
                   <strong className="mt-5 max-w-xl break-all text-base font-black text-[#294038]">{file.name}</strong>
-                  <span className="mt-2 rounded-full bg-[#dcece5] px-3 py-1 text-xs font-extrabold text-[#2d6d5d]">HWPX</span>
-                  <p className="mt-3 max-w-lg text-sm leading-6 text-[#66756e]">{t("upload.hwpxDescription")}</p>
+                  <span className="mt-2 rounded-full bg-[#dcece5] px-3 py-1 text-xs font-extrabold text-[#2d6d5d]">{isPdfFile(file) ? "PDF" : "HWPX"}</span>
+                  <p className="mt-3 max-w-lg text-sm leading-6 text-[#66756e]">
+                    {t(isPdfFile(file) ? "upload.pdfDescription" : "upload.hwpxDescription")}
+                  </p>
                   <button type="button" onClick={removeFile} className="absolute right-3 top-3 min-h-11 rounded-xl bg-[#27342f] px-4 text-xs font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                     {t("upload.remove")}
                   </button>
@@ -400,8 +409,8 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           ) : null}
 
           {file ? (
-            <div className={`mt-5 grid gap-3 ${isHwpxFile(file) ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
-              {!isHwpxFile(file) ? (
+            <div className={`mt-5 grid gap-3 ${isDocumentFile(file) ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+              {!isDocumentFile(file) ? (
                 <button type="button" onClick={openCamera} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="camera" className="size-4" />{t("upload.retake")}</button>
               ) : null}
               <button type="button" onClick={openGallery} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#d8e1dc] bg-white px-4 text-sm font-extrabold text-[#41564d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="upload" className="size-4" />{t("upload.replace")}</button>
@@ -446,7 +455,7 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
         <AnalysisResult
           analysis={analysis}
           onRetake={retakePhoto}
-          allowRetake={!file || !isHwpxFile(file)}
+          allowRetake={!file || !isDocumentFile(file)}
           onSave={saveAnalysisResult}
           saveState={saveState}
           saveError={saveError}
@@ -736,6 +745,7 @@ function apiErrorMessage(code: string, t: Translator) {
   if (code === "UNSUPPORTED_FILE_TYPE") return t("errors.fileType");
   if (code === "FILE_TOO_LARGE") return t("errors.fileSize");
   if (code === "INVALID_HWPX") return t("errors.hwpx");
+  if (code === "INVALID_PDF") return t("errors.pdf");
   if (code === "TOO_MANY_REQUESTS") return t("errors.rateLimit");
   return t("errors.generic");
 }
@@ -749,6 +759,20 @@ function saveApiErrorMessage(code: string, t: Translator) {
 
 function isHwpxFile(file: File) {
   return file.name.toLocaleLowerCase().endsWith(".hwpx");
+}
+
+function isPdfFile(file: File) {
+  return file.type === "application/pdf" || file.name.toLocaleLowerCase().endsWith(".pdf");
+}
+
+function isDocumentFile(file: File) {
+  return isPdfFile(file) || isHwpxFile(file);
+}
+
+function getSourceKind(file: File | null): SaveOcrResultRequest["sourceKind"] {
+  if (file && isPdfFile(file)) return "pdf";
+  if (file && isHwpxFile(file)) return "hwpx";
+  return "image";
 }
 
 function isUuid(value: string) {

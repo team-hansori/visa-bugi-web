@@ -102,7 +102,7 @@ export type SavedDocumentReviewStatus =
 
 export type SaveOcrResultRequest = {
   documentRequirementId: string | null;
-  sourceKind: "image" | "hwpx";
+  sourceKind: "image" | "hwpx" | "pdf";
   analysis: Pick<
     ApplicationFormAnalysis,
     | "mode"

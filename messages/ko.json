@@ -19,14 +19,38 @@
     "map": "기관",
     "ocr": "서류",
     "chat": "상담",
-    "my": "설정",
+    "my": "더보기",
     "mainMenuAriaLabel": "주요 메뉴",
     "mobileMenuAriaLabel": "모바일 주요 메뉴"
   },
   "LocaleSwitcher": {
     "label": "언어 선택"
   },
-  "=NotFound": {
+  "Calendar": {
+    "search": {
+      "open": "캘린더 내 일정 검색",
+      "placeholder": "비자 절차, 일정, 카테고리, 위치 검색",
+      "ariaLabel": "캘린더 내 일정 검색어",
+      "close": "닫기",
+      "resultCount": "검색 결과 {count}개",
+      "noResults": "검색 결과가 없습니다.",
+      "dateUndecided": "날짜 미정"
+    },
+    "visaPicker": {
+      "label": "확인할 비자 유형",
+      "placeholder": "비자 유형을 선택해 주세요",
+      "selectedCount": "{count}개 선택",
+      "clear": "선택 초기화",
+      "optionsAriaLabel": "비자 유형 다중 선택",
+      "visas": {
+        "f4r": "지역특화형 재외동포",
+        "e74r": "지역특화형 숙련기능인력",
+        "f2r": "지역특화형 지역우수인재",
+        "d2": "광역형 유학비자"
+      }
+    }
+  },
+  "NotFound": {
     "title": "페이지를 찾을 수 없어요",
     "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",
     "backHome": "홈으로 돌아가기"

@@ -19,12 +19,36 @@
     "map": "机构",
     "ocr": "文件",
     "chat": "咨询",
-    "my": "设置",
+    "my": "更多",
     "mainMenuAriaLabel": "主菜单",
     "mobileMenuAriaLabel": "移动端主菜单"
   },
   "LocaleSwitcher": {
-    "label": "언어 선택"
+    "label": "选择语言"
+  },
+  "Calendar": {
+    "search": {
+      "open": "搜索日历内容",
+      "placeholder": "搜索签证流程、日程、类别或地点",
+      "ariaLabel": "日历搜索词",
+      "close": "关闭",
+      "resultCount": "搜索结果 {count} 条",
+      "noResults": "没有搜索结果。",
+      "dateUndecided": "日期未定"
+    },
+    "visaPicker": {
+      "label": "要查看的签证类型",
+      "placeholder": "请选择签证类型",
+      "selectedCount": "已选 {count} 项",
+      "clear": "清除选择",
+      "optionsAriaLabel": "多选签证类型",
+      "visas": {
+        "f4r": "地区特化型海外同胞",
+        "e74r": "地区特化型熟练技能人才",
+        "f2r": "地区特化型地区优秀人才",
+        "d2": "广域型留学签证"
+      }
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",

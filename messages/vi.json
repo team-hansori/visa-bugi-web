@@ -19,12 +19,36 @@
     "map": "Cơ quan",
     "ocr": "Tài liệu",
     "chat": "Tư vấn",
-    "my": "Cài đặt",
+    "my": "Thêm",
     "mainMenuAriaLabel": "Menu chính",
     "mobileMenuAriaLabel": "Menu chính trên di động"
   },
   "LocaleSwitcher": {
-    "label": "언어 선택"
+    "label": "Chọn ngôn ngữ"
+  },
+  "Calendar": {
+    "search": {
+      "open": "Tìm trong lịch",
+      "placeholder": "Tìm thủ tục, lịch, danh mục hoặc địa điểm",
+      "ariaLabel": "Từ khóa tìm kiếm trong lịch",
+      "close": "Đóng",
+      "resultCount": "{count} kết quả",
+      "noResults": "Không có kết quả tìm kiếm.",
+      "dateUndecided": "Chưa xác định ngày"
+    },
+    "visaPicker": {
+      "label": "Loại thị thực cần xem",
+      "placeholder": "Chọn loại thị thực",
+      "selectedCount": "Đã chọn {count}",
+      "clear": "Xóa lựa chọn",
+      "optionsAriaLabel": "Chọn nhiều loại thị thực",
+      "visas": {
+        "f4r": "Kiều bào diện chuyên biệt theo khu vực",
+        "e74r": "Nhân lực kỹ năng diện chuyên biệt theo khu vực",
+        "f2r": "Nhân tài ưu tú diện chuyên biệt theo khu vực",
+        "d2": "Thị thực du học cấp vùng"
+      }
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",

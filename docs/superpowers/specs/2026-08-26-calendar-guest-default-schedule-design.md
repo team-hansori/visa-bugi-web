@@ -51,41 +51,65 @@ type AuthState =
 - `features/calendar/personal-calendar.tsx` (기존 `demo-calendar.tsx`를 이름 변경·확장): 로그인 뷰. 기존 일정 추가 폼을 카테고리·위치·시간 필드로 확장한다.
 - `app/[locale]/calendar/page.tsx`는 `CalendarPage`만 렌더링하도록 축소.
 
-## 데이터 모델 (mock, 실제 visa-data 스키마 컬럼명에 맞춤)
+## 데이터 모델
 
-`visa-data`의 `visa_process_stages.csv` 실제 컬럼(`stage_id, visa_id, stage_order, stage_name, stage_name_kr, actor_from, actor_to, stage_start_date, stage_end_date, notes, notice_round, document_requirements_status, valid_from, valid_to, source_document, source_page, last_verified_at`)을 확인했다. 여기엔 "기준일+offset" 컬럼이 없고, 대신 **공고 회차(`notice_round`) 기준 절대 날짜**가 이미 채워져 있다 (예: 접수마감 2026-09-18). 이는 사용자 개인 기준일과 무관한 공개 행정 일정이다.
+`visa-data`의 `visa_process_stages.csv`는 아직 SQLite 검수·Supabase 적재 전이라 컬럼명이 확정된 스키마가 아니다(`stage_id, visa_id, stage_order, stage_name, stage_name_kr, actor_from, actor_to, stage_start_date, stage_end_date, notes, notice_round, document_requirements_status, valid_from, valid_to, source_document, source_page, last_verified_at` — 현재 초안 기준). 검수 과정에서 컬럼이 이름을 바꾸거나 추가·삭제될 수 있으므로, **이 원본 컬럼명을 프론트 컴포넌트 타입으로 직접 쓰지 않는다.** 대신 `lib/visa-schedule/default-checklist.ts` 안에서만 원본 shape을 다루고, 컴포넌트는 우리가 정한 안정적인 내부 타입만 본다.
 
 ```ts
+// upstream 원본 shape (검수 전 초안, 이 파일 밖으로 export하지 않는다)
+type VisaProcessStageRow = {
+  stage_id: string;
+  visa_id: string;
+  stage_order: number;
+  stage_name_kr: string;
+  stage_start_date: string | null; // 공고 회차형 비자만 값 존재
+  stage_end_date: string | null;
+  notice_round: number | null;
+  source_document: string;
+};
+
+// 컴포넌트가 실제로 의존하는 내부 타입 — upstream 컬럼명이 바뀌어도 이 shape은 유지한다.
 type ChecklistItem = {
-  stageId: string;
-  stageOrder: number;
-  stageName: string;
-  stageNameKr: string;
-  stageStartDate?: string; // ISO date, 공고 회차형 비자만 존재
-  stageEndDate?: string;
+  id: string;
+  order: number;
+  title: string;
+  startDate?: string; // ISO date
+  endDate?: string;
   noticeRound?: number;
-  referenceEvent?: string; // 개인 기준일형 비자용, 현재 mock 데이터엔 없음
+  referenceEvent?: string; // 개인 기준일형 비자용, 현재 upstream 컬럼엔 없는 필드 — 확정되면 매핑 추가
   offsetDays?: number;
   source: string;
-  sourcePage: string;
-  lastVerifiedAt: string;
 };
+
+// upstream → 내부 타입 변환은 이 함수 한 곳에서만 일어난다.
+// 필드를 스프레드하지 않고 하나씩 명시 매핑해서, 컬럼명이 바뀌면 여기서 컴파일 에러로 드러나게 한다.
+function toChecklistItem(row: VisaProcessStageRow): ChecklistItem {
+  return {
+    id: row.stage_id,
+    order: row.stage_order,
+    title: row.stage_name_kr,
+    startDate: row.stage_start_date ?? undefined,
+    endDate: row.stage_end_date ?? undefined,
+    noticeRound: row.notice_round ?? undefined,
+    source: row.source_document,
+  };
+}
 ```
 
-렌더링 규칙:
+렌더링 규칙 (모두 `ChecklistItem` 기준):
 
-- `stageStartDate`/`stageEndDate`가 있으면 **비로그인 상태에서도 실제 날짜 그대로 표시**한다 (공개 행정 일정이므로 개인화 불필요).
+- `startDate`/`endDate`가 있으면 **비로그인 상태에서도 실제 날짜 그대로 표시**한다 (공개 행정 일정이므로 개인화 불필요).
 - `referenceEvent`/`offsetDays`만 있고 절대 날짜가 없으면, 로그인 후 사용자가 기준일을 직접 입력하기 전까지 **날짜 없이 체크리스트로만** 표시한다. 기준일 입력 전에는 절대 자동으로 날짜를 추정하지 않는다 (`AGENTS.md` 원칙).
 - 두 종류가 섞인 목록도 지원해야 하므로 두 필드 그룹 모두 optional로 둔다.
 
-`lib/visa-schedule/default-checklist.ts` (신규): 위 스키마와 동일한 모양의 정적 mock 데이터 + `getDefaultChecklist(targetVisaId: string): ChecklistItem[]`. visa-data 적재가 끝나면 이 함수 내부만 Supabase 쿼리로 교체한다.
+`lib/visa-schedule/default-checklist.ts` (신규): `VisaProcessStageRow` 모양의 정적 mock 데이터 + `toChecklistItem` 매핑 + `getDefaultChecklist(targetVisaId: string): ChecklistItem[]`(mock 배열을 필터링해 매핑한 결과를 반환)를 export한다. 컴포넌트는 `getDefaultChecklist`와 `ChecklistItem` 타입만 import한다. visa-data 적재가 끝나 실제 컬럼명이 확정되면 `VisaProcessStageRow`와 `toChecklistItem`만 그 컬럼명에 맞춰 고치고, `getDefaultChecklist` 내부를 mock 배열 대신 Supabase 쿼리로 교체한다 — `ChecklistItem`을 쓰는 컴포넌트 쪽은 변경하지 않는다.
 
 **목표 비자 판별:** 온보딩이 아직 "현재/목표"를 구분하지 않으므로([#5](https://github.com/team-hansori/visa-bugi-web/issues/5) 참고), 이번 스코프에서는 `sessionStorage`의 `visa-bugi-demo-profile.visa` 값을 "목표 비자"로 취급한다. 값이 없거나 `UNKNOWN`이면 캘린더 안에 인라인 비자 유형 선택 UI를 둔다 (온보딩 재실행을 강제하지 않음).
 
 ## 게스트 뷰 (`guest-checklist-calendar.tsx`)
 
 - `getDefaultChecklist(targetVisaId)`로 절차 목록을 불러와 사이드 패널에 체크리스트(읽기 전용, 체크 불가)로 보여준다.
-- `stageStartDate`가 있는 항목은 캘린더 그리드 해당 날짜 셀에도 표시한다. 날짜가 여러 달에 걸칠 수 있으므로(예: 3월 공고~9월 마감) **월 이동 버튼을 실제로 동작**하게 만든다 (기존 데모의 "데모에서는 사용할 수 없음" 비활성화 버튼을 제거).
+- `startDate`가 있는 항목은 캘린더 그리드 해당 날짜 셀에도 표시한다. 날짜가 여러 달에 걸칠 수 있으므로(예: 3월 공고~9월 마감) **월 이동 버튼을 실제로 동작**하게 만든다 (기존 데모의 "데모에서는 사용할 수 없음" 비활성화 버튼을 제거).
 - 절대 날짜가 없는 항목은 날짜 없이 목록에만 노출한다.
 - 로그인 유도 문구와 버튼을 배치한다. Google 로그인이 아직 없으므로 버튼은 "Google로 로그인 (준비 중)"처럼 명확히 준비 중 상태를 표시한다 (`AGENTS.md`: 버튼은 실제 동작 연결 또는 준비 중 표시).
 

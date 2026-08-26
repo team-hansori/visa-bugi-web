@@ -77,6 +77,8 @@
 - 웹 프로젝트 README 정리
 - CHANGELOG 자동 업데이트 [skip ci]
 - README에 브랜드와 기술 스택 추가
+- CHANGELOG 자동 업데이트 [skip ci]
+- README 목차 추가
 
 ### ⚙️ Miscellaneous Tasks
 

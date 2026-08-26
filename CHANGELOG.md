@@ -81,6 +81,8 @@
 - README 목차 추가
 - CHANGELOG 자동 업데이트 [skip ci]
 - README에 팀 소개 추가
+- CHANGELOG 자동 업데이트 [skip ci]
+- README 개발 서버 안내 제거
 
 ### ⚙️ Miscellaneous Tasks
 

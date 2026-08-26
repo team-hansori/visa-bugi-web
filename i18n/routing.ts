@@ -13,3 +13,12 @@ export const localeNames: Record<(typeof routing.locales)[number], string> = {
   ne: "नेपाली",
   km: "ខ្មែរ",
 };
+
+export const localeFlags: Record<(typeof routing.locales)[number], string> = {
+  ko: "🇰🇷",
+  zh: "🇨🇳",
+  vi: "🇻🇳",
+  uz: "🇺🇿",
+  ne: "🇳🇵",
+  km: "🇰🇭",
+};

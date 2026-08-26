@@ -2,7 +2,7 @@
   <img src="public/brand/app-icon/bugi-app-icon-192.png" alt="비자부기 앱 아이콘" width="128" height="128" />
   <br />
   <img src="public/brand/wordmark/visa-bugi-wordmark.svg" alt="비자부기" width="352" />
-  <p>외국인 주민의 체류자격 요건과 행정 절차를 함께 관리하는 충북살이 웹앱</p>
+  <p>외국인 주민의 체류자격 요건과 행정 절차를 함께 관리하는 웹앱</p>
   <p>
     <img src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs" alt="Next.js 16" />
     <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=000000" alt="React 19" />

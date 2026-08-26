@@ -17,20 +17,10 @@ const navItems: NavItem[] = [
   { href: "/calendar", icon: "calendar", key: "calendar" },
   { href: "/map", icon: "map-pin", key: "map" },
   { href: "/ocr", icon: "document", key: "ocr" },
-  { href: "/my", icon: "user", key: "my" },
+  { href: "/my", icon: "settings", key: "my" },
 ];
 
 const mySubPagePaths = new Set(["/contact", "/terms", "/privacy"]);
-
-const headerTitleKeyByPath: Record<string, string> = {
-  "/calendar": "Nav.calendar",
-  "/map": "Nav.map",
-  "/ocr": "Nav.ocr",
-  "/my": "Nav.my",
-  "/contact": "Contact.pageTitle",
-  "/terms": "Terms.pageTitle",
-  "/privacy": "Privacy.pageTitle",
-};
 
 function isCurrentPath(pathname: string, href: string) {
   if (href === "/") return pathname === href;
@@ -62,29 +52,25 @@ function Brand() {
 }
 
 function HeaderTitle({ pathname }: { pathname: string }) {
-  const t = useTranslations();
-  const titleKey = headerTitleKeyByPath[pathname];
+  const t = useTranslations("A11y");
 
-  if (pathname === "/" || !titleKey) {
+  if (pathname === "/") {
     return <Brand />;
   }
 
-  return (
-    <div className="flex min-h-11 min-w-0 items-center gap-1.5">
-      {mySubPagePaths.has(pathname) ? (
-        <Link
-          href="/my"
-          aria-label={t("A11y.backToMy")}
-          className="grid size-9 shrink-0 place-items-center rounded-xl text-[#3a4a44] hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
-        >
-          <Icon name="chevron-left" className="size-5" />
-        </Link>
-      ) : null}
-      <span className="truncate text-base font-extrabold tracking-[-0.02em] text-[#20332c] sm:text-lg">
-        {t(titleKey)}
-      </span>
-    </div>
-  );
+  if (mySubPagePaths.has(pathname)) {
+    return (
+      <Link
+        href="/my"
+        aria-label={t("backToMy")}
+        className="grid size-9 shrink-0 place-items-center rounded-xl text-[#3a4a44] hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+      >
+        <Icon name="chevron-left" className="size-5" />
+      </Link>
+    );
+  }
+
+  return <div aria-hidden="true" />;
 }
 
 function SettingsEntry({ pathname }: { pathname: string }) {

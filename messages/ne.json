@@ -6,7 +6,7 @@
   },
   "A11y": {
     "skipToContent": "본문으로 바로가기",
-    "backToMy": "MY로 돌아가기",
+    "backToMy": "설정으로 돌아가기",
     "openSettings": "설정 열기"
   },
   "Brand": {
@@ -17,7 +17,7 @@
     "calendar": "일정",
     "map": "기관",
     "ocr": "서류",
-    "my": "MY",
+    "my": "설정",
     "mainMenuAriaLabel": "주요 메뉴",
     "mobileMenuAriaLabel": "모바일 주요 메뉴"
   },

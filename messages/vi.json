@@ -106,6 +106,7 @@
     "searchNoResult": "Không có kết quả tìm kiếm.",
     "searchError": "Không thể tải địa chỉ. Vui lòng thử lại sau.",
     "saveError": "Không thể lưu do lỗi tạm thời. Vui lòng thử lại sau.",
+    "consentNotice": "Nếu tiếp tục, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách bảo mật</privacy>.",
     "welcomeTitle": "Hãy bắt đầu cùng Visa-bugi",
     "welcomeDescription": "Chúng tôi sẽ giúp bạn theo dõi yêu cầu visa và bước tiếp theo.",
     "googleStart": "Bắt đầu bằng Google",

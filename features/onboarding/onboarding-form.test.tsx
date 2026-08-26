@@ -14,6 +14,11 @@ vi.mock("next/navigation", () => ({
 vi.mock("@/i18n/navigation", () => ({
   useRouter: () => ({ replace, push }),
   usePathname: () => "/onboarding",
+  Link: ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
 }));
 
 vi.mock("./actions", () => ({

@@ -8,6 +8,14 @@ vi.mock("next-intl", () => ({
   useTranslations: (namespace: string) => createTestTranslator(namespace),
 }));
 
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}));
+
 describe("OnboardingWelcome", () => {
   it("로그인 없이 시작하기 버튼이 있다", () => {
     render(<OnboardingWelcome onContinueWithoutLogin={vi.fn()} />);
@@ -41,5 +49,15 @@ describe("OnboardingWelcome", () => {
   it("로고 이미지를 보여준다", () => {
     render(<OnboardingWelcome onContinueWithoutLogin={vi.fn()} />);
     expect(screen.getByRole("img")).toBeInTheDocument();
+  });
+
+  it("이용약관과 개인정보처리방침 링크를 보여준다", () => {
+    render(<OnboardingWelcome onContinueWithoutLogin={vi.fn()} />);
+
+    expect(screen.getByRole("link", { name: "이용약관" })).toHaveAttribute("href", "/terms");
+    expect(screen.getByRole("link", { name: "개인정보처리방침" })).toHaveAttribute(
+      "href",
+      "/privacy",
+    );
   });
 });

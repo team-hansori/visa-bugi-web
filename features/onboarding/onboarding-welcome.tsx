@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
+import { Link } from "@/i18n/navigation";
 
 type Props = {
   onContinueWithoutLogin: () => void;
@@ -77,6 +78,27 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
         >
           {t("continueWithoutLogin")}
         </button>
+
+        <p className="mt-1 max-w-xs text-center text-xs leading-5 text-[#8a938e]">
+          {t.rich("consentNotice", {
+            terms: (chunks) => (
+              <Link
+                href="/terms"
+                className="font-semibold text-[#52615b] underline underline-offset-2"
+              >
+                {chunks}
+              </Link>
+            ),
+            privacy: (chunks) => (
+              <Link
+                href="/privacy"
+                className="font-semibold text-[#52615b] underline underline-offset-2"
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
       </div>
     </section>
   );

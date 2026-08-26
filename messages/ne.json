@@ -141,7 +141,8 @@
   },
   "Legal": {
     "viewFullPage": "पूरा स्क्रिनमा हेर्नुहोस्",
-    "viewOriginal": "कोरियाली मूल पाठ हेर्नुहोस्"
+    "viewOriginal": "कोरियाली मूल पाठ हेर्नुहोस्",
+    "revisionLabel": "अन्तिम संशोधन मिति"
   },
   "Terms": {
     "pageTitle": "सेवा सर्तहरू",

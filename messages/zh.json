@@ -141,7 +141,8 @@
   },
   "Legal": {
     "viewFullPage": "查看完整页面",
-    "viewOriginal": "查看韩语原文"
+    "viewOriginal": "查看韩语原文",
+    "revisionLabel": "最终修订日期"
   },
   "Terms": {
     "pageTitle": "服务条款",

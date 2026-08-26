@@ -16,11 +16,9 @@ export function PolicyDocument({
         <span className="rounded-full bg-[#fff1d4] px-2.5 py-1 text-[0.68rem] font-extrabold text-[#8a5910]">
           {content.badge}
         </span>
-        {content.kind === "full" ? (
-          <span className="text-xs text-[#8a938e]">
-            {content.revisionLabel} {content.revisionDate}
-          </span>
-        ) : null}
+        <span className="text-xs text-[#8a938e]">
+          {content.revisionLabel} {content.revisionDate}
+        </span>
       </div>
 
       {content.kind === "full" ? (

@@ -161,7 +161,7 @@ export function MyHub() {
           onClose={() => setOpenPolicy(null)}
         >
           <PolicyDocument
-            content={getPolicyContent(locale, tTerms)}
+            content={getPolicyContent(locale, tTerms, tLegal("revisionLabel"))}
             viewOriginalLabel={tLegal("viewOriginal")}
             viewOriginalHref="/terms"
           />
@@ -181,7 +181,7 @@ export function MyHub() {
           onClose={() => setOpenPolicy(null)}
         >
           <PolicyDocument
-            content={getPolicyContent(locale, tPrivacy)}
+            content={getPolicyContent(locale, tPrivacy, tLegal("revisionLabel"))}
             viewOriginalLabel={tLegal("viewOriginal")}
             viewOriginalHref="/privacy"
           />

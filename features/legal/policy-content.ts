@@ -12,6 +12,7 @@ export type PolicyContent =
   | {
       kind: "referral";
       badge: string;
+      revisionLabel: string;
       revisionDate: string;
       notice: string;
     };
@@ -21,12 +22,16 @@ export interface PolicyTranslator {
   raw(key: string): unknown;
 }
 
-export function getPolicyContent(locale: string, t: PolicyTranslator): PolicyContent {
+export function getPolicyContent(
+  locale: string,
+  t: PolicyTranslator,
+  revisionLabel: string,
+): PolicyContent {
   if (locale === "ko") {
     return {
       kind: "full",
       badge: t("badge"),
-      revisionLabel: t("revisionLabel"),
+      revisionLabel,
       revisionDate: t("revisionDate"),
       draftNotice: t("draftNotice"),
       sections: t.raw("sections") as PolicySection[],
@@ -36,6 +41,7 @@ export function getPolicyContent(locale: string, t: PolicyTranslator): PolicyCon
   return {
     kind: "referral",
     badge: t("badge"),
+    revisionLabel,
     revisionDate: t("revisionDate"),
     notice: t("referral.notice"),
   };

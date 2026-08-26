@@ -6,7 +6,7 @@ export async function TermsView() {
   const locale = await getLocale();
   const t = await getTranslations("Terms");
   const legalT = await getTranslations("Legal");
-  const content = getPolicyContent(locale, t);
+  const content = getPolicyContent(locale, t, legalT("revisionLabel"));
 
   return (
     <div className="space-y-6">

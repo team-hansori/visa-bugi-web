@@ -111,12 +111,12 @@
   },
   "Legal": {
     "viewFullPage": "전체 화면에서 보기",
-    "viewOriginal": "한국어 원문 보기"
+    "viewOriginal": "한국어 원문 보기",
+    "revisionLabel": "최종 개정일"
   },
   "Terms": {
     "pageTitle": "이용약관",
     "badge": "법률 검토 전 초안",
-    "revisionLabel": "최종 개정일",
     "revisionDate": "2026-08-26",
     "draftNotice": "이 약관은 비자부기의 실제 제공 기능을 기준으로 작성한 초안입니다. 운영 주체, 연락처 등 확정되지 않은 사항은 정식 서비스 공개 전 확정되며, 개발 단계에서 작성한 이 초안은 법률 검토를 대체하지 않습니다.",
     "sections": [
@@ -214,7 +214,6 @@
   "Privacy": {
     "pageTitle": "개인정보 처리방침",
     "badge": "법률 검토 전 초안",
-    "revisionLabel": "최종 개정일",
     "revisionDate": "2026-08-26",
     "draftNotice": "이 방침은 비자부기의 실제 개인정보 처리 흐름을 기준으로 작성한 초안입니다. 운영 주체, 위탁업체 세부사항, 보유기간 등 확정되지 않은 사항은 정식 서비스 공개 전 확정되며, 개발 단계에서 작성한 이 초안은 법률 검토를 대체하지 않습니다.",
     "sections": [

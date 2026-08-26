@@ -137,21 +137,18 @@
     }
   },
   "Contact": {
-    "eyebrow": "Aloqa",
     "pageTitle": "Bog'lanish",
     "heading": "Aloqa kanali tayyorlanmoqda",
     "description": "Hozircha tasdiqlangan aloqa elektron pochtasi yoki forma mavjud emas. Kanal ochilgach, ushbu ekranda to'g'ridan-to'g'ri bog'lanish imkonini beramiz.",
     "buttonLabel": "Aloqa tayyorlanmoqda"
   },
   "Terms": {
-    "eyebrow": "Siyosat",
     "pageTitle": "Foydalanish shartlari",
     "heading": "Foydalanish shartlari tayyorlanmoqda",
     "description": "Jamoa tomonidan tasdiqlangan foydalanish shartlarining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",
     "badge": "Tayyorlanmoqda"
   },
   "Privacy": {
-    "eyebrow": "Siyosat",
     "pageTitle": "Maxfiylik siyosati",
     "heading": "Maxfiylik siyosati tayyorlanmoqda",
     "description": "Jamoa tomonidan tasdiqlangan maxfiylik siyosatining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",

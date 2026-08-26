@@ -137,21 +137,18 @@
     }
   },
   "Contact": {
-    "eyebrow": "咨询",
     "pageTitle": "联系我们",
     "heading": "咨询渠道筹备中",
     "description": "目前还没有确定的咨询邮箱或表单。渠道开通后，我们会在此页面提供直接联系方式。",
     "buttonLabel": "咨询功能筹备中"
   },
   "Terms": {
-    "eyebrow": "政策",
     "pageTitle": "服务条款",
     "heading": "服务条款筹备中",
     "description": "团队确定的服务条款正式文本即将发布。目前不会显示任何临时编写的内容。",
     "badge": "筹备中"
   },
   "Privacy": {
-    "eyebrow": "政策",
     "pageTitle": "隐私政策",
     "heading": "隐私政策筹备中",
     "description": "团队确定的隐私政策正式文本即将发布。目前不会显示任何临时编写的内容。",

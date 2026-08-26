@@ -107,21 +107,18 @@
     "footer": { "appName": "비자부기" }
   },
   "Contact": {
-    "eyebrow": "문의",
     "pageTitle": "문의하기",
     "heading": "문의 채널을 준비하고 있어요",
     "description": "확정된 문의 이메일이나 문의 폼이 아직 없습니다. 채널이 열리면 이 화면에서 바로 연결할 수 있도록 안내할게요.",
     "buttonLabel": "문의 준비 중"
   },
   "Terms": {
-    "eyebrow": "정책",
     "pageTitle": "이용약관",
     "heading": "이용약관을 준비하고 있어요",
     "description": "팀에서 확정한 이용약관 원문을 게시할 예정입니다. 아직 임의로 작성한 문구를 표시하지 않습니다.",
     "badge": "준비 중"
   },
   "Privacy": {
-    "eyebrow": "정책",
     "pageTitle": "개인정보 처리방침",
     "heading": "개인정보처리방침을 준비하고 있어요",
     "description": "팀에서 확정한 개인정보처리방침 원문을 게시할 예정입니다. 아직 임의로 작성한 문구를 표시하지 않습니다.",

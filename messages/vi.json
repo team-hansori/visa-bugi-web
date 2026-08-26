@@ -137,21 +137,18 @@
     }
   },
   "Contact": {
-    "eyebrow": "Liên hệ",
     "pageTitle": "Liên hệ",
     "heading": "Kênh liên hệ đang được chuẩn bị",
     "description": "Hiện chưa có email hoặc biểu mẫu liên hệ chính thức. Khi kênh liên hệ được mở, chúng tôi sẽ hướng dẫn kết nối trực tiếp tại màn hình này.",
     "buttonLabel": "Liên hệ đang được chuẩn bị"
   },
   "Terms": {
-    "eyebrow": "Chính sách",
     "pageTitle": "Điều khoản sử dụng",
     "heading": "Điều khoản sử dụng đang được chuẩn bị",
     "description": "Nội dung chính thức của điều khoản sử dụng do đội ngũ xác nhận sẽ sớm được đăng tải. Hiện tại không hiển thị nội dung do nhà phát triển tự soạn thảo.",
     "badge": "Đang chuẩn bị"
   },
   "Privacy": {
-    "eyebrow": "Chính sách",
     "pageTitle": "Chính sách bảo mật",
     "heading": "Chính sách bảo mật đang được chuẩn bị",
     "description": "Nội dung chính thức của chính sách bảo mật do đội ngũ xác nhận sẽ sớm được đăng tải. Hiện tại không hiển thị nội dung do nhà phát triển tự soạn thảo.",

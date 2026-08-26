@@ -52,8 +52,7 @@ export function DocumentUpload() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <header>
-        <p className="text-xs font-extrabold text-[#2d6d5d]">개인정보를 저장하지 않는 흐름</p>
-        <h1 className="mt-2 text-3xl font-black tracking-[-0.05em] sm:text-4xl">서류 사진 사전 점검</h1>
+        <h1 className="text-3xl font-black tracking-[-0.05em] sm:text-4xl">서류 사진 사전 점검</h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6d7974] sm:text-base">사진 촬영과 미리보기 화면을 먼저 확인할 수 있습니다. OCR 분석과 자동 마스킹은 아직 연결되지 않았습니다.</p>
       </header>
 

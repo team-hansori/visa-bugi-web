@@ -5,6 +5,7 @@ export type IconName =
   | "bell"
   | "calendar"
   | "camera"
+  | "chat"
   | "check"
   | "chevron-left"
   | "chevron-right"
@@ -49,6 +50,12 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <path d="M14.5 4 16 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l1.5-3h5Z" />
       <circle cx="12" cy="13" r="3.5" />
+    </>
+  ),
+  chat: (
+    <>
+      <path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z" />
+      <path d="M8 11h8M8 15h5" />
     </>
   ),
   check: <path d="m5 12 4 4L19 6" />,

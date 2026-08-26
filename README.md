@@ -32,6 +32,7 @@
 - [기술 스택](#기술-스택)
 - [디렉터리 구조](#디렉터리-구조)
 - [저장소 역할과 데이터 흐름](#저장소-역할과-데이터-흐름)
+- [팀 소개](#팀-소개)
 - [개발 명령어](#개발-명령어)
 - [기본 작업 흐름](#기본-작업-흐름)
 - [Vercel 배포](#vercel-배포)
@@ -144,6 +145,22 @@ visa-bugi-web/
   일정 필드로 별도 관리합니다.
 - 기준일과 offset이 확정되지 않은 상대 일정은 날짜를 추정해 자동 생성하지 않습니다.
 - 기관 전화번호·주소·운영시간은 출처와 확인일을 함께 관리합니다.
+
+---
+
+## 팀 소개
+
+비자부기는 **team-hansori**가 함께 만들고 있습니다.
+
+| 팀원 | 주요 기여 영역 |
+| --- | --- |
+| [JungYeoni](https://github.com/JungYeoni) | 웹 UI, 다국어 지원, Supabase·데이터 연동 |
+| [taeeunni](https://github.com/taeeunni) | 온보딩, 캘린더, 공통 스키마·지원기관 데이터 |
+| [Jayams11](https://github.com/Jayams11) | 문서 OCR, F-2-R 비자 데이터 구조화 |
+
+웹 애플리케이션과 데이터 파이프라인은 각각
+[`visa-bugi-web`](https://github.com/team-hansori/visa-bugi-web)과
+[`visa-data`](https://github.com/team-hansori/visa-data)에서 함께 관리합니다.
 
 ---
 

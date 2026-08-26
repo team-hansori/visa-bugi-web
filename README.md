@@ -73,9 +73,6 @@ cp .env.example .env.local
 npm run dev
 ```
 
-개발 서버는 [http://localhost:3000](http://localhost:3000)에서 확인할 수 있고,
-서비스 상태는 `/api/health`에서 확인할 수 있습니다.
-
 Supabase 기능을 사용할 때는 `.env.local`에 다음 값을 입력합니다.
 
 ```env

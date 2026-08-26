@@ -38,7 +38,6 @@
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
       "caption": "예시 진행률",
-      "eyebrow": "전체 요건 충족률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
       "selectedVisaLabel": "선택 비자",
@@ -47,7 +46,6 @@
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
-      "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
       "stagesAriaLabel": "비자 진행 단계 예시",
@@ -65,7 +63,6 @@
       "viewSchedule": "일정 보기"
     },
     "tasks": {
-      "eyebrow": "다음 할 일",
       "heading": "서류 준비 체크",
       "items": {
         "passport": {
@@ -83,7 +80,6 @@
       }
     },
     "agencies": {
-      "eyebrow": "주변 기관",
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
@@ -137,21 +133,18 @@
     }
   },
   "Contact": {
-    "eyebrow": "咨询",
     "pageTitle": "联系我们",
     "heading": "咨询渠道筹备中",
     "description": "目前还没有确定的咨询邮箱或表单。渠道开通后，我们会在此页面提供直接联系方式。",
     "buttonLabel": "咨询功能筹备中"
   },
   "Terms": {
-    "eyebrow": "政策",
     "pageTitle": "服务条款",
     "heading": "服务条款筹备中",
     "description": "团队确定的服务条款正式文本即将发布。目前不会显示任何临时编写的内容。",
     "badge": "筹备中"
   },
   "Privacy": {
-    "eyebrow": "政策",
     "pageTitle": "隐私政策",
     "heading": "隐私政策筹备中",
     "description": "团队确定的隐私政策正式文本即将发布。目前不会显示任何临时编写的内容。",

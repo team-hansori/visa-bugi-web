@@ -38,7 +38,6 @@
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
       "caption": "예시 진행률",
-      "eyebrow": "전체 요건 충족률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
       "selectedVisaLabel": "선택 비자",
@@ -47,7 +46,6 @@
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
-      "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
       "stagesAriaLabel": "비자 진행 단계 예시",
@@ -65,7 +63,6 @@
       "viewSchedule": "일정 보기"
     },
     "tasks": {
-      "eyebrow": "다음 할 일",
       "heading": "서류 준비 체크",
       "items": {
         "passport": {
@@ -83,7 +80,6 @@
       }
     },
     "agencies": {
-      "eyebrow": "주변 기관",
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
@@ -137,21 +133,18 @@
     }
   },
   "Contact": {
-    "eyebrow": "Liên hệ",
     "pageTitle": "Liên hệ",
     "heading": "Kênh liên hệ đang được chuẩn bị",
     "description": "Hiện chưa có email hoặc biểu mẫu liên hệ chính thức. Khi kênh liên hệ được mở, chúng tôi sẽ hướng dẫn kết nối trực tiếp tại màn hình này.",
     "buttonLabel": "Liên hệ đang được chuẩn bị"
   },
   "Terms": {
-    "eyebrow": "Chính sách",
     "pageTitle": "Điều khoản sử dụng",
     "heading": "Điều khoản sử dụng đang được chuẩn bị",
     "description": "Nội dung chính thức của điều khoản sử dụng do đội ngũ xác nhận sẽ sớm được đăng tải. Hiện tại không hiển thị nội dung do nhà phát triển tự soạn thảo.",
     "badge": "Đang chuẩn bị"
   },
   "Privacy": {
-    "eyebrow": "Chính sách",
     "pageTitle": "Chính sách bảo mật",
     "heading": "Chính sách bảo mật đang được chuẩn bị",
     "description": "Nội dung chính thức của chính sách bảo mật do đội ngũ xác nhận sẽ sớm được đăng tải. Hiện tại không hiển thị nội dung do nhà phát triển tự soạn thảo.",

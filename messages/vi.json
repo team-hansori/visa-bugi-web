@@ -13,13 +13,13 @@
     "homeAriaLabel": "비자부기 홈"
   },
   "Nav": {
-    "home": "홈",
-    "calendar": "일정",
-    "map": "기관",
-    "ocr": "서류",
-    "my": "설정",
-    "mainMenuAriaLabel": "주요 메뉴",
-    "mobileMenuAriaLabel": "모바일 주요 메뉴"
+    "home": "Trang chủ",
+    "calendar": "Lịch trình",
+    "map": "Cơ quan",
+    "ocr": "Tài liệu",
+    "my": "Cài đặt",
+    "mainMenuAriaLabel": "Menu chính",
+    "mobileMenuAriaLabel": "Menu chính trên di động"
   },
   "LocaleSwitcher": {
     "label": "언어 선택"

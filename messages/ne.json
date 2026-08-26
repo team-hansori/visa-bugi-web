@@ -13,13 +13,13 @@
     "homeAriaLabel": "비자부기 홈"
   },
   "Nav": {
-    "home": "홈",
-    "calendar": "일정",
-    "map": "기관",
-    "ocr": "서류",
-    "my": "설정",
-    "mainMenuAriaLabel": "주요 메뉴",
-    "mobileMenuAriaLabel": "모바일 주요 메뉴"
+    "home": "गृहपृष्ठ",
+    "calendar": "तालिका",
+    "map": "निकाय",
+    "ocr": "कागजात",
+    "my": "सेटिङ",
+    "mainMenuAriaLabel": "मुख्य मेनु",
+    "mobileMenuAriaLabel": "मोबाइल मुख्य मेनु"
   },
   "LocaleSwitcher": {
     "label": "언어 선택"

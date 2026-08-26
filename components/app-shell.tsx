@@ -20,14 +20,13 @@ const navItems: NavItem[] = [
   { href: "/my", icon: "user", key: "my" },
 ];
 
-const mySubPagePaths = new Set(["/settings", "/contact", "/terms", "/privacy"]);
+const mySubPagePaths = new Set(["/contact", "/terms", "/privacy"]);
 
 const headerTitleKeyByPath: Record<string, string> = {
   "/calendar": "Nav.calendar",
   "/map": "Nav.map",
   "/ocr": "Nav.ocr",
   "/my": "Nav.my",
-  "/settings": "Settings.pageTitle",
   "/contact": "Contact.pageTitle",
   "/terms": "Terms.pageTitle",
   "/privacy": "Privacy.pageTitle",
@@ -93,9 +92,9 @@ function SettingsEntry({ pathname }: { pathname: string }) {
 
   return (
     <Link
-      href="/settings"
+      href="/my"
       aria-label={t("openSettings")}
-      aria-current={pathname === "/settings" ? "page" : undefined}
+      aria-current={pathname === "/my" ? "page" : undefined}
       className="grid size-10 shrink-0 place-items-center rounded-xl text-[#52615b] transition-colors hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
     >
       <Icon name="settings" className="size-5" />

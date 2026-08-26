@@ -1,47 +1,135 @@
-import { getTranslations } from "next-intl/server";
+"use client";
+
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+import { useState } from "react";
 import { Icon, type IconName } from "@/components/ui/icon";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Link } from "@/i18n/navigation";
 
-const links: { href: string; icon: IconName; key: "settings" | "contact" | "terms" | "privacy" }[] = [
-  { href: "/settings", icon: "settings", key: "settings" },
-  { href: "/contact", icon: "mail", key: "contact" },
-  { href: "/terms", icon: "document", key: "terms" },
-  { href: "/privacy", icon: "shield", key: "privacy" },
-];
+function Card({ children }: { children: ReactNode }) {
+  return (
+    <div className="overflow-hidden rounded-[20px] border border-[#e0e7e2] bg-white px-4 shadow-[0_10px_32px_rgba(52,76,65,0.06)]">
+      {children}
+    </div>
+  );
+}
 
-export async function MyHub() {
-  const t = await getTranslations("My");
+function Row({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex min-h-16 items-center justify-between gap-4 border-b border-[#e7ebe8] py-4 last:border-b-0">
+      {children}
+    </div>
+  );
+}
+
+function LinkRow({ href, icon, label }: { href: string; icon?: IconName; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="flex min-h-16 items-center justify-between gap-4 border-b border-[#e7ebe8] py-4 last:border-b-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+    >
+      <span className="flex items-center gap-3 font-bold text-[#2a3c35]">
+        {icon ? <Icon name={icon} className="size-5 text-[#5a6b64]" /> : null}
+        {label}
+      </span>
+      <Icon name="chevron-right" className="size-4 shrink-0 text-[#9aa6a0]" />
+    </Link>
+  );
+}
+
+function DisabledRow({ label, tone = "default" }: { label: string; tone?: "default" | "danger" }) {
+  return (
+    <span
+      aria-disabled="true"
+      className={`flex min-h-14 cursor-not-allowed items-center border-b border-[#e7ebe8] py-4 font-bold last:border-b-0 ${
+        tone === "danger" ? "text-[#c1725f]" : "text-[#9aa6a0]"
+      }`}
+    >
+      {label}
+    </span>
+  );
+}
+
+export function MyHub() {
+  const t = useTranslations();
+  const [pushEnabled, setPushEnabled] = useState(true);
 
   return (
-    <div className="space-y-6">
-      <header>
-        <p className="text-xs font-extrabold text-[#2d6d5d]">{t("eyebrow")}</p>
-        <h1 className="mt-2 text-3xl font-black tracking-[-0.05em] sm:text-4xl">{t("pageTitle")}</h1>
-      </header>
+    <div className="mx-auto max-w-xl space-y-5">
+      <div
+        aria-disabled="true"
+        className="flex items-center gap-4 rounded-[20px] border border-[#dce8e2] bg-[#edf6f2] p-4"
+      >
+        <span className="grid size-12 shrink-0 place-items-center rounded-full bg-white text-[#2d6d5d]">
+          <Icon name="user" className="size-6" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-extrabold text-[#1d5748]">{t("My.loginBanner.title")}</span>
+          <span className="mt-0.5 block truncate text-sm text-[#5d7068]">{t("My.loginBanner.body")}</span>
+        </span>
+        <Icon name="chevron-right" className="size-4 shrink-0 text-[#9bb9ac]" />
+      </div>
 
-      <section aria-label={t("loginBanner.title")} className="rounded-[24px] border border-[#dce8e2] bg-[#edf6f2] p-5 sm:p-6">
-        <p className="font-extrabold text-[#1d5748]">{t("loginBanner.title")}</p>
-        <p className="mt-1 text-sm leading-6 text-[#5d7068]">{t("loginBanner.body")}</p>
-      </section>
+      <Card>
+        <Row>
+          <span className="font-bold text-[#2a3c35]">{t("Settings.language.label")}</span>
+          <div className="w-44 max-w-[55%]">
+            <LocaleSwitcher />
+          </div>
+        </Row>
 
-      <nav aria-label={t("linksAriaLabel")} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="flex items-center gap-4 rounded-[20px] border border-[#e0e7e2] bg-white p-4 shadow-[0_10px_32px_rgba(52,76,65,0.06)] transition-colors hover:border-[#9bb9ac] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+        <Row>
+          <span className="font-bold text-[#2a3c35]">{t("Settings.push.label")}</span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={pushEnabled}
+            onClick={() => setPushEnabled((value) => !value)}
+            className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
+              pushEnabled ? "bg-[#2d6d5d]" : "bg-[#d8dfda]"
+            }`}
           >
-            <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-[#e8f3ee] text-[#215a4b]">
-              <Icon name={link.icon} className="size-5" />
-            </span>
-            <span className="min-w-0">
-              <span className="block font-extrabold text-[#2a3c35]">{t(`links.${link.key}.label`)}</span>
-              <span className="mt-0.5 block truncate text-sm text-[#76817c]">{t(`links.${link.key}.description`)}</span>
-            </span>
-            <Icon name="chevron-right" className="ml-auto size-4 shrink-0 text-[#9aa6a0]" />
-          </Link>
-        ))}
-      </nav>
+            <span
+              aria-hidden="true"
+              className={`inline-block size-5 rounded-full bg-white shadow-sm transition-transform ${
+                pushEnabled ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </Row>
+
+        <Row>
+          <span>
+            <span className="block font-bold text-[#2a3c35]">{t("Settings.location.label")}</span>
+            <span className="mt-0.5 block text-xs text-[#9aa6a0]">{t("Settings.location.statusPreparing")}</span>
+          </span>
+          <span
+            aria-disabled="true"
+            className="relative inline-flex h-7 w-12 shrink-0 cursor-not-allowed items-center rounded-full bg-[#eef1ef] opacity-70"
+          >
+            <span aria-hidden="true" className="inline-block size-5 translate-x-1 rounded-full bg-white shadow-sm" />
+          </span>
+        </Row>
+
+        <LinkRow href="/contact" label={t("Contact.pageTitle")} />
+      </Card>
+
+      <div>
+        <p className="mb-2 px-1 text-xs font-bold text-[#8a938e]">{t("Settings.policy.sectionLabel")}</p>
+        <Card>
+          <LinkRow href="/terms" label={t("Terms.pageTitle")} />
+          <LinkRow href="/privacy" label={t("Privacy.pageTitle")} />
+          <LinkRow href="/privacy" label={t("Settings.policy.locationTerms")} />
+        </Card>
+      </div>
+
+      <Card>
+        <DisabledRow label={t("Settings.account.logout")} />
+        <DisabledRow label={t("Settings.account.withdraw")} tone="danger" />
+      </Card>
+
+      <p className="pb-4 text-center text-xs text-[#a7b0ab]">{t("Settings.footer.appName")}</p>
     </div>
   );
 }

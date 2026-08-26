@@ -10,21 +10,6 @@
 - App 라우트를 [locale] 세그먼트 아래로 재구성
 - 랜딩 페이지에 next-intl 번역 연결
 - AppShell에 locale 네비게이션과 언어 선택 UI 연결
-- 온보딩 프로필 세션스토리지 리더 추가
-- 인증 상태 mock 훅 추가
-- 비자 절차 mock 데이터와 getDefaultChecklist 추가
-- 기준일+offset 날짜 계산 함수 추가
-- 실제 월 이동을 지원하는 공용 캘린더 그리드 추가
-- 온보딩 프로필/수동 선택 기반 목표 비자 훅 추가
-- 게스트 비자 절차 체크리스트 캘린더 뷰 추가
-- 기준일 계산+개인 일정 등록 폼을 포함한 로그인 캘린더 뷰 추가
-- 캘린더 페이지를 인증 상태로 분기하도록 연결
-- 프로젝트 지원 비자 유형 추가
-- 캘린더 비자 유형 다중 선택 지원
-- 다국어 비자 선택 드롭다운 추가
-- 캘린더 일정 검색 모드 추가
-- 캘린더 검색 결과와 전체 비자 기본값 개선
-- 비자 선택 색상과 초기화 기능 추가
 - 헤더 브랜드 워드마크·앱 아이콘 자산 적용 (#17)
 - Mail·settings 아이콘 추가
 - 내비게이션에 MY 탭 추가
@@ -49,6 +34,22 @@
 - 폴백 사다리 오케스트레이터 추가 (escalation → 답변 → out_of_scope → 정적 폴백)
 - 챗봇 API 라우트 추가 (POST /api/chat, DELETE /api/chat/session)
 - 챗 상담 페이지·내비게이션·다국어 키 추가
+- Integrate chat and OCR foundations
+- 온보딩 프로필 세션스토리지 리더 추가
+- 인증 상태 mock 훅 추가
+- 비자 절차 mock 데이터와 getDefaultChecklist 추가
+- 기준일+offset 날짜 계산 함수 추가
+- 실제 월 이동을 지원하는 공용 캘린더 그리드 추가
+- 온보딩 프로필/수동 선택 기반 목표 비자 훅 추가
+- 게스트 비자 절차 체크리스트 캘린더 뷰 추가
+- 기준일 계산+개인 일정 등록 폼을 포함한 로그인 캘린더 뷰 추가
+- 캘린더 페이지를 인증 상태로 분기하도록 연결
+- 프로젝트 지원 비자 유형 추가
+- 캘린더 비자 유형 다중 선택 지원
+- 다국어 비자 선택 드롭다운 추가
+- 캘린더 일정 검색 모드 추가
+- 캘린더 검색 결과와 전체 비자 기본값 개선
+- 비자 선택 색상과 초기화 기능 추가
 
 ### 🐛 Bug Fixes
 
@@ -61,9 +62,6 @@
 - 온보딩 폼 라우터를 locale-aware 네비게이션으로 교체
 - 최종 리뷰 반영 — 온보딩 언어 질문 연동, 404 경계 추가, 접근성 개선
 - App/not-found.tsx 홈 링크가 locale-aware Link 아님 (#8)
-- 캘린더 SSR 하이드레이션 불일치 및 로그인/게스트 뷰 마감일 불일치 수정
-- 비자 선택 영역을 캘린더 위에 유지
-- 캘린더 선택 바 글씨 크기 통일
 - 헤더 워드마크 크기를 네비게이션 라인에 맞춤
 - 한글 라벨의 과도한 자간(letter-spacing) 제거
 - MY 허브 카드 그리드가 360px 이하에서 넘치는 문제 수정
@@ -88,6 +86,10 @@
 - *(chat)* Harden screening failure fallback
 - *(chat)* Scope short contact number detection
 - *(i18n)* Localize chat metadata and labels
+- Harden OCR upload and result validation
+- 캘린더 SSR 하이드레이션 불일치 및 로그인/게스트 뷰 마감일 불일치 수정
+- 비자 선택 영역을 캘린더 위에 유지
+- 캘린더 선택 바 글씨 크기 통일
 - CodeRabbit 캘린더 리뷰 반영
 - 모바일 내비게이션 6개 탭 한 줄 정렬
 
@@ -113,10 +115,6 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
-- 캘린더 게스트 기본 일정/로그인 개인 일정 설계 스펙 추가
-- 후속 이슈 링크(#20, #21) 스펙에 반영
-- 비자 스키마 결합도 낮추는 어댑터 계층 설계 추가
-- 캘린더 게스트/로그인 분리 구현 계획 추가
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - MY 탭·설정·정책 화면 설계 스펙 추가
@@ -139,6 +137,11 @@
 - 챗봇 MVP 구현 계획 작성 (11개 태스크, TDD)
 - Role spoofing 완화·잔여 리스크 계획 문서에 기록
 - README에서 이전 서비스명 제거
+- 캘린더 게스트 기본 일정/로그인 개인 일정 설계 스펙 추가
+- 후속 이슈 링크(#20, #21) 스펙에 반영
+- 비자 스키마 결합도 낮추는 어댑터 계층 설계 추가
+- 캘린더 게스트/로그인 분리 구현 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 
 ### 🎨 Styling
@@ -166,3 +169,4 @@
 - Replace Visa Bugi wordmark PNGs with SVG
 - Add app icon PNG assets
 - Add transparent crawling Bugi poses
+- Merge latest main before grounded OCR chat PR

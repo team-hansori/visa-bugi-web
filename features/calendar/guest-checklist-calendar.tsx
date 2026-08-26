@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { CalendarGrid } from "./calendar-grid";
 import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
-import { useTargetVisaId } from "./use-target-visa";
+import { useTargetVisaIds } from "./use-target-visa";
 import { useToday } from "./use-today";
 import { VisaPicker } from "./visa-picker";
 import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
 
 export function GuestChecklistCalendar() {
-  const { targetVisaId, setManualVisaId } = useTargetVisaId();
+  const { targetVisaIds, toggleVisaId } = useTargetVisaIds();
   const today = useToday();
   const [view, setView] = useState<{ year: number; month: number } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -29,7 +29,7 @@ export function GuestChecklistCalendar() {
     );
   }
 
-  const checklist = targetVisaId ? getDefaultChecklist(targetVisaId) : [];
+  const checklist = targetVisaIds.flatMap(getDefaultChecklist);
   const eventsByDate = buildChecklistEvents(checklist, null);
   const selectedItems = findChecklistItemsForDate(checklist, null, selectedDate);
 
@@ -46,7 +46,7 @@ export function GuestChecklistCalendar() {
         </button>
       </header>
 
-      <VisaPicker selectedVisaId={targetVisaId} onSelect={setManualVisaId} />
+      <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <CalendarGrid
@@ -59,7 +59,7 @@ export function GuestChecklistCalendar() {
             todayDate={today.date}
           />
           <aside className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-6" aria-labelledby="checklist-title">
-            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaId ? `${targetVisaId} 비자 기본 절차` : "비자 기본 절차"}</p>
+            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaIds.length ? `${targetVisaIds.join(", ")} 비자 기본 절차` : "비자 기본 절차"}</p>
             <h2 id="checklist-title" className="mt-1 text-xl font-black tracking-[-0.035em]">전체 체크리스트</h2>
             {checklist.length ? (
               <ul className="mt-4 space-y-3">
@@ -74,7 +74,7 @@ export function GuestChecklistCalendar() {
               </ul>
             ) : (
               <div className="mt-4 rounded-2xl border border-dashed border-[#d6dfda] p-5 text-center text-sm leading-6 text-[#77837e]">
-                {targetVisaId ? "이 비자 유형의 기본 절차 데이터가 아직 없습니다." : "위에서 비자 유형을 선택하면 기본 절차를 확인할 수 있습니다."}
+                {targetVisaIds.length ? "선택한 비자 유형의 기본 절차 데이터가 아직 없습니다." : "위에서 비자 유형을 선택하면 기본 절차를 확인할 수 있습니다."}
               </div>
             )}
             {selectedDate && selectedItems.length ? (

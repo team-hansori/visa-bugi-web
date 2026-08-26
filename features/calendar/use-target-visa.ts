@@ -16,9 +16,9 @@ function resolveProfileVisaId(): string | null {
  * directly during render would return different values on the server vs. the
  * client's hydration render and cause a hydration mismatch.
  */
-export function useTargetVisaId(): { targetVisaId: string | null; setManualVisaId: (visaId: string) => void } {
+export function useTargetVisaIds(): { targetVisaIds: string[]; toggleVisaId: (visaId: string) => void } {
   const [profileVisaId, setProfileVisaId] = useState<string | null>(null);
-  const [manualVisaId, setManualVisaId] = useState<string | null>(null);
+  const [manualVisaIds, setManualVisaIds] = useState<string[] | null>(null);
 
   useEffect(() => {
     // Intentional: this is the mount-only sessionStorage read described
@@ -27,5 +27,14 @@ export function useTargetVisaId(): { targetVisaId: string | null; setManualVisaI
     setProfileVisaId(resolveProfileVisaId());
   }, []);
 
-  return { targetVisaId: manualVisaId ?? profileVisaId, setManualVisaId };
+  const targetVisaIds = manualVisaIds ?? (profileVisaId ? [profileVisaId] : []);
+
+  function toggleVisaId(visaId: string) {
+    setManualVisaIds((current) => {
+      const selected = current ?? (profileVisaId ? [profileVisaId] : []);
+      return selected.includes(visaId) ? selected.filter((id) => id !== visaId) : [...selected, visaId];
+    });
+  }
+
+  return { targetVisaIds, toggleVisaId };
 }

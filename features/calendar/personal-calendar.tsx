@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { CalendarGrid } from "./calendar-grid";
 import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
-import { useTargetVisaId } from "./use-target-visa";
+import { useTargetVisaIds } from "./use-target-visa";
 import { useToday } from "./use-today";
 import { VisaPicker } from "./visa-picker";
 import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
@@ -26,7 +26,7 @@ function monthOf(dateIso: string): { year: number; month: number } {
 }
 
 export function PersonalCalendar() {
-  const { targetVisaId, setManualVisaId } = useTargetVisaId();
+  const { targetVisaIds, toggleVisaId } = useTargetVisaIds();
   const today = useToday();
   const [view, setView] = useState<{ year: number; month: number } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -53,7 +53,7 @@ export function PersonalCalendar() {
     }
   }, [today, view]);
 
-  const checklist = useMemo(() => (targetVisaId ? getDefaultChecklist(targetVisaId) : []), [targetVisaId]);
+  const checklist = useMemo(() => targetVisaIds.flatMap(getDefaultChecklist), [targetVisaIds]);
   const hasUnresolvedItems = checklist.some((item) => !item.startDate);
 
   const eventsByDate = useMemo(() => {
@@ -120,7 +120,7 @@ export function PersonalCalendar() {
         </button>
       </header>
 
-      <VisaPicker selectedVisaId={targetVisaId} onSelect={setManualVisaId} />
+      <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
 
       {hasUnresolvedItems ? (
         <div className="rounded-[24px] border border-[#dce5e0] bg-[#edf5f1] p-5">

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import { createClient } from "@/lib/supabase/client";
+import { ensureAnonymousSession } from "@/lib/supabase/ensure-anonymous-session";
 import {
   type ClientImageIssue,
   inspectApplicationFormImage,
@@ -18,6 +20,8 @@ import type {
   ImageQuality,
   OcrApiError,
   ReviewedFormField,
+  SaveOcrResultRequest,
+  SaveOcrResultResponse,
 } from "./types";
 
 const maxUploadFileSize = 4 * 1024 * 1024;
@@ -70,6 +74,8 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
   const [error, setError] = useState("");
   const [isPreparing, setIsPreparing] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     return () => {
@@ -84,6 +90,8 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
 
     setPhotoIssue(null);
     setError("");
+    setSaveState("idle");
+    setSaveError("");
 
     const imageFile = acceptedImageTypes.has(selectedFile.type);
     const hwpxFile = isHwpxFile(selectedFile);
@@ -172,6 +180,8 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     setAnalysis(null);
     setError("");
     setPhotoIssue(null);
+    setSaveState("idle");
+    setSaveError("");
     setMessage(t("upload.removed"));
     if (cameraInputRef.current) cameraInputRef.current.value = "";
     if (galleryInputRef.current) galleryInputRef.current.value = "";
@@ -188,6 +198,8 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
     setIsAnalyzing(true);
     setError("");
     setAnalysis(null);
+    setSaveState("idle");
+    setSaveError("");
 
     try {
       const selectedForm = forms.find(
@@ -217,6 +229,67 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
       setError(caught instanceof Error ? caught.message : t("errors.generic"));
     } finally {
       setIsAnalyzing(false);
+    }
+  }
+
+  async function saveAnalysisResult() {
+    if (!analysis || analysis.mode !== "live" || saveState === "saving") return;
+
+    setSaveState("saving");
+    setSaveError("");
+
+    try {
+      if (
+        !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+        !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+      ) {
+        throw new Error(t("save.notConfigured"));
+      }
+
+      const supabase = createClient();
+      const user = await ensureAnonymousSession(supabase);
+      if (!user) throw new Error(t("save.sessionError"));
+
+      const payload: SaveOcrResultRequest = {
+        documentRequirementId:
+          selectedFormId === "auto" || !isUuid(selectedFormId)
+            ? null
+            : selectedFormId,
+        sourceKind: file && isHwpxFile(file) ? "hwpx" : "image",
+        analysis: {
+          mode: analysis.mode,
+          templateKey: analysis.templateKey,
+          documentTitle: analysis.documentTitle,
+          visaCode: analysis.visaCode,
+          pageNumber: analysis.pageNumber,
+          imageQuality: analysis.imageQuality,
+          warnings: analysis.warnings,
+          fields: analysis.fields.map((field) => ({
+            fieldIdentifier: field.fieldIdentifier,
+            status: field.status,
+            confidence: field.confidence,
+            required: field.required,
+          })),
+        },
+      };
+      const response = await fetch("/api/ocr/results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const body = (await response.json()) as SaveOcrResultResponse | OcrApiError;
+      if (!response.ok || "error" in body) {
+        throw new Error(
+          "error" in body
+            ? saveApiErrorMessage(body.code, t)
+            : t("save.error"),
+        );
+      }
+
+      setSaveState("saved");
+    } catch (caught) {
+      setSaveState("idle");
+      setSaveError(caught instanceof Error ? caught.message : t("save.error"));
     }
   }
 
@@ -250,6 +323,8 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
             onChange={(event) => {
               setSelectedFormId(event.target.value);
               setAnalysis(null);
+              setSaveState("idle");
+              setSaveError("");
             }}
             className="mt-2 min-h-12 w-full rounded-2xl border border-[#cfdad4] bg-white px-4 text-sm font-bold text-[#31463d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
           >
@@ -363,6 +438,9 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           analysis={analysis}
           onRetake={retakePhoto}
           allowRetake={!file || !isHwpxFile(file)}
+          onSave={saveAnalysisResult}
+          saveState={saveState}
+          saveError={saveError}
         />
       ) : null}
     </div>
@@ -373,10 +451,16 @@ function AnalysisResult({
   analysis,
   onRetake,
   allowRetake,
+  onSave,
+  saveState,
+  saveError,
 }: {
   analysis: ApplicationFormAnalysis;
   onRetake: () => void;
   allowRetake: boolean;
+  onSave: () => void;
+  saveState: "idle" | "saving" | "saved";
+  saveError: string;
 }) {
   const t = useTranslations("Ocr");
   const summaryCards = [
@@ -443,6 +527,35 @@ function AnalysisResult({
           </div>
           <button type="button" onClick={onRetake} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#8f3e34] px-4 text-sm font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8f3e34]"><Icon name="camera" className="size-4" />{t("retake.action")}</button>
         </div>
+      ) : null}
+
+      <div className="mt-5 rounded-2xl border border-[#d7e4de] bg-[#f1f7f4] p-4 sm:flex sm:items-center sm:justify-between sm:gap-5">
+        <div>
+          <p className="font-black text-[#245c4d]">{t("save.title")}</p>
+          <p className="mt-1 text-sm leading-6 text-[#5e7169]">
+            {analysis.mode === "live"
+              ? t("save.description")
+              : t("save.demoDescription")}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onSave}
+          disabled={analysis.mode !== "live" || saveState !== "idle"}
+          className="mt-3 inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[#266452] px-5 text-sm font-extrabold text-white disabled:cursor-not-allowed disabled:bg-[#9cafA7] sm:mt-0 sm:w-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+        >
+          <Icon name={saveState === "saving" ? "clock" : "check"} className="size-4" />
+          {saveState === "saving"
+            ? t("save.saving")
+            : saveState === "saved"
+              ? t("save.saved")
+              : t("save.action")}
+        </button>
+      </div>
+      {saveError ? (
+        <p role="alert" className="mt-3 rounded-xl bg-[#fff0ed] px-4 py-3 text-sm font-bold leading-6 text-[#9a3f33]">
+          {saveError}
+        </p>
       ) : null}
 
       <div className="mt-6 grid gap-3 lg:grid-cols-2">
@@ -564,8 +677,18 @@ function apiErrorMessage(code: string, t: Translator) {
   return t("errors.generic");
 }
 
+function saveApiErrorMessage(code: string, t: Translator) {
+  if (code === "STORAGE_NOT_CONFIGURED") return t("save.notConfigured");
+  if (code === "AUTH_REQUIRED") return t("save.sessionError");
+  return t("save.error");
+}
+
 function isHwpxFile(file: File) {
   return file.name.toLocaleLowerCase().endsWith(".hwpx");
+}
+
+function isUuid(value: string) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
 async function optimizeImageForUpload(source: File) {

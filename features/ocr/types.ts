@@ -94,3 +94,36 @@ export type OcrApiError = {
   error: string;
   code: string;
 };
+
+export type SavedDocumentReviewStatus =
+  | "READY"
+  | "NEEDS_REVIEW"
+  | "INCOMPLETE";
+
+export type SaveOcrResultRequest = {
+  documentRequirementId: string | null;
+  sourceKind: "image" | "hwpx";
+  analysis: Pick<
+    ApplicationFormAnalysis,
+    | "mode"
+    | "templateKey"
+    | "documentTitle"
+    | "visaCode"
+    | "pageNumber"
+    | "imageQuality"
+    | "warnings"
+  > & {
+    fields: Array<
+      Pick<
+        ReviewedFormField,
+        "fieldIdentifier" | "status" | "confidence" | "required"
+      >
+    >;
+  };
+};
+
+export type SaveOcrResultResponse = {
+  reviewId: string;
+  reviewStatus: SavedDocumentReviewStatus;
+  updatedAt: string;
+};

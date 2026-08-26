@@ -30,25 +30,34 @@
   },
   "Home": {
     "demoBadge": "로그인 없이 둘러보는 데모",
+    "savedBadge": "저장된 진행상황",
     "heroTitle": "오늘 준비할 일을 한눈에 확인하세요",
     "heroDescription": "현재 화면은 반응형 UI 확인용 예시입니다. 공식 비자 요건과 사용자 진행상황은 검수된 데이터 연결 후 표시됩니다.",
+    "savedHeroDescription": "저장한 서류 {count}개의 OCR 점검 결과를 기준으로 준비 상태와 다음 할 일을 보여드립니다.",
     "heroCta": "내 정보 설정하기",
     "progress": {
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
+      "savedAriaLabel": "저장된 서류 작성 진행률 {percent}퍼센트",
       "caption": "예시 진행률",
+      "savedCaption": "서류 작성 진행률",
       "eyebrow": "전체 요건 충족률",
+      "savedEyebrow": "저장된 서류 작성 진행률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
+      "savedTag": "저장됨",
       "selectedVisaLabel": "선택 비자",
       "selectedVisaValue": "E-7-4R 예시",
+      "commonVisaValue": "공통 신청서",
       "baseDateLabel": "기준일",
+      "lastUpdatedLabel": "최근 저장",
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
       "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
+      "savedStepIndicator": "서류 {total}개 중 {ready}개 준비 완료",
       "stagesAriaLabel": "비자 진행 단계 예시",
       "stageDone": "완료",
       "stageCurrent": "진행 중",
@@ -70,6 +79,11 @@
         "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
         "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
         "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+      },
+      "saved": {
+        "missing": { "label": "{document}의 필수 항목 {count}개 작성", "meta": "OCR 결과 · 작성 필요" },
+        "review": { "label": "{document}의 항목 {count}개 다시 확인", "meta": "OCR 결과 · 원본과 대조" },
+        "ready": { "label": "{document} 제출 전 최종 확인", "meta": "OCR 결과 · 준비 완료" }
       }
     },
     "agencies": {
@@ -132,6 +146,17 @@
       "analyze": "작성 항목 점검",
       "analyzing": "신청서를 분석하는 중"
     },
+    "save": {
+      "title": "진행상황에 반영하기",
+      "description": "원본 파일과 인식된 실제 값은 저장하지 않고, 항목별 완료·확인·미작성 상태만 저장합니다.",
+      "demoDescription": "데모 결과는 실제 인식값이 아니므로 저장할 수 없습니다.",
+      "action": "이 결과 저장",
+      "saving": "저장하는 중",
+      "saved": "저장 완료",
+      "error": "OCR 결과를 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      "notConfigured": "Supabase 진행상황 저장소가 아직 연결되지 않았습니다.",
+      "sessionError": "사용자 저장 세션을 만들지 못했습니다. Supabase 익명 로그인을 확인해 주세요."
+    },
     "retake": {
       "title": "신청서 사진을 다시 확인해 주세요",
       "description": "신청서 종류가 다르거나 사진이 흐리고 잘린 것으로 보입니다. 네 모서리와 글자가 모두 보이게 다시 촬영해 주세요.",
@@ -140,7 +165,7 @@
     "privacy": {
       "title": "첨부 파일 처리 원칙",
       "temporary": "사진·HWPX는 분석을 위해서만 일시 전송",
-      "noDatabase": "원본 첨부 파일과 분석 결과를 데이터베이스에 저장하지 않음",
+      "noDatabase": "원본 파일·인식값은 저장하지 않고 사용자가 선택한 진행 상태만 저장",
       "reviewFirst": "인식 결과를 사용자가 확인한 뒤에만 활용"
     },
     "tips": {

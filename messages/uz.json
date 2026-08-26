@@ -30,25 +30,34 @@
   },
   "Home": {
     "demoBadge": "로그인 없이 둘러보는 데모",
+    "savedBadge": "저장된 진행상황",
     "heroTitle": "오늘 준비할 일을 한눈에 확인하세요",
     "heroDescription": "현재 화면은 반응형 UI 확인용 예시입니다. 공식 비자 요건과 사용자 진행상황은 검수된 데이터 연결 후 표시됩니다.",
+    "savedHeroDescription": "저장한 서류 {count}개의 OCR 점검 결과를 기준으로 준비 상태와 다음 할 일을 보여드립니다.",
     "heroCta": "내 정보 설정하기",
     "progress": {
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
+      "savedAriaLabel": "저장된 서류 작성 진행률 {percent}퍼센트",
       "caption": "예시 진행률",
+      "savedCaption": "서류 작성 진행률",
       "eyebrow": "전체 요건 충족률",
+      "savedEyebrow": "저장된 서류 작성 진행률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
+      "savedTag": "저장됨",
       "selectedVisaLabel": "선택 비자",
       "selectedVisaValue": "E-7-4R 예시",
+      "commonVisaValue": "공통 신청서",
       "baseDateLabel": "기준일",
+      "lastUpdatedLabel": "최근 저장",
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
       "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
+      "savedStepIndicator": "서류 {total}개 중 {ready}개 준비 완료",
       "stagesAriaLabel": "비자 진행 단계 예시",
       "stageDone": "완료",
       "stageCurrent": "진행 중",
@@ -70,6 +79,11 @@
         "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
         "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
         "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+      },
+      "saved": {
+        "missing": { "label": "{document}의 필수 항목 {count}개 작성", "meta": "OCR 결과 · 작성 필요" },
+        "review": { "label": "{document}의 항목 {count}개 다시 확인", "meta": "OCR 결과 · 원본과 대조" },
+        "ready": { "label": "{document} 제출 전 최종 확인", "meta": "OCR 결과 · 준비 완료" }
       }
     },
     "agencies": {
@@ -132,6 +146,17 @@
       "analyze": "To‘ldirilgan joylarni tekshirish",
       "analyzing": "Ariza tahlil qilinmoqda"
     },
+    "save": {
+      "title": "Jarayonimga qo‘shish",
+      "description": "Asl fayl va tanilgan haqiqiy qiymatlar saqlanmaydi; faqat bandlarning bajarilgan, tekshiriladigan yoki bo‘sh holati saqlanadi.",
+      "demoDescription": "Demo natijasi haqiqiy OCR ma’lumoti emas, shuning uchun uni saqlab bo‘lmaydi.",
+      "action": "Natijani saqlash",
+      "saving": "Saqlanmoqda",
+      "saved": "Saqlandi",
+      "error": "OCR natijasini saqlab bo‘lmadi. Keyinroq qayta urinib ko‘ring.",
+      "notConfigured": "Supabase jarayon saqlash ombori hali ulanmagan.",
+      "sessionError": "Saqlash seansini yaratib bo‘lmadi. Supabase anonim kirishini tekshiring."
+    },
     "retake": {
       "title": "Ariza rasmini qayta tekshiring",
       "description": "Ariza turi boshqa bo‘lishi yoki rasm xira va kesilgan bo‘lishi mumkin. To‘rt burchak va matn to‘liq ko‘rinadigan qilib qayta oling.",
@@ -140,7 +165,7 @@
     "privacy": {
       "title": "Biriktirmani qayta ishlash qoidalari",
       "temporary": "Rasm yoki HWPX faqat tahlil uchun vaqtincha yuboriladi",
-      "noDatabase": "Asl biriktirma va tahlil natijasi ma’lumotlar bazasida saqlanmaydi",
+      "noDatabase": "Asl fayl va tanilgan qiymatlar saqlanmaydi, faqat foydalanuvchi tanlagan jarayon holati saqlanadi",
       "reviewFirst": "Natija faqat foydalanuvchi tekshirganidan keyin ishlatiladi"
     },
     "tips": {

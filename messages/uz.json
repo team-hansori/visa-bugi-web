@@ -18,6 +18,7 @@
     "calendar": "Jadval",
     "map": "Muassasalar",
     "ocr": "Hujjatlar",
+    "chat": "Maslahat",
     "my": "Ko‘proq",
     "mainMenuAriaLabel": "Asosiy menyu",
     "mobileMenuAriaLabel": "Mobil asosiy menyu"
@@ -109,6 +110,25 @@
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "Chat": {
+    "title": "Viza bo‘yicha maslahat",
+    "description": "Biz tekshirilgan viza ma’lumotlariga asoslanib javob beramiz va doiradan tashqari masalalar uchun mas’ul tashkilotlarni ko‘rsatamiz.",
+    "disclaimer": "Bu ma’lumot faqat ma’lumot uchun berilgan. Yakuniy tasdiq uchun vakolatli tashkilotga murojaat qiling.",
+    "inputPlaceholder": "Viza talablari, tartiblari yoki hujjatlari haqida so‘rang",
+    "inputAriaLabel": "Savolni kiriting",
+    "send": "Yuborish",
+    "sending": "Javob tayyorlanmoqda…",
+    "deleteHistory": "Suhbatni o‘chirish",
+    "deleteConfirm": "Barcha saqlangan suhbatlar o‘chirilsinmi? Buni qaytarib bo‘lmaydi.",
+    "deleted": "Suhbat o‘chirildi.",
+    "error": "Xatolik yuz berdi. Iltimos, birozdan keyin qayta urinib ko‘ring.",
+    "empty": "Maslahatni boshlash uchun savolingizni kiriting.",
+    "sourcesLabel": "Manbalar",
+    "verifiedAtLabel": "Tasdiqlangan sana",
+    "contactsLabel": "Yo‘naltiriladigan tashkilotlar",
+    "unverifiedNotice": "Bu ma’lumot migrant ishchilar uchun tasdiqlangan. Vaziyatga qarab farq qilishi mumkin, shuning uchun tashkilot bilan bevosita tasdiqlang.",
+    "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin."
   },
   "My": {
     "eyebrow": "MY",

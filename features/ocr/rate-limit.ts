@@ -2,6 +2,7 @@ import "server-only";
 
 const requestWindowMs = 60_000;
 const maxRequestsPerWindow = 6;
+const maxHelpRequestsPerWindow = 6;
 const maxTrackedClients = 1_000;
 
 type RequestWindow = {
@@ -10,19 +11,36 @@ type RequestWindow = {
 };
 
 const requestWindows = new Map<string, RequestWindow>();
+const helpRequestWindows = new Map<string, RequestWindow>();
 
 export function takeOcrRequestSlot(request: Request) {
+  return takeRequestSlot(request, requestWindows, maxRequestsPerWindow);
+}
+
+export function takeOcrHelpRequestSlot(request: Request) {
+  return takeRequestSlot(
+    request,
+    helpRequestWindows,
+    maxHelpRequestsPerWindow,
+  );
+}
+
+function takeRequestSlot(
+  request: Request,
+  windows: Map<string, RequestWindow>,
+  maxRequests: number,
+) {
   const now = Date.now();
   const clientKey = getClientKey(request);
-  const current = requestWindows.get(clientKey);
+  const current = windows.get(clientKey);
 
   if (!current || current.resetAt <= now) {
-    requestWindows.set(clientKey, { count: 1, resetAt: now + requestWindowMs });
-    pruneRequestWindows(now);
+    windows.set(clientKey, { count: 1, resetAt: now + requestWindowMs });
+    pruneRequestWindows(windows, now);
     return { allowed: true, retryAfterSeconds: 0 };
   }
 
-  if (current.count >= maxRequestsPerWindow) {
+  if (current.count >= maxRequests) {
     return {
       allowed: false,
       retryAfterSeconds: Math.max(1, Math.ceil((current.resetAt - now) / 1_000)),
@@ -38,16 +56,16 @@ function getClientKey(request: Request) {
   return forwardedFor || request.headers.get("x-real-ip") || "local-client";
 }
 
-function pruneRequestWindows(now: number) {
-  if (requestWindows.size <= maxTrackedClients) return;
+function pruneRequestWindows(windows: Map<string, RequestWindow>, now: number) {
+  if (windows.size <= maxTrackedClients) return;
 
-  for (const [key, window] of requestWindows) {
-    if (window.resetAt <= now) requestWindows.delete(key);
+  for (const [key, window] of windows) {
+    if (window.resetAt <= now) windows.delete(key);
   }
 
-  while (requestWindows.size > maxTrackedClients) {
-    const oldestKey = requestWindows.keys().next().value;
+  while (windows.size > maxTrackedClients) {
+    const oldestKey = windows.keys().next().value;
     if (!oldestKey) break;
-    requestWindows.delete(oldestKey);
+    windows.delete(oldestKey);
   }
 }

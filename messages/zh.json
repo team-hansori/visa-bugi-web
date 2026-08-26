@@ -157,6 +157,38 @@
       "notConfigured": "Supabase 进度存储尚未连接。",
       "sessionError": "无法创建保存会话，请确认 Supabase 已启用匿名登录。"
     },
+    "chat": {
+      "open": "询问聊天助手",
+      "askField": "询问此项目",
+      "eyebrow": "OCR 问答助手",
+      "title": "不明白的项目可直接提问",
+      "description": "可选择推荐问题，或直接询问申请表的填写方法。",
+      "fieldContext": "当前提问项目：{field}",
+      "fieldDefaultQuestion": "{field} 项目应该填写什么？",
+      "privacy": "仅向助手发送文件名、项目名和填写状态，不会发送 OCR 识别出的实际内容。",
+      "sensitiveWarning": "请勿在问题中输入护照号、外国人登记号或地址等个人信息。",
+      "close": "关闭",
+      "inputLabel": "询问 OCR 结果",
+      "placeholder": "例如：这个项目应该由我填写吗？",
+      "characterCount": "{count}/500字",
+      "send": "发送问题",
+      "sending": "正在准备回答",
+      "disclaimer": "回答仅用于协助填写申请表，不判断签证获批可能性，也不构成法律意见。请以最新官方公告和主管机关说明为准。",
+      "suggestions": {
+        "what": "{field} 应该填写什么？",
+        "who": "{field} 应由谁填写？",
+        "why": "为什么要再次确认 {field}？",
+        "first": "我应该先确认哪些项目？",
+        "applicant": "哪些项目需要我本人填写？",
+        "manual": "哪些项目无法通过 OCR 确认？"
+      },
+      "errors": {
+        "notConfigured": "聊天助手尚未连接，请检查 OPENAI_API_KEY。",
+        "rateLimit": "短时间内发送了太多问题，请稍后再试。",
+        "invalid": "请检查问题内容后重新发送。",
+        "generic": "无法获取回答，请稍后再试。"
+      }
+    },
     "retake": {
       "title": "请重新确认申请表照片",
       "description": "申请表类型可能不同，或照片模糊、被裁切。请让四个角和文字都清晰可见后重新拍摄。",

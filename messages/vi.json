@@ -157,6 +157,38 @@
       "notConfigured": "Kho lưu tiến độ Supabase chưa được kết nối.",
       "sessionError": "Không thể tạo phiên lưu. Hãy kiểm tra đăng nhập ẩn danh của Supabase."
     },
+    "chat": {
+      "open": "Hỏi chatbot",
+      "askField": "Hỏi về mục này",
+      "eyebrow": "Trợ lý hỏi đáp OCR",
+      "title": "Hỏi ngay về mục bạn chưa rõ",
+      "description": "Chọn câu hỏi gợi ý hoặc hỏi trực tiếp cách điền đơn.",
+      "fieldContext": "Mục đang hỏi: {field}",
+      "fieldDefaultQuestion": "Tôi cần điền gì vào mục {field}?",
+      "privacy": "Chỉ tên tài liệu, tên mục và trạng thái điền được gửi cho chatbot; nội dung thực tế OCR nhận diện sẽ không được gửi.",
+      "sensitiveWarning": "Không nhập số hộ chiếu, số đăng ký người nước ngoài, địa chỉ hoặc thông tin cá nhân khác vào câu hỏi.",
+      "close": "Đóng",
+      "inputLabel": "Hỏi về kết quả OCR",
+      "placeholder": "Ví dụ: Tôi có phải điền mục này không?",
+      "characterCount": "{count}/500 ký tự",
+      "send": "Gửi câu hỏi",
+      "sending": "Đang chuẩn bị câu trả lời",
+      "disclaimer": "Câu trả lời chỉ hỗ trợ điền đơn, không đánh giá khả năng được cấp visa và không phải tư vấn pháp lý. Hãy kiểm tra thông báo chính thức mới nhất và cơ quan phụ trách.",
+      "suggestions": {
+        "what": "Điền gì vào mục {field}?",
+        "who": "Ai phải điền mục {field}?",
+        "why": "Vì sao cần kiểm tra lại mục {field}?",
+        "first": "Tôi nên kiểm tra mục nào trước?",
+        "applicant": "Những mục nào tôi phải tự điền?",
+        "manual": "Những mục nào OCR không thể kiểm tra?"
+      },
+      "errors": {
+        "notConfigured": "Chatbot chưa được kết nối. Hãy kiểm tra OPENAI_API_KEY.",
+        "rateLimit": "Bạn đã gửi quá nhiều câu hỏi trong thời gian ngắn. Vui lòng thử lại sau.",
+        "invalid": "Hãy kiểm tra nội dung câu hỏi rồi gửi lại.",
+        "generic": "Không thể tải câu trả lời. Vui lòng thử lại sau."
+      }
+    },
     "retake": {
       "title": "Hãy kiểm tra lại ảnh đơn",
       "description": "Loại đơn có thể không đúng hoặc ảnh bị mờ, bị cắt. Hãy chụp lại để thấy rõ bốn góc và toàn bộ chữ.",

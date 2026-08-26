@@ -31,6 +31,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```env
 OPENAI_API_KEY=your-server-only-key
 OPENAI_OCR_MODEL=gpt-5.4-mini
+OPENAI_CHAT_MODEL=gpt-5.4-mini
 ```
 
 API 비용 없이 화면과 업로드 흐름을 테스트하려면 `OCR_MODE=demo`를 설정합니다.
@@ -40,6 +41,15 @@ API 비용 없이 화면과 업로드 흐름을 테스트하려면 `OCR_MODE=dem
 
 ```env
 OCR_MODE=demo
+```
+
+OCR 결과 화면의 질문 도우미는 같은 `OPENAI_API_KEY`를 사용합니다. 질문 기능만
+끄고 싶다면 `CHAT_MODE=disabled`를 설정합니다. `OCR_MODE=demo`는 사진 분석
+호출만 막으므로 질문 도우미까지 무료 테스트하려면 두 값을 함께 설정해야 합니다.
+
+```env
+OCR_MODE=demo
+CHAT_MODE=disabled
 ```
 
 `/api/health`에서 서비스 상태를 확인할 수 있습니다.
@@ -72,6 +82,7 @@ npm run build     # 프로덕션 빌드
 - HWPX 한 파일 첨부(16MB 이하, 서버에서 문서 텍스트를 추출한 뒤 분석)
 - 사진 촬영과 파일 첨부를 분리하고, 사진 전송 전에 해상도·노출·대비·흐림을 기기에서 점검
 - 앱에서 선택한 6개 언어로 항목별 작성 안내
+- 문서명·항목명·작성 상태만 전달하는 OCR 전용 질문 도우미
 - OCR 값의 확신도에 따른 확인 필요 상태 표시
 - 서명, 동의, 기관 작성란은 자동 인식·자동 입력하지 않음
 - 원본 사진과 분석 결과를 웹 데이터베이스에 저장하지 않음

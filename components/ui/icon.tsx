@@ -12,6 +12,7 @@ export type IconName =
   | "globe"
   | "home"
   | "map-pin"
+  | "message-circle"
   | "navigation"
   | "phone"
   | "shield"
@@ -72,6 +73,12 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
       <circle cx="12" cy="10" r="2.5" />
+    </>
+  ),
+  "message-circle": (
+    <>
+      <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.8-4.4A8.4 8.4 0 0 1 3 11.5a8.5 8.5 0 0 1 9-8.5 8.5 8.5 0 0 1 9 8.5Z" />
+      <path d="M8 12h.01M12 12h.01M16 12h.01" />
     </>
   ),
   navigation: <path d="m3 11 18-8-8 18-2-8-8-2Z" />,

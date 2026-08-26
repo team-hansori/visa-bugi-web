@@ -157,6 +157,38 @@
       "notConfigured": "Supabase jarayon saqlash ombori hali ulanmagan.",
       "sessionError": "Saqlash seansini yaratib bo‘lmadi. Supabase anonim kirishini tekshiring."
     },
+    "chat": {
+      "open": "Chatbotdan so‘rash",
+      "askField": "Bu band haqida so‘rash",
+      "eyebrow": "OCR savol yordamchisi",
+      "title": "Tushunmagan bandingizni darhol so‘rang",
+      "description": "Tavsiya etilgan savolni tanlang yoki arizani qanday to‘ldirishni yozib so‘rang.",
+      "fieldContext": "Hozirgi savol bandi: {field}",
+      "fieldDefaultQuestion": "{field} bandiga nima yozishim kerak?",
+      "privacy": "Chatbotga faqat hujjat nomi, band nomi va to‘ldirish holati yuboriladi; OCR tanigan haqiqiy qiymatlar yuborilmaydi.",
+      "sensitiveWarning": "Savolga pasport raqami, chet ellik ro‘yxat raqami, manzil yoki boshqa shaxsiy ma’lumotni yozmang.",
+      "close": "Yopish",
+      "inputLabel": "OCR natijasi haqida so‘rash",
+      "placeholder": "Masalan: Bu bandni men to‘ldirishim kerakmi?",
+      "characterCount": "{count}/500 belgi",
+      "send": "Savol yuborish",
+      "sending": "Javob tayyorlanmoqda",
+      "disclaimer": "Javob faqat arizani to‘ldirishga yordam beradi; viza tasdiqlanishini baholamaydi va huquqiy maslahat emas. Eng so‘nggi rasmiy e’lon va mas’ul idoradan tekshiring.",
+      "suggestions": {
+        "what": "{field} bandiga nima yoziladi?",
+        "who": "{field} bandini kim to‘ldiradi?",
+        "why": "Nega {field} bandini qayta tekshirish kerak?",
+        "first": "Avval qaysi bandlarni tekshiray?",
+        "applicant": "Qaysi bandlarni o‘zim to‘ldiraman?",
+        "manual": "Qaysi bandlarni OCR tekshira olmaydi?"
+      },
+      "errors": {
+        "notConfigured": "Chatbot hali ulanmagan. OPENAI_API_KEY ni tekshiring.",
+        "rateLimit": "Qisqa vaqtda juda ko‘p savol yubordingiz. Keyinroq qayta urinib ko‘ring.",
+        "invalid": "Savol matnini tekshirib, qayta yuboring.",
+        "generic": "Javobni olib bo‘lmadi. Keyinroq qayta urinib ko‘ring."
+      }
+    },
     "retake": {
       "title": "Ariza rasmini qayta tekshiring",
       "description": "Ariza turi boshqa bo‘lishi yoki rasm xira va kesilgan bo‘lishi mumkin. To‘rt burchak va matn to‘liq ko‘rinadigan qilib qayta oling.",

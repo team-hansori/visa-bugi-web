@@ -10,6 +10,7 @@ import {
   type ClientImageIssue,
   inspectApplicationFormImage,
 } from "./image-quality";
+import { OcrHelpChat } from "./ocr-help-chat";
 import type {
   ApplicationFormAnalysis,
   ApplicationFormCatalog,
@@ -463,6 +464,8 @@ function AnalysisResult({
   saveError: string;
 }) {
   const t = useTranslations("Ocr");
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatField, setChatField] = useState<ReviewedFormField | null>(null);
   const summaryCards = [
     { key: "complete", value: analysis.summary.complete, tone: "bg-[#e8f4ee] text-[#27624f]" },
     { key: "review", value: analysis.summary.review, tone: "bg-[#fff2d9] text-[#80520d]" },
@@ -482,6 +485,17 @@ function AnalysisResult({
         ].includes(warning),
       ));
 
+  function openChat(field: ReviewedFormField | null) {
+    setChatField(field);
+    setChatOpen(true);
+    window.setTimeout(() => {
+      document.getElementById("ocr-help-chat")?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
+  }
+
   return (
     <section className="rounded-[28px] border border-[#dce5e0] bg-white p-4 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-6" aria-labelledby="analysis-title">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -490,9 +504,21 @@ function AnalysisResult({
           <h2 id="analysis-title" className="mt-1 text-2xl font-black tracking-[-0.04em]">{t("result.title")}</h2>
           <p className="mt-2 text-sm leading-6 text-[#66756f]">{analysis.visaCode} · {analysis.documentTitle}</p>
         </div>
-        <span className={`w-fit rounded-full px-3 py-1.5 text-xs font-extrabold ${analysis.mode === "live" ? "bg-[#e5f2ec] text-[#28614f]" : "bg-[#fff0d4] text-[#82530c]"}`}>
-          {analysis.mode === "live" ? t("result.live") : t("result.demo")}
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={`w-fit rounded-full px-3 py-1.5 text-xs font-extrabold ${analysis.mode === "live" ? "bg-[#e5f2ec] text-[#28614f]" : "bg-[#fff0d4] text-[#82530c]"}`}>
+            {analysis.mode === "live" ? t("result.live") : t("result.demo")}
+          </span>
+          <button
+            type="button"
+            onClick={() => openChat(null)}
+            aria-expanded={chatOpen}
+            aria-controls="ocr-help-chat"
+            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-[#bfd4ca] bg-[#f0f8f4] px-3.5 text-xs font-extrabold text-[#266452] hover:bg-[#e5f2ec] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+          >
+            <Icon name="message-circle" className="size-4" />
+            {t("chat.open")}
+          </button>
+        </div>
       </div>
 
       <dl className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -529,6 +555,15 @@ function AnalysisResult({
         </div>
       ) : null}
 
+      {chatOpen ? (
+        <OcrHelpChat
+          key={chatField?.fieldIdentifier ?? "general"}
+          analysis={analysis}
+          selectedField={chatField}
+          onClose={() => setChatOpen(false)}
+        />
+      ) : null}
+
       <div className="mt-5 rounded-2xl border border-[#d7e4de] bg-[#f1f7f4] p-4 sm:flex sm:items-center sm:justify-between sm:gap-5">
         <div>
           <p className="font-black text-[#245c4d]">{t("save.title")}</p>
@@ -560,14 +595,24 @@ function AnalysisResult({
 
       <div className="mt-6 grid gap-3 lg:grid-cols-2">
         {analysis.fields.map((field) => (
-          <FieldReviewCard key={field.fieldIdentifier} field={field} />
+          <FieldReviewCard
+            key={field.fieldIdentifier}
+            field={field}
+            onAsk={() => openChat(field)}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function FieldReviewCard({ field }: { field: ReviewedFormField }) {
+function FieldReviewCard({
+  field,
+  onAsk,
+}: {
+  field: ReviewedFormField;
+  onAsk: () => void;
+}) {
   const t = useTranslations("Ocr");
 
   return (
@@ -591,6 +636,14 @@ function FieldReviewCard({ field }: { field: ReviewedFormField }) {
         {field.example ? ` ${t("field.example", { value: field.example })}` : ""}
       </p>
       {field.status === "review" ? <p className="mt-2 text-xs font-extrabold text-[#895b13]">{t("field.lowConfidence", { percent: Math.round(field.confidence * 100) })}</p> : null}
+      <button
+        type="button"
+        onClick={onAsk}
+        className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#d3dfd9] bg-white px-3.5 text-xs font-extrabold text-[#356153] hover:bg-[#eef6f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+      >
+        <Icon name="message-circle" className="size-4" />
+        {t("chat.askField")}
+      </button>
     </article>
   );
 }

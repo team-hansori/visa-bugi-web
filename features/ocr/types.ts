@@ -127,3 +127,36 @@ export type SaveOcrResultResponse = {
   reviewStatus: SavedDocumentReviewStatus;
   updatedAt: string;
 };
+
+export type OcrHelpLocale = "ko" | "zh" | "vi" | "uz" | "ne" | "km";
+
+export type OcrHelpFieldContext = Pick<
+  ReviewedFormField,
+  | "fieldIdentifier"
+  | "labelKr"
+  | "kind"
+  | "filledBy"
+  | "required"
+  | "manualOnly"
+  | "status"
+>;
+
+export type OcrHelpChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+export type OcrHelpRequest = {
+  locale: OcrHelpLocale;
+  question: string;
+  documentTitle: string;
+  visaCode: VisaCode;
+  summary: ApplicationFormAnalysis["summary"];
+  fields: OcrHelpFieldContext[];
+  selectedFieldIdentifier: string | null;
+  history: OcrHelpChatMessage[];
+};
+
+export type OcrHelpResponse = {
+  answer: string;
+};

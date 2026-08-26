@@ -1,5 +1,7 @@
 export function GET() {
   const forceDemoMode = process.env.OCR_MODE?.trim().toLowerCase() === "demo";
+  const chatDisabled =
+    process.env.CHAT_MODE?.trim().toLowerCase() === "disabled";
 
   return Response.json({
     service: "visa-bugi-web",
@@ -15,6 +17,10 @@ export function GET() {
         : process.env.OPENAI_API_KEY
           ? "configured"
           : "demo",
+      ocrHelpChat:
+        !chatDisabled && process.env.OPENAI_API_KEY
+          ? "configured"
+          : "not_configured",
     },
   });
 }

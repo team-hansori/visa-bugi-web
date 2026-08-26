@@ -13,7 +13,7 @@ export function CalendarSearch({ value, onChange }: { value: string; onChange: (
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex min-h-14 w-full items-center gap-3 rounded-2xl border border-[#d6dfda] bg-white px-4 text-left text-sm font-semibold text-[#77837e] shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+        className="flex min-h-14 w-full items-center gap-3 rounded-2xl border border-[#d6dfda] bg-white px-4 text-left text-base font-semibold text-[#77837e] shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
       >
         <Icon name="search" className="size-5" aria-hidden="true" />
         {t("open")}

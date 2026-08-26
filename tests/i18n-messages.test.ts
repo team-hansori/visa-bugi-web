@@ -36,4 +36,10 @@ describe("messages", () => {
       expect(byLocale[locale].Chat.title).not.toBe(byLocale.ko.Chat.title);
     }
   });
+
+  it("localizes the language switcher label", () => {
+    for (const locale of ["zh", "vi", "uz", "ne", "km"]) {
+      expect(byLocale[locale].LocaleSwitcher.label).not.toBe(byLocale.ko.LocaleSwitcher.label);
+    }
+  });
 });

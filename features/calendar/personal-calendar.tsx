@@ -10,6 +10,7 @@ import { VisaPicker } from "./visa-picker";
 import { CalendarSearch, type CalendarSearchResult } from "./calendar-search";
 import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
 import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
+import { resolveChecklistDate } from "./reference-date";
 
 type PersonalEvent = {
   id: string;
@@ -75,7 +76,7 @@ export function PersonalCalendar() {
   const selectedPersonalEvents = events.filter((event) => event.date === selectedDate && (!normalizedQuery || [event.title, event.category, event.location ?? ""].some((value) => value.toLocaleLowerCase().includes(normalizedQuery))));
   const searchResults: CalendarSearchResult[] = normalizedQuery
     ? [
-        ...checklist.map((item) => ({ id: `checklist-${item.id}`, label: item.title, meta: item.visaId, date: item.startDate ?? item.endDate ?? null })),
+        ...checklist.map((item) => ({ id: `checklist-${item.id}`, label: item.title, meta: item.visaId, date: resolveChecklistDate(item, referenceDate || null) })),
         ...events
           .filter((event) => [event.title, event.category, event.location ?? ""].some((value) => value.toLocaleLowerCase().includes(normalizedQuery)))
           .map((event) => ({ id: `event-${event.id}`, label: event.title, meta: [event.category, event.location].filter(Boolean).join(" · "), date: event.date })),

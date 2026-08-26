@@ -17,6 +17,9 @@ export function getOnboardingProfile(): OnboardingProfile | null {
     if (typeof parsed !== "object" || parsed === null || !("version" in parsed) || typeof (parsed as { version: unknown }).version !== "number") {
       return null;
     }
+    if ("visa" in parsed && typeof (parsed as { visa: unknown }).visa !== "string") {
+      return null;
+    }
     return parsed as OnboardingProfile;
   } catch {
     return null;

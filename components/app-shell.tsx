@@ -88,7 +88,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
             key={item.href}
             href={item.href}
             aria-current={current ? "page" : undefined}
-            className={`flex min-h-11 w-20 items-center justify-center gap-2 rounded-xl px-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
+            className={`flex min-h-11 min-w-20 items-center justify-center gap-2 rounded-xl px-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               current
                 ? "bg-[#e6f1ec] text-[#1e5a4b]"
                 : "text-[#66736e] hover:bg-[#f2f5f2] hover:text-[#27443b]"

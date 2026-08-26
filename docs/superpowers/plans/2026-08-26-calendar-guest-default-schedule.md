@@ -277,8 +277,8 @@ git commit -m "feat: 비자 절차 mock 데이터와 getDefaultChecklist 추가"
 import type { ChecklistItem } from "@/lib/visa-schedule/default-checklist";
 
 export function addDays(isoDate: string, days: number): string {
-  const date = new Date(`${isoDate}T00:00:00`);
-  date.setDate(date.getDate() + days);
+  const date = new Date(`${isoDate}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
   return date.toISOString().slice(0, 10);
 }
 

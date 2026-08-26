@@ -89,6 +89,7 @@
 - *(chat)* Scope short contact number detection
 - *(i18n)* Localize chat metadata and labels
 - CodeRabbit 캘린더 리뷰 반영
+- 모바일 내비게이션 6개 탭 한 줄 정렬
 
 ### 💼 Other
 
@@ -138,6 +139,7 @@
 - 챗봇 MVP 구현 계획 작성 (11개 태스크, TDD)
 - Role spoofing 완화·잔여 리스크 계획 문서에 기록
 - README에서 이전 서비스명 제거
+- CHANGELOG 자동 업데이트 [skip ci]
 
 ### 🎨 Styling
 

@@ -1,5 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
+import { getApplicationFormTemplate } from "@/features/ocr/form-templates";
 import type {
+  ApplicationFormTemplate,
   FormReviewStatus,
   ImageQuality,
   OcrApiError,
@@ -140,6 +142,8 @@ function validateRequest(value: unknown): ValidatedRequest | null {
   }
   if (typeof value.sourceKind !== "string" || !sourceKinds.has(value.sourceKind)) return null;
   if (!isShortText(analysis.templateKey, 120)) return null;
+  const template = getApplicationFormTemplate(analysis.templateKey);
+  if (!template) return null;
   if (!isShortText(analysis.visaCode, 30)) return null;
   if (!isShortText(analysis.documentTitle, 200)) return null;
   if (
@@ -167,6 +171,11 @@ function validateRequest(value: unknown): ValidatedRequest | null {
     };
   });
   if (fields.some((field) => field === null)) return null;
+  const templateFields = validateTemplateFields(
+    template,
+    fields as ValidatedRequest["fields"],
+  );
+  if (!templateFields) return null;
 
   return {
     documentRequirementId,
@@ -177,8 +186,54 @@ function validateRequest(value: unknown): ValidatedRequest | null {
     pageNumber: analysis.pageNumber as number | null,
     imageQuality: analysis.imageQuality as ImageQuality,
     warnings: analysis.warnings as string[],
-    fields: fields as ValidatedRequest["fields"],
+    fields: templateFields,
   };
+}
+
+function validateTemplateFields(
+  template: ApplicationFormTemplate,
+  submittedFields: ValidatedRequest["fields"],
+) {
+  if (submittedFields.length !== template.fields.length) return null;
+
+  const submittedByIdentifier = new Map<
+    string,
+    ValidatedRequest["fields"][number]
+  >();
+  for (const field of submittedFields) {
+    if (submittedByIdentifier.has(field.fieldIdentifier)) return null;
+    submittedByIdentifier.set(field.fieldIdentifier, field);
+  }
+
+  const validatedFields: ValidatedRequest["fields"] = [];
+  for (const definition of template.fields) {
+    const submitted = submittedByIdentifier.get(definition.fieldIdentifier);
+    if (
+      !submitted ||
+      submitted.required !== definition.required ||
+      !isStatusValidForDefinition(definition, submitted.status)
+    ) {
+      return null;
+    }
+
+    validatedFields.push({
+      ...submitted,
+      required: definition.required,
+    });
+  }
+
+  return validatedFields;
+}
+
+function isStatusValidForDefinition(
+  definition: ApplicationFormTemplate["fields"][number],
+  status: FormReviewStatus,
+) {
+  if (definition.manualOnly) return status === "manual";
+  if (definition.required) {
+    return status === "complete" || status === "review" || status === "missing";
+  }
+  return status === "complete" || status === "review" || status === "optional";
 }
 
 function summarizeFields(fields: ValidatedRequest["fields"]) {

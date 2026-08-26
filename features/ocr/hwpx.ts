@@ -7,6 +7,7 @@ const centralDirectorySignature = 0x02014b50;
 const localFileHeaderSignature = 0x04034b50;
 const maxZipEntries = 5_000;
 const maxExtractedXmlBytes = 12 * 1024 * 1024;
+const maxDecompressedOutputBytes = maxExtractedXmlBytes + 1024;
 const maxExtractedCharacters = 140_000;
 
 type ZipEntry = {
@@ -19,6 +20,29 @@ type ZipEntry = {
 
 export function extractHwpxText(archive: Buffer) {
   const entries = readCentralDirectory(archive);
+  let decompressedOutputBytes = 0;
+  const readEntryWithinLimit = (entry: ZipEntry) => {
+    const remainingBytes = maxDecompressedOutputBytes - decompressedOutputBytes;
+    if (remainingBytes <= 0 || entry.uncompressedSize > remainingBytes) {
+      throw new Error("HWPX document content is too large");
+    }
+
+    let output: Buffer;
+    try {
+      output = readEntry(archive, entry, remainingBytes);
+    } catch (error) {
+      if (isOutputLimitError(error)) {
+        throw new Error("HWPX document content is too large");
+      }
+      throw error;
+    }
+
+    decompressedOutputBytes += output.length;
+    if (decompressedOutputBytes > maxDecompressedOutputBytes) {
+      throw new Error("HWPX document content is too large");
+    }
+    return output;
+  };
   const sectionEntries = entries
     .filter((entry) => /^Contents\/section\d+\.xml$/i.test(entry.name))
     .sort((left, right) => sectionNumber(left.name) - sectionNumber(right.name));
@@ -29,7 +53,7 @@ export function extractHwpxText(archive: Buffer) {
 
   const mimetypeEntry = entries.find((entry) => entry.name === "mimetype");
   if (mimetypeEntry) {
-    const mimetype = readEntry(archive, mimetypeEntry).toString("utf8").trim();
+    const mimetype = readEntryWithinLimit(mimetypeEntry).toString("utf8").trim();
     if (!/hwp|hwpx/i.test(mimetype)) {
       throw new Error("The uploaded ZIP is not an HWPX document");
     }
@@ -44,7 +68,7 @@ export function extractHwpxText(archive: Buffer) {
       throw new Error("HWPX document content is too large");
     }
 
-    const xml = readEntry(archive, entry).toString("utf8");
+    const xml = readEntryWithinLimit(entry).toString("utf8");
     paragraphs.push(...extractParagraphs(xml));
     if (paragraphs.join("\n").length >= maxExtractedCharacters) break;
   }
@@ -101,7 +125,7 @@ function findEndOfCentralDirectory(archive: Buffer) {
   throw new Error("Invalid HWPX ZIP footer");
 }
 
-function readEntry(archive: Buffer, entry: ZipEntry) {
+function readEntry(archive: Buffer, entry: ZipEntry, maxOutputLength: number) {
   const offset = entry.localHeaderOffset;
   ensureReadable(archive, offset, 30);
   if (archive.readUInt32LE(offset) !== localFileHeaderSignature) {
@@ -114,15 +138,28 @@ function readEntry(archive: Buffer, entry: ZipEntry) {
   ensureReadable(archive, dataOffset, entry.compressedSize);
   const compressed = archive.subarray(dataOffset, dataOffset + entry.compressedSize);
 
-  if (entry.compressionMethod === 0) return compressed;
+  if (entry.compressionMethod === 0) {
+    if (compressed.length !== entry.uncompressedSize) {
+      throw new Error("HWPX ZIP entry size did not match");
+    }
+    return compressed;
+  }
   if (entry.compressionMethod === 8) {
-    const inflated = inflateRawSync(compressed);
+    const inflated = inflateRawSync(compressed, { maxOutputLength });
     if (inflated.length !== entry.uncompressedSize) {
       throw new Error("HWPX ZIP entry size did not match");
     }
     return inflated;
   }
   throw new Error("Unsupported HWPX ZIP compression method");
+}
+
+function isOutputLimitError(error: unknown) {
+  return (
+    error instanceof Error &&
+    "code" in error &&
+    error.code === "ERR_BUFFER_TOO_LARGE"
+  );
 }
 
 function extractParagraphs(xml: string) {

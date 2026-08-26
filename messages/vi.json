@@ -23,6 +23,20 @@
   "LocaleSwitcher": {
     "label": "언어 선택"
   },
+  "Calendar": {
+    "visaPicker": {
+      "label": "Loại thị thực cần xem",
+      "placeholder": "Chọn loại thị thực",
+      "selectedCount": "Đã chọn {count}",
+      "optionsAriaLabel": "Chọn nhiều loại thị thực",
+      "visas": {
+        "f4r": "Kiều bào diện chuyên biệt theo khu vực",
+        "e74r": "Nhân lực kỹ năng diện chuyên biệt theo khu vực",
+        "f2r": "Nhân tài ưu tú diện chuyên biệt theo khu vực",
+        "d2": "Thị thực du học cấp vùng"
+      }
+    }
+  },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
     "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",

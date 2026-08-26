@@ -17,6 +17,18 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
   const t = useTranslations("Onboarding");
   const [showGoogleNotice, setShowGoogleNotice] = useState(false);
 
+  function handleGoogleLogin() {
+    // 실제 Google OAuth 연동 시 이 자리를 아래로 교체한다.
+    // (Supabase에 Google 프로바이더 설정 + 아래 호출로 대체 — 익명 세션과
+    //  동일하게 Supabase Auth를 쓰므로 별도 인증 라이브러리를 추가하지 않는다.)
+    //
+    //   await createClient().auth.signInWithOAuth({
+    //     provider: "google",
+    //     options: { redirectTo: `${window.location.origin}/auth/callback` },
+    //   });
+    setShowGoogleNotice(true);
+  }
+
   return (
     <section
       aria-labelledby="welcome-title"
@@ -46,7 +58,7 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
       <div className="grid w-full max-w-xs gap-3">
         <button
           type="button"
-          onClick={() => setShowGoogleNotice(true)}
+          onClick={handleGoogleLogin}
           className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-[#dfe5e1] bg-white px-5 text-sm font-extrabold text-[#33453e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
         >
           {t("googleStart")}

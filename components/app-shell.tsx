@@ -96,7 +96,7 @@ function SettingsEntry({ pathname }: { pathname: string }) {
       href="/settings"
       aria-label={t("openSettings")}
       aria-current={pathname === "/settings" ? "page" : undefined}
-      className="grid size-10 shrink-0 place-items-center rounded-full border border-[#dfe5e1] bg-white text-[#52615b] transition-colors hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+      className="grid size-10 shrink-0 place-items-center rounded-xl text-[#52615b] transition-colors hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
     >
       <Icon name="settings" className="size-5" />
     </Link>

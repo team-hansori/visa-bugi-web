@@ -7,7 +7,8 @@
   "A11y": {
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
-    "openSettings": "설정 열기"
+    "openSettings": "설정 열기",
+    "closeDialog": "关闭"
   },
   "Brand": {
     "homeAriaLabel": "비자부기 홈"
@@ -138,17 +139,26 @@
     "description": "目前还没有确定的咨询邮箱或表单。渠道开通后，我们会在此页面提供直接联系方式。",
     "buttonLabel": "咨询功能筹备中"
   },
+  "Legal": {
+    "viewFullPage": "查看完整页面",
+    "viewOriginal": "查看韩语原文",
+    "revisionLabel": "最终修订日期"
+  },
   "Terms": {
     "pageTitle": "服务条款",
-    "heading": "服务条款筹备中",
-    "description": "团队确定的服务条款正式文本即将发布。目前不会显示任何临时编写的内容。",
-    "badge": "筹备中"
+    "badge": "翻译准备中",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "本文件的正式原文为韩语，该语言的完整翻译正在准备中。您可以通过下方链接查看韩语原文。"
+    }
   },
   "Privacy": {
     "pageTitle": "隐私政策",
-    "heading": "隐私政策筹备中",
-    "description": "团队确定的隐私政策正式文本即将发布。目前不会显示任何临时编写的内容。",
-    "badge": "筹备中",
+    "badge": "翻译准备中",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "本文件的正式原文为韩语，该语言的完整翻译正在准备中。您可以通过下方链接查看韩语原文。"
+    },
     "locationNotice": "有关位置信息收集和使用的单独政策，将在位置信息政策确定后添加到此页面。"
   }
 }

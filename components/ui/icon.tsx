@@ -9,6 +9,7 @@ export type IconName =
   | "chevron-left"
   | "chevron-right"
   | "clock"
+  | "close"
   | "document"
   | "globe"
   | "home"
@@ -57,6 +58,12 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v5l3 2" />
+    </>
+  ),
+  close: (
+    <>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
     </>
   ),
   document: (

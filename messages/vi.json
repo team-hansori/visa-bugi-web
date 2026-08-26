@@ -7,7 +7,8 @@
   "A11y": {
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
-    "openSettings": "설정 열기"
+    "openSettings": "Mở cài đặt",
+    "closeDialog": "Đóng"
   },
   "Brand": {
     "homeAriaLabel": "비자부기 홈"
@@ -138,17 +139,26 @@
     "description": "Hiện chưa có email hoặc biểu mẫu liên hệ chính thức. Khi kênh liên hệ được mở, chúng tôi sẽ hướng dẫn kết nối trực tiếp tại màn hình này.",
     "buttonLabel": "Liên hệ đang được chuẩn bị"
   },
+  "Legal": {
+    "viewFullPage": "Xem toàn trang",
+    "viewOriginal": "Xem bản gốc tiếng Hàn",
+    "revisionLabel": "Ngày cập nhật cuối"
+  },
   "Terms": {
     "pageTitle": "Điều khoản sử dụng",
-    "heading": "Điều khoản sử dụng đang được chuẩn bị",
-    "description": "Nội dung chính thức của điều khoản sử dụng do đội ngũ xác nhận sẽ sớm được đăng tải. Hiện tại không hiển thị nội dung do nhà phát triển tự soạn thảo.",
-    "badge": "Đang chuẩn bị"
+    "badge": "Đang chuẩn bị bản dịch",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Văn bản chính thức của tài liệu này là tiếng Hàn, và bản dịch đầy đủ sang ngôn ngữ này đang được chuẩn bị. Bạn có thể xem văn bản gốc tiếng Hàn qua liên kết bên dưới."
+    }
   },
   "Privacy": {
     "pageTitle": "Chính sách bảo mật",
-    "heading": "Chính sách bảo mật đang được chuẩn bị",
-    "description": "Nội dung chính thức của chính sách bảo mật do đội ngũ xác nhận sẽ sớm được đăng tải. Hiện tại không hiển thị nội dung do nhà phát triển tự soạn thảo.",
-    "badge": "Đang chuẩn bị",
+    "badge": "Đang chuẩn bị bản dịch",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Văn bản chính thức của tài liệu này là tiếng Hàn, và bản dịch đầy đủ sang ngôn ngữ này đang được chuẩn bị. Bạn có thể xem văn bản gốc tiếng Hàn qua liên kết bên dưới."
+    },
     "locationNotice": "Chính sách riêng về việc thu thập và sử dụng thông tin vị trí sẽ được bổ sung vào màn hình này sau khi chính sách vị trí được xác định."
   }
 }

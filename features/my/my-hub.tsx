@@ -1,11 +1,14 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Link } from "@/i18n/navigation";
+import { getPolicyContent } from "@/features/legal/policy-content";
+import { PolicyDocument } from "@/features/legal/policy-document";
+import { PolicyModal } from "@/features/legal/policy-modal";
 
 function Card({ children }: { children: ReactNode }) {
   return (
@@ -38,6 +41,19 @@ function LinkRow({ href, icon, label }: { href: string; icon?: IconName; label: 
   );
 }
 
+function PolicyButtonRow({ label, onOpen }: { label: string; onOpen: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="flex min-h-16 w-full items-center justify-between gap-4 border-b border-[#e7ebe8] py-4 text-left last:border-b-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+    >
+      <span className="flex items-center gap-3 font-bold text-[#2a3c35]">{label}</span>
+      <Icon name="chevron-right" className="size-4 shrink-0 text-[#9aa6a0]" />
+    </button>
+  );
+}
+
 function DisabledRow({ label, tone = "default" }: { label: string; tone?: "default" | "danger" }) {
   return (
     <span
@@ -53,7 +69,13 @@ function DisabledRow({ label, tone = "default" }: { label: string; tone?: "defau
 
 export function MyHub() {
   const t = useTranslations();
+  const locale = useLocale();
+  const tTerms = useTranslations("Terms");
+  const tPrivacy = useTranslations("Privacy");
+  const tLegal = useTranslations("Legal");
+  const tA11y = useTranslations("A11y");
   const [pushEnabled, setPushEnabled] = useState(true);
+  const [openPolicy, setOpenPolicy] = useState<"terms" | "privacy" | null>(null);
 
   return (
     <div className="mx-auto max-w-xl space-y-5">
@@ -118,8 +140,8 @@ export function MyHub() {
       <div>
         <p className="mb-2 px-1 text-xs font-bold text-[#8a938e]">{t("Settings.policy.sectionLabel")}</p>
         <Card>
-          <LinkRow href="/terms" label={t("Terms.pageTitle")} />
-          <LinkRow href="/privacy" label={t("Privacy.pageTitle")} />
+          <PolicyButtonRow label={tTerms("pageTitle")} onOpen={() => setOpenPolicy("terms")} />
+          <PolicyButtonRow label={tPrivacy("pageTitle")} onOpen={() => setOpenPolicy("privacy")} />
           <LinkRow href="/privacy" label={t("Settings.policy.locationTerms")} />
         </Card>
       </div>
@@ -130,6 +152,48 @@ export function MyHub() {
       </Card>
 
       <p className="pb-4 text-center text-xs text-[#a7b0ab]">{t("Settings.footer.appName")}</p>
+
+      {openPolicy === "terms" && (
+        <PolicyModal
+          titleId="policy-modal-title"
+          title={tTerms("pageTitle")}
+          closeLabel={tA11y("closeDialog")}
+          onClose={() => setOpenPolicy(null)}
+        >
+          <PolicyDocument
+            content={getPolicyContent(locale, tTerms, tLegal("revisionLabel"))}
+            viewOriginalLabel={tLegal("viewOriginal")}
+            viewOriginalHref="/terms"
+          />
+          <Link
+            href="/terms"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#2d6d5d] underline underline-offset-4"
+          >
+            {tLegal("viewFullPage")}
+          </Link>
+        </PolicyModal>
+      )}
+      {openPolicy === "privacy" && (
+        <PolicyModal
+          titleId="policy-modal-title"
+          title={tPrivacy("pageTitle")}
+          closeLabel={tA11y("closeDialog")}
+          onClose={() => setOpenPolicy(null)}
+        >
+          <PolicyDocument
+            content={getPolicyContent(locale, tPrivacy, tLegal("revisionLabel"))}
+            viewOriginalLabel={tLegal("viewOriginal")}
+            viewOriginalHref="/privacy"
+          />
+          <p className="mt-4 rounded-2xl bg-[#f5f7f4] p-4 text-sm leading-6 text-[#5d6a63]">{tPrivacy("locationNotice")}</p>
+          <Link
+            href="/privacy"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#2d6d5d] underline underline-offset-4"
+          >
+            {tLegal("viewFullPage")}
+          </Link>
+        </PolicyModal>
+      )}
     </div>
   );
 }

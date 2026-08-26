@@ -1,7 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useActionState, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useActionState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { usePathname, useRouter } from "@/i18n/navigation";
@@ -250,6 +257,18 @@ export function OnboardingForm() {
   const isLastStep = stepIndex === sequence.length - 1;
   const totalSteps = sequence.length;
 
+  // 스텝이 바뀔 때 키보드·스크린리더 포커스를 새 질문 제목으로 옮긴다.
+  // (main의 코드 리뷰 반영 커밋 ff616ac에서 도입된 접근성 동작 — URL
+  // 기반 퍼널로 재작성하며 빠졌던 것을 복원)
+  const questionHeadingRef = useRef<HTMLHeadingElement>(null);
+  const previousStepIndexRef = useRef(stepIndex);
+
+  useEffect(() => {
+    if (previousStepIndexRef.current === stepIndex) return;
+    previousStepIndexRef.current = stepIndex;
+    questionHeadingRef.current?.focus();
+  }, [stepIndex]);
+
   const goToStep = useCallback(
     (index: number) => {
       const next = sequence[index];
@@ -441,10 +460,11 @@ export function OnboardingForm() {
         </div>
 
         <div className="mt-8">
-          <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">
+          <p className="text-xs font-extrabold text-[#2d6d5d]">
             {t("questionLabel", { index: stepIndex + 1 })}
           </p>
           <h2
+            ref={questionHeadingRef}
             id="question-title"
             tabIndex={-1}
             className="mt-2 text-2xl font-black leading-tight tracking-[-0.04em] focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2d6d5d] sm:text-3xl"

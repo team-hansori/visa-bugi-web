@@ -5,20 +5,22 @@
     "description": "내 비자 요건과 다음 단계를 추적하는 AI 서비스"
   },
   "A11y": {
-    "skipToContent": "본문으로 바로가기"
+    "skipToContent": "본문으로 바로가기",
+    "backToMy": "설정으로 돌아가기",
+    "openSettings": "Mở cài đặt",
+    "closeDialog": "Đóng"
   },
   "Brand": {
-    "name": "비자부기",
-    "tagline": "내 비자 여정의 동반자",
     "homeAriaLabel": "비자부기 홈"
   },
   "Nav": {
-    "home": "홈",
-    "calendar": "일정",
-    "map": "기관",
-    "ocr": "서류",
-    "mainMenuAriaLabel": "주요 메뉴",
-    "mobileMenuAriaLabel": "모바일 주요 메뉴"
+    "home": "Trang chủ",
+    "calendar": "Lịch trình",
+    "map": "Cơ quan",
+    "ocr": "Tài liệu",
+    "my": "Cài đặt",
+    "mainMenuAriaLabel": "Menu chính",
+    "mobileMenuAriaLabel": "Menu chính trên di động"
   },
   "LocaleSwitcher": {
     "label": "언어 선택"
@@ -61,7 +63,6 @@
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
       "caption": "예시 진행률",
-      "eyebrow": "전체 요건 충족률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
       "selectedVisaLabel": "선택 비자",
@@ -70,7 +71,6 @@
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
-      "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
       "stagesAriaLabel": "비자 진행 단계 예시",
@@ -88,19 +88,101 @@
       "viewSchedule": "일정 보기"
     },
     "tasks": {
-      "eyebrow": "다음 할 일",
       "heading": "서류 준비 체크",
       "items": {
-        "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
-        "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
-        "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+        "passport": {
+          "label": "여권 사본 상태 확인",
+          "meta": "서류 준비 · 예시 항목"
+        },
+        "schedule": {
+          "label": "방문 일정 직접 추가",
+          "meta": "캘린더 · 날짜 미정"
+        },
+        "agency": {
+          "label": "가까운 지원기관 확인",
+          "meta": "기관 지도 · 위치 사용 선택"
+        }
       }
     },
     "agencies": {
-      "eyebrow": "주변 기관",
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "My": {
+    "eyebrow": "MY",
+    "pageTitle": "Của tôi",
+    "linksAriaLabel": "Menu của tôi",
+    "loginBanner": {
+      "title": "Tính năng đăng nhập đang được chuẩn bị",
+      "body": "Khi tính năng đăng nhập được bổ sung, bạn có thể xem thông tin tài khoản và tiến trình tại đây."
+    },
+    "links": {
+      "contact": {
+        "label": "Liên hệ",
+        "description": "Hãy để lại câu hỏi của bạn"
+      },
+      "terms": {
+        "label": "Điều khoản sử dụng",
+        "description": "Xem điều kiện sử dụng dịch vụ"
+      },
+      "privacy": {
+        "label": "Chính sách bảo mật",
+        "description": "Xem cách xử lý thông tin cá nhân"
+      }
+    }
+  },
+  "Settings": {
+    "pageTitle": "Cài đặt",
+    "language": {
+      "label": "Ngôn ngữ"
+    },
+    "push": {
+      "label": "Thông báo đẩy"
+    },
+    "location": {
+      "label": "Sử dụng vị trí của tôi",
+      "statusPreparing": "Đang chuẩn bị"
+    },
+    "policy": {
+      "sectionLabel": "Điều khoản và chính sách",
+      "locationTerms": "Điều khoản dịch vụ dựa trên vị trí"
+    },
+    "account": {
+      "logout": "Đăng xuất",
+      "withdraw": "Xóa tài khoản"
+    },
+    "footer": {
+      "appName": "비자부기"
+    }
+  },
+  "Contact": {
+    "pageTitle": "Liên hệ",
+    "heading": "Kênh liên hệ đang được chuẩn bị",
+    "description": "Hiện chưa có email hoặc biểu mẫu liên hệ chính thức. Khi kênh liên hệ được mở, chúng tôi sẽ hướng dẫn kết nối trực tiếp tại màn hình này.",
+    "buttonLabel": "Liên hệ đang được chuẩn bị"
+  },
+  "Legal": {
+    "viewFullPage": "Xem toàn trang",
+    "viewOriginal": "Xem bản gốc tiếng Hàn",
+    "revisionLabel": "Ngày cập nhật cuối"
+  },
+  "Terms": {
+    "pageTitle": "Điều khoản sử dụng",
+    "badge": "Đang chuẩn bị bản dịch",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Văn bản chính thức của tài liệu này là tiếng Hàn, và bản dịch đầy đủ sang ngôn ngữ này đang được chuẩn bị. Bạn có thể xem văn bản gốc tiếng Hàn qua liên kết bên dưới."
+    }
+  },
+  "Privacy": {
+    "pageTitle": "Chính sách bảo mật",
+    "badge": "Đang chuẩn bị bản dịch",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Văn bản chính thức của tài liệu này là tiếng Hàn, và bản dịch đầy đủ sang ngôn ngữ này đang được chuẩn bị. Bạn có thể xem văn bản gốc tiếng Hàn qua liên kết bên dưới."
+    },
+    "locationNotice": "Chính sách riêng về việc thu thập và sử dụng thông tin vị trí sẽ được bổ sung vào màn hình này sau khi chính sách vị trí được xác định."
   }
 }

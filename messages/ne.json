@@ -5,20 +5,22 @@
     "description": "내 비자 요건과 다음 단계를 추적하는 AI 서비스"
   },
   "A11y": {
-    "skipToContent": "본문으로 바로가기"
+    "skipToContent": "본문으로 바로가기",
+    "backToMy": "설정으로 돌아가기",
+    "openSettings": "설정 열기",
+    "closeDialog": "बन्द गर्नुहोस्"
   },
   "Brand": {
-    "name": "비자부기",
-    "tagline": "내 비자 여정의 동반자",
     "homeAriaLabel": "비자부기 홈"
   },
   "Nav": {
-    "home": "홈",
-    "calendar": "일정",
-    "map": "기관",
-    "ocr": "서류",
-    "mainMenuAriaLabel": "주요 메뉴",
-    "mobileMenuAriaLabel": "모바일 주요 메뉴"
+    "home": "गृहपृष्ठ",
+    "calendar": "तालिका",
+    "map": "निकाय",
+    "ocr": "कागजात",
+    "my": "सेटिङ",
+    "mainMenuAriaLabel": "मुख्य मेनु",
+    "mobileMenuAriaLabel": "मोबाइल मुख्य मेनु"
   },
   "LocaleSwitcher": {
     "label": "언어 선택"
@@ -61,7 +63,6 @@
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
       "caption": "예시 진행률",
-      "eyebrow": "전체 요건 충족률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
       "selectedVisaLabel": "선택 비자",
@@ -70,7 +71,6 @@
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
-      "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
       "stagesAriaLabel": "비자 진행 단계 예시",
@@ -88,19 +88,101 @@
       "viewSchedule": "일정 보기"
     },
     "tasks": {
-      "eyebrow": "다음 할 일",
       "heading": "서류 준비 체크",
       "items": {
-        "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
-        "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
-        "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+        "passport": {
+          "label": "여권 사본 상태 확인",
+          "meta": "서류 준비 · 예시 항목"
+        },
+        "schedule": {
+          "label": "방문 일정 직접 추가",
+          "meta": "캘린더 · 날짜 미정"
+        },
+        "agency": {
+          "label": "가까운 지원기관 확인",
+          "meta": "기관 지도 · 위치 사용 선택"
+        }
       }
     },
     "agencies": {
-      "eyebrow": "주변 기관",
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "My": {
+    "eyebrow": "MY",
+    "pageTitle": "मेरो",
+    "linksAriaLabel": "मेरो मेनु",
+    "loginBanner": {
+      "title": "लगइन सुविधा तयार हुँदैछ",
+      "body": "लगइन सुविधा थपिएपछि तपाईं यहाँ खाता जानकारी र प्रगति हेर्न सक्नुहुनेछ।"
+    },
+    "links": {
+      "contact": {
+        "label": "सम्पर्क गर्नुहोस्",
+        "description": "आफ्नो प्रश्न छोड्नुहोस्"
+      },
+      "terms": {
+        "label": "सेवा सर्तहरू",
+        "description": "सेवा प्रयोगका सर्तहरू हेर्नुहोस्"
+      },
+      "privacy": {
+        "label": "गोपनीयता नीति",
+        "description": "व्यक्तिगत जानकारी प्रशोधन गर्ने तरिका हेर्नुहोस्"
+      }
+    }
+  },
+  "Settings": {
+    "pageTitle": "सेटिङ",
+    "language": {
+      "label": "भाषा"
+    },
+    "push": {
+      "label": "पुश सूचना"
+    },
+    "location": {
+      "label": "मेरो स्थान प्रयोग गर्नुहोस्",
+      "statusPreparing": "तयारी हुँदैछ"
+    },
+    "policy": {
+      "sectionLabel": "सर्त र नीतिहरू",
+      "locationTerms": "स्थान-आधारित सेवा सर्तहरू"
+    },
+    "account": {
+      "logout": "लगआउट",
+      "withdraw": "खाता हटाउनुहोस्"
+    },
+    "footer": {
+      "appName": "비자부기"
+    }
+  },
+  "Contact": {
+    "pageTitle": "सम्पर्क गर्नुहोस्",
+    "heading": "सम्पर्क च्यानल तयार गर्दैछौं",
+    "description": "अहिलेसम्म पक्का सम्पर्क इमेल वा फारम छैन। च्यानल खुलेपछि, यो स्क्रिनबाटै सिधै जडान गर्न सकिने बनाउनेछौं।",
+    "buttonLabel": "सम्पर्क तयारी हुँदैछ"
+  },
+  "Legal": {
+    "viewFullPage": "पूरा स्क्रिनमा हेर्नुहोस्",
+    "viewOriginal": "कोरियाली मूल पाठ हेर्नुहोस्",
+    "revisionLabel": "अन्तिम संशोधन मिति"
+  },
+  "Terms": {
+    "pageTitle": "सेवा सर्तहरू",
+    "badge": "अनुवाद तयार हुँदैछ",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "यस कागजातको आधिकारिक मूल पाठ कोरियालीमा छ, र यस भाषाको पूर्ण अनुवाद तयार हुँदैछ। तलको लिङ्कबाट कोरियाली मूल पाठ हेर्न सकिन्छ।"
+    }
+  },
+  "Privacy": {
+    "pageTitle": "गोपनीयता नीति",
+    "badge": "अनुवाद तयार हुँदैछ",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "यस कागजातको आधिकारिक मूल पाठ कोरियालीमा छ, र यस भाषाको पूर्ण अनुवाद तयार हुँदैछ। तलको लिङ्कबाट कोरियाली मूल पाठ हेर्न सकिन्छ।"
+    },
+    "locationNotice": "स्थान जानकारी सङ्कलन र प्रयोगसम्बन्धी छुट्टै नीति, स्थान नीति पुष्टि भएपछि यस स्क्रिनमा थपिनेछ।"
   }
 }

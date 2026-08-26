@@ -1,16 +1,16 @@
 "use client";
 
-import { hasLocale, useLocale, useTranslations } from "next-intl";
-import type { ChangeEvent, ReactNode } from "react";
-import { useTransition } from "react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import type { ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { localeNames, routing } from "@/i18n/routing";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { Link, usePathname } from "@/i18n/navigation";
 
 type NavItem = {
   href: string;
   icon: IconName;
-  key: "home" | "calendar" | "map" | "ocr";
+  key: "home" | "calendar" | "map" | "ocr" | "my";
 };
 
 const navItems: NavItem[] = [
@@ -18,10 +18,15 @@ const navItems: NavItem[] = [
   { href: "/calendar", icon: "calendar", key: "calendar" },
   { href: "/map", icon: "map-pin", key: "map" },
   { href: "/ocr", icon: "document", key: "ocr" },
+  { href: "/my", icon: "settings", key: "my" },
 ];
 
+const mySubPagePaths = new Set(["/contact", "/terms", "/privacy"]);
+
 function isCurrentPath(pathname: string, href: string) {
-  return href === "/" ? pathname === href : pathname.startsWith(href);
+  if (href === "/") return pathname === href;
+  if (href === "/my") return pathname === href || mySubPagePaths.has(pathname);
+  return pathname.startsWith(href);
 }
 
 function Brand() {
@@ -30,33 +35,43 @@ function Brand() {
   return (
     <Link
       href="/"
-      className="group flex min-h-11 items-center gap-2.5 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2d6d5d]"
+      className="group flex min-h-11 items-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2d6d5d]"
       aria-label={t("homeAriaLabel")}
     >
-      <span
+      <Image
+        src="/brand/wordmark/visa-bugi-wordmark.svg"
+        alt=""
         aria-hidden="true"
-        className="grid size-10 place-items-center rounded-[14px] bg-[#ffca68] text-[#173f36] shadow-[0_6px_18px_rgba(86,64,21,0.14)] transition-transform group-hover:-translate-y-0.5"
-      >
-        <svg viewBox="0 0 32 32" className="size-7" fill="none">
-          <path
-            d="M8.5 13.5a7.5 7.5 0 0 1 15 0v4a6 6 0 0 1-6 6h-3a6 6 0 0 1-6-6v-4Z"
-            fill="currentColor"
-          />
-          <path d="M12 16h8M16 12v8" stroke="#ffca68" strokeWidth="2" strokeLinecap="round" />
-          <circle cx="6" cy="17" r="2" fill="currentColor" />
-          <circle cx="26" cy="17" r="2" fill="currentColor" />
-        </svg>
-      </span>
-      <span>
-        <span className="block text-[1.05rem] font-extrabold tracking-[-0.035em] text-[#173f36]">
-          {t("name")}
-        </span>
-        <span className="hidden text-[0.7rem] font-medium tracking-[-0.01em] text-[#73807b] sm:block">
-          {t("tagline")}
-        </span>
-      </span>
+        width={704}
+        height={160}
+        unoptimized
+        priority
+        className="h-auto w-24 max-w-[45vw] transition-transform group-hover:-translate-y-0.5 sm:w-28 md:w-32"
+      />
     </Link>
   );
+}
+
+function HeaderTitle({ pathname }: { pathname: string }) {
+  const t = useTranslations("A11y");
+
+  if (pathname === "/") {
+    return <Brand />;
+  }
+
+  if (mySubPagePaths.has(pathname)) {
+    return (
+      <Link
+        href="/my"
+        aria-label={t("backToMy")}
+        className="grid size-9 shrink-0 place-items-center rounded-xl text-[#3a4a44] hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+      >
+        <Icon name="chevron-left" className="size-5" />
+      </Link>
+    );
+  }
+
+  return <div aria-hidden="true" />;
 }
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
@@ -95,7 +110,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
       aria-label={t("mobileMenuAriaLabel")}
       className="mobile-safe-bottom fixed inset-x-0 bottom-0 z-50 border-t border-[#dfe6e1] bg-white/95 px-3 pt-2 shadow-[0_-8px_28px_rgba(34,54,46,0.08)] backdrop-blur-xl md:hidden"
     >
-      <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
+      <div className="mx-auto grid max-w-md grid-cols-5 gap-1">
         {navItems.map((item) => {
           const current = isCurrentPath(pathname, item.href);
 
@@ -118,43 +133,6 @@ function MobileNavigation({ pathname }: { pathname: string }) {
   );
 }
 
-function LocaleSwitcher() {
-  const t = useTranslations("LocaleSwitcher");
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
-
-  function onChange(event: ChangeEvent<HTMLSelectElement>) {
-    const nextLocale = event.target.value;
-    if (!hasLocale(routing.locales, nextLocale)) {
-      return;
-    }
-    startTransition(() => {
-      router.replace(pathname, { locale: nextLocale });
-    });
-  }
-
-  return (
-    <label className="flex min-h-10 items-center gap-1.5 rounded-full border border-[#dfe5e1] bg-white px-3 text-xs font-bold text-[#52615b]">
-      <Icon name="globe" className="size-4" aria-hidden="true" />
-      <select
-        aria-label={t("label")}
-        aria-busy={isPending}
-        value={locale}
-        onChange={onChange}
-        className={`bg-transparent focus-visible:outline-none ${isPending ? "opacity-60" : ""}`}
-      >
-        {routing.locales.map((code) => (
-          <option key={code} value={code}>
-            {localeNames[code]}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const t = useTranslations("A11y");
@@ -170,7 +148,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <header className="sticky top-0 z-40 border-b border-[#e2e7e3] bg-[#f7f8f4]/94 backdrop-blur-xl">
         <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <Brand />
+          <HeaderTitle pathname={pathname} />
           <DesktopNavigation pathname={pathname} />
           <LocaleSwitcher />
         </div>

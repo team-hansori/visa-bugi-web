@@ -54,8 +54,7 @@ export function GuestChecklistCalendar() {
     <div className="space-y-6">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">비자 유형 기본 일정</p>
-          <h1 className="mt-2 text-3xl font-black tracking-[-0.05em] sm:text-4xl">내 일정</h1>
+          <h1 className="text-3xl font-black tracking-[-0.05em] sm:text-4xl">내 일정</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6d7974] sm:text-base">로그인하면 이 절차에 기준일을 입력하고, 직접 일정을 추가할 수 있습니다.</p>
         </div>
         <button type="button" disabled className="inline-flex min-h-12 w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-[#c7d1cc] px-5 text-sm font-extrabold text-white sm:w-fit">

@@ -87,7 +87,7 @@ export function OnboardingForm() {
           <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#e8edea]" aria-hidden="true"><div className="h-full rounded-full bg-[#2d6d5d] transition-[width]" style={{ width: `${((step + 1) / questions.length) * 100}%` }} /></div>
         </div>
         <div className="mt-8">
-          <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">질문 {step + 1}</p>
+          <p className="text-xs font-extrabold text-[#2d6d5d]">질문 {step + 1}</p>
           <h2 ref={questionHeadingRef} id="question-title" tabIndex={-1} className="mt-2 text-2xl font-black leading-tight tracking-[-0.04em] focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2d6d5d] sm:text-3xl">{question.title}</h2>
           <p className="mt-3 text-sm leading-6 text-[#6c7873] sm:text-base">{question.description}</p>
         </div>

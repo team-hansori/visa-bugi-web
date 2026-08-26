@@ -5,20 +5,22 @@
     "description": "내 비자 요건과 다음 단계를 추적하는 AI 서비스"
   },
   "A11y": {
-    "skipToContent": "본문으로 바로가기"
+    "skipToContent": "본문으로 바로가기",
+    "backToMy": "설정으로 돌아가기",
+    "openSettings": "설정 열기",
+    "closeDialog": "关闭"
   },
   "Brand": {
-    "name": "비자부기",
-    "tagline": "내 비자 여정의 동반자",
     "homeAriaLabel": "비자부기 홈"
   },
   "Nav": {
-    "home": "홈",
-    "calendar": "일정",
-    "map": "기관",
-    "ocr": "서류",
-    "mainMenuAriaLabel": "주요 메뉴",
-    "mobileMenuAriaLabel": "모바일 주요 메뉴"
+    "home": "首页",
+    "calendar": "日程",
+    "map": "机构",
+    "ocr": "文件",
+    "my": "设置",
+    "mainMenuAriaLabel": "主菜单",
+    "mobileMenuAriaLabel": "移动端主菜单"
   },
   "LocaleSwitcher": {
     "label": "언어 선택"
@@ -61,7 +63,6 @@
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
       "caption": "예시 진행률",
-      "eyebrow": "전체 요건 충족률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
       "selectedVisaLabel": "선택 비자",
@@ -70,7 +71,6 @@
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
-      "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
       "stagesAriaLabel": "비자 진행 단계 예시",
@@ -88,19 +88,101 @@
       "viewSchedule": "일정 보기"
     },
     "tasks": {
-      "eyebrow": "다음 할 일",
       "heading": "서류 준비 체크",
       "items": {
-        "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
-        "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
-        "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+        "passport": {
+          "label": "여권 사본 상태 확인",
+          "meta": "서류 준비 · 예시 항목"
+        },
+        "schedule": {
+          "label": "방문 일정 직접 추가",
+          "meta": "캘린더 · 날짜 미정"
+        },
+        "agency": {
+          "label": "가까운 지원기관 확인",
+          "meta": "기관 지도 · 위치 사용 선택"
+        }
       }
     },
     "agencies": {
-      "eyebrow": "주변 기관",
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
     }
+  },
+  "My": {
+    "eyebrow": "MY",
+    "pageTitle": "我的",
+    "linksAriaLabel": "我的菜单",
+    "loginBanner": {
+      "title": "登录功能即将上线",
+      "body": "登录功能上线后，您可以在此查看账户信息和进度。"
+    },
+    "links": {
+      "contact": {
+        "label": "联系我们",
+        "description": "有疑问请告诉我们"
+      },
+      "terms": {
+        "label": "服务条款",
+        "description": "查看服务使用条件"
+      },
+      "privacy": {
+        "label": "隐私政策",
+        "description": "查看个人信息处理方式"
+      }
+    }
+  },
+  "Settings": {
+    "pageTitle": "设置",
+    "language": {
+      "label": "语言"
+    },
+    "push": {
+      "label": "推送通知"
+    },
+    "location": {
+      "label": "使用我的位置",
+      "statusPreparing": "即将推出"
+    },
+    "policy": {
+      "sectionLabel": "条款与政策",
+      "locationTerms": "基于位置服务条款"
+    },
+    "account": {
+      "logout": "退出登录",
+      "withdraw": "注销账户"
+    },
+    "footer": {
+      "appName": "비자부기"
+    }
+  },
+  "Contact": {
+    "pageTitle": "联系我们",
+    "heading": "咨询渠道筹备中",
+    "description": "目前还没有确定的咨询邮箱或表单。渠道开通后，我们会在此页面提供直接联系方式。",
+    "buttonLabel": "咨询功能筹备中"
+  },
+  "Legal": {
+    "viewFullPage": "查看完整页面",
+    "viewOriginal": "查看韩语原文",
+    "revisionLabel": "最终修订日期"
+  },
+  "Terms": {
+    "pageTitle": "服务条款",
+    "badge": "翻译准备中",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "本文件的正式原文为韩语，该语言的完整翻译正在准备中。您可以通过下方链接查看韩语原文。"
+    }
+  },
+  "Privacy": {
+    "pageTitle": "隐私政策",
+    "badge": "翻译准备中",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "本文件的正式原文为韩语，该语言的完整翻译正在准备中。您可以通过下方链接查看韩语原文。"
+    },
+    "locationNotice": "有关位置信息收集和使用的单独政策，将在位置信息政策确定后添加到此页面。"
   }
 }

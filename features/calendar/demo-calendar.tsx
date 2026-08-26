@@ -110,8 +110,7 @@ export function DemoCalendar() {
         </section>
 
         <aside className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-6" aria-labelledby="selected-date">
-          <p className="text-xs font-extrabold text-[#2d6d5d]">선택한 날짜</p>
-          <h2 id="selected-date" className="mt-1 text-xl font-black tracking-[-0.035em]">8월 {selectedDay}일</h2>
+          <h2 id="selected-date" className="text-xl font-black tracking-[-0.035em]">8월 {selectedDay}일</h2>
           <div className="mt-5 space-y-3">
             {selectedEvents.length ? selectedEvents.map((event) => (
               <div key={event.id} className="rounded-2xl bg-[#f4f7f4] p-4">

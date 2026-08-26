@@ -63,8 +63,7 @@ export default async function Home({
         <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 xl:col-span-4">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{t("progress.eyebrow")}</p>
-              <h2 className="mt-1 text-xl font-black tracking-[-0.035em] text-[#20332c]">{t("progress.heading")}</h2>
+              <h2 className="text-xl font-black tracking-[-0.035em] text-[#20332c]">{t("progress.heading")}</h2>
             </div>
             <span className="rounded-full bg-[#fff1d4] px-2.5 py-1 text-[0.68rem] font-extrabold text-[#8a5910]">{t("progress.demoTag")}</span>
           </div>
@@ -86,8 +85,7 @@ export default async function Home({
         <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 xl:col-span-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{t("journey.eyebrow")}</p>
-              <h2 className="mt-1 text-xl font-black tracking-[-0.035em]">{t("journey.heading")}</h2>
+              <h2 className="text-xl font-black tracking-[-0.035em]">{t("journey.heading")}</h2>
             </div>
             <span className="text-sm font-bold text-[#2d6d5d]">{t("journey.stepIndicator")}</span>
           </div>
@@ -135,8 +133,7 @@ export default async function Home({
         <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 lg:col-span-3">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{t("tasks.eyebrow")}</p>
-              <h2 className="mt-1 text-xl font-black tracking-[-0.035em]">{t("tasks.heading")}</h2>
+              <h2 className="text-xl font-black tracking-[-0.035em]">{t("tasks.heading")}</h2>
             </div>
             <Icon name="document" className="size-6 text-[#2d6d5d]" />
           </div>
@@ -156,8 +153,7 @@ export default async function Home({
         <article className="overflow-hidden rounded-[24px] bg-[#f1e8d7] lg:col-span-2">
           <div className="p-5 sm:p-7">
             <span className="grid size-11 place-items-center rounded-2xl bg-white text-[#2d6d5d] shadow-sm"><Icon name="map-pin" className="size-5" /></span>
-            <p className="mt-5 text-xs font-extrabold tracking-[0.08em] text-[#76582d]">{t("agencies.eyebrow")}</p>
-            <h2 className="mt-1 text-xl font-black tracking-[-0.035em] text-[#352d22]">{t("agencies.heading")}</h2>
+            <h2 className="mt-5 text-xl font-black tracking-[-0.035em] text-[#352d22]">{t("agencies.heading")}</h2>
             <p className="mt-2 text-sm leading-6 text-[#6f6454]">{t("agencies.description")}</p>
             <Link href="/map" className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#352d22] px-4 text-sm font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#352d22]">
               {t("agencies.cta")}

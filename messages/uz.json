@@ -5,21 +5,22 @@
     "description": "내 비자 요건과 다음 단계를 추적하는 AI 서비스"
   },
   "A11y": {
-    "skipToContent": "본문으로 바로가기"
+    "skipToContent": "본문으로 바로가기",
+    "backToMy": "설정으로 돌아가기",
+    "openSettings": "설정 열기"
   },
   "Brand": {
-    "name": "비자부기",
-    "tagline": "내 비자 여정의 동반자",
     "homeAriaLabel": "비자부기 홈"
   },
   "Nav": {
-    "home": "홈",
-    "calendar": "일정",
-    "map": "기관",
-    "ocr": "서류",
+    "home": "Bosh sahifa",
+    "calendar": "Jadval",
+    "map": "Muassasalar",
+    "ocr": "Hujjatlar",
     "chat": "Maslahat",
-    "mainMenuAriaLabel": "주요 메뉴",
-    "mobileMenuAriaLabel": "모바일 주요 메뉴"
+    "my": "Sozlamalar",
+    "mainMenuAriaLabel": "Asosiy menyu",
+    "mobileMenuAriaLabel": "Mobil asosiy menyu"
   },
   "LocaleSwitcher": {
     "label": "언어 선택"
@@ -38,7 +39,6 @@
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
       "caption": "예시 진행률",
-      "eyebrow": "전체 요건 충족률",
       "heading": "준비 현황",
       "demoTag": "DEMO",
       "selectedVisaLabel": "선택 비자",
@@ -47,7 +47,6 @@
       "baseDateValue": "아직 설정되지 않음"
     },
     "journey": {
-      "eyebrow": "비자 여정",
       "heading": "현재 단계",
       "stepIndicator": "2단계 · 서류 준비",
       "stagesAriaLabel": "비자 진행 단계 예시",
@@ -65,16 +64,23 @@
       "viewSchedule": "일정 보기"
     },
     "tasks": {
-      "eyebrow": "다음 할 일",
       "heading": "서류 준비 체크",
       "items": {
-        "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
-        "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
-        "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+        "passport": {
+          "label": "여권 사본 상태 확인",
+          "meta": "서류 준비 · 예시 항목"
+        },
+        "schedule": {
+          "label": "방문 일정 직접 추가",
+          "meta": "캘린더 · 날짜 미정"
+        },
+        "agency": {
+          "label": "가까운 지원기관 확인",
+          "meta": "기관 지도 · 위치 사용 선택"
+        }
       }
     },
     "agencies": {
-      "eyebrow": "주변 기관",
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
       "cta": "기관 지도 열기"
@@ -98,5 +104,71 @@
     "contactsLabel": "Yo‘naltiriladigan tashkilotlar",
     "unverifiedNotice": "Bu ma’lumot migrant ishchilar uchun tasdiqlangan. Vaziyatga qarab farq qilishi mumkin, shuning uchun tashkilot bilan bevosita tasdiqlang.",
     "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin."
+  },
+  "My": {
+    "eyebrow": "MY",
+    "pageTitle": "Mening sahifam",
+    "linksAriaLabel": "Mening menyum",
+    "loginBanner": {
+      "title": "Tizimga kirish tayyorlanmoqda",
+      "body": "Tizimga kirish funksiyasi qo'shilgach, hisob ma'lumotlari va jarayonni shu yerda ko'rishingiz mumkin bo'ladi."
+    },
+    "links": {
+      "contact": {
+        "label": "Bog'lanish",
+        "description": "Savolingizni qoldiring"
+      },
+      "terms": {
+        "label": "Foydalanish shartlari",
+        "description": "Xizmatdan foydalanish shartlarini ko'ring"
+      },
+      "privacy": {
+        "label": "Maxfiylik siyosati",
+        "description": "Shaxsiy ma'lumotlar qanday qayta ishlanishini ko'ring"
+      }
+    }
+  },
+  "Settings": {
+    "pageTitle": "Sozlamalar",
+    "language": {
+      "label": "Til"
+    },
+    "push": {
+      "label": "Push bildirishnomalar"
+    },
+    "location": {
+      "label": "Joylashuvimdan foydalanish",
+      "statusPreparing": "Tayyorlanmoqda"
+    },
+    "policy": {
+      "sectionLabel": "Shartlar va siyosat",
+      "locationTerms": "Joylashuvga asoslangan xizmat shartlari"
+    },
+    "account": {
+      "logout": "Chiqish",
+      "withdraw": "Hisobni o'chirish"
+    },
+    "footer": {
+      "appName": "비자부기"
+    }
+  },
+  "Contact": {
+    "pageTitle": "Bog'lanish",
+    "heading": "Aloqa kanali tayyorlanmoqda",
+    "description": "Hozircha tasdiqlangan aloqa elektron pochtasi yoki forma mavjud emas. Kanal ochilgach, ushbu ekranda to'g'ridan-to'g'ri bog'lanish imkonini beramiz.",
+    "buttonLabel": "Aloqa tayyorlanmoqda"
+  },
+  "Terms": {
+    "pageTitle": "Foydalanish shartlari",
+    "heading": "Foydalanish shartlari tayyorlanmoqda",
+    "description": "Jamoa tomonidan tasdiqlangan foydalanish shartlarining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",
+    "badge": "Tayyorlanmoqda"
+  },
+  "Privacy": {
+    "pageTitle": "Maxfiylik siyosati",
+    "heading": "Maxfiylik siyosati tayyorlanmoqda",
+    "description": "Jamoa tomonidan tasdiqlangan maxfiylik siyosatining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",
+    "badge": "Tayyorlanmoqda",
+    "locationNotice": "Joylashuv ma'lumotlarini yig'ish va foydalanish bo'yicha alohida siyosat, joylashuv siyosati tasdiqlangach ushbu ekranga qo'shiladi."
   }
 }

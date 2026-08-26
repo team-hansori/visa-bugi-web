@@ -46,10 +46,9 @@ export function GuestChecklistCalendar() {
         </button>
       </header>
 
-      {!targetVisaId ? (
-        <VisaPicker onSelect={setManualVisaId} />
-      ) : (
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+      <VisaPicker selectedVisaId={targetVisaId} onSelect={setManualVisaId} />
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <CalendarGrid
             year={view.year}
             month={view.month}
@@ -60,7 +59,7 @@ export function GuestChecklistCalendar() {
             todayDate={today.date}
           />
           <aside className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-6" aria-labelledby="checklist-title">
-            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaId} 비자 기본 절차</p>
+            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaId ? `${targetVisaId} 비자 기본 절차` : "비자 기본 절차"}</p>
             <h2 id="checklist-title" className="mt-1 text-xl font-black tracking-[-0.035em]">전체 체크리스트</h2>
             {checklist.length ? (
               <ul className="mt-4 space-y-3">
@@ -75,7 +74,7 @@ export function GuestChecklistCalendar() {
               </ul>
             ) : (
               <div className="mt-4 rounded-2xl border border-dashed border-[#d6dfda] p-5 text-center text-sm leading-6 text-[#77837e]">
-                이 비자 유형의 기본 절차 데이터가 아직 없습니다.
+                {targetVisaId ? "이 비자 유형의 기본 절차 데이터가 아직 없습니다." : "위에서 비자 유형을 선택하면 기본 절차를 확인할 수 있습니다."}
               </div>
             )}
             {selectedDate && selectedItems.length ? (
@@ -85,8 +84,7 @@ export function GuestChecklistCalendar() {
               </div>
             ) : null}
           </aside>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

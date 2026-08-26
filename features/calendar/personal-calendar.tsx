@@ -120,7 +120,7 @@ export function PersonalCalendar() {
         </button>
       </header>
 
-      {!targetVisaId ? <VisaPicker onSelect={setManualVisaId} /> : null}
+      <VisaPicker selectedVisaId={targetVisaId} onSelect={setManualVisaId} />
 
       {hasUnresolvedItems ? (
         <div className="rounded-[24px] border border-[#dce5e0] bg-[#edf5f1] p-5">

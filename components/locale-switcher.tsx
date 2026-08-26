@@ -3,18 +3,12 @@
 import { hasLocale, useLocale, useTranslations } from "next-intl";
 import type { ChangeEvent } from "react";
 import { useTransition } from "react";
-import { Icon } from "@/components/ui/icon";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { localeNames, routing } from "@/i18n/routing";
+import { localeFlags, localeNames, routing } from "@/i18n/routing";
 
 const containerClassByVariant = {
-  compact: "flex min-h-10 items-center gap-1.5 rounded-full border border-[#dfe5e1] bg-white px-3 text-xs font-bold text-[#52615b]",
+  compact: "flex min-h-8 items-center gap-1 rounded-full border border-[#dfe5e1] bg-white px-2.5 text-[0.7rem] font-bold text-[#52615b]",
   full: "flex min-h-12 w-full items-center gap-2 rounded-xl border border-[#d4ddd8] bg-white px-4 text-sm font-bold text-[#40534b]",
-} as const;
-
-const iconSizeByVariant = {
-  compact: "size-4",
-  full: "size-5",
 } as const;
 
 export function LocaleSwitcher({ variant = "compact" }: { variant?: "compact" | "full" }) {
@@ -36,7 +30,6 @@ export function LocaleSwitcher({ variant = "compact" }: { variant?: "compact" | 
 
   return (
     <label className={containerClassByVariant[variant]}>
-      <Icon name="globe" className={iconSizeByVariant[variant]} aria-hidden="true" />
       <select
         aria-label={t("label")}
         aria-busy={isPending}
@@ -46,7 +39,7 @@ export function LocaleSwitcher({ variant = "compact" }: { variant?: "compact" | 
       >
         {routing.locales.map((code) => (
           <option key={code} value={code}>
-            {localeNames[code]}
+            {localeFlags[code]} {localeNames[code]}
           </option>
         ))}
       </select>

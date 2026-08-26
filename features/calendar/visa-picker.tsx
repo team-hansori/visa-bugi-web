@@ -5,10 +5,10 @@ import { Icon } from "@/components/ui/icon";
 import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
 
 const VISA_CHIP_CLASSES: Record<string, string> = {
-  "F-4-R": "border-[#164E63] bg-[#164E63] text-white",
-  "E-7-4R": "border-[#0F766E] bg-[#0F766E] text-white",
-  "F-2-R": "border-[#5BC0A8] bg-[#5BC0A8] text-[#17302F]",
-  "D-2": "border-[#F4C95D] bg-[#F4C95D] text-[#17302F]",
+  "F-4-R": "border-[#164E63]/30 bg-[#164E63]/15 text-[#164E63]",
+  "E-7-4R": "border-[#0F766E]/30 bg-[#0F766E]/15 text-[#0F665F]",
+  "F-2-R": "border-[#5BC0A8]/40 bg-[#5BC0A8]/20 text-[#17695F]",
+  "D-2": "border-[#F4C95D]/50 bg-[#F4C95D]/25 text-[#80561D]",
 };
 
 export function VisaPicker({ selectedVisaIds, onToggle, onClear }: { selectedVisaIds: string[]; onToggle: (visaId: string) => void; onClear: () => void }) {

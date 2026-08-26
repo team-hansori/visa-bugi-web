@@ -17,8 +17,12 @@ export function VisaPicker({ selectedVisaIds, onToggle }: { selectedVisaIds: str
         >
           <span className="min-w-0">
             {selectedVisas.length ? (
-              <span className="flex flex-wrap gap-x-2 gap-y-1 text-base font-semibold text-[#30433b]">
-                {selectedVisas.map((visa) => <span key={visa.id}>{visa.id} | {t(`visas.${visa.messageKey}`)}</span>)}
+              <span className="flex flex-wrap gap-2 text-sm font-semibold text-[#30433b]">
+                {selectedVisas.map((visa) => (
+                  <span key={visa.id} className="rounded-lg border border-[#cfe0d8] bg-[#edf5f1] px-2.5 py-1.5">
+                    <strong>{visa.id}</strong> <span aria-hidden="true">|</span> {t(`visas.${visa.messageKey}`)}
+                  </span>
+                ))}
               </span>
             ) : (
               <span className="text-base font-semibold text-[#77837e]">{t("placeholder")}</span>

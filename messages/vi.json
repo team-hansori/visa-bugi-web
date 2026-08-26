@@ -28,7 +28,10 @@
       "open": "Tìm trong lịch",
       "placeholder": "Tìm thủ tục, lịch, danh mục hoặc địa điểm",
       "ariaLabel": "Từ khóa tìm kiếm trong lịch",
-      "close": "Đóng"
+      "close": "Đóng",
+      "resultCount": "{count} kết quả",
+      "noResults": "Không có kết quả tìm kiếm.",
+      "dateUndecided": "Chưa xác định ngày"
     },
     "visaPicker": {
       "label": "Loại thị thực cần xem",

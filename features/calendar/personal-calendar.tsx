@@ -1,14 +1,15 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { CalendarGrid } from "./calendar-grid";
 import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
 import { useTargetVisaIds } from "./use-target-visa";
 import { useToday } from "./use-today";
 import { VisaPicker } from "./visa-picker";
-import { CalendarSearch } from "./calendar-search";
+import { CalendarSearch, type CalendarSearchResult } from "./calendar-search";
 import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
+import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
 
 type PersonalEvent = {
   id: string;
@@ -56,22 +57,36 @@ export function PersonalCalendar() {
   }, [today, view]);
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
-  const checklist = useMemo(
-    () => targetVisaIds.flatMap(getDefaultChecklist).filter((item) => !normalizedQuery || [item.visaId, item.title].some((value) => value.toLocaleLowerCase().includes(normalizedQuery))),
-    [normalizedQuery, targetVisaIds],
-  );
+  const effectiveVisaIds = targetVisaIds.length ? targetVisaIds : SUPPORTED_VISAS.map((visa) => visa.id);
+  const checklist = effectiveVisaIds
+    .flatMap(getDefaultChecklist)
+    .filter((item) => !normalizedQuery || [item.visaId, item.title].some((value) => value.toLocaleLowerCase().includes(normalizedQuery)));
   const hasUnresolvedItems = checklist.some((item) => !item.startDate);
 
-  const eventsByDate = useMemo(() => {
+  const eventsByDate = (() => {
     const map = buildChecklistEvents(checklist, referenceDate || null);
     for (const event of events.filter((item) => !normalizedQuery || [item.title, item.category, item.location ?? ""].some((value) => value.toLocaleLowerCase().includes(normalizedQuery)))) {
       map[event.date] = [...(map[event.date] ?? []), { id: event.id, label: event.title }];
     }
     return map;
-  }, [checklist, referenceDate, events, normalizedQuery]);
+  })();
 
   const selectedChecklistItems = findChecklistItemsForDate(checklist, referenceDate || null, selectedDate);
   const selectedPersonalEvents = events.filter((event) => event.date === selectedDate && (!normalizedQuery || [event.title, event.category, event.location ?? ""].some((value) => value.toLocaleLowerCase().includes(normalizedQuery))));
+  const searchResults: CalendarSearchResult[] = normalizedQuery
+    ? [
+        ...checklist.map((item) => ({ id: `checklist-${item.id}`, label: item.title, meta: item.visaId, date: item.startDate ?? item.endDate ?? null })),
+        ...events
+          .filter((event) => [event.title, event.category, event.location ?? ""].some((value) => value.toLocaleLowerCase().includes(normalizedQuery)))
+          .map((event) => ({ id: `event-${event.id}`, label: event.title, meta: [event.category, event.location].filter(Boolean).join(" · "), date: event.date })),
+      ]
+    : [];
+
+  function selectSearchResult(result: CalendarSearchResult) {
+    if (!result.date) return;
+    setView(monthOf(result.date));
+    setSelectedDate(result.date);
+  }
 
   if (!today || !view) {
     return (
@@ -127,7 +142,7 @@ export function PersonalCalendar() {
       </header>
 
       <div className="grid gap-3">
-        <CalendarSearch value={searchQuery} onChange={setSearchQuery} />
+        <CalendarSearch value={searchQuery} results={searchResults} onChange={setSearchQuery} onSelectResult={selectSearchResult} />
         <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
       </div>
 

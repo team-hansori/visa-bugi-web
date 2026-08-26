@@ -28,7 +28,10 @@
       "open": "캘린더 내 일정 검색",
       "placeholder": "비자 절차, 일정, 카테고리, 위치 검색",
       "ariaLabel": "캘린더 내 일정 검색어",
-      "close": "닫기"
+      "close": "닫기",
+      "resultCount": "검색 결과 {count}개",
+      "noResults": "검색 결과가 없습니다.",
+      "dateUndecided": "날짜 미정"
     },
     "visaPicker": {
       "label": "확인할 비자 유형",

@@ -28,7 +28,10 @@
       "open": "Taqvimdan qidirish",
       "placeholder": "Viza jarayoni, tadbir, turkum yoki joyni qidiring",
       "ariaLabel": "Taqvim qidiruv so‘zi",
-      "close": "Yopish"
+      "close": "Yopish",
+      "resultCount": "{count} ta natija",
+      "noResults": "Qidiruv natijasi topilmadi.",
+      "dateUndecided": "Sana belgilanmagan"
     },
     "visaPicker": {
       "label": "Ko‘riladigan viza turi",

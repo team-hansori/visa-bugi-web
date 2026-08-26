@@ -6,8 +6,9 @@ import { getDefaultChecklist } from "@/lib/visa-schedule/default-checklist";
 import { useTargetVisaIds } from "./use-target-visa";
 import { useToday } from "./use-today";
 import { VisaPicker } from "./visa-picker";
-import { CalendarSearch } from "./calendar-search";
+import { CalendarSearch, type CalendarSearchResult } from "./calendar-search";
 import { buildChecklistEvents, findChecklistItemsForDate } from "./checklist-events";
+import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
 
 export function GuestChecklistCalendar() {
   const { targetVisaIds, toggleVisaId } = useTargetVisaIds();
@@ -32,11 +33,22 @@ export function GuestChecklistCalendar() {
   }
 
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
-  const checklist = targetVisaIds
+  const effectiveVisaIds = targetVisaIds.length ? targetVisaIds : SUPPORTED_VISAS.map((visa) => visa.id);
+  const checklist = effectiveVisaIds
     .flatMap(getDefaultChecklist)
     .filter((item) => !normalizedQuery || [item.visaId, item.title].some((value) => value.toLocaleLowerCase().includes(normalizedQuery)));
   const eventsByDate = buildChecklistEvents(checklist, null);
   const selectedItems = findChecklistItemsForDate(checklist, null, selectedDate);
+  const searchResults: CalendarSearchResult[] = normalizedQuery
+    ? checklist.map((item) => ({ id: item.id, label: item.title, meta: item.visaId, date: item.startDate ?? item.endDate ?? null }))
+    : [];
+
+  function selectSearchResult(result: CalendarSearchResult) {
+    if (!result.date) return;
+    const [year, month] = result.date.split("-").map(Number);
+    setView({ year, month });
+    setSelectedDate(result.date);
+  }
 
   return (
     <div className="space-y-6">
@@ -52,7 +64,7 @@ export function GuestChecklistCalendar() {
       </header>
 
       <div className="grid gap-3">
-        <CalendarSearch value={searchQuery} onChange={setSearchQuery} />
+        <CalendarSearch value={searchQuery} results={searchResults} onChange={setSearchQuery} onSelectResult={selectSearchResult} />
         <VisaPicker selectedVisaIds={targetVisaIds} onToggle={toggleVisaId} />
       </div>
 
@@ -67,7 +79,7 @@ export function GuestChecklistCalendar() {
             todayDate={today.date}
           />
           <aside className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-6" aria-labelledby="checklist-title">
-            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaIds.length ? `${targetVisaIds.join(", ")} 비자 기본 절차` : "비자 기본 절차"}</p>
+            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{targetVisaIds.length ? `${targetVisaIds.join(", ")} 비자 기본 절차` : "전체 비자 기본 절차"}</p>
             <h2 id="checklist-title" className="mt-1 text-xl font-black tracking-[-0.035em]">전체 체크리스트</h2>
             {checklist.length ? (
               <ul className="mt-4 space-y-3">
@@ -82,7 +94,7 @@ export function GuestChecklistCalendar() {
               </ul>
             ) : (
               <div className="mt-4 rounded-2xl border border-dashed border-[#d6dfda] p-5 text-center text-sm leading-6 text-[#77837e]">
-                {targetVisaIds.length ? "선택한 비자 유형의 기본 절차 데이터가 아직 없습니다." : "위에서 비자 유형을 선택하면 기본 절차를 확인할 수 있습니다."}
+                {targetVisaIds.length ? "선택한 비자 유형의 기본 절차 데이터가 아직 없습니다." : "전체 비자 유형의 기본 절차 데이터가 아직 없습니다."}
               </div>
             )}
             {selectedDate && selectedItems.length ? (

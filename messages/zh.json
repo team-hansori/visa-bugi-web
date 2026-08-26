@@ -28,7 +28,10 @@
       "open": "搜索日历内容",
       "placeholder": "搜索签证流程、日程、类别或地点",
       "ariaLabel": "日历搜索词",
-      "close": "关闭"
+      "close": "关闭",
+      "resultCount": "搜索结果 {count} 条",
+      "noResults": "没有搜索结果。",
+      "dateUndecided": "日期未定"
     },
     "visaPicker": {
       "label": "要查看的签证类型",

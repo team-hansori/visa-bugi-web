@@ -16,10 +16,23 @@ describe("messages", () => {
     LOCALES.map((l) => [l, JSON.parse(readFileSync(`messages/${l}.json`, "utf8"))]),
   );
 
-  it("모든 locale이 ko와 같은 키 구조를 가진다", () => {
-    const koKeys = keyPaths(byLocale.ko).sort();
+  it("정책 문서를 제외한 모든 locale이 ko와 같은 키 구조를 가진다", () => {
+    const withoutPolicies = (source: Record<string, unknown>) =>
+      Object.fromEntries(Object.entries(source).filter(([namespace]) => !["Terms", "Privacy"].includes(namespace)));
+    const koKeys = keyPaths(withoutPolicies(byLocale.ko)).sort();
     for (const l of LOCALES) {
-      expect(keyPaths(byLocale[l]).sort(), `locale ${l}`).toEqual(koKeys);
+      expect(keyPaths(withoutPolicies(byLocale[l])).sort(), `locale ${l}`).toEqual(koKeys);
+    }
+  });
+
+  it("한국어는 정책 전문을, 번역 locale은 한국어 원문 안내를 제공한다", () => {
+    for (const policy of ["Terms", "Privacy"]) {
+      expect(byLocale.ko[policy].draftNotice).toBeTypeOf("string");
+      expect(byLocale.ko[policy].sections).toBeInstanceOf(Array);
+
+      for (const locale of LOCALES.filter((item) => item !== "ko")) {
+        expect(byLocale[locale][policy].referral.notice).toBeTypeOf("string");
+      }
     }
   });
 

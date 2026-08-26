@@ -7,7 +7,8 @@
   "A11y": {
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
-    "openSettings": "설정 열기"
+    "openSettings": "설정 열기",
+    "closeDialog": "Yopish"
   },
   "Brand": {
     "homeAriaLabel": "비자부기 홈"
@@ -138,17 +139,25 @@
     "description": "Hozircha tasdiqlangan aloqa elektron pochtasi yoki forma mavjud emas. Kanal ochilgach, ushbu ekranda to'g'ridan-to'g'ri bog'lanish imkonini beramiz.",
     "buttonLabel": "Aloqa tayyorlanmoqda"
   },
+  "Legal": {
+    "viewFullPage": "To'liq sahifada ko'rish",
+    "viewOriginal": "Koreyscha asl nusxani ko'rish"
+  },
   "Terms": {
     "pageTitle": "Foydalanish shartlari",
-    "heading": "Foydalanish shartlari tayyorlanmoqda",
-    "description": "Jamoa tomonidan tasdiqlangan foydalanish shartlarining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",
-    "badge": "Tayyorlanmoqda"
+    "badge": "Tarjima tayyorlanmoqda",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Ushbu hujjatning rasmiy asl matni koreys tilida bo'lib, ushbu tildagi to'liq tarjima tayyorlanmoqda. Quyidagi havola orqali koreyscha asl matnni ko'rishingiz mumkin."
+    }
   },
   "Privacy": {
     "pageTitle": "Maxfiylik siyosati",
-    "heading": "Maxfiylik siyosati tayyorlanmoqda",
-    "description": "Jamoa tomonidan tasdiqlangan maxfiylik siyosatining rasmiy matni tez orada e'lon qilinadi. Hozircha ishlab chiquvchi tomonidan yozilgan hech qanday matn ko'rsatilmaydi.",
-    "badge": "Tayyorlanmoqda",
+    "badge": "Tarjima tayyorlanmoqda",
+    "revisionDate": "2026-08-26",
+    "referral": {
+      "notice": "Ushbu hujjatning rasmiy asl matni koreys tilida bo'lib, ushbu tildagi to'liq tarjima tayyorlanmoqda. Quyidagi havola orqali koreyscha asl matnni ko'rishingiz mumkin."
+    },
     "locationNotice": "Joylashuv ma'lumotlarini yig'ish va foydalanish bo'yicha alohida siyosat, joylashuv siyosati tasdiqlangach ushbu ekranga qo'shiladi."
   }
 }

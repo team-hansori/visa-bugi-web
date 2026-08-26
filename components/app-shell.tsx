@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/icon";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Link, usePathname } from "@/i18n/navigation";
 
 type NavItem = {
@@ -71,21 +72,6 @@ function HeaderTitle({ pathname }: { pathname: string }) {
   }
 
   return <div aria-hidden="true" />;
-}
-
-function SettingsEntry({ pathname }: { pathname: string }) {
-  const t = useTranslations("A11y");
-
-  return (
-    <Link
-      href="/my"
-      aria-label={t("openSettings")}
-      aria-current={pathname === "/my" ? "page" : undefined}
-      className="grid size-10 shrink-0 place-items-center rounded-xl text-[#52615b] transition-colors hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
-    >
-      <Icon name="settings" className="size-5" />
-    </Link>
-  );
 }
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
@@ -164,7 +150,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <HeaderTitle pathname={pathname} />
           <DesktopNavigation pathname={pathname} />
-          <SettingsEntry pathname={pathname} />
+          <LocaleSwitcher />
         </div>
       </header>
 

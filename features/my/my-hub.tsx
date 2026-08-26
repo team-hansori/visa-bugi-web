@@ -75,7 +75,7 @@ export function MyHub() {
         <Row>
           <span className="font-bold text-[#2a3c35]">{t("Settings.language.label")}</span>
           <div className="w-44 max-w-[55%]">
-            <LocaleSwitcher />
+            <LocaleSwitcher variant="full" />
           </div>
         </Row>
 

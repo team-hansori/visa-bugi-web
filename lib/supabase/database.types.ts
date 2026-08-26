@@ -1,4 +1,5 @@
-import type { TargetVisaCode } from "@/features/onboarding/constants";
+/** `user_visa_profile.target_visa_code` check 제약과 동일한 값 집합. */
+export type TargetVisaCode = "F-2-R" | "E-7-4R" | "F-4-R" | "D-2";
 
 /** `user_visa_profile.visa_details`에 들어가는 비자 전용 값 (스펙 §3.2). */
 export type VisaDetails = {

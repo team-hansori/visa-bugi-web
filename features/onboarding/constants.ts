@@ -1,6 +1,14 @@
+import type { TargetVisaCode } from "@/lib/supabase/database.types";
+
+export type { TargetVisaCode };
+
 /** 이번 스코프의 목표 비자 4종. 값은 visa-data의 `visa_requirements.csv` visa_code와 일치한다. */
-export const TARGET_VISA_CODES = ["F-2-R", "E-7-4R", "F-4-R", "D-2"] as const;
-export type TargetVisaCode = (typeof TARGET_VISA_CODES)[number];
+export const TARGET_VISA_CODES: readonly TargetVisaCode[] = [
+  "F-2-R",
+  "E-7-4R",
+  "F-4-R",
+  "D-2",
+];
 
 /**
  * 온보딩에서 고를 수 있는 현재 체류자격.

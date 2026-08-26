@@ -1,4 +1,17 @@
-# 비자부기 웹
+<div align="center">
+  <img src="public/brand/app-icon/bugi-app-icon-192.png" alt="비자부기 앱 아이콘" width="128" height="128" />
+  <br />
+  <img src="public/brand/wordmark/visa-bugi-wordmark.svg" alt="비자부기" width="352" />
+  <p>외국인 주민의 체류자격 요건과 행정 절차를 함께 관리하는 충북살이 웹앱</p>
+  <p>
+    <img src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs" alt="Next.js 16" />
+    <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=000000" alt="React 19" />
+    <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" alt="TypeScript 5" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4" />
+    <img src="https://img.shields.io/badge/Supabase-2-3FCF8E?logo=supabase&logoColor=white" alt="Supabase 2" />
+    <img src="https://img.shields.io/badge/Vercel-Deploy-000000?logo=vercel" alt="Vercel" />
+  </p>
+</div>
 
 충청북도 외국인 주민이 자신의 체류자격 요건과 행정 절차를 이해하고,
 준비할 서류·일정·지원기관을 추적할 수 있도록 돕는 웹앱입니다.
@@ -61,12 +74,15 @@ OCR·LLM API key 같은 비밀값은 `NEXT_PUBLIC_` 변수나 클라이언트 �
 
 ## 기술 스택
 
-- Next.js 16 App Router
-- React 19, TypeScript
-- Tailwind CSS 4
-- `next-intl` 기반 다국어 라우팅
-- Supabase 데이터베이스·인증
-- Vercel 배포와 API/Cron 실행
+| 영역 | 기술 | 용도 |
+| --- | --- | --- |
+| 프레임워크 | Next.js 16 App Router, React 19 | 서버·클라이언트 렌더링과 라우팅 |
+| 언어 | TypeScript 5 | 정적 타입 기반 애플리케이션 개발 |
+| 스타일 | Tailwind CSS 4 | 반응형 UI와 디자인 시스템 |
+| 다국어 | `next-intl` 4 | locale 라우팅과 번역 메시지 관리 |
+| 데이터·인증 | Supabase JS 2, Supabase SSR | 데이터 조회, 인증, 사용자 진행 상황 저장 |
+| 배포 | Vercel | 웹앱 배포와 API/Cron 실행 |
+| 품질 검사 | ESLint 9, TypeScript | 코드 규칙과 타입 오류 검사 |
 
 ---
 

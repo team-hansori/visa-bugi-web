@@ -28,6 +28,19 @@
   "LocaleSwitcher": {
     "label": "Chọn ngôn ngữ"
   },
+  "Auth": {
+    "tabSignIn": "Đăng nhập",
+    "tabSignUp": "Đăng ký",
+    "username": "Tên đăng nhập",
+    "usernameHint": "Chữ thường, số, gạch dưới, 3~30 ký tự",
+    "password": "Mật khẩu",
+    "passwordHint": "Tối thiểu 8 ký tự",
+    "name": "Họ tên",
+    "signInSubmit": "Đăng nhập",
+    "signUpSubmit": "Đăng ký và bắt đầu",
+    "submitting": "Đang xử lý…",
+    "genericError": "Đã xảy ra lỗi tạm thời. Vui lòng thử lại sau."
+  },
   "Calendar": {
     "search": {
       "open": "Tìm trong lịch",

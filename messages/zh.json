@@ -28,6 +28,19 @@
   "LocaleSwitcher": {
     "label": "选择语言"
   },
+  "Auth": {
+    "tabSignIn": "登录",
+    "tabSignUp": "注册",
+    "username": "用户名",
+    "usernameHint": "小写字母、数字、下划线，3~30 个字符",
+    "password": "密码",
+    "passwordHint": "至少 8 个字符",
+    "name": "姓名",
+    "signInSubmit": "登录",
+    "signUpSubmit": "注册并开始",
+    "submitting": "处理中…",
+    "genericError": "发生临时错误，请稍后再试。"
+  },
   "Calendar": {
     "search": {
       "open": "搜索日历内容",

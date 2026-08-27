@@ -28,6 +28,19 @@
   "LocaleSwitcher": {
     "label": "언어 선택"
   },
+  "Auth": {
+    "tabSignIn": "로그인",
+    "tabSignUp": "회원가입",
+    "username": "아이디",
+    "usernameHint": "영문 소문자·숫자·밑줄 3~30자",
+    "password": "비밀번호",
+    "passwordHint": "8자 이상",
+    "name": "이름",
+    "signInSubmit": "로그인",
+    "signUpSubmit": "회원가입하고 시작하기",
+    "submitting": "처리 중…",
+    "genericError": "일시적인 오류로 처리하지 못했습니다. 잠시 후 다시 시도해 주세요."
+  },
   "Calendar": {
     "search": {
       "open": "캘린더 내 일정 검색",

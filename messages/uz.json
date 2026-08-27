@@ -28,6 +28,19 @@
   "LocaleSwitcher": {
     "label": "Tilni tanlang"
   },
+  "Auth": {
+    "tabSignIn": "Kirish",
+    "tabSignUp": "Ro‘yxatdan o‘tish",
+    "username": "Foydalanuvchi nomi",
+    "usernameHint": "Kichik harflar, raqamlar, pastki chiziq, 3~30 belgi",
+    "password": "Parol",
+    "passwordHint": "Kamida 8 belgi",
+    "name": "Ism",
+    "signInSubmit": "Kirish",
+    "signUpSubmit": "Ro‘yxatdan o‘tib boshlash",
+    "submitting": "Amalga oshirilmoqda…",
+    "genericError": "Vaqtinchalik xatolik yuz berdi. Keyinroq qayta urinib ko‘ring."
+  },
   "Calendar": {
     "search": {
       "open": "Taqvimdan qidirish",

@@ -28,6 +28,19 @@
   "LocaleSwitcher": {
     "label": "ជ្រើសរើសភាសា"
   },
+  "Auth": {
+    "tabSignIn": "ចូល",
+    "tabSignUp": "ចុះឈ្មោះ",
+    "username": "ឈ្មោះអ្នកប្រើ",
+    "usernameHint": "អក្សរតូច លេខ និងសញ្ញាបន្ទាត់ក្រោម ៣~៣០ តួអក្សរ",
+    "password": "ពាក្យសម្ងាត់",
+    "passwordHint": "យ៉ាងតិច ៨ តួអក្សរ",
+    "name": "ឈ្មោះ",
+    "signInSubmit": "ចូល",
+    "signUpSubmit": "ចុះឈ្មោះ ហើយចាប់ផ្ដើម",
+    "submitting": "កំពុងដំណើរការ…",
+    "genericError": "មានបញ្ហាបណ្ដោះអាសន្ន។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។"
+  },
   "Calendar": {
     "search": {
       "open": "ស្វែងរកក្នុងប្រតិទិន",

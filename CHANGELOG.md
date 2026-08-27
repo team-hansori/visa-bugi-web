@@ -76,6 +76,7 @@
 - 온보딩을 마쳐야 홈으로 넘어가도록 진입 라우팅 변경 (데모용)
 - Add floating chat launcher
 - 신청서 촬영 및 첨부 UI 개선
+- 홈 기준일 자리에 목표비자 공고 유효기간(visa_requirements) 표시
 - Add visa quota carousel
 - Add turtle to journey progress
 - Personalize visa preparation progress
@@ -141,11 +142,13 @@
 - 온보딩 스키마에 authenticated 역할 GRANT 추가
 - 온보딩 뒤로가기를 히스토리 대신 stepIndex 기준으로 결정론적으로 처리 + 상단 진행바 UI
 - Remove chatbot icon container styling
+- 홈 목표비자 드롭다운 즉시 변경, 서류준비 단계 실데이터화, 언어전환 쿼리스트링 유지
 - Translate Vietnamese chat labels
 - 공고 배지 문구 변경
 - Link quota cards to official notice
 - Map quota notices by visa type
 - Link D-2 card to Study in Chungbuk
+- 목표비자 인라인 드롭다운, 공고 유효기간을 새 VisaProgressDashboard에 재구현
 
 ### 💼 Other
 
@@ -207,6 +210,7 @@
 - 계획서에 익명 세션 보장 태스크 반영, 스펙 문구 정밀화
 - 온보딩 진입 화면 개편 + 앱 셸 분리 설계 스펙 추가
 - 온보딩 진입 화면 개편 + 앱 셸 분리 구현 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

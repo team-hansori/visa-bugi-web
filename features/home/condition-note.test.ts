@@ -65,4 +65,41 @@ describe("splitConditionNote", () => {
   it("구분자만 반복돼도 빈 조각은 버린다", () => {
     expect(splitConditionNote("A ;; ; B")).toEqual(["A", "B"]);
   });
+
+  describe("데이터 큐레이션 메모는 화면에서 제외한다", () => {
+    it("'원문:' 인용 줄과 스키마 결정 메모 줄을 모두 버린다", () => {
+      const note = [
+        "원문: '한국어능력 입증을 TOPIK으로 할 경우만 점수표를 제출하고, 사회통합프로그램 이수나 사전평가 점수로 하는 경우 이수증이나 사전평가 성적표 제출 생략'",
+        "문장 자체는 다소 모호하나, TOPIK 성적표 / 사회통합프로그램 이수증 / 사전평가 성적표 중 하나만 제출하면 된다는 취지로 해석하여 3개 대체(ALTERNATIVE) 행으로 분리함(alternative_group=LANGUAGE_PROOF).",
+      ].join("\n");
+      expect(splitConditionNote(note)).toEqual([]);
+    });
+
+    it("메타 접두사(출처:/비고:/참고:)를 버린다", () => {
+      expect(
+        splitConditionNote("본인 확인용 서류\n비고: 담당자 재량으로 생략 가능하도록 표기함"),
+      ).toEqual(["본인 확인용 서류"]);
+    });
+
+    it("스키마 토큰(xxx_group=/xxx_status=)이 든 줄을 버린다", () => {
+      expect(
+        splitConditionNote("여권 사본 필요\nrequirement_status=CONDITIONAL 로 분류"),
+      ).toEqual(["여권 사본 필요"]);
+    });
+
+    it("사용자용 문구는 그대로 유지한다", () => {
+      expect(
+        splitConditionNote("본인이 직접 신청하면 제출 불필요 — 대리신청일 때 필요"),
+      ).toEqual([
+        "본인이 직접 신청하면 제출 불필요",
+        "대리신청일 때 필요",
+      ]);
+    });
+
+    it("'분리' 글자가 들어가도 큐레이션 서술이 아니면 유지한다", () => {
+      expect(splitConditionNote("가족관계증명서(분리세대 포함)")).toEqual([
+        "가족관계증명서(분리세대 포함)",
+      ]);
+    });
+  });
 });

@@ -81,6 +81,8 @@
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
       "baseDateValue": "아직 설정되지 않음",
+      "validityLabel": "Thời hạn hiệu lực thông báo",
+      "validityUnavailable": "Chưa có thông tin thời hạn thông báo",
       "savedAriaLabel": "Tiến trình điền tài liệu đã lưu {percent} phần trăm",
       "savedCaption": "Tiến trình điền tài liệu",
       "eyebrow": "Tỷ lệ đáp ứng tổng yêu cầu",

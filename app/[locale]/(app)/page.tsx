@@ -2,12 +2,28 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Icon } from "@/components/ui/icon";
 import { ChatLauncher } from "@/features/chat/chat-launcher";
 import { TargetVisaSelect } from "@/features/home/target-visa-select";
+import { getTargetVisaValidity, type VisaValidity } from "@/features/home/visa-validity";
 import { getTargetVisaCode } from "@/features/onboarding/get-target-visa";
 import { getSavedDocumentProgress, type SavedDocumentProgress } from "@/features/ocr/saved-progress";
 import { Link, redirect } from "@/i18n/navigation";
 import { hasCompletedOnboarding } from "@/lib/onboarding/completion";
 
 const sampleTasks = ["passport", "schedule", "agency"] as const;
+
+/**
+ * "공고 유효기간" 표시용 포맷. valid_from/valid_to는 마스터 데이터의
+ * 유효기간이지 사용자 개인 일정이 아니므로(스펙 §데이터 경계), 날짜 범위
+ * 그대로만 보여주고 상대 기한을 추정하지 않는다.
+ */
+function formatVisaValidity(validity: VisaValidity | null, locale: string): string | null {
+  if (!validity || (!validity.validFrom && !validity.validTo)) return null;
+  const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+  const from = validity.validFrom ? formatter.format(new Date(validity.validFrom)) : null;
+  const to = validity.validTo ? formatter.format(new Date(validity.validTo)) : null;
+  if (from && to) return `${from} – ${to}`;
+  if (from) return `${from} ~`;
+  return `~ ${to}`;
+}
 
 /**
  * "서류 준비" 단계만 저장된 OCR 진행률(user_document_reviews)로 실데이터화한다.
@@ -71,13 +87,21 @@ export default async function Home({
     getSavedDocumentProgress(),
     getTargetVisaCode(),
   ]);
+  const targetVisaValidity =
+    !savedProgress && targetVisaCode
+      ? await getTargetVisaValidity(targetVisaCode)
+      : null;
   const stages = buildStages(savedProgress);
   const progressPercentage = savedProgress?.percentage ?? 68;
+  const baseDateLabel = savedProgress
+    ? t("progress.lastUpdatedLabel")
+    : t("progress.validityLabel");
   const baseDate = savedProgress
     ? new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(
         new Date(savedProgress.lastUpdatedAt),
       )
-    : t("progress.baseDateValue");
+    : (formatVisaValidity(targetVisaValidity, locale) ??
+      t("progress.validityUnavailable"));
   const taskItems = savedProgress
     ? savedProgress.tasks.map((task, index) => ({
         key: `${task.kind}:${task.documentTitle}:${index}`,
@@ -151,7 +175,7 @@ export default async function Home({
                 )}
               </div>
               <div className="mt-3 flex items-center justify-between gap-4 text-sm">
-                <span className="font-semibold text-[#64716c]">{savedProgress ? t("progress.lastUpdatedLabel") : t("progress.baseDateLabel")}</span>
+                <span className="font-semibold text-[#64716c]">{baseDateLabel}</span>
                 <strong className="text-[#8a5910]">{baseDate}</strong>
               </div>
             </div>

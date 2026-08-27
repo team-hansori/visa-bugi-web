@@ -81,6 +81,8 @@
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
       "baseDateValue": "아직 설정되지 않음",
+      "validityLabel": "E'lon amal qilish muddati",
+      "validityUnavailable": "E'lon muddati haqida ma'lumot yo'q",
       "savedAriaLabel": "Saqlangan hujjatlarni to‘ldirish jarayoni {percent} foiz",
       "savedCaption": "Hujjatlarni to‘ldirish jarayoni",
       "eyebrow": "Umumiy talablar bajarilishi",

@@ -82,6 +82,8 @@
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
       "baseDateValue": "아직 설정되지 않음",
+      "validityLabel": "공고 유효기간",
+      "validityUnavailable": "등록된 공고 기간 없음",
       "savedAriaLabel": "저장된 서류 작성 진행률 {percent}퍼센트",
       "savedCaption": "서류 작성 진행률",
       "eyebrow": "전체 요건 충족률",

@@ -32,7 +32,32 @@ function kakaoDirectionsUrl(agency: Agency): string {
   return `https://map.kakao.com/link/to/${label},${agency.position.lat},${agency.position.lng}`;
 }
 
-function AgencyDetails({ agency, mobile = false }: { agency: Agency | null; mobile?: boolean }) {
+// The current live dataset's CSV import converts empty-string cells to
+// `null` before they reach Supabase, so a plain `??` fallback happens to
+// work today — but that's an upstream import-behavior assumption, not
+// something this component's own code guarantees. Treat both `null` and an
+// all-whitespace/empty string as "no value."
+function displayOrFallback(value: string | null | undefined, fallback: string): string {
+  return value && value.trim() ? value : fallback;
+}
+
+function AgencyDetails({
+  agency,
+  loading,
+  loadError,
+  mobile = false,
+}: {
+  agency: Agency | null;
+  loading: boolean;
+  loadError: string | null;
+  mobile?: boolean;
+}) {
+  if (loading || loadError) {
+    // The outer loading/error banners already communicate this state; avoid
+    // rendering a second, contradictory "no agencies" message underneath.
+    return null;
+  }
+
   if (!agency) {
     return (
       <div
@@ -46,6 +71,8 @@ function AgencyDetails({ agency, mobile = false }: { agency: Agency | null; mobi
       </div>
     );
   }
+
+  const hasPhone = Boolean(agency.phone && agency.phone.trim());
 
   return (
     <div
@@ -68,27 +95,38 @@ function AgencyDetails({ agency, mobile = false }: { agency: Agency | null; mobi
       <dl className={`mt-4 space-y-2.5 text-sm ${mobile ? "hidden sm:block" : ""}`}>
         <div className="flex gap-3">
           <dt className="w-14 shrink-0 font-bold text-[#77827d]">주소</dt>
-          <dd className="font-semibold text-[#475a52]">{agency.roadAddress ?? "주소 확인 안됨"}</dd>
+          <dd className="font-semibold text-[#475a52]">
+            {displayOrFallback(agency.roadAddress, "주소 확인 안됨")}
+          </dd>
         </div>
         <div className="flex gap-3">
           <dt className="w-14 shrink-0 font-bold text-[#77827d]">전화</dt>
-          <dd className="font-semibold text-[#475a52]">{agency.phone}</dd>
+          <dd className="font-semibold text-[#475a52]">
+            {displayOrFallback(agency.phone, "전화번호 확인 안됨")}
+          </dd>
         </div>
         <div className="flex gap-3">
           <dt className="w-14 shrink-0 font-bold text-[#77827d]">운영</dt>
           <dd className="font-semibold text-[#475a52]">
-            {agency.operatingHours ?? "운영시간 확인 안됨"}
+            {displayOrFallback(agency.operatingHours, "운영시간 확인 안됨")}
           </dd>
         </div>
       </dl>
       <div className={`mt-4 grid grid-cols-2 gap-2 ${mobile ? "" : "lg:mt-auto lg:pt-6"}`}>
-        <a
-          href={`tel:${agency.phone}`}
-          className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[#2d6d5d] px-3 text-xs font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173f36]"
-        >
-          <Icon name="phone" className="size-4" />
-          전화하기
-        </a>
+        {hasPhone ? (
+          <a
+            href={`tel:${agency.phone}`}
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[#2d6d5d] px-3 text-xs font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173f36]"
+          >
+            <Icon name="phone" className="size-4" />
+            전화하기
+          </a>
+        ) : (
+          <span className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[#c9d3ce] px-3 text-xs font-extrabold text-white">
+            <Icon name="phone" className="size-4" />
+            전화번호 확인 안됨
+          </span>
+        )}
         <a
           href={kakaoDirectionsUrl(agency)}
           target="_blank"
@@ -104,7 +142,15 @@ function AgencyDetails({ agency, mobile = false }: { agency: Agency | null; mobi
 }
 
 export function AgencyMap() {
-  const supabase = useMemo(() => createClient(), []);
+  const supabase = useMemo(() => {
+    if (
+      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+    ) {
+      return null;
+    }
+    return createClient();
+  }, []);
   const [selectedRegion, setSelectedRegion] = useState<RegionId>("cheongju");
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [userPosition, setUserPosition] = useState<LatLng | null>(null);
@@ -127,6 +173,16 @@ export function AgencyMap() {
     async function loadAgencies() {
       setLoading(true);
       setLoadError(null);
+
+      if (!supabase) {
+        if (cancelled) return;
+        setLoadError("기관 정보 설정이 완료되지 않았습니다.");
+        setAgencies([]);
+        setSelectedId(null);
+        setLoading(false);
+        return;
+      }
+
       try {
         const result = await fetchNearbyAgencies(
           supabase,
@@ -270,7 +326,17 @@ export function AgencyMap() {
         ))}
       </div>
 
-      {loadError && (
+      {loading && (
+        <p
+          role="status"
+          aria-live="polite"
+          className="rounded-xl bg-[#f4f6f4] px-4 py-3 text-sm font-bold text-[#5e6d67]"
+        >
+          기관 정보를 불러오는 중입니다…
+        </p>
+      )}
+
+      {!loading && loadError && (
         <p role="alert" className="rounded-xl bg-[#fdecea] px-4 py-3 text-sm font-bold text-[#8a2f24]">
           {loadError}
         </p>
@@ -314,11 +380,11 @@ export function AgencyMap() {
             }}
           />
           <div className="absolute inset-x-3 bottom-3 z-20 lg:hidden">
-            <AgencyDetails agency={selectedAgency} mobile />
+            <AgencyDetails agency={selectedAgency} loading={loading} loadError={loadError} mobile />
           </div>
         </section>
         <aside className="hidden lg:block">
-          <AgencyDetails agency={selectedAgency} />
+          <AgencyDetails agency={selectedAgency} loading={loading} loadError={loadError} />
         </aside>
       </div>
     </div>

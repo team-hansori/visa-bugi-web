@@ -89,6 +89,9 @@ export async function fetchNearbyAgencies(
   limit: number,
 ): Promise<Agency[]> {
   const regionToken = REGION_QUERY_TOKENS[region];
+  // Plain equality is correct for the current map-visible dataset — none of
+  // its rows use the legacy table's "|"-delimited multi-region format
+  // (e.g. "옥천|영동"). Revisit if that ever changes.
   let query = supabase
     .from("map_visible_agency_contacts")
     .select(

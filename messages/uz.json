@@ -12,7 +12,9 @@
     "closeDialog": "Yopish"
   },
   "Brand": {
-    "homeAriaLabel": "비자부기 홈"
+    "homeAriaLabel": "비자부기 홈",
+    "name": "비자부기",
+    "tagline": "Viza safarimdagi hamrohim"
   },
   "Nav": {
     "home": "Bosh sahifa",
@@ -70,7 +72,14 @@
       "selectedVisaLabel": "선택 비자",
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
-      "baseDateValue": "아직 설정되지 않음"
+      "baseDateValue": "아직 설정되지 않음",
+      "savedAriaLabel": "Saqlangan hujjatlarni to‘ldirish jarayoni {percent} foiz",
+      "savedCaption": "Hujjatlarni to‘ldirish jarayoni",
+      "eyebrow": "Umumiy talablar bajarilishi",
+      "savedEyebrow": "Saqlangan hujjatlarni to‘ldirish jarayoni",
+      "savedTag": "Saqlangan",
+      "commonVisaValue": "Umumiy ariza shakli",
+      "lastUpdatedLabel": "Yaqinda saqlandi"
     },
     "journey": {
       "heading": "현재 단계",
@@ -87,7 +96,9 @@
       },
       "noticeTitle": "상대 일정은 자동으로 추정하지 않아요",
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
-      "viewSchedule": "일정 보기"
+      "viewSchedule": "일정 보기",
+      "eyebrow": "Viza jarayoni",
+      "savedStepIndicator": "{total} hujjatdan {ready} tasi tayyor"
     },
     "tasks": {
       "heading": "서류 준비 체크",
@@ -104,13 +115,31 @@
           "label": "가까운 지원기관 확인",
           "meta": "기관 지도 · 위치 사용 선택"
         }
+      },
+      "eyebrow": "Keyingi vazifalar",
+      "saved": {
+        "missing": {
+          "label": "{document}: {count} ta majburiy maydonni to‘ldiring",
+          "meta": "OCR natijasi · to‘ldirish kerak"
+        },
+        "review": {
+          "label": "{document}: {count} ta maydonni qayta tekshiring",
+          "meta": "OCR natijasi · asl nusxa bilan solishtiring"
+        },
+        "ready": {
+          "label": "{document}: topshirishdan oldin yakuniy tekshiruv",
+          "meta": "OCR natijasi · tayyor"
+        }
       }
     },
     "agencies": {
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
-      "cta": "기관 지도 열기"
-    }
+      "cta": "기관 지도 열기",
+      "eyebrow": "Yaqin atrofdagi muassasalar"
+    },
+    "savedBadge": "Saqlangan jarayon",
+    "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi."
   },
   "Onboarding": {
     "badge": "Oddiy sozlash · taxminan 2 daqiqa",
@@ -339,5 +368,195 @@
       "notice": "Ushbu hujjatning rasmiy asl matni koreys tilida bo'lib, ushbu tildagi to'liq tarjima tayyorlanmoqda. Quyidagi havola orqali koreyscha asl matnni ko'rishingiz mumkin."
     },
     "locationNotice": "Joylashuv ma'lumotlarini yig'ish va foydalanish bo'yicha alohida siyosat, joylashuv siyosati tasdiqlangach ushbu ekranga qo'shiladi."
+  },
+  "Ocr": {
+    "eyebrow": "Ariza to‘ldirish yordamchisi",
+    "title": "Viza arizasidagi maydonlarni tekshirish",
+    "description": "Ariza rasmi, PDF yoki HWPX faylidagi to‘ldirilgan maydonlarni o‘qiydi va bo‘sh yoki qayta tekshirilishi kerak bo‘lgan joylarni ko‘rsatadi. Natija avtomatik yuborilmaydi.",
+    "languageNotice": "Tizim shakldagi koreyscha matnni o‘qiydi va yo‘riqnomani ilovada tanlangan tilda beradi.",
+    "catalog": {
+      "supabase": "Supabase v2 sxemasi ulangan",
+      "builtIn": "Tekshirilgan shablon demo"
+    },
+    "form": {
+      "label": "Ariza turi",
+      "auto": "Biriktirilgan fayldan avtomatik aniqlash",
+      "count": "Hozir {count} ta shaklni tanlash mumkin.",
+      "hint": "Noto‘g‘ri aniqlanishi mumkin. Ariza turini bilsangiz, uni bevosita tanlang."
+    },
+    "upload": {
+      "step": "1-bosqich",
+      "title": "Ariza rasmi yoki faylini biriktirish",
+      "chooseTitle": "Ariza rasmi, PDF yoki HWPX faylini tayyorlang",
+      "chooseDescription": "Rasmda hujjat va matn to‘liq, aniq ko‘rinsin; asl PDF yoki HWPX faylini ham biriktirish mumkin.",
+      "choose": "Rasm tanlash",
+      "inputLabel": "Viza arizasi rasmini tanlash",
+      "capture": "Rasmga olish",
+      "select": "Fayl biriktirish",
+      "cameraInputLabel": "Viza arizasini rasmga olish",
+      "galleryInputLabel": "Ariza rasmi, PDF yoki HWPX faylini biriktirish",
+      "types": "Bitta JPG, PNG, WebP rasmi yoki bitta PDF, HWPX faylini biriktiring (asl fayl ko‘pi bilan 16MB).",
+      "ready": "{name} fayli tahlilga tayyor.",
+      "pdfReady": "{name} PDF fayli o‘qishga tayyor.",
+      "pdfDescription": "Maydonlarni tekshirish uchun PDF matni va sahifa rasmlari birga o‘qiladi. Ko‘p sahifali fayl ko‘proq foydalanishga olib kelishi mumkin.",
+      "hwpxReady": "{name} HWPX fayli o‘qishga tayyor.",
+      "hwpxDescription": "Rasm OCR o‘rniga HWPX ichidagi hujjat matni xavfsiz o‘qilib, maydonlar tekshiriladi.",
+      "checking": "API chaqirilishidan oldin rasm sifati qurilmada bepul tekshirilmoqda.",
+      "optimizing": "Xavfsiz yuborish uchun rasm hajmi shu qurilmada kichraytirilmoqda.",
+      "optimized": "{name} fayli shu qurilmada 4MB dan kichik qilindi va tahlilga tayyor.",
+      "removed": "Biriktirma o‘chirildi. Boshqa rasm yoki fayl tanlashingiz mumkin.",
+      "retakeHint": "Arizaning butun sahifasi aniq ko‘rinadigan qilib qayta rasmga oling yoki boshqa rasm tanlang.",
+      "previewAlt": "Tanlangan ariza rasmi {name}",
+      "remove": "Biriktirmani o‘chirish",
+      "retake": "Qayta rasmga olish",
+      "replace": "Boshqa fayl biriktirish"
+    },
+    "imageCheck": {
+      "title": "Bu rasm bilan arizani tekshirish qiyin",
+      "tooSmall": "Rasm o‘lchami juda kichik. Matn aniq ko‘rinishi uchun hujjatga yaqinroqdan qayta oling.",
+      "tooDark": "Rasm juda qorong‘i. Yorug‘ va soyasiz joyda qayta oling.",
+      "tooBright": "Rasm juda yorug‘ va matn ko‘rinmaydi. Yorug‘lik aksidan saqlanib qayta oling.",
+      "lowContrast": "Matnni qog‘ozdan ajratish qiyin. Fokus va yoritishni sozlang.",
+      "blurry": "Rasm qimirlagan yoki fokuslanmagan. Telefonni qimirlatmay qayta oling.",
+      "notDocument": "Rasmda viza arizasining bitta to‘liq sahifasi ko‘rinayotganini tekshiring. Boshqa yoki kesilgan rasm tahlil qilinmaydi."
+    },
+    "actions": {
+      "analyze": "To‘ldirilgan joylarni tekshirish",
+      "analyzing": "Ariza tahlil qilinmoqda"
+    },
+    "save": {
+      "title": "Jarayonimga qo‘shish",
+      "description": "Asl fayl va tanilgan haqiqiy qiymatlar saqlanmaydi; faqat bandlarning bajarilgan, tekshiriladigan yoki bo‘sh holati saqlanadi.",
+      "demoDescription": "Demo natijasi haqiqiy OCR ma’lumoti emas, shuning uchun uni saqlab bo‘lmaydi.",
+      "action": "Natijani saqlash",
+      "saving": "Saqlanmoqda",
+      "saved": "Saqlandi",
+      "error": "OCR natijasini saqlab bo‘lmadi. Keyinroq qayta urinib ko‘ring.",
+      "notConfigured": "Supabase jarayon saqlash ombori hali ulanmagan.",
+      "sessionError": "Saqlash seansini yaratib bo‘lmadi. Supabase anonim kirishini tekshiring.",
+      "requiredMissing": "{count} ta majburiy band bo‘sh. Asl arizani to‘ldirib, qayta tahlil qilgandan keyin saqlash mumkin.",
+      "requiredMissingServer": "Majburiy bandlar bo‘shligi sababli saqlab bo‘lmaydi. Asl arizani to‘ldirib, qayta tahlil qiling.",
+      "blocked": "Majburiy bandlardan keyin saqlash"
+    },
+    "chat": {
+      "open": "Chatbotdan so‘rash",
+      "eyebrow": "OCR savol yordamchisi",
+      "title": "Tushunmagan bandingizni darhol so‘rang",
+      "description": "Tavsiya etilgan savolni tanlang yoki arizani qanday to‘ldirishni yozib so‘rang.",
+      "fieldContext": "Hozirgi savol bandi: {field}",
+      "fieldDefaultQuestion": "{field} bandiga nima yozishim kerak?",
+      "privacy": "Chatbotga faqat hujjat nomi, band nomi va to‘ldirish holati yuboriladi; OCR tanigan haqiqiy qiymatlar yuborilmaydi.",
+      "sensitiveWarning": "Savolga pasport raqami, chet ellik ro‘yxat raqami, manzil yoki boshqa shaxsiy ma’lumotni yozmang.",
+      "close": "Yopish",
+      "inputLabel": "OCR natijasi haqida so‘rash",
+      "placeholder": "Masalan: Bu bandni men to‘ldirishim kerakmi?",
+      "characterCount": "{count}/500 belgi",
+      "send": "Savol yuborish",
+      "sending": "Javob tayyorlanmoqda",
+      "disclaimer": "Javob faqat arizani to‘ldirishga yordam beradi; viza tasdiqlanishini baholamaydi va huquqiy maslahat emas. Eng so‘nggi rasmiy e’lon va mas’ul idoradan tekshiring.",
+      "suggestions": {
+        "what": "{field} bandiga nima yoziladi?",
+        "who": "{field} bandini kim to‘ldiradi?",
+        "why": "Nega {field} bandini qayta tekshirish kerak?",
+        "first": "Avval qaysi bandlarni tekshiray?",
+        "applicant": "Qaysi bandlarni o‘zim to‘ldiraman?",
+        "manual": "Qaysi bandlarni OCR tekshira olmaydi?"
+      },
+      "errors": {
+        "notConfigured": "Chatbot hali ulanmagan. OPENAI_API_KEY ni tekshiring.",
+        "rateLimit": "Qisqa vaqtda juda ko‘p savol yubordingiz. Keyinroq qayta urinib ko‘ring.",
+        "invalid": "Savol matnini tekshirib, qayta yuboring.",
+        "generic": "Javobni olib bo‘lmadi. Keyinroq qayta urinib ko‘ring."
+      }
+    },
+    "retake": {
+      "title": "Ariza rasmini qayta tekshiring",
+      "description": "Ariza turi boshqa bo‘lishi yoki rasm xira va kesilgan bo‘lishi mumkin. To‘rt burchak va matn to‘liq ko‘rinadigan qilib qayta oling.",
+      "action": "Qayta rasmga olish"
+    },
+    "privacy": {
+      "title": "Biriktirmani qayta ishlash qoidalari",
+      "temporary": "Rasm, PDF yoki HWPX faqat tahlil uchun vaqtincha yuboriladi",
+      "noDatabase": "Asl fayl va tanilgan qiymatlar saqlanmaydi, faqat foydalanuvchi tanlagan jarayon holati saqlanadi",
+      "reviewFirst": "Natija faqat foydalanuvchi tekshirganidan keyin ishlatiladi"
+    },
+    "tips": {
+      "eyebrow": "Rasmga olish bo‘yicha maslahat",
+      "edges": "Hujjatning to‘rt burchagi ham ko‘rinsin.",
+      "light": "Matn aniq chiqishi uchun yorug‘lik aksi va soyadan saqlaning.",
+      "onePage": "Ko‘p sahifali arizani har bir sahifa bo‘yicha tartib bilan tekshiring."
+    },
+    "errors": {
+      "generic": "Arizani tahlil qilishda muammo yuz berdi. Keyinroq qayta urinib ko‘ring.",
+      "fileType": "Faqat JPG, PNG, WebP rasmi, PDF yoki HWPX faylini biriktirish mumkin.",
+      "fileSize": "Rasm, PDF yoki HWPX asl fayli 16MB dan oshmasligi kerak.",
+      "pdf": "Bu to‘g‘ri PDF fayli ekanini tekshiring. Buzilgan yoki faqat kengaytmasi o‘zgartirilgan fayl tahlil qilinmaydi.",
+      "hwpx": "Bu to‘g‘ri HWPX fayli ekanini tekshiring. Buzilgan yoki faqat kengaytmasi o‘zgartirilgan fayl tahlil qilinmaydi.",
+      "optimize": "Rasm hajmini kichraytirib bo‘lmadi. Kichikroq rasm tanlang.",
+      "rateLimit": "Qisqa vaqtda juda ko‘p so‘rov yuborildi. Birozdan keyin qayta urinib ko‘ring."
+    },
+    "result": {
+      "eyebrow": "2-bosqich",
+      "title": "To‘ldirish holatini tekshirish",
+      "live": "OCR tahlili",
+      "demo": "Demo natija",
+      "page": "Sahifa",
+      "imageQuality": "Rasm holati"
+    },
+    "summary": {
+      "complete": "Aniqlandi",
+      "review": "Tekshirish kerak",
+      "missing": "To‘ldirish kerak",
+      "manual": "Qo‘lda tekshirish"
+    },
+    "field": {
+      "required": "Majburiy",
+      "optional": "Ixtiyoriy",
+      "empty": "Matn aniqlanmadi",
+      "example": "Masalan: {value}",
+      "lowConfidence": "Aniqlash ishonchi {percent}% · Asl nusxa bilan solishtiring."
+    },
+    "owner": {
+      "applicant": "Arizachi to‘ldiradi",
+      "employer": "Ish beruvchi to‘ldiradi",
+      "school": "Ta’lim muassasasi to‘ldiradi",
+      "official": "Mas’ul idora to‘ldiradi",
+      "signer": "Imzolovchi shaxsan to‘ldiradi"
+    },
+    "guide": {
+      "text": "Arizada ko‘rsatilgan maydon nomiga mos ma’lumotni aniq kiriting.",
+      "date": "Shaklda talab qilingan sana tartibini tekshirib, raqamlarda yozing.",
+      "number": "Tasdiqlovchi hujjatdagi raqam bilan bir xil ekanini tekshirib, faqat raqam kiriting.",
+      "choice": "Holatingizga mos bitta variantni belgilang.",
+      "checkbox": "Izohni o‘qib, mos katakka belgi qo‘ying.",
+      "address": "Hozirgi haqiqiy manzilingizni pochta indeksi va batafsil manzil bilan yozing.",
+      "identifier": "Rasmiy shaxsiy yoki korxona hujjatidagi raqam bilan har bir belgisini solishtiring.",
+      "manual": "Imzo, rozilik va idora uchun maydonlarni OCR to‘ldirmaydi. Ularni asl nusxada shaxsan to‘ldiring."
+    },
+    "status": {
+      "complete": "Aniqlandi",
+      "review": "Qayta tekshiring",
+      "missing": "To‘ldirish kerak",
+      "manual": "Shaxsan to‘ldiring",
+      "optional": "Ixtiyoriy maydon"
+    },
+    "quality": {
+      "clear": "Aniq",
+      "blurred": "Xira",
+      "cropped": "Bir qismi kesilgan",
+      "glare": "Yorug‘lik aksi bor",
+      "unknown": "Tekshirish kerak"
+    },
+    "warnings": {
+      "formNotConfirmed": "Ariza turi aniqlanmadi. Tanlangan turni asl nusxa bilan solishtiring.",
+      "formMismatch": "Tanlangan ariza turi rasmdan aniqlangan turga mos kelmaydi.",
+      "imageBlurred": "Rasm xira, ayrim matnlarni o‘qish qiyin. Qayta rasmga oling.",
+      "imageCropped": "Hujjatning bir qismi kesilgan. To‘rt burchagi ko‘rinadigan qilib qayta rasmga oling.",
+      "imageGlare": "Ayrim maydonlar yorug‘lik aksi bilan yopilgan.",
+      "handwritingUnclear": "Noaniq qo‘l yozuvi bo‘lgan maydonlarni asl nusxa bilan tekshiring.",
+      "multiplePages": "Qolgan sahifalarni ham tartib bilan tekshirish kerak.",
+      "demoData": "Bepul sinov rejimida namuna natijasi ko‘rsatilmoqda. OpenAI API chaqirilmagan va bu haqiqiy aniqlangan ma’lumot emas.",
+      "unknown": "Asl ariza va aniqlangan natijani qayta solishtiring."
+    }
   }
 }

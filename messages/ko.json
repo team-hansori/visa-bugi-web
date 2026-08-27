@@ -12,7 +12,9 @@
     "closeDialog": "닫기"
   },
   "Brand": {
-    "homeAriaLabel": "비자부기 홈"
+    "homeAriaLabel": "비자부기 홈",
+    "name": "비자부기",
+    "tagline": "내 비자 여정의 동반자"
   },
   "Nav": {
     "home": "홈",
@@ -70,7 +72,14 @@
       "selectedVisaLabel": "선택 비자",
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
-      "baseDateValue": "아직 설정되지 않음"
+      "baseDateValue": "아직 설정되지 않음",
+      "savedAriaLabel": "저장된 서류 작성 진행률 {percent}퍼센트",
+      "savedCaption": "서류 작성 진행률",
+      "eyebrow": "전체 요건 충족률",
+      "savedEyebrow": "저장된 서류 작성 진행률",
+      "savedTag": "저장됨",
+      "commonVisaValue": "공통 신청서",
+      "lastUpdatedLabel": "최근 저장"
     },
     "journey": {
       "heading": "현재 단계",
@@ -87,21 +96,50 @@
       },
       "noticeTitle": "상대 일정은 자동으로 추정하지 않아요",
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
-      "viewSchedule": "일정 보기"
+      "viewSchedule": "일정 보기",
+      "eyebrow": "비자 여정",
+      "savedStepIndicator": "서류 {total}개 중 {ready}개 준비 완료"
     },
     "tasks": {
       "heading": "서류 준비 체크",
       "items": {
-        "passport": { "label": "여권 사본 상태 확인", "meta": "서류 준비 · 예시 항목" },
-        "schedule": { "label": "방문 일정 직접 추가", "meta": "캘린더 · 날짜 미정" },
-        "agency": { "label": "가까운 지원기관 확인", "meta": "기관 지도 · 위치 사용 선택" }
+        "passport": {
+          "label": "여권 사본 상태 확인",
+          "meta": "서류 준비 · 예시 항목"
+        },
+        "schedule": {
+          "label": "방문 일정 직접 추가",
+          "meta": "캘린더 · 날짜 미정"
+        },
+        "agency": {
+          "label": "가까운 지원기관 확인",
+          "meta": "기관 지도 · 위치 사용 선택"
+        }
+      },
+      "eyebrow": "다음 할 일",
+      "saved": {
+        "missing": {
+          "label": "{document}의 필수 항목 {count}개 작성",
+          "meta": "OCR 결과 · 작성 필요"
+        },
+        "review": {
+          "label": "{document}의 항목 {count}개 다시 확인",
+          "meta": "OCR 결과 · 원본과 대조"
+        },
+        "ready": {
+          "label": "{document} 제출 전 최종 확인",
+          "meta": "OCR 결과 · 준비 완료"
+        }
       }
     },
     "agencies": {
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
-      "cta": "기관 지도 열기"
-    }
+      "cta": "기관 지도 열기",
+      "eyebrow": "주변 기관"
+    },
+    "savedBadge": "저장된 진행 상황",
+    "savedHeroDescription": "저장한 문서 {count}개의 OCR 점검 결과를 바탕으로 준비 상태와 다음 할 일을 보여줍니다."
   },
   "Onboarding": {
     "badge": "간단 설정 · 약 2분",
@@ -271,22 +309,43 @@
       "body": "로그인 기능이 추가되면 계정 정보와 진행 상황을 이 화면에서 확인할 수 있어요."
     },
     "links": {
-      "contact": { "label": "문의하기", "description": "궁금한 점을 남겨주세요" },
-      "terms": { "label": "이용약관", "description": "서비스 이용 조건을 확인해요" },
-      "privacy": { "label": "개인정보 처리방침", "description": "개인정보 처리 방식을 확인해요" }
+      "contact": {
+        "label": "문의하기",
+        "description": "궁금한 점을 남겨주세요"
+      },
+      "terms": {
+        "label": "이용약관",
+        "description": "서비스 이용 조건을 확인해요"
+      },
+      "privacy": {
+        "label": "개인정보 처리방침",
+        "description": "개인정보 처리 방식을 확인해요"
+      }
     }
   },
   "Settings": {
     "pageTitle": "설정",
-    "language": { "label": "언어" },
-    "push": { "label": "푸시 알림" },
-    "location": { "label": "내 위치 사용", "statusPreparing": "준비 중" },
+    "language": {
+      "label": "언어"
+    },
+    "push": {
+      "label": "푸시 알림"
+    },
+    "location": {
+      "label": "내 위치 사용",
+      "statusPreparing": "준비 중"
+    },
     "policy": {
       "sectionLabel": "약관 및 정책",
       "locationTerms": "위치기반서비스 이용약관"
     },
-    "account": { "logout": "로그아웃", "withdraw": "회원 탈퇴" },
-    "footer": { "appName": "비자부기" }
+    "account": {
+      "logout": "로그아웃",
+      "withdraw": "회원 탈퇴"
+    },
+    "footer": {
+      "appName": "비자부기"
+    }
   },
   "Contact": {
     "pageTitle": "문의하기",
@@ -485,5 +544,200 @@
       }
     ],
     "locationNotice": "위치정보 수집·이용에 대한 별도 처리방침은 위치정보 정책이 확정된 뒤 이 화면에 추가됩니다."
+  },
+  "NotFound": {
+    "title": "페이지를 찾을 수 없어요",
+    "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",
+    "backHome": "홈으로 돌아가기"
+  },
+  "Ocr": {
+    "eyebrow": "신청서 작성 도우미",
+    "title": "비자 신청서 작성 항목 점검",
+    "description": "신청서 사진, PDF 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다. 결과는 자동 제출되지 않습니다.",
+    "languageNotice": "서식의 한국어를 읽은 뒤 안내는 현재 선택한 앱 언어로 제공합니다.",
+    "catalog": {
+      "supabase": "Supabase 스키마 v2 연결",
+      "builtIn": "검수 템플릿 데모"
+    },
+    "form": {
+      "label": "신청서 종류",
+      "auto": "첨부 파일에서 자동으로 찾기",
+      "count": "현재 {count}개 서식을 선택할 수 있습니다.",
+      "hint": "잘못 인식될 수 있으므로 신청서 종류를 알고 있다면 직접 선택해 주세요."
+    },
+    "upload": {
+      "step": "1단계",
+      "title": "신청서 사진·파일 첨부",
+      "chooseTitle": "신청서 사진, PDF 또는 HWPX 파일을 준비하세요",
+      "chooseDescription": "사진은 문서 전체와 글자가 선명하게 보여야 하며, 원본 PDF와 HWPX 파일도 첨부할 수 있어요.",
+      "choose": "이미지 선택",
+      "inputLabel": "신청서 사진 선택",
+      "capture": "사진 촬영",
+      "select": "파일 첨부하기",
+      "cameraInputLabel": "신청서 사진 촬영",
+      "galleryInputLabel": "신청서 사진, PDF 또는 HWPX 파일 첨부",
+      "types": "JPG·PNG·WebP 사진 한 장, PDF 또는 HWPX 파일 한 개를 첨부해 주세요(원본 최대 16MB).",
+      "ready": "{name} 파일을 분석할 준비가 되었습니다.",
+      "pdfReady": "{name} PDF 파일을 읽을 준비가 되었습니다.",
+      "pdfDescription": "PDF의 텍스트와 각 페이지 이미지를 함께 읽어 작성 항목을 점검합니다. 여러 페이지를 분석하면 사용량이 늘 수 있습니다.",
+      "hwpxReady": "{name} HWPX 파일을 읽을 준비가 되었습니다.",
+      "hwpxDescription": "사진 OCR 대신 HWPX 내부의 문서 내용을 안전하게 읽어 작성 항목을 점검합니다.",
+      "checking": "API를 호출하기 전에 이 기기에서 사진 상태를 무료로 확인하는 중입니다.",
+      "optimizing": "사진을 안전하게 전송할 수 있도록 이 기기에서 크기를 줄이는 중입니다.",
+      "optimized": "{name} 파일을 이 기기에서 4MB 이하로 줄였습니다. 분석할 준비가 되었습니다.",
+      "removed": "첨부 파일을 삭제했습니다. 다른 사진이나 파일을 선택할 수 있습니다.",
+      "retakeHint": "신청서 전체가 선명하게 보이도록 다시 촬영하거나 다른 사진을 선택해 주세요.",
+      "previewAlt": "선택한 신청서 이미지 {name}",
+      "remove": "첨부 삭제",
+      "retake": "다시 촬영",
+      "replace": "다른 파일 첨부"
+    },
+    "imageCheck": {
+      "title": "이 사진으로는 신청서를 확인하기 어려워요",
+      "tooSmall": "사진 해상도가 너무 낮습니다. 문서 가까이에서 글자가 선명하게 보이도록 다시 촬영해 주세요.",
+      "tooDark": "사진이 너무 어둡습니다. 밝은 곳에서 그림자가 생기지 않도록 다시 촬영해 주세요.",
+      "tooBright": "사진이 너무 밝아 글자가 보이지 않습니다. 빛 반사를 피해서 다시 촬영해 주세요.",
+      "lowContrast": "글자와 종이의 구분이 흐립니다. 초점을 맞추고 조명을 조절해 주세요.",
+      "blurry": "사진이 흔들리거나 초점이 맞지 않았습니다. 휴대전화를 고정하고 다시 촬영해 주세요.",
+      "notDocument": "비자 신청서 한 페이지 전체가 보이는 사진인지 확인해 주세요. 다른 이미지나 일부만 잘린 사진은 분석할 수 없습니다."
+    },
+    "actions": {
+      "analyze": "작성 항목 점검",
+      "analyzing": "신청서를 분석하는 중"
+    },
+    "save": {
+      "title": "진행상황에 반영하기",
+      "description": "원본 파일과 인식된 실제 값은 저장하지 않고, 항목별 완료·확인·미작성 상태만 저장합니다.",
+      "demoDescription": "데모 결과는 실제 인식값이 아니므로 저장할 수 없습니다.",
+      "action": "이 결과 저장",
+      "saving": "저장하는 중",
+      "saved": "저장 완료",
+      "error": "OCR 결과를 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      "notConfigured": "Supabase 진행상황 저장소가 아직 연결되지 않았습니다.",
+      "sessionError": "사용자 저장 세션을 만들지 못했습니다. Supabase 익명 로그인을 확인해 주세요.",
+      "requiredMissing": "필수 미작성 항목 {count}개를 원본 신청서에 작성하고 다시 분석해야 저장할 수 있습니다.",
+      "requiredMissingServer": "필수 미작성 항목이 있어 저장할 수 없습니다. 원본을 작성한 뒤 다시 분석해 주세요.",
+      "blocked": "필수 항목 작성 후 저장"
+    },
+    "chat": {
+      "open": "챗봇에게 물어보기",
+      "eyebrow": "OCR 질문 도우미",
+      "title": "모르는 항목을 바로 물어보세요",
+      "description": "추천 질문을 선택하거나 신청서 작성 방법을 직접 질문할 수 있습니다.",
+      "fieldContext": "현재 질문 항목: {field}",
+      "fieldDefaultQuestion": "{field} 항목에는 무엇을 적어야 하나요?",
+      "privacy": "챗봇에는 문서명·항목명·작성 상태만 전달하며 OCR로 인식된 실제 값은 전달하지 않습니다.",
+      "sensitiveWarning": "질문에 여권번호, 외국인등록번호, 주소 같은 개인정보를 입력하지 마세요.",
+      "close": "닫기",
+      "inputLabel": "OCR 결과에 관해 질문하기",
+      "placeholder": "예: 이 항목은 제가 작성해야 하나요?",
+      "characterCount": "{count}/500자",
+      "send": "질문 보내기",
+      "sending": "답변을 준비하는 중",
+      "disclaimer": "답변은 신청서 작성을 돕기 위한 안내이며 비자 승인 가능성이나 법률 판단을 제공하지 않습니다. 최종 내용은 최신 공식 공고와 담당 기관에서 확인하세요.",
+      "suggestions": {
+        "what": "{field}에는 무엇을 적나요?",
+        "who": "{field}는 누가 작성하나요?",
+        "why": "{field}를 왜 다시 확인해야 하나요?",
+        "first": "어떤 항목부터 확인해야 하나요?",
+        "applicant": "제가 직접 작성할 항목은 무엇인가요?",
+        "manual": "OCR로 확인할 수 없는 항목은 무엇인가요?"
+      },
+      "errors": {
+        "notConfigured": "챗봇 연결이 아직 설정되지 않았습니다. OPENAI_API_KEY를 확인해 주세요.",
+        "rateLimit": "짧은 시간에 질문을 너무 많이 보냈습니다. 잠시 후 다시 시도해 주세요.",
+        "invalid": "질문 내용을 확인한 뒤 다시 보내 주세요.",
+        "generic": "답변을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
+      }
+    },
+    "retake": {
+      "title": "신청서 사진을 다시 확인해 주세요",
+      "description": "신청서 종류가 다르거나 사진이 흐리고 잘린 것으로 보입니다. 네 모서리와 글자가 모두 보이게 다시 촬영해 주세요.",
+      "action": "다시 촬영하기"
+    },
+    "privacy": {
+      "title": "첨부 파일 처리 원칙",
+      "temporary": "사진·PDF·HWPX는 분석을 위해서만 일시 전송",
+      "noDatabase": "원본 파일·인식값은 저장하지 않고 사용자가 선택한 진행 상태만 저장",
+      "reviewFirst": "인식 결과를 사용자가 확인한 뒤에만 활용"
+    },
+    "tips": {
+      "eyebrow": "촬영 도움말",
+      "edges": "문서의 네 모서리가 모두 보이게 촬영하세요.",
+      "light": "빛 반사와 그림자를 피해 글자를 선명하게 찍으세요.",
+      "onePage": "여러 장인 신청서는 한 페이지씩 순서대로 점검하세요."
+    },
+    "errors": {
+      "generic": "신청서 분석 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+      "fileType": "JPG, PNG, WebP 사진, PDF 또는 HWPX 파일만 첨부할 수 있습니다.",
+      "fileSize": "사진, PDF 또는 HWPX 원본 파일 크기는 16MB 이하여야 합니다.",
+      "pdf": "올바른 PDF 파일인지 확인해 주세요. 손상되었거나 다른 파일의 확장자만 바꾼 경우에는 분석할 수 없습니다.",
+      "hwpx": "올바른 HWPX 파일인지 확인해 주세요. 손상되었거나 다른 파일의 확장자만 바꾼 경우에는 분석할 수 없습니다.",
+      "optimize": "사진 크기를 줄이지 못했습니다. 더 작은 사진을 선택해 주세요.",
+      "rateLimit": "짧은 시간에 너무 많이 요청했습니다. 잠시 후 다시 시도해 주세요."
+    },
+    "result": {
+      "eyebrow": "2단계",
+      "title": "작성 상태 확인",
+      "live": "OCR 분석",
+      "demo": "데모 결과",
+      "page": "페이지",
+      "imageQuality": "사진 상태"
+    },
+    "summary": {
+      "complete": "인식 완료",
+      "review": "확인 필요",
+      "missing": "작성 필요",
+      "manual": "직접 확인"
+    },
+    "field": {
+      "required": "필수",
+      "optional": "선택",
+      "empty": "인식된 내용 없음",
+      "example": "예: {value}",
+      "lowConfidence": "인식 확신도 {percent}% · 원본과 비교해 주세요."
+    },
+    "owner": {
+      "applicant": "신청인 작성",
+      "employer": "고용주 작성",
+      "school": "학교 작성",
+      "official": "담당 기관 작성",
+      "signer": "서명자 직접 작성"
+    },
+    "guide": {
+      "text": "신청서에 표시된 항목명에 맞춰 정확한 내용을 적어 주세요.",
+      "date": "서식이 요구하는 날짜 순서를 확인하고 숫자로 적어 주세요.",
+      "number": "증빙자료와 같은 숫자인지 확인하고 숫자만 적어 주세요.",
+      "choice": "해당하는 한 가지 선택지를 표시해 주세요.",
+      "checkbox": "설명을 읽고 해당하는 칸에 체크해 주세요.",
+      "address": "현재 실제 주소를 우편번호와 상세주소까지 적어 주세요.",
+      "identifier": "공식 신분·사업 서류의 번호와 같은지 한 글자씩 확인해 주세요.",
+      "manual": "서명·동의·기관 작성란은 OCR로 대신 채우지 않습니다. 원본에서 직접 작성해 주세요."
+    },
+    "status": {
+      "complete": "인식 완료",
+      "review": "다시 확인",
+      "missing": "작성 필요",
+      "manual": "직접 작성",
+      "optional": "선택 항목"
+    },
+    "quality": {
+      "clear": "선명함",
+      "blurred": "흐림",
+      "cropped": "일부 잘림",
+      "glare": "빛 반사",
+      "unknown": "확인 필요"
+    },
+    "warnings": {
+      "formNotConfirmed": "신청서 종류를 확정하지 못했습니다. 선택한 종류와 원본을 비교해 주세요.",
+      "formMismatch": "선택한 신청서 종류와 사진에서 감지한 종류가 다릅니다.",
+      "imageBlurred": "사진이 흐려 일부 글자를 읽기 어렵습니다. 다시 촬영해 주세요.",
+      "imageCropped": "문서 일부가 잘렸습니다. 네 모서리가 모두 보이게 다시 촬영해 주세요.",
+      "imageGlare": "빛 반사로 가려진 항목이 있습니다.",
+      "handwritingUnclear": "손글씨가 불분명한 항목은 원본과 직접 비교해 주세요.",
+      "multiplePages": "나머지 페이지도 순서대로 점검해야 합니다.",
+      "demoData": "무료 테스트 모드라 예시 결과를 표시합니다. OpenAI API는 호출되지 않았으며 실제 인식값이 아닙니다.",
+      "unknown": "원본 신청서와 인식 결과를 다시 비교해 주세요."
+    }
   }
 }

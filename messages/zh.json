@@ -12,7 +12,9 @@
     "closeDialog": "关闭"
   },
   "Brand": {
-    "homeAriaLabel": "비자부기 홈"
+    "homeAriaLabel": "비자부기 홈",
+    "name": "비자부기",
+    "tagline": "我的签证旅程伙伴"
   },
   "Nav": {
     "home": "首页",
@@ -70,7 +72,14 @@
       "selectedVisaLabel": "선택 비자",
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
-      "baseDateValue": "아직 설정되지 않음"
+      "baseDateValue": "아직 설정되지 않음",
+      "savedAriaLabel": "已保存文件的填写进度 {percent}%",
+      "savedCaption": "文件填写进度",
+      "eyebrow": "总体要求完成率",
+      "savedEyebrow": "已保存文件的填写进度",
+      "savedTag": "已保存",
+      "commonVisaValue": "通用申请表",
+      "lastUpdatedLabel": "最近保存"
     },
     "journey": {
       "heading": "현재 단계",
@@ -87,7 +96,9 @@
       },
       "noticeTitle": "상대 일정은 자동으로 추정하지 않아요",
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
-      "viewSchedule": "일정 보기"
+      "viewSchedule": "일정 보기",
+      "eyebrow": "签证旅程",
+      "savedStepIndicator": "{total} 份文件中已准备 {ready} 份"
     },
     "tasks": {
       "heading": "서류 준비 체크",
@@ -104,13 +115,31 @@
           "label": "가까운 지원기관 확인",
           "meta": "기관 지도 · 위치 사용 선택"
         }
+      },
+      "eyebrow": "下一步事项",
+      "saved": {
+        "missing": {
+          "label": "{document}：填写 {count} 个必填项目",
+          "meta": "OCR 结果 · 需要填写"
+        },
+        "review": {
+          "label": "{document}：再次确认 {count} 个项目",
+          "meta": "OCR 结果 · 与原件核对"
+        },
+        "ready": {
+          "label": "{document}：提交前最终确认",
+          "meta": "OCR 结果 · 已准备完成"
+        }
       }
     },
     "agencies": {
       "heading": "도움받을 곳을 찾아보세요",
       "description": "GPS는 저장하지 않으며, 위치를 허용하지 않아도 지역을 직접 선택할 수 있습니다.",
-      "cta": "기관 지도 열기"
-    }
+      "cta": "기관 지도 열기",
+      "eyebrow": "附近机构"
+    },
+    "savedBadge": "已保存的进度",
+    "savedHeroDescription": "我们会根据已保存的 {count} 份文件的 OCR 结果，显示准备状态和下一步事项。"
   },
   "Onboarding": {
     "badge": "简单设置 · 约2分钟",
@@ -339,5 +368,195 @@
       "notice": "本文件的正式原文为韩语，该语言的完整翻译正在准备中。您可以通过下方链接查看韩语原文。"
     },
     "locationNotice": "有关位置信息收集和使用的单独政策，将在位置信息政策确定后添加到此页面。"
+  },
+  "Ocr": {
+    "eyebrow": "申请表填写助手",
+    "title": "检查签证申请表填写项目",
+    "description": "读取申请表照片、PDF 或 HWPX 文件中已填写的内容，并提示空白或需要再次确认的项目。结果不会自动提交。",
+    "languageNotice": "系统读取表格中的韩文，并以当前选择的应用语言提供说明。",
+    "catalog": {
+      "supabase": "已连接 Supabase 架构 v2",
+      "builtIn": "已审核模板演示"
+    },
+    "form": {
+      "label": "申请表类型",
+      "auto": "从附件自动识别",
+      "count": "目前可选择 {count} 份表格。",
+      "hint": "识别可能有误。如果您知道申请表类型，请直接选择。"
+    },
+    "upload": {
+      "step": "第1步",
+      "title": "添加申请表照片或文件",
+      "chooseTitle": "准备申请表照片、PDF 或 HWPX 文件",
+      "chooseDescription": "照片应清晰显示整份文件和文字，也可以添加原始 PDF 或 HWPX 文件。",
+      "choose": "选择图片",
+      "inputLabel": "选择申请表照片",
+      "capture": "拍照",
+      "select": "添加文件",
+      "cameraInputLabel": "拍摄申请表照片",
+      "galleryInputLabel": "添加申请表照片、PDF 或 HWPX 文件",
+      "types": "请添加一张 JPG、PNG、WebP 照片，或一个 PDF、HWPX 文件（原文件最大 16MB）。",
+      "ready": "已准备分析文件 {name}。",
+      "pdfReady": "已准备读取 PDF 文件 {name}。",
+      "pdfDescription": "系统会同时读取 PDF 文本和页面图像来检查填写项目。分析多页文件可能会增加用量。",
+      "hwpxReady": "已准备读取 HWPX 文件 {name}。",
+      "hwpxDescription": "系统不会对其进行照片 OCR，而是安全读取 HWPX 内部内容并检查填写项目。",
+      "checking": "在调用 API 之前，正在此设备上免费检查照片质量。",
+      "optimizing": "正在此设备上缩小照片，以便安全传输。",
+      "optimized": "已在此设备上将 {name} 缩小至 4MB 以下，可以开始分析。",
+      "removed": "附件已删除，您可以选择其他照片或文件。",
+      "retakeHint": "请重新拍摄或选择一张整页清晰可见的申请表照片。",
+      "previewAlt": "已选择的申请表图片 {name}",
+      "remove": "删除附件",
+      "retake": "重新拍照",
+      "replace": "添加其他文件"
+    },
+    "imageCheck": {
+      "title": "这张照片难以用于检查申请表",
+      "tooSmall": "照片分辨率太低。请靠近文件重新拍摄，确保文字清晰。",
+      "tooDark": "照片太暗。请在明亮且没有阴影的地方重新拍摄。",
+      "tooBright": "照片过亮，文字不可见。请避开反光后重新拍摄。",
+      "lowContrast": "文字与纸张的区分不清。请对焦并调整光线。",
+      "blurry": "照片抖动或没有对焦。请固定手机后重新拍摄。",
+      "notDocument": "请确认照片中完整显示一页签证申请表。其他图片或被裁切的照片无法分析。"
+    },
+    "actions": {
+      "analyze": "检查填写项目",
+      "analyzing": "正在分析申请表"
+    },
+    "save": {
+      "title": "同步到我的进度",
+      "description": "不保存原始文件和识别出的实际内容，仅保存各项目的完成、待确认和未填写状态。",
+      "demoDescription": "演示结果不是真实识别内容，因此无法保存。",
+      "action": "保存此结果",
+      "saving": "正在保存",
+      "saved": "保存完成",
+      "error": "无法保存 OCR 结果，请稍后重试。",
+      "notConfigured": "Supabase 进度存储尚未连接。",
+      "sessionError": "无法创建保存会话，请确认 Supabase 已启用匿名登录。",
+      "requiredMissing": "有 {count} 个必填项目尚未填写。请在原申请表中填写并重新分析后再保存。",
+      "requiredMissingServer": "仍有必填项目未填写，无法保存。请填写原申请表后重新分析。",
+      "blocked": "填写必填项目后保存"
+    },
+    "chat": {
+      "open": "询问聊天助手",
+      "eyebrow": "OCR 问答助手",
+      "title": "不明白的项目可直接提问",
+      "description": "可选择推荐问题，或直接询问申请表的填写方法。",
+      "fieldContext": "当前提问项目：{field}",
+      "fieldDefaultQuestion": "{field} 项目应该填写什么？",
+      "privacy": "仅向助手发送文件名、项目名和填写状态，不会发送 OCR 识别出的实际内容。",
+      "sensitiveWarning": "请勿在问题中输入护照号、外国人登记号或地址等个人信息。",
+      "close": "关闭",
+      "inputLabel": "询问 OCR 结果",
+      "placeholder": "例如：这个项目应该由我填写吗？",
+      "characterCount": "{count}/500字",
+      "send": "发送问题",
+      "sending": "正在准备回答",
+      "disclaimer": "回答仅用于协助填写申请表，不判断签证获批可能性，也不构成法律意见。请以最新官方公告和主管机关说明为准。",
+      "suggestions": {
+        "what": "{field} 应该填写什么？",
+        "who": "{field} 应由谁填写？",
+        "why": "为什么要再次确认 {field}？",
+        "first": "我应该先确认哪些项目？",
+        "applicant": "哪些项目需要我本人填写？",
+        "manual": "哪些项目无法通过 OCR 确认？"
+      },
+      "errors": {
+        "notConfigured": "聊天助手尚未连接，请检查 OPENAI_API_KEY。",
+        "rateLimit": "短时间内发送了太多问题，请稍后再试。",
+        "invalid": "请检查问题内容后重新发送。",
+        "generic": "无法获取回答，请稍后再试。"
+      }
+    },
+    "retake": {
+      "title": "请重新确认申请表照片",
+      "description": "申请表类型可能不同，或照片模糊、被裁切。请让四个角和文字都清晰可见后重新拍摄。",
+      "action": "重新拍照"
+    },
+    "privacy": {
+      "title": "附件处理原则",
+      "temporary": "照片、PDF 或 HWPX 仅为分析而临时传输",
+      "noDatabase": "不保存原始文件和识别内容，仅保存用户选择的进度状态",
+      "reviewFirst": "识别结果须经用户确认后才使用"
+    },
+    "tips": {
+      "eyebrow": "拍摄提示",
+      "edges": "拍摄时请让文件四个角全部可见。",
+      "light": "避开反光和阴影，确保文字清晰。",
+      "onePage": "多页申请表请按顺序逐页检查。"
+    },
+    "errors": {
+      "generic": "分析申请表时出现问题，请稍后重试。",
+      "fileType": "只能添加 JPG、PNG、WebP 照片、PDF 或 HWPX 文件。",
+      "fileSize": "照片、PDF 或 HWPX 原文件必须不超过 16MB。",
+      "pdf": "请确认这是有效的 PDF 文件。文件损坏或仅更改扩展名时无法分析。",
+      "hwpx": "请确认这是有效的 HWPX 文件。文件损坏或仅更改扩展名时无法分析。",
+      "optimize": "无法缩小照片，请选择更小的图片。",
+      "rateLimit": "短时间内请求次数过多，请稍后重试。"
+    },
+    "result": {
+      "eyebrow": "第2步",
+      "title": "确认填写状态",
+      "live": "OCR 分析",
+      "demo": "演示结果",
+      "page": "页码",
+      "imageQuality": "照片状态"
+    },
+    "summary": {
+      "complete": "识别完成",
+      "review": "需要确认",
+      "missing": "需要填写",
+      "manual": "手动确认"
+    },
+    "field": {
+      "required": "必填",
+      "optional": "选填",
+      "empty": "未识别到内容",
+      "example": "例如：{value}",
+      "lowConfidence": "识别置信度 {percent}% · 请与原件核对。"
+    },
+    "owner": {
+      "applicant": "由申请人填写",
+      "employer": "由雇主填写",
+      "school": "由学校填写",
+      "official": "由受理机关填写",
+      "signer": "由签署人亲自填写"
+    },
+    "guide": {
+      "text": "请按照申请表中的项目名称准确填写。",
+      "date": "确认表格要求的日期顺序，并用数字填写。",
+      "number": "请确认与证明材料中的数字一致，并只填写数字。",
+      "choice": "请选择并标记一个符合情况的选项。",
+      "checkbox": "阅读说明后，在符合情况的方框内打勾。",
+      "address": "请填写当前实际地址，包括邮政编码和详细地址。",
+      "identifier": "请逐字核对，确保与正式身份证明或企业文件中的号码一致。",
+      "manual": "签名、同意和机关填写栏不会由 OCR 代填，请在原件上亲自填写。"
+    },
+    "status": {
+      "complete": "识别完成",
+      "review": "再次确认",
+      "missing": "需要填写",
+      "manual": "亲自填写",
+      "optional": "选填项目"
+    },
+    "quality": {
+      "clear": "清晰",
+      "blurred": "模糊",
+      "cropped": "部分被裁切",
+      "glare": "有反光",
+      "unknown": "需要确认"
+    },
+    "warnings": {
+      "formNotConfirmed": "无法确定申请表类型，请将所选类型与原件比较。",
+      "formMismatch": "所选申请表类型与照片中识别到的类型不同。",
+      "imageBlurred": "照片模糊，部分文字难以读取，请重新拍摄。",
+      "imageCropped": "文件部分被裁切，请让四个角全部可见后重新拍摄。",
+      "imageGlare": "部分项目被反光遮挡。",
+      "handwritingUnclear": "手写不清的项目请直接与原件核对。",
+      "multiplePages": "其余页面也需要按顺序检查。",
+      "demoData": "当前为免费测试模式，显示的是示例结果。未调用 OpenAI API，也不是真实识别内容。",
+      "unknown": "请再次比较原申请表和识别结果。"
+    }
   }
 }

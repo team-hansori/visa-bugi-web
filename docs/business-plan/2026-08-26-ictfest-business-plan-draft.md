@@ -1,5 +1,7 @@
 # 비자부기 ICT융합 공모전 사업계획서 초안 작성 Implementation Plan
 
+> **문서 상태:** 작성 과정 기록용 계획서이며 제출본이 아니다. 제출 내용의 기준은 `2026_ICT융합공모전_비자부기_사업계획서_최종안.docx`와 `2026-visa-bugi-사업계획서-출처원장.md`이다.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 제13회 전국 ICT융합 공모전(분야 ② 충북 현안 해결 AI 혁신) 출품용 "비자부기(visa-bugi)" 사업계획서의 전체 본문 초안을, 확정된 목차 설계 스펙에 따라 마크다운 파일로 작성한다.

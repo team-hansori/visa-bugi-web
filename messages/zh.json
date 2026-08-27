@@ -637,6 +637,7 @@
       "required": "必填",
       "optional": "选填",
       "empty": "未识别到内容",
+      "signatureDetected": "签名识别完成",
       "example": "例如：{value}",
       "lowConfidence": "识别置信度 {percent}% · 请与原件核对。"
     },
@@ -655,6 +656,7 @@
       "checkbox": "阅读说明后，在符合情况的方框内打勾。",
       "address": "请填写当前实际地址，包括邮政编码和详细地址。",
       "identifier": "请逐字核对，确保与正式身份证明或企业文件中的号码一致。",
+      "signature": "签名栏已标记为识别完成。",
       "manual": "签名、同意和机关填写栏不会由 OCR 代填，请在原件上亲自填写。"
     },
     "status": {

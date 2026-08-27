@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import { KakaoMap, type KakaoMapMarker } from "@/features/map/kakao-map";
+import { REGION_CENTERS, getMarkerPosition, type RegionId } from "@/features/map/geo";
 
 const categories = [
   { id: "all", label: "전체" },
@@ -15,12 +17,12 @@ const regions = [
   { id: "chungju", label: "충주시" },
   { id: "jincheon", label: "진천군" },
   { id: "eumseong", label: "음성군" },
-] as const;
+] as const satisfies readonly { id: RegionId; label: string }[];
 
 const demoAgencies = [
-  { id: 1, category: "admin", name: "행정 지원기관 예시", type: "행정", x: "27%", y: "34%" },
-  { id: 2, category: "labor", name: "노동 상담기관 예시", type: "노동", x: "62%", y: "48%" },
-  { id: 3, category: "education", name: "교육 지원기관 예시", type: "교육", x: "43%", y: "68%" },
+  { id: 1, category: "admin", name: "행정 지원기관 예시", type: "행정" },
+  { id: 2, category: "labor", name: "노동 상담기관 예시", type: "노동" },
+  { id: 3, category: "education", name: "교육 지원기관 예시", type: "교육" },
 ] as const;
 
 type Category = (typeof categories)[number]["id"];
@@ -59,6 +61,11 @@ export function AgencyMapDemo() {
   const locationRequestId = useRef(0);
   const selectedAgency = demoAgencies.find((agency) => agency.id === selectedId) ?? demoAgencies[0];
   const visibleAgencies = category === "all" ? demoAgencies : demoAgencies.filter((agency) => agency.category === category);
+  const mapCenter = REGION_CENTERS[selectedRegion];
+  const mapMarkers: KakaoMapMarker[] = visibleAgencies.map((agency, index) => ({
+    id: agency.id,
+    position: getMarkerPosition(selectedRegion, index),
+  }));
 
   function selectCategory(nextCategory: Category) {
     setCategory(nextCategory);
@@ -122,13 +129,37 @@ export function AgencyMapDemo() {
         {categories.map((item) => <button key={item.id} type="button" aria-pressed={category === item.id} onClick={() => selectCategory(item.id)} className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${category === item.id ? "bg-[#173f36] text-white" : "border border-[#dce4df] bg-white text-[#5e6d67]"}`}>{item.label}</button>)}
       </div>
 
+      <div className="flex gap-2 overflow-x-auto pb-1" role="list" aria-label="지도 위 기관 목록">
+        {visibleAgencies.map((agency) => (
+          <button
+            key={agency.id}
+            type="button"
+            role="listitem"
+            aria-pressed={selectedId === agency.id}
+            onClick={() => setSelectedId(agency.id)}
+            className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
+              selectedId === agency.id
+                ? "bg-[#e59b37] text-white"
+                : "border border-[#dce4df] bg-white text-[#5e6d67]"
+            }`}
+          >
+            {agency.name}
+          </button>
+        ))}
+      </div>
+
       <div className="grid min-h-[560px] gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <section className="map-grid relative min-h-[68dvh] overflow-hidden rounded-[24px] border border-[#cedbd2] lg:min-h-[560px]" aria-label="기관 지도 화면 예시">
-          <div className="absolute left-3 top-3 z-20 rounded-xl bg-[#2f3c37]/85 px-3 py-2 text-[0.68rem] font-bold text-white backdrop-blur sm:left-4 sm:top-4">지도 SDK·실기관 데이터 연결 전</div>
-          <div className="absolute inset-x-[12%] top-[15%] h-5 rotate-12 rounded-full bg-white/80" aria-hidden="true" />
-          <div className="absolute bottom-[22%] left-[-5%] h-5 w-[75%] -rotate-12 rounded-full bg-white/80" aria-hidden="true" />
-          {visibleAgencies.map((agency) => <button key={agency.id} type="button" onClick={() => setSelectedId(agency.id)} style={{ left: agency.x, top: agency.y }} aria-label={`${agency.name} 선택`} aria-pressed={selectedId === agency.id} className={`absolute z-10 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-4 border-white shadow-[0_8px_20px_rgba(42,67,55,0.28)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#173f36] ${selectedId === agency.id ? "bg-[#e59b37] text-white" : "bg-[#2d6d5d] text-white"}`}><Icon name="map-pin" className="size-5" /></button>)}
-          <div className="absolute inset-x-3 bottom-3 z-20 lg:hidden"><AgencyDetails agency={selectedAgency} mobile /></div>
+        <section
+          className="map-grid relative min-h-[68dvh] overflow-hidden rounded-[24px] border border-[#cedbd2] lg:min-h-[560px]"
+          aria-label="기관 지도"
+        >
+          <div className="absolute left-3 top-3 z-20 rounded-xl bg-[#2f3c37]/85 px-3 py-2 text-[0.68rem] font-bold text-white backdrop-blur sm:left-4 sm:top-4">
+            실기관 데이터 연결 전 · 예시 위치
+          </div>
+          <KakaoMap center={mapCenter} markers={mapMarkers} onSelectMarker={setSelectedId} />
+          <div className="absolute inset-x-3 bottom-3 z-20 lg:hidden">
+            <AgencyDetails agency={selectedAgency} mobile />
+          </div>
         </section>
         <aside className="hidden lg:block"><AgencyDetails agency={selectedAgency} /></aside>
       </div>

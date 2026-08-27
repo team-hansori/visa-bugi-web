@@ -24,6 +24,8 @@ export type VisaDetails = {
 export type ProfileRow = {
   user_id: string;
   locale: string;
+  username: string | null;
+  name: string | null;
   gender: string | null;
   birthdate: string | null;
   nationality: string | null;

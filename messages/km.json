@@ -27,6 +27,19 @@
   "LocaleSwitcher": {
     "label": "ជ្រើសរើសភាសា"
   },
+  "Auth": {
+    "tabSignIn": "ចូល",
+    "tabSignUp": "ចុះឈ្មោះ",
+    "username": "ឈ្មោះអ្នកប្រើ",
+    "usernameHint": "អក្សរតូច លេខ និងសញ្ញាបន្ទាត់ក្រោម ៣~៣០ តួអក្សរ",
+    "password": "ពាក្យសម្ងាត់",
+    "passwordHint": "យ៉ាងតិច ៨ តួអក្សរ",
+    "name": "ឈ្មោះ",
+    "signInSubmit": "ចូល",
+    "signUpSubmit": "ចុះឈ្មោះ ហើយចាប់ផ្ដើម",
+    "submitting": "កំពុងដំណើរការ…",
+    "genericError": "មានបញ្ហាបណ្ដោះអាសន្ន។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។"
+  },
   "Calendar": {
     "search": {
       "open": "ស្វែងរកក្នុងប្រតិទិន",
@@ -267,8 +280,6 @@
     "consentNotice": "<terms>លក្ខខណ្ឌប្រើប្រាស់</terms> និង <privacy>គោលការណ៍ភាពឯកជន</privacy> កំពុងត្រូវបានរៀបចំ។ នៅពេលចេញផ្សាយ អ្នកអាចមើលបាននៅទីនេះ។",
     "welcomeTitle": "តោះចាប់ផ្តើមជាមួយ Visa-bugi",
     "welcomeDescription": "យើងនឹងតាមដានលក្ខខណ្ឌទិដ្ឋាការ និងជំហានបន្ទាប់របស់អ្នក។",
-    "googleStart": "ចាប់ផ្តើមជាមួយ Google",
-    "googleComingSoon": "ការចូលគណនី Google កំពុងត្រូវបានរៀបចំ។ អ្នកអាចប្រើប្រាស់បានភ្លាមៗតាមប៊ូតុងខាងក្រោម។",
     "continueWithoutLogin": "ចាប់ផ្តើមដោយមិនចូលគណនី",
     "addressManualPrompt": "រកមិនឃើញមែនទេ? ខ្ញុំនឹងបញ្ចូលដោយផ្ទាល់",
     "addressManualRoadLabel": "អាសយដ្ឋាន (ឈ្មោះផ្លូវ ឬលេខផ្ទះ)",

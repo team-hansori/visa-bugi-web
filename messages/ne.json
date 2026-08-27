@@ -27,6 +27,19 @@
   "LocaleSwitcher": {
     "label": "भाषा चयन गर्नुहोस्"
   },
+  "Auth": {
+    "tabSignIn": "लगइन",
+    "tabSignUp": "दर्ता",
+    "username": "प्रयोगकर्ता नाम",
+    "usernameHint": "सानो अक्षर, अंक, अन्डरस्कोर, ३~३० अक्षर",
+    "password": "पासवर्ड",
+    "passwordHint": "कम्तीमा ८ अक्षर",
+    "name": "नाम",
+    "signInSubmit": "लगइन",
+    "signUpSubmit": "दर्ता गरी सुरु गर्नुहोस्",
+    "submitting": "प्रशोधन हुँदै…",
+    "genericError": "अस्थायी त्रुटि भयो। पछि फेरि प्रयास गर्नुहोस्।"
+  },
   "Calendar": {
     "search": {
       "open": "पात्रोमा खोज्नुहोस्",
@@ -267,8 +280,6 @@
     "consentNotice": "<terms>सेवा सर्तहरू</terms> र <privacy>गोपनीयता नीति</privacy> तयार गरिँदैछ। प्रकाशित भएपछि यहाँ हेर्न सकिन्छ।",
     "welcomeTitle": "भिसा-बुगीसँग सुरु गरौं",
     "welcomeDescription": "हामी तपाईंको भिसा आवश्यकता र अर्को चरण ट्र्याक गर्नेछौं।",
-    "googleStart": "Google बाट सुरु गर्नुहोस्",
-    "googleComingSoon": "Google लगइन तयारी हुँदैछ। तलको बटनबाट तुरुन्त प्रयोग गर्न सकिन्छ।",
     "continueWithoutLogin": "लगइन बिना सुरु गर्नुहोस्",
     "addressManualPrompt": "फेला परेन? म आफैं प्रविष्ट गर्छु",
     "addressManualRoadLabel": "ठेगाना (सडकको नाम वा घर नम्बर)",

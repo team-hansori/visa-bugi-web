@@ -27,6 +27,19 @@
   "LocaleSwitcher": {
     "label": "选择语言"
   },
+  "Auth": {
+    "tabSignIn": "登录",
+    "tabSignUp": "注册",
+    "username": "用户名",
+    "usernameHint": "小写字母、数字、下划线，3~30 个字符",
+    "password": "密码",
+    "passwordHint": "至少 8 个字符",
+    "name": "姓名",
+    "signInSubmit": "登录",
+    "signUpSubmit": "注册并开始",
+    "submitting": "处理中…",
+    "genericError": "发生临时错误，请稍后再试。"
+  },
   "Calendar": {
     "search": {
       "open": "搜索日历内容",
@@ -267,8 +280,6 @@
     "consentNotice": "<terms>服务条款</terms>和<privacy>隐私政策</privacy>正在准备中，发布后可在此查看。",
     "welcomeTitle": "与Visa-bugi一起开始吧",
     "welcomeDescription": "我们将为您追踪签证要求和下一步。",
-    "googleStart": "使用Google开始",
-    "googleComingSoon": "Google登录正在准备中。您可以通过下方按钮立即使用。",
     "continueWithoutLogin": "无需登录开始",
     "addressManualPrompt": "搜索不到吗？我自己输入",
     "addressManualRoadLabel": "地址（道路名或地号）",

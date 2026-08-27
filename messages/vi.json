@@ -27,6 +27,19 @@
   "LocaleSwitcher": {
     "label": "Chọn ngôn ngữ"
   },
+  "Auth": {
+    "tabSignIn": "Đăng nhập",
+    "tabSignUp": "Đăng ký",
+    "username": "Tên đăng nhập",
+    "usernameHint": "Chữ thường, số, gạch dưới, 3~30 ký tự",
+    "password": "Mật khẩu",
+    "passwordHint": "Tối thiểu 8 ký tự",
+    "name": "Họ tên",
+    "signInSubmit": "Đăng nhập",
+    "signUpSubmit": "Đăng ký và bắt đầu",
+    "submitting": "Đang xử lý…",
+    "genericError": "Đã xảy ra lỗi tạm thời. Vui lòng thử lại sau."
+  },
   "Calendar": {
     "search": {
       "open": "Tìm trong lịch",
@@ -267,8 +280,6 @@
     "consentNotice": "<terms>Điều khoản sử dụng</terms> và <privacy>Chính sách bảo mật</privacy> đang được chuẩn bị. Bạn có thể xem khi được đăng tải.",
     "welcomeTitle": "Hãy bắt đầu cùng Visa-bugi",
     "welcomeDescription": "Chúng tôi sẽ giúp bạn theo dõi yêu cầu visa và bước tiếp theo.",
-    "googleStart": "Bắt đầu bằng Google",
-    "googleComingSoon": "Đăng nhập Google đang được chuẩn bị. Bạn có thể sử dụng ngay bằng nút bên dưới.",
     "continueWithoutLogin": "Bắt đầu không cần đăng nhập",
     "addressManualPrompt": "Không tìm thấy? Tôi sẽ nhập trực tiếp",
     "addressManualRoadLabel": "Địa chỉ (tên đường hoặc số nhà)",

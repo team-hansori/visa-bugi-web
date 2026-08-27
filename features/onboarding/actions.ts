@@ -81,7 +81,9 @@ export async function saveOnboarding(
 
   const submission = parsed.data;
 
-  const profileRow: ProfileInsert = {
+  // 온보딩은 아이디/이름을 수집하지 않는다. 가입(signUpWithId)이 먼저 넣은
+  // username/name을 이 upsert가 덮어쓰지 않도록 페이로드에서 제외한다.
+  const profileRow: Omit<ProfileInsert, "username" | "name"> = {
     user_id: user.id,
     locale: submission.locale,
     gender: submission.gender,

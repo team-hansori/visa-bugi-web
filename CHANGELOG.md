@@ -166,6 +166,7 @@
 - *(home)* 좁은 폭에서 안 접히던 요소들 반응형 처리
 - *(api)* Phase 2 코드 리뷰 반영 — 위치 프라이버시·캐시 request-id·오류 로깅·세션 독립 조회
 - *(ui)* 코드 리뷰 반영 — condition_note 분할 축소, label 중첩 해소
+- *(onboarding)* 회원가입·로그인 후 온보딩으로 이동 (로그인 화면 재노출 루프 제거)
 
 ### 💼 Other
 
@@ -250,6 +251,7 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - BFF/아이디 인증 설계안 + 구현 계획 추가
 - 제외한 3개 엔드포인트에 대한 결정 확정 및 추가 절차 명시
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

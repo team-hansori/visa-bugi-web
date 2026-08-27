@@ -8,6 +8,7 @@
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
     "openSettings": "설정 열기",
+    "backToHome": "홈으로 돌아가기",
     "closeDialog": "닫기"
   },
   "Brand": {
@@ -139,6 +140,146 @@
     },
     "savedBadge": "저장된 진행 상황",
     "savedHeroDescription": "저장한 문서 {count}개의 OCR 점검 결과를 바탕으로 준비 상태와 다음 할 일을 보여줍니다."
+  },
+  "Onboarding": {
+    "badge": "간단 설정 · 약 2분",
+    "heroTitle": "나에게 맞는 안내를 준비할게요",
+    "heroDescription": "로그인 화면 없이 바로 이용할 수 있고, 선택 결과는 이 브라우저에 안전하게 보관됩니다. 문서 이미지는 저장하지 않습니다.",
+    "privacyTitle": "개인정보 최소 수집",
+    "privacyNotice": "여기서 안내하는 내용은 참고용이며, 최종 자격 판정은 관할 출입국·외국인관서에서 확인해야 합니다.",
+    "questionLabel": "질문 {index}",
+    "previous": "이전",
+    "next": "다음",
+    "submit": "설정 완료",
+    "submitting": "저장하는 중...",
+    "saveSuccess": "설정이 저장되었습니다.",
+    "addressLabel": "거주(희망) 주소",
+    "addressPlaceholder": "도로명 또는 지번을 입력하세요",
+    "addressEligible": "{region}는 지역특화형 비자 대상 지역입니다.",
+    "addressNotEligible": "{region}는 지역특화형 비자(F-2-R·E-7-4R·F-4-R) 대상 지역이 아닙니다. 참고용 안내이며 최종 판정은 관할 출입국·외국인관서에서 확인해 주세요.",
+    "searchResultCount": "검색 결과 {count}건",
+    "searchNoResult": "검색 결과가 없습니다.",
+    "searchError": "주소를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+    "saveError": "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+    "consentNotice": "<terms>이용약관</terms>과 <privacy>개인정보처리방침</privacy>을 준비하고 있어요. 게시되면 이 화면에서 확인하실 수 있습니다.",
+
+    "welcomeTitle": "비자부기와 함께 시작해요",
+    "welcomeDescription": "내 비자 요건과 다음 단계를 추적해 드릴게요.",
+    "googleStart": "Google로 시작하기",
+    "googleComingSoon": "Google 로그인은 준비 중입니다. 아래 버튼으로 바로 이용하실 수 있어요.",
+    "continueWithoutLogin": "로그인 없이 시작하기",
+
+    "addressManualPrompt": "검색이 안 되나요? 직접 입력할게요",
+    "addressManualRoadLabel": "주소 (도로명 또는 지번)",
+    "addressManualRoadPlaceholder": "예: 충북 제천시 내토로 295",
+    "addressManualSigunguLabel": "사는 시/군",
+    "addressManualSigunguPlaceholder": "예: 제천시",
+    "addressManualBack": "주소 검색으로 돌아가기",
+    "addressManualSubmit": "이 주소로 설정",
+
+    "birthdateLabel": "생년월일",
+
+    "koreanTopikLabel": "TOPIK",
+    "koreanTopikDescription": "한국어능력시험 급수",
+    "koreanKiipLabel": "사회통합프로그램",
+    "koreanKiipDescription": "이수 단계",
+    "koreanNoneLabel": "아직 없어요",
+    "koreanTopikSelectLabel": "TOPIK 급수",
+    "koreanKiipSelectLabel": "사회통합프로그램 단계",
+    "koreanSelectPlaceholder": "선택해 주세요",
+    "koreanTopikUnit": "급",
+    "koreanKiipUnit": "단계",
+
+    "d2UniversityLabel": "재학 중인 대학",
+    "d2DepartmentLabel": "학과",
+    "d2AcademicStatusLabel": "현재 과정",
+    "d2ProgramStartDateLabel": "입학(또는 어학연수 시작)일",
+    "d2SelectPlaceholder": "선택해 주세요",
+
+    "stepTitles": {
+      "locale": "어떤 언어가 편한가요?",
+      "nationality": "국적을 선택해 주세요",
+      "gender": "성별을 선택해 주세요",
+      "birthdate": "생년월일이 어떻게 되나요?",
+      "currentVisa": "지금 가지고 계신 체류자격은 무엇인가요?",
+      "address": "어디에 살고 계신가요?",
+      "koreanLevel": "한국어능력 자격이 있으신가요?",
+      "targetVisa": "어떤 체류자격을 준비하고 계신가요?",
+      "f2rDetail": "국내 전문학사 이상 학위가 있으신가요?",
+      "e74rDetail": "최근 10년 내 E-9·E-10·H-2로 몇 년 체류하셨나요?",
+      "f4rDetail": "다음 중 어떤 상황에 가까우신가요?",
+      "d2Detail": "재학 정보를 알려주세요"
+    },
+    "stepDescriptions": {
+      "locale": "화면에 표시할 언어를 선택해 주세요.",
+      "nationality": "맞춤 안내를 준비하는 데 사용합니다.",
+      "gender": "선택하지 않아도 다음 단계로 넘어갈 수 있습니다.",
+      "birthdate": "나이 요건 확인에 사용합니다.",
+      "currentVisa": "이 답변으로 준비 가능한 체류자격을 좁혀서 보여드립니다.",
+      "address": "지역특화형 비자는 인구감소지역 거주(희망)가 조건입니다.",
+      "koreanLevel": "해당하는 자격을 모두 선택해 주세요. TOPIK과 사회통합프로그램을 둘 다 가지고 계셔도 괜찮습니다.",
+      "targetVisa": "현재 체류자격을 기준으로 준비 가능한 자격만 보여드립니다.",
+      "f2rDetail": "학위 또는 생활임금 요건 중 하나를 충족하면 됩니다.",
+      "e74rDetail": "대략적인 기간이면 충분합니다.",
+      "f4rDetail": "이주 유형에 따라 필요한 서류가 달라집니다.",
+      "d2Detail": "광역형 비자 대상 학과인지 확인하는 데 사용합니다."
+    },
+    "genderOptions": {
+      "female": "여성",
+      "male": "남성",
+      "unspecified": "선택하지 않음"
+    },
+    "nationalityOptions": {
+      "VN": "베트남",
+      "UZ": "우즈베키스탄",
+      "NP": "네팔",
+      "KH": "캄보디아",
+      "CN": "중국",
+      "OT": "기타"
+    },
+    "currentVisaOptions": {
+      "D-2": "D-2 (유학)",
+      "D-10": "D-10 (구직)",
+      "E-9": "E-9 (비전문취업)",
+      "E-10": "E-10 (선원취업)",
+      "H-2": "H-2 (방문취업)",
+      "F-4": "F-4 (재외동포)",
+      "OTHER": "다른 체류자격",
+      "UNKNOWN": "잘 모르겠어요"
+    },
+    "targetVisaOptions": {
+      "F-2-R": "F-2-R (지역특화 우수인재)",
+      "E-7-4R": "E-7-4R (지역특화 숙련기능인력)",
+      "F-4-R": "F-4-R (지역특화 재외동포)",
+      "D-2": "D-2 (충북 광역형 유학)"
+    },
+    "educationOptions": {
+      "ASSOCIATE_OR_ABOVE": "전문학사 이상 있음",
+      "BELOW_ASSOCIATE": "없음"
+    },
+    "residenceYearOptions": {
+      "1": "1년 미만",
+      "2": "2년 이상",
+      "3": "3년 이상",
+      "4": "4년 이상"
+    },
+    "migrationTypeLabels": {
+      "EXISTING_RESIDENT": "기존 거주자",
+      "DOMESTIC_TRANSFER": "국내 전입자",
+      "OVERSEAS_TRANSFER": "해외 전입자"
+    },
+    "migrationTypeDescriptions": {
+      "EXISTING_RESIDENT": "이미 인구감소지역에 2년 이상 거주",
+      "DOMESTIC_TRANSFER": "국내 다른 지역에서 가족과 함께 이주",
+      "OVERSEAS_TRANSFER": "해외에서 가족과 함께 이주"
+    },
+    "academicStatusOptions": {
+      "LANGUAGE_COURSE": "어학연수",
+      "ASSOCIATE": "전문학사",
+      "BACHELOR_1_2": "학사 1~2학년",
+      "BACHELOR_3_4": "학사 3~4학년",
+      "GRADUATE": "석사·박사"
+    }
   },
   "Chat": {
     "title": "비자 상담",

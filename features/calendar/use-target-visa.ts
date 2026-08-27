@@ -1,30 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getOnboardingProfile } from "@/lib/onboarding/profile";
-
-const UNRESOLVED_VISA_VALUES = new Set(["OTHER", "UNKNOWN"]);
-
-function resolveProfileVisaId(): string | null {
-  const profile = getOnboardingProfile();
-  return profile?.visa && !UNRESOLVED_VISA_VALUES.has(profile.visa) ? profile.visa : null;
-}
+import { resolveStoredTargetVisaCode } from "@/lib/onboarding/target-visa";
 
 /**
- * profileVisaId starts null (matches the server, which has no sessionStorage)
- * and is populated in an effect after mount — reading getOnboardingProfile()
- * directly during render would return different values on the server vs. the
- * client's hydration render and cause a hydration mismatch.
+ * 목표 비자는 온보딩이 user_visa_profile에 저장한 값을 사용한다.
+ * 아직 세션이나 저장된 값이 없으면 빈 배열로 시작해 전체 일정을 보여준다.
  */
 export function useTargetVisaIds(): { targetVisaIds: string[]; toggleVisaId: (visaId: string) => void; clearVisaIds: () => void } {
   const [profileVisaId, setProfileVisaId] = useState<string | null>(null);
   const [manualVisaIds, setManualVisaIds] = useState<string[] | null>(null);
 
   useEffect(() => {
-    // Intentional: this is the mount-only sessionStorage read described
-    // above, not state synchronized from an external system on every render.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setProfileVisaId(resolveProfileVisaId());
+    let cancelled = false;
+    resolveStoredTargetVisaCode().then((visaCode) => {
+      if (!cancelled) setProfileVisaId(visaCode);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const targetVisaIds = manualVisaIds ?? (profileVisaId ? [profileVisaId] : []);

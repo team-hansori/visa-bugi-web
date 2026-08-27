@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getOnboardingProfile } from "@/lib/onboarding/profile";
+import { resolveStoredTargetVisaCode } from "@/lib/onboarding/target-visa";
 import type { HomeVisaPreparationCatalog } from "./preparation-model";
 
 const UNRESOLVED_VISA_VALUES = new Set(["OTHER", "UNKNOWN"]);
@@ -16,18 +17,31 @@ export function useSelectedVisa(catalog: HomeVisaPreparationCatalog) {
   );
 
   useEffect(() => {
-    const profile = getOnboardingProfile();
-    const profileVisaCode =
-      profile?.visa && !UNRESOLVED_VISA_VALUES.has(profile.visa)
-        ? profile.visa
-        : null;
-    if (profileVisaCode && catalog.visas.some((visa) => visa.visaCode === profileVisaCode)) {
-      // This mount-only browser storage read deliberately happens after hydration.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setSelectedVisaCode(profileVisaCode);
+    let cancelled = false;
+
+    async function loadSelectedVisa() {
+      const storedVisaCode = await resolveStoredTargetVisaCode();
+      const profile = getOnboardingProfile();
+      const browserFallbackCode =
+        profile?.visa && !UNRESOLVED_VISA_VALUES.has(profile.visa)
+          ? profile.visa
+          : null;
+      const nextVisaCode = storedVisaCode ?? browserFallbackCode;
+
+      if (
+        !cancelled &&
+        nextVisaCode &&
+        catalog.visas.some((visa) => visa.visaCode === nextVisaCode)
+      ) {
+        setSelectedVisaCode(nextVisaCode);
+      }
     }
+
+    void loadSelectedVisa();
+    return () => {
+      cancelled = true;
+    };
   }, [catalog.visas]);
 
   return catalog.visas.find((visa) => visa.visaCode === selectedVisaCode) ?? fallbackVisa;
 }
-

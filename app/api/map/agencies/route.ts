@@ -11,25 +11,31 @@ const AGENCY_TYPES = [
   "OTHER",
 ] as const;
 
-function parseNear(params: URLSearchParams, region: RegionId | null): LatLng {
+type NearResult = { near: LatLng; fromCoords: boolean };
+
+function parseNear(params: URLSearchParams, region: RegionId | null): NearResult {
   const latRaw = params.get("lat");
   const lngRaw = params.get("lng");
-  if (latRaw !== null && lngRaw !== null) {
-    const lat = Number(latRaw);
-    const lng = Number(lngRaw);
-    if (
-      !Number.isFinite(lat) ||
-      !Number.isFinite(lng) ||
-      lat < 33 ||
-      lat > 39 ||
-      lng < 124 ||
-      lng > 132
-    ) {
-      throw new ApiRouteError(400, "INVALID_QUERY", "좌표 값이 올바르지 않습니다.");
-    }
-    return { lat, lng };
+  if (latRaw === null && lngRaw === null) {
+    return { near: REGION_CENTERS[region ?? "cheongju"], fromCoords: false };
   }
-  return REGION_CENTERS[region ?? "cheongju"];
+  if (latRaw === null || lngRaw === null) {
+    throw new ApiRouteError(400, "INVALID_QUERY", "lat과 lng는 함께 보내야 합니다.");
+  }
+
+  const lat = Number(latRaw);
+  const lng = Number(lngRaw);
+  if (
+    !Number.isFinite(lat) ||
+    !Number.isFinite(lng) ||
+    lat < 33 ||
+    lat > 39 ||
+    lng < 124 ||
+    lng > 132
+  ) {
+    throw new ApiRouteError(400, "INVALID_QUERY", "좌표 값이 올바르지 않습니다.");
+  }
+  return { near: { lat, lng }, fromCoords: true };
 }
 
 export const GET = withApiRoute(async (request) => {
@@ -63,11 +69,14 @@ export const GET = withApiRoute(async (request) => {
     }
   }
 
-  const near = parseNear(params, region);
+  const { near, fromCoords } = parseNear(params, region);
   const agencies = await getNearbyAgencies({ region, agencyType, near, limit });
 
-  return Response.json(
-    { agencies },
-    { headers: { "Cache-Control": "public, max-age=60" } },
-  );
+  // 좌표가 실린 요청(사용자 위치 기반)은 공유 캐시에 올리지 않는다. 좌표 없는
+  // region 조회만 개인화되지 않으므로 짧은 public 캐시를 허용한다.
+  const cacheControl = fromCoords
+    ? "private, max-age=30"
+    : "public, max-age=60";
+
+  return Response.json({ agencies }, { headers: { "Cache-Control": cacheControl } });
 });

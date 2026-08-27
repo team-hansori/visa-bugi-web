@@ -4,13 +4,17 @@ export type ApiError = {
 
 /** 라우트 핸들러가 던지면 withApiRoute가 공통 오류 형태로 직렬화한다. */
 export class ApiRouteError extends Error {
+  readonly cause?: unknown;
+
   constructor(
     readonly status: number,
     readonly code: string,
     message: string,
+    options?: { cause?: unknown },
   ) {
     super(message);
     this.name = "ApiRouteError";
+    this.cause = options?.cause;
   }
 }
 
@@ -27,6 +31,28 @@ export function apiErrorResponse(
   });
 }
 
+// 클라이언트가 보낸 x-request-id는 로그·응답 헤더에 그대로 반향되므로
+// 토큰 문자·길이만 허용한다(로그 포징·헤더 인젝션 표면 축소).
+const REQUEST_ID_PATTERN = /^[A-Za-z0-9._-]{1,128}$/;
+
+function resolveRequestId(request: Request): string {
+  const inbound = request.headers.get("x-request-id");
+  if (inbound && REQUEST_ID_PATTERN.test(inbound)) return inbound;
+  return crypto.randomUUID();
+}
+
+// 공유(CDN) 캐시에 저장될 수 있는 응답에는 요청별 x-request-id를 붙이지 않는다.
+// 캐시 히트 시 최초 요청의 id가 다른 클라이언트에 재전달되어 로그와 대응되지
+// 않기 때문이다. no-store/private 응답에만 부착한다.
+function isSharedCacheable(cacheControl: string | null): boolean {
+  if (!cacheControl) return false;
+  return (
+    cacheControl.includes("public") &&
+    !cacheControl.includes("no-store") &&
+    !cacheControl.includes("private")
+  );
+}
+
 type Handler = (
   request: Request,
   context: { requestId: string },
@@ -39,12 +65,13 @@ type Handler = (
  */
 export function withApiRoute(handler: Handler) {
   return async (request: Request): Promise<Response> => {
-    const requestId =
-      request.headers.get("x-request-id") ?? crypto.randomUUID();
+    const requestId = resolveRequestId(request);
     try {
       const response = await handler(request, { requestId });
       const headers = new Headers(response.headers);
-      headers.set("x-request-id", requestId);
+      if (!isSharedCacheable(headers.get("Cache-Control"))) {
+        headers.set("x-request-id", requestId);
+      }
       return new Response(response.body, {
         status: response.status,
         statusText: response.statusText,
@@ -57,6 +84,7 @@ export function withApiRoute(handler: Handler) {
           code: cause.code,
           status: cause.status,
           message: cause.message,
+          cause: cause.cause,
         });
         return apiErrorResponse(
           cause.status,

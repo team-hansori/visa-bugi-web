@@ -9,6 +9,11 @@ import type { Agency, AgencyType } from "@/features/map/agency-queries";
 
 const NEARBY_LIMIT = 3;
 
+/** 위치 좌표를 ~1km 정밀도로 낮춰 API 쿼리스트링에 정밀 위치가 남지 않게 한다. */
+function roundCoord(value: number): string {
+  return (Math.round(value * 100) / 100).toString();
+}
+
 const regions = [
   { id: "cheongju", translationKey: "cheongju" },
   { id: "chungju", translationKey: "chungju" },
@@ -165,13 +170,17 @@ export function AgencyMap() {
       setSelectedId(null);
 
       const params = new URLSearchParams();
-      // A real GPS fix searches across every pilot region instead of
-      // whatever region happens to be selected in the dropdown, so
-      // "가까운 기관" always matches what the map actually centers on.
-      if (!userPosition) params.set("region", selectedRegion);
+      if (userPosition) {
+        // 정밀 좌표가 캐시 URL·접근 로그에 그대로 남지 않도록 소수 2자리
+        // (~1km)로 반올림해 보낸다. 3개 최근접 목록 정렬에는 이 정밀도로 충분하다.
+        params.set("lat", roundCoord(userPosition.lat));
+        params.set("lng", roundCoord(userPosition.lng));
+      } else {
+        // A real GPS fix searches across every pilot region; without one the
+        // server derives the sort origin from the selected region's center.
+        params.set("region", selectedRegion);
+      }
       if (typeFilter !== "all") params.set("type", typeFilter);
-      params.set("lat", String(near.lat));
-      params.set("lng", String(near.lng));
       params.set("limit", String(NEARBY_LIMIT));
 
       try {

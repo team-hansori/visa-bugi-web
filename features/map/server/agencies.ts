@@ -1,4 +1,5 @@
 import "server-only";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import {
   PROVINCE_WIDE_TOKEN,
   REGION_QUERY_TOKENS,
@@ -9,7 +10,6 @@ import {
 } from "@/features/map/agency-queries";
 import type { LatLng, RegionId } from "@/features/map/geo";
 import { ApiRouteError } from "@/lib/api/errors";
-import { createClient } from "@/lib/supabase/server";
 
 export type AgencyQuery = {
   // `null` = 지역으로 필터하지 않음 (실제 GPS 좌표로 정렬할 때는 모든 시범
@@ -20,15 +20,22 @@ export type AgencyQuery = {
   limit: number;
 };
 
-function hasSupabaseEnv(): boolean {
-  return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-  );
+/**
+ * `map_visible_agency_contacts`는 visa-data가 소유한 공개 읽기 전용 뷰다.
+ * 쿠키(세션) 컨텍스트를 싣지 않는 anon 클라이언트로 조회해, 호출한 사용자와
+ * 무관하게 항상 같은 결과가 나오도록 한다 — 그래야 라우트가 응답을 공유 캐시에
+ * 안전하게 올릴 수 있다.
+ */
+function createPublicReadClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) return null;
+  return createSupabaseClient(url, key, { auth: { persistSession: false } });
 }
 
 export async function getNearbyAgencies(query: AgencyQuery): Promise<Agency[]> {
-  if (!hasSupabaseEnv()) {
+  const supabase = createPublicReadClient();
+  if (!supabase) {
     throw new ApiRouteError(
       503,
       "MAP_NOT_CONFIGURED",
@@ -36,7 +43,6 @@ export async function getNearbyAgencies(query: AgencyQuery): Promise<Agency[]> {
     );
   }
 
-  const supabase = await createClient();
   let request = supabase
     .from("map_visible_agency_contacts")
     .select(
@@ -57,6 +63,7 @@ export async function getNearbyAgencies(query: AgencyQuery): Promise<Agency[]> {
       502,
       "MAP_QUERY_FAILED",
       "기관 정보를 불러오지 못했습니다.",
+      { cause: error },
     );
   }
 

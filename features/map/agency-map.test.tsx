@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
-import { afterEach, beforeEach, expect, it, vi } from "vitest";
+import { afterEach, expect, it, vi } from "vitest";
 import messages from "@/messages/ko.json";
 
 vi.mock("@/features/map/kakao-map", () => ({
@@ -16,11 +16,6 @@ function renderMap() {
     </NextIntlClientProvider>,
   );
 }
-
-beforeEach(() => {
-  process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "pk";
-});
 
 afterEach(() => vi.restoreAllMocks());
 

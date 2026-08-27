@@ -44,6 +44,7 @@ export async function getCurrentUserTargetVisa(): Promise<{
       502,
       "PROFILE_QUERY_FAILED",
       "프로필을 불러오지 못했습니다.",
+      { cause: error },
     );
   }
 

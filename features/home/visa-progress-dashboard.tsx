@@ -156,8 +156,8 @@ export function VisaProgressDashboard({
 
   return (
     <>
-      <section className="grid gap-5 xl:grid-cols-12" aria-label={t("progress.sectionAriaLabel")}>
-        <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 xl:col-span-4">
+      <section className="grid gap-5 lg:grid-cols-12" aria-label={t("progress.sectionAriaLabel")}>
+        <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 lg:col-span-4">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{t("progress.onboardingEyebrow")}</p>
@@ -167,23 +167,23 @@ export function VisaProgressDashboard({
               {selectedVisa.source === "supabase" ? t("progress.liveTag") : t("progress.previewTag")}
             </span>
           </div>
-          <div className="mt-6 flex flex-col items-center gap-5 sm:flex-row sm:justify-center xl:flex-col">
+          <div className="mt-6 flex flex-col items-center gap-5 sm:flex-row sm:justify-center lg:flex-col">
             <ProgressRing
               ariaLabel={t("progress.dynamicAriaLabel", { percent: percentage })}
               caption={t("progress.checklistCaption")}
               percentage={percentage}
             />
             <div className="w-full rounded-2xl bg-[#f5f7f4] p-4">
-              <div className="flex items-start justify-between gap-4 text-sm">
-                <span className="mt-1.5 font-semibold text-[#64716c]">{t("progress.selectedVisaLabel")}</span>
-                <div className="flex flex-col items-end gap-1">
+              <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 text-sm">
+                <span className="font-semibold text-[#64716c]">{t("progress.selectedVisaLabel")}</span>
+                <div className="flex w-full min-w-0 flex-col gap-1 sm:w-auto sm:items-end">
                   <select
                     aria-label={t("progress.selectedVisaLabel")}
                     aria-busy={isChangingVisa}
                     value={selectedVisa.visaCode}
                     onChange={(event) => changeVisaCode(event.target.value)}
                     disabled={isChangingVisa}
-                    className={`rounded-lg border border-[#d4ddd8] bg-white px-2.5 py-1.5 text-right text-sm font-extrabold text-[#20332c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${isChangingVisa ? "opacity-60" : ""}`}
+                    className={`w-full min-w-0 max-w-full rounded-lg border border-[#d4ddd8] bg-white px-2.5 py-1.5 text-sm font-extrabold text-[#20332c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] sm:w-auto sm:text-right ${isChangingVisa ? "opacity-60" : ""}`}
                   >
                     {catalog.visas.map((visa) => (
                       <option key={visa.visaCode} value={visa.visaCode}>
@@ -198,7 +198,7 @@ export function VisaProgressDashboard({
                   ) : null}
                 </div>
               </div>
-              <div className="mt-3 flex items-center justify-between gap-4 border-t border-[#e3e8e5] pt-3 text-xs">
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-[#e3e8e5] pt-3 text-xs">
                 <span className="font-semibold text-[#64716c]">{t("progress.validityLabel")}</span>
                 <strong className="text-[#8a5910]">
                   {formatVisaValidity(selectedVisa.validFrom, selectedVisa.validTo, locale) ??
@@ -209,7 +209,7 @@ export function VisaProgressDashboard({
           </div>
         </article>
 
-        <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 xl:col-span-8">
+        <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 lg:col-span-8">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h2 className="text-xl font-black tracking-[-0.035em]">{t("journey.heading")}</h2>
@@ -281,12 +281,12 @@ export function VisaProgressDashboard({
                   })}
                 </span>
               </div>
-              <ol className="mt-3 flex gap-2 overflow-x-auto pb-1" aria-label={t("journey.detailHeading")}>
+              <ol className="mt-3 flex flex-wrap gap-2" aria-label={t("journey.detailHeading")}>
                 {selectedVisa.stages.map((stage, index) => {
                   const complete = isPreparationStageComplete(stage, checkedIds);
                   const current = index === currentPreparationStageIndex && !allRequiredChecked;
                   return (
-                    <li key={stage.id} className={`min-w-[10rem] flex-1 rounded-xl border px-3 py-2 ${current ? "border-[#2d6d5d] bg-[#e9f4ef]" : complete ? "border-[#cbded5] bg-white" : "border-[#e1e6e3] bg-white"}`}>
+                    <li key={stage.id} className={`min-w-0 grow basis-[calc(50%-0.25rem)] rounded-xl border px-3 py-2 sm:basis-[calc(33.333%-0.5rem)] lg:basis-[calc(25%-0.5rem)] ${current ? "border-[#2d6d5d] bg-[#e9f4ef]" : complete ? "border-[#cbded5] bg-white" : "border-[#e1e6e3] bg-white"}`}>
                       <span className="flex items-center gap-2 text-xs font-black text-[#2c5044]">
                         <span className={`grid size-5 place-items-center rounded-full ${complete ? "bg-[#2d6d5d] text-white" : "bg-[#edf2ef] text-[#65716c]"}`}>
                           {complete ? <Icon name="check" className="size-3" /> : index + 1}

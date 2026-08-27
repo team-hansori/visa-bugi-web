@@ -96,13 +96,13 @@ export function VisaQuotaCarousel({ items, source }: VisaQuotaCarouselProps) {
           return (
             <article
               key={item.visaCode}
-              className={`relative min-h-[340px] w-full shrink-0 bg-gradient-to-br ${themes[index % themes.length]} px-6 pb-20 pt-7 sm:min-h-[330px] sm:px-16 sm:pb-16 sm:pt-10 lg:px-24`}
+              className={`relative min-h-[340px] w-full shrink-0 bg-gradient-to-br ${themes[index % themes.length]} px-6 pb-20 pt-7 sm:min-h-[330px] sm:px-12 sm:pb-16 sm:pt-10 md:px-16 lg:px-24`}
               aria-hidden={index !== activeIndex}
             >
               <div className="absolute -right-16 -top-24 size-72 rounded-full border-[46px] border-white/[0.04]" aria-hidden="true" />
               <div className="absolute -bottom-36 right-20 size-72 rounded-full bg-white/[0.04] blur-2xl" aria-hidden="true" />
 
-              <div className="relative flex h-full flex-col justify-between gap-7 sm:flex-row sm:items-end">
+              <div className="relative flex h-full flex-col justify-between gap-7 md:flex-row md:items-end">
                 <div className="max-w-2xl">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex min-h-8 items-center rounded-full bg-white/12 px-3 text-xs font-extrabold text-white/90">
@@ -166,7 +166,7 @@ export function VisaQuotaCarousel({ items, source }: VisaQuotaCarouselProps) {
                   </div>
                 </div>
 
-                <div className="relative w-full rounded-2xl border border-white/12 bg-black/15 p-4 backdrop-blur-sm sm:w-[280px]">
+                <div className="relative w-full rounded-2xl border border-white/12 bg-black/15 p-4 backdrop-blur-sm md:w-[280px]">
                   <p className="text-sm font-extrabold text-white">
                     {getScopeLabel(item, t)}
                   </p>

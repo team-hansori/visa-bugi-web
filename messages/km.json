@@ -129,10 +129,19 @@
       "viewSchedule": "일정 보기",
       "eyebrow": "ដំណើរទិដ្ឋាការ",
       "savedStepIndicator": "ឯកសារ {ready} ក្នុងចំណោម {total} បានរួចរាល់",
-      "stepIndicatorDynamic": "ដំណាក់កាល {step} · {stage}"
+      "stepIndicatorDynamic": "ដំណាក់កាល {step} · {stage}",
+      "detailHeading": "ដំណាក់កាលលម្អិតនៃការរៀបចំឯកសារ",
+      "detailProgress": "ដំណាក់កាល {current}/{total}"
     },
     "tasks": {
       "heading": "បញ្ជីត្រួតពិនិត្យឯកសារ",
+      "pendingHeading": "ឯកសារចាំបាច់ដែលមិនទាន់ដាក់",
+      "pendingDescription": "បង្ហាញឯកសារចាំបាច់មិនទាន់ដាក់រហូតដល់ ៥ ដោយចៃដន្យ។",
+      "requiredSummary": "បានដាក់ឯកសារចាំបាច់ {checked}/{total}",
+      "sampleHint": "មើលបញ្ជីពេញតាមដំណាក់កាលក្នុងស្ថានភាពឯកសារ",
+      "allRequiredChecked": "បានពិនិត្យឯកសារចាំបាច់ទាំងអស់",
+      "noPendingRequired": "មិនមានឯកសារចាំបាច់ដែលមិនទាន់ដាក់ទេ។",
+      "viewAll": "មើលឯកសារដាក់ស្នើទាំងអស់",
       "stageDescription": "ឯកសារដែលត្រូវការសម្រាប់ដំណាក់កាល {stage}។",
       "checkedSummary": "បានពិនិត្យ {checked}/{total}",
       "checkAriaLabel": "សម្គាល់ {document} ថាបានរៀបចំ",
@@ -187,6 +196,38 @@
     },
     "savedBadge": "វឌ្ឍនភាពដែលបានរក្សាទុក",
     "savedHeroDescription": "យើងបង្ហាញស្ថានភាពត្រៀម និងកិច្ចការបន្ទាប់ដោយផ្អែកលើលទ្ធផល OCR នៃឯកសារ {count} ដែលបានរក្សាទុក។"
+  },
+  "DocumentsHub": {
+    "eyebrow": "ជំនួយការឯកសារ",
+    "title": "តើអ្នកត្រូវការការងារឯកសារមួយណា?",
+    "description": "ពិនិត្យប្រអប់ក្នុងពាក្យសុំដោយ OCR ឬគ្រប់គ្រងឯកសារទាំងអស់របស់ទិដ្ឋាការដែលបានជ្រើសតាមដំណាក់កាល។",
+    "ocr": {
+      "title": "ពិនិត្យប្រអប់បំពេញពាក្យសុំទិដ្ឋាការ",
+      "description": "វិភាគរូបថត PDF ឬ HWPX នៃពាក្យសុំ ដើម្បីណែនាំអ្វីត្រូវបំពេញ និងពិនិត្យឡើងវិញ។"
+    },
+    "status": {
+      "title": "ស្ថានភាពឯកសារដាក់ទិដ្ឋាការ",
+      "description": "មើល និងគូសធីកឯកសារទាំងអស់តាមដំណាក់កាលនីតិវិធីសម្រាប់ទិដ្ឋាការដែលបានជ្រើស។"
+    }
+  },
+  "DocumentStatus": {
+    "back": "ត្រឡប់ទៅម៉ឺនុយឯកសារ",
+    "eyebrow": "បញ្ជីពេញតាមដំណាក់កាល",
+    "title": "ស្ថានភាពឯកសារដាក់ទិដ្ឋាការ",
+    "description": "ពិនិត្យឯកសារចាំបាច់ មានលក្ខខណ្ឌ និងជម្រើសតាមដំណាក់កាលដាក់ស្នើ។",
+    "requiredProgress": "វឌ្ឍនភាពឯកសារចាំបាច់",
+    "requiredSummary": "{checked}/{total}",
+    "allSummary": "បានគូសធីក {checked} ក្នុងចំណោម {total} ឯកសារ",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "ដំណាក់កាលលម្អិត {current}/{total}",
+    "stageComplete": "ឯកសារចាំបាច់រួចរាល់",
+    "stageRequiredSummary": "ចាំបាច់ {checked}/{total}",
+    "checkAriaLabel": "សម្គាល់ {document} ថាបានដាក់",
+    "readyTitle": "បានពិនិត្យឯកសារចាំបាច់ទាំងអស់",
+    "remainingTitle": "នៅមានឯកសារចាំបាច់មិនទាន់ដាក់",
+    "readyDescription": "ពេលទៅដំណាក់កាលបន្ទាប់ ទីតាំងអណ្តើក និងវឌ្ឍនភាពលើទំព័រដើមនឹងប្តូរ។",
+    "remainingDescription": "គូសធីកឯកសារចាំបាច់ទាំងអស់នៅរាល់ដំណាក់កាល ដើម្បីបន្ត។",
+    "advance": "ទៅដំណាក់កាលស្ថាប័ន"
   },
   "Chat": {
     "title": "ការពិគ្រោះអំពីទិដ្ឋាការ",

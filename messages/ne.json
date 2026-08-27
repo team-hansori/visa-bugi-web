@@ -129,10 +129,19 @@
       "viewSchedule": "일정 보기",
       "eyebrow": "भिसा यात्रा",
       "savedStepIndicator": "कागजात {total} मध्ये {ready} तयार",
-      "stepIndicatorDynamic": "चरण {step} · {stage}"
+      "stepIndicatorDynamic": "चरण {step} · {stage}",
+      "detailHeading": "कागजात तयारीका विस्तृत चरण",
+      "detailProgress": "चरण {current}/{total}"
     },
     "tasks": {
       "heading": "कागजात तयारी जाँच",
+      "pendingHeading": "पेश नगरिएका अनिवार्य कागजात",
+      "pendingDescription": "पेश नगरिएका अनिवार्य कागजातमध्ये बढीमा ५ वटा अनियमित रूपमा देखाइन्छ।",
+      "requiredSummary": "अनिवार्य {checked}/{total} पेश",
+      "sampleHint": "सम्पूर्ण सूची कागजात स्थितिमा चरणअनुसार हेर्नुहोस्",
+      "allRequiredChecked": "सबै अनिवार्य कागजात जाँच भयो",
+      "noPendingRequired": "पेश गर्न बाँकी अनिवार्य कागजात छैन।",
+      "viewAll": "सबै पेश गर्ने कागजात हेर्नुहोस्",
       "stageDescription": "{stage} चरणका लागि आवश्यक कागजातहरू।",
       "checkedSummary": "{checked}/{total} जाँच गरियो",
       "checkAriaLabel": "{document} तयार भएको चिन्ह लगाउनुहोस्",
@@ -187,6 +196,38 @@
     },
     "savedBadge": "सुरक्षित प्रगति",
     "savedHeroDescription": "सुरक्षित गरिएका {count} कागजातको OCR परिणामका आधारमा तयारी स्थिति र अर्को काम देखाइन्छ।"
+  },
+  "DocumentsHub": {
+    "eyebrow": "कागजात सहायक",
+    "title": "तपाईंलाई कुन कागजात काम चाहिन्छ?",
+    "description": "OCR बाट आवेदनका फिल्ड जाँच गर्नुहोस् वा छानिएको भिसाका सबै कागजात चरणअनुसार व्यवस्थापन गर्नुहोस्।",
+    "ocr": {
+      "title": "भिसा आवेदनका लेख्ने फिल्ड जाँच",
+      "description": "आवेदनको फोटो, PDF वा HWPX विश्लेषण गरी भर्नुपर्ने र पुनः जाँच गर्नुपर्ने ठाउँ देखाउँछ।"
+    },
+    "status": {
+      "title": "भिसा पेश गर्ने कागजात स्थिति",
+      "description": "छानिएको भिसाका सबै कागजात प्रक्रिया चरणअनुसार हेर्नुहोस् र चिन्ह लगाउनुहोस्।"
+    }
+  },
+  "DocumentStatus": {
+    "back": "कागजात मेनुमा फर्कनुहोस्",
+    "eyebrow": "चरणअनुसार पूर्ण सूची",
+    "title": "भिसा पेश गर्ने कागजात स्थिति",
+    "description": "अनिवार्य, सर्तसहित र ऐच्छिक कागजात विस्तृत पेश चरणअनुसार जाँच गर्नुहोस्।",
+    "requiredProgress": "अनिवार्य कागजात पेश प्रगति",
+    "requiredSummary": "{checked}/{total}",
+    "allSummary": "जम्मा {total} मध्ये {checked} कागजात चिन्ह लगाइयो",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "विस्तृत चरण {current}/{total}",
+    "stageComplete": "अनिवार्य कागजात पूरा",
+    "stageRequiredSummary": "अनिवार्य {checked}/{total}",
+    "checkAriaLabel": "{document} पेश भएको चिन्ह लगाउनुहोस्",
+    "readyTitle": "सबै अनिवार्य कागजात जाँच भयो",
+    "remainingTitle": "अझै अनिवार्य कागजात पेश गर्न बाँकी छ",
+    "readyDescription": "अर्को चरणमा जाँदा गृहपृष्ठको कछुवा र प्रगति पनि बदलिन्छ।",
+    "remainingDescription": "अर्को चरणमा जान प्रत्येक चरणका अनिवार्य कागजात चिन्ह लगाउनुहोस्।",
+    "advance": "कार्यालय भ्रमण चरणमा जानुहोस्"
   },
   "Chat": {
     "title": "भिसा परामर्श",

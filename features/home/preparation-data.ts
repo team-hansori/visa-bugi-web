@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { SUPPORTED_VISAS } from "@/lib/visa-schedule/supported-visas";
 import type {
   HomeDocumentRequirement,
+  HomePreparationStage,
   HomeVisaPreparation,
   HomeVisaPreparationCatalog,
   RequirementStatus,
@@ -23,6 +24,8 @@ type StageRow = {
   stage_order: number;
   stage_code: string;
   stage_name_kr: string;
+  actor_from: string | null;
+  actor_to: string | null;
   valid_from: string | null;
   valid_to: string | null;
 };
@@ -60,7 +63,7 @@ export async function getHomeVisaPreparationCatalog(): Promise<HomeVisaPreparati
 
     const { data: stageData, error: stageError } = await supabase
       .from("visa_process_stages")
-      .select("stage_id,visa_id,stage_order,stage_code,stage_name_kr,valid_from,valid_to")
+      .select("stage_id,visa_id,stage_order,stage_code,stage_name_kr,actor_from,actor_to,valid_from,valid_to")
       .in(
         "visa_id",
         visas.map((visa) => visa.visa_id),
@@ -114,20 +117,24 @@ function buildLivePreparations(
     const candidateStages = stages
       .filter((stage) => stage.visa_id === visa.visa_id && documentsByStage.has(stage.stage_id))
       .sort((left, right) => left.stage_order - right.stage_order);
-    const selectedStage =
-      candidateStages.find((stage) => stage.stage_code === "APPLICATION_SUBMISSION") ??
-      candidateStages[0];
-    if (!selectedStage) return [];
+    if (!candidateStages.length) return [];
 
     return [
       {
         visaCode: visa.visa_code,
         visaNameKr: visa.visa_name_kr,
-        stageNameKr: selectedStage.stage_name_kr,
         source: "supabase",
-        documents: (documentsByStage.get(selectedStage.stage_id) ?? [])
-          .map(toHomeDocument)
-          .sort((left, right) => left.displayOrder - right.displayOrder),
+        stages: candidateStages.map<HomePreparationStage>((stage) => ({
+          id: stage.stage_id,
+          code: stage.stage_code,
+          nameKr: stage.stage_name_kr,
+          order: stage.stage_order,
+          actorFrom: stage.actor_from,
+          actorTo: stage.actor_to,
+          documents: (documentsByStage.get(stage.stage_id) ?? [])
+            .map(toHomeDocument)
+            .sort((left, right) => left.displayOrder - right.displayOrder),
+        })),
       },
     ];
   });
@@ -174,16 +181,25 @@ function isCurrentlyValid(
 function previewCatalog(): HomeVisaPreparationCatalog {
   return {
     visas: previewVisas.map((visa) => ({
-      ...visa,
+      visaCode: visa.visaCode,
+      visaNameKr: visa.visaNameKr,
       source: "preview" as const,
-      documents: visa.documents.map((document, index) => ({
-        id: `preview:${visa.visaCode}:${index + 1}`,
-        category: null,
-        requirementStatus: "REQUIRED" as const,
-        alternativeGroup: null,
-        conditionNote: null,
-        displayOrder: index + 1,
-        ...document,
+      stages: visa.stages.map((stage, stageIndex) => ({
+        id: `preview:${visa.visaCode}:stage:${stageIndex + 1}`,
+        code: stage.code,
+        nameKr: stage.nameKr,
+        order: stageIndex + 1,
+        actorFrom: stage.actorFrom,
+        actorTo: stage.actorTo,
+        documents: stage.documents.map((document, documentIndex) => ({
+          id: `preview:${visa.visaCode}:${stageIndex + 1}:${documentIndex + 1}`,
+          category: null,
+          requirementStatus: "REQUIRED" as const,
+          alternativeGroup: null,
+          conditionNote: null,
+          displayOrder: documentIndex + 1,
+          ...document,
+        })),
       })),
     })),
   };
@@ -193,52 +209,137 @@ const previewVisas = [
   {
     visaCode: "F-4-R",
     visaNameKr: "지역특화형 재외동포",
-    stageNameKr: "신청 접수",
-    documents: [
-      { name: "지역특화형 비자사업 추천서 발급 신청서(재외동포)" },
-      { name: "재외동포(F-4) 통합신청서(신고서)" },
-      { name: "여권 사본" },
-      { name: "거주/숙소제공 확인서" },
-      { name: "확약서" },
+    stages: [
+      {
+        code: "APPLICATION_SUBMISSION",
+        nameKr: "시·군 추천 신청",
+        actorFrom: "재외동포 신청자",
+        actorTo: "시·군 담당부서",
+        documents: [
+          { name: "지역특화형 비자사업 추천서 발급 신청서(재외동포)" },
+          { name: "여권 사본" },
+          { name: "거주/숙소제공 확인서" },
+          { name: "확약서" },
+        ],
+      },
+      {
+        code: "STATUS_CHANGE_APPLICATION",
+        nameKr: "체류자격 변경신청",
+        actorFrom: "재외동포 신청자",
+        actorTo: "출입국·외국인관서",
+        documents: [
+          { name: "재외동포(F-4) 통합신청서(신고서)" },
+          { name: "재외동포 직업 및 연간 소득금액 신고서" },
+          { name: "충청북도지사 추천서" },
+        ],
+      },
     ],
   },
   {
     visaCode: "E-7-4R",
     visaNameKr: "지역특화형 숙련기능인력",
-    stageNameKr: "서류 제출",
-    documents: [
-      { name: "지역특화형 비자사업 추천서 발급 신청서" },
-      { name: "여권 사본" },
-      { name: "외국인등록증 사본" },
-      { name: "K-POINT E-7-4 점수제 자체 심사표" },
-      { name: "외국인근로자 표준근로계약서" },
-      { name: "신원보증서" },
+    stages: [
+      {
+        code: "APPLICATION_SUBMISSION",
+        nameKr: "광역지자체 추천 신청",
+        actorFrom: "신청자·고용기업",
+        actorTo: "충청북도",
+        documents: [
+          { name: "지역특화형 비자사업 추천서 발급 신청서" },
+          { name: "여권 사본" },
+          { name: "외국인등록증 사본" },
+          { name: "K-POINT E-7-4 점수제 자체 심사표" },
+          { name: "K-POINT E-7-4 신상기술서" },
+        ],
+      },
+      {
+        code: "EMPLOYMENT_REVIEW",
+        nameKr: "고용 서류 확인",
+        actorFrom: "고용기업",
+        actorTo: "충청북도",
+        documents: [
+          { name: "외국인근로자 표준근로계약서" },
+          { name: "신원보증서" },
+          { name: "K-POINT E-7-4 고용기업 추천 양식" },
+        ],
+      },
+      {
+        code: "STATUS_CHANGE_APPLICATION",
+        nameKr: "체류자격 변경신청",
+        actorFrom: "신청자",
+        actorTo: "출입국·외국인관서",
+        documents: [
+          { name: "통합신청서(신고서)" },
+          { name: "광역지자체장 추천서" },
+        ],
+      },
     ],
   },
   {
     visaCode: "F-2-R",
     visaNameKr: "지역특화형 지역우수인재",
-    stageNameKr: "시·군 추천 신청",
-    documents: [
-      { name: "지역특화형 비자사업 추천서 발급 신청서" },
-      { name: "여권 사본" },
-      { name: "외국인등록증 사본" },
-      { name: "외국인근로자 표준근로계약서" },
-      { name: "거주/숙소제공 확인서" },
-      { name: "한국어 능력 증빙서류" },
+    stages: [
+      {
+        code: "APPLICATION_SUBMISSION",
+        nameKr: "시·군 추천 신청",
+        actorFrom: "지역우수인재 신청자",
+        actorTo: "시·군 담당부서",
+        documents: [
+          { name: "지역특화형 비자사업 추천서 발급 신청서" },
+          { name: "여권 사본" },
+          { name: "외국인등록증 사본" },
+          { name: "한국어 능력 증빙서류" },
+        ],
+      },
+      {
+        code: "RESIDENCE_EMPLOYMENT_REVIEW",
+        nameKr: "취업·거주 증빙 확인",
+        actorFrom: "지역우수인재 신청자",
+        actorTo: "시·군 담당부서",
+        documents: [
+          { name: "외국인근로자 표준근로계약서" },
+          { name: "거주/숙소제공 확인서" },
+          { name: "재직증명서" },
+        ],
+      },
+      {
+        code: "STATUS_CHANGE_APPLICATION",
+        nameKr: "체류자격 변경신청",
+        actorFrom: "지역우수인재 신청자",
+        actorTo: "출입국·외국인관서",
+        documents: [
+          { name: "지역우수인재 추천서" },
+          { name: "통합신청서(신고서)" },
+        ],
+      },
     ],
   },
   {
     visaCode: "D-2",
     visaNameKr: "광역형 유학비자",
-    stageNameKr: "서류 준비",
-    documents: [
-      { name: "사업자(고용주) 및 신청인 서약서" },
-      { name: "재학사항 신고서" },
-      { name: "어학연수생 현황" },
-      { name: "논문 지도교수 확인서(국문)" },
-      { name: "유학생 시간제취업 요건 준수 확인서" },
+    stages: [
+      {
+        code: "SCHOOL_CONFIRMATION",
+        nameKr: "학교 확인 서류 준비",
+        actorFrom: "유학생",
+        actorTo: "소속 대학",
+        documents: [
+          { name: "재학사항 신고서" },
+          { name: "어학연수생 현황" },
+          { name: "논문 지도교수 확인서(국문)" },
+        ],
+      },
+      {
+        code: "PART_TIME_WORK_APPLICATION",
+        nameKr: "시간제취업 신청",
+        actorFrom: "유학생·고용주",
+        actorTo: "출입국·외국인관서",
+        documents: [
+          { name: "사업자(고용주) 및 신청인 서약서" },
+          { name: "유학생 시간제취업 요건 준수 확인서" },
+          { name: "외국인 유학생 시간제취업 확인서" },
+        ],
+      },
     ],
   },
 ];
-

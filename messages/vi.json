@@ -129,10 +129,19 @@
       "viewSchedule": "일정 보기",
       "eyebrow": "Hành trình thị thực",
       "savedStepIndicator": "Đã chuẩn bị {ready}/{total} tài liệu",
-      "stepIndicatorDynamic": "Bước {step} · {stage}"
+      "stepIndicatorDynamic": "Bước {step} · {stage}",
+      "detailHeading": "Các bước chuẩn bị hồ sơ chi tiết",
+      "detailProgress": "Bước {current}/{total}"
     },
     "tasks": {
       "heading": "Kiểm tra hồ sơ cần chuẩn bị",
+      "pendingHeading": "Giấy tờ bắt buộc chưa nộp",
+      "pendingDescription": "Hiển thị ngẫu nhiên tối đa 5 giấy tờ bắt buộc chưa nộp.",
+      "requiredSummary": "Đã nộp {checked}/{total} giấy tờ bắt buộc",
+      "sampleHint": "Xem danh sách đầy đủ theo từng bước trong trạng thái hồ sơ",
+      "allRequiredChecked": "Đã kiểm tra tất cả giấy tờ bắt buộc",
+      "noPendingRequired": "Không còn giấy tờ bắt buộc chưa nộp.",
+      "viewAll": "Xem toàn bộ giấy tờ",
       "stageDescription": "Các giấy tờ cần cho giai đoạn {stage}.",
       "checkedSummary": "Đã kiểm tra {checked}/{total}",
       "checkAriaLabel": "Đánh dấu {document} là đã chuẩn bị",
@@ -187,6 +196,38 @@
     },
     "savedBadge": "Tiến trình đã lưu",
     "savedHeroDescription": "Chúng tôi hiển thị tình trạng chuẩn bị và việc cần làm tiếp theo dựa trên kết quả OCR của {count} tài liệu đã lưu."
+  },
+  "DocumentsHub": {
+    "eyebrow": "Trợ lý hồ sơ",
+    "title": "Bạn cần làm việc gì với hồ sơ?",
+    "description": "Kiểm tra mục cần điền bằng OCR hoặc quản lý toàn bộ giấy tờ của thị thực đã chọn theo từng bước.",
+    "ocr": {
+      "title": "Kiểm tra mục điền trong đơn xin thị thực",
+      "description": "Phân tích ảnh, PDF hoặc HWPX của đơn để hướng dẫn mục cần điền và cần kiểm tra lại."
+    },
+    "status": {
+      "title": "Tình trạng giấy tờ nộp xin thị thực",
+      "description": "Xem và đánh dấu toàn bộ giấy tờ của thị thực đã chọn theo từng giai đoạn thủ tục."
+    }
+  },
+  "DocumentStatus": {
+    "back": "Quay lại menu hồ sơ",
+    "eyebrow": "Danh sách đầy đủ theo từng bước",
+    "title": "Tình trạng giấy tờ nộp xin thị thực",
+    "description": "Kiểm tra giấy tờ bắt buộc, có điều kiện và tùy chọn theo từng bước nộp hồ sơ.",
+    "requiredProgress": "Tiến độ nộp giấy tờ bắt buộc",
+    "requiredSummary": "{checked}/{total}",
+    "allSummary": "Đã đánh dấu {checked}/{total} giấy tờ",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "Bước chi tiết {current}/{total}",
+    "stageComplete": "Đã đủ giấy tờ bắt buộc",
+    "stageRequiredSummary": "Bắt buộc {checked}/{total}",
+    "checkAriaLabel": "Đánh dấu {document} là đã nộp",
+    "readyTitle": "Đã kiểm tra tất cả giấy tờ bắt buộc",
+    "remainingTitle": "Vẫn còn giấy tờ bắt buộc chưa nộp",
+    "readyDescription": "Khi chuyển bước, vị trí rùa và tiến độ trên trang chính cũng được cập nhật.",
+    "remainingDescription": "Đánh dấu tất cả giấy tờ bắt buộc ở mỗi bước để tiếp tục.",
+    "advance": "Chuyển sang bước đến cơ quan"
   },
   "Chat": {
     "title": "비자 상담",

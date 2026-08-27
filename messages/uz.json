@@ -129,10 +129,19 @@
       "viewSchedule": "일정 보기",
       "eyebrow": "Viza jarayoni",
       "savedStepIndicator": "{total} hujjatdan {ready} tasi tayyor",
-      "stepIndicatorDynamic": "{step}-bosqich · {stage}"
+      "stepIndicatorDynamic": "{step}-bosqich · {stage}",
+      "detailHeading": "Hujjat tayyorlashning batafsil bosqichlari",
+      "detailProgress": "{current}/{total}-bosqich"
     },
     "tasks": {
       "heading": "Hujjatlar tayyorgarligi",
+      "pendingHeading": "Topshirilmagan majburiy hujjatlar",
+      "pendingDescription": "Topshirilmagan majburiy hujjatlardan tasodifiy 5 tagacha ko‘rsatiladi.",
+      "requiredSummary": "Majburiy hujjatlar {checked}/{total} topshirildi",
+      "sampleHint": "To‘liq ro‘yxatni hujjatlar holatida bosqichma-bosqich ko‘ring",
+      "allRequiredChecked": "Barcha majburiy hujjatlar tekshirildi",
+      "noPendingRequired": "Topshirilmagan majburiy hujjat yo‘q.",
+      "viewAll": "Barcha hujjatlarni ko‘rish",
       "stageDescription": "{stage} bosqichi uchun kerakli hujjatlar.",
       "checkedSummary": "{checked}/{total} ta tekshirildi",
       "checkAriaLabel": "{document} hujjatini tayyor deb belgilash",
@@ -187,6 +196,38 @@
     },
     "savedBadge": "Saqlangan jarayon",
     "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi."
+  },
+  "DocumentsHub": {
+    "eyebrow": "Hujjat yordamchisi",
+    "title": "Qaysi hujjat ishini bajarmoqchisiz?",
+    "description": "Ariza maydonlarini OCR orqali tekshiring yoki tanlangan viza hujjatlarini bosqichma-bosqich boshqaring.",
+    "ocr": {
+      "title": "Viza arizasi maydonlarini tekshirish",
+      "description": "Ariza rasmi, PDF yoki HWPX faylini tahlil qilib, to‘ldiriladigan va qayta tekshiriladigan joylarni ko‘rsatadi."
+    },
+    "status": {
+      "title": "Viza topshirish hujjatlari holati",
+      "description": "Tanlangan viza uchun barcha hujjatlarni jarayon bosqichlari bo‘yicha ko‘ring va belgilang."
+    }
+  },
+  "DocumentStatus": {
+    "back": "Hujjatlar menyusiga qaytish",
+    "eyebrow": "Bosqichlar bo‘yicha to‘liq ro‘yxat",
+    "title": "Viza topshirish hujjatlari holati",
+    "description": "Majburiy, shartli va ixtiyoriy hujjatlarni topshirish bosqichlari bo‘yicha tekshiring.",
+    "requiredProgress": "Majburiy hujjatlar topshirish jarayoni",
+    "requiredSummary": "{checked}/{total}",
+    "allSummary": "Jami {total} hujjatdan {checked} tasi belgilandi",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "Batafsil bosqich {current}/{total}",
+    "stageComplete": "Majburiy hujjatlar tayyor",
+    "stageRequiredSummary": "Majburiy {checked}/{total}",
+    "checkAriaLabel": "{document} hujjatini topshirilgan deb belgilash",
+    "readyTitle": "Barcha majburiy hujjatlar tekshirildi",
+    "remainingTitle": "Hali topshirilmagan majburiy hujjatlar bor",
+    "readyDescription": "Keyingi bosqichda bosh sahifadagi toshbaqa va foiz ham yangilanadi.",
+    "remainingDescription": "Davom etish uchun har bosqichdagi majburiy hujjatlarni belgilang.",
+    "advance": "Tashkilotga borish bosqichiga o‘tish"
   },
   "Chat": {
     "title": "Viza bo‘yicha maslahat",

@@ -18,7 +18,7 @@ const navItems: NavItem[] = [
   { href: "/calendar", icon: "calendar", key: "calendar" },
   { href: "/map", icon: "map-pin", key: "map" },
   { href: "/chat", icon: "chat", key: "chat" },
-  { href: "/ocr", icon: "document", key: "ocr" },
+  { href: "/documents", icon: "document", key: "ocr" },
   { href: "/my", icon: "menu", key: "my" },
 ];
 
@@ -27,6 +27,9 @@ const mySubPagePaths = new Set(["/contact", "/terms", "/privacy"]);
 function isCurrentPath(pathname: string, href: string) {
   if (href === "/") return pathname === href;
   if (href === "/my") return pathname === href || mySubPagePaths.has(pathname);
+  if (href === "/documents") {
+    return pathname.startsWith("/documents") || pathname.startsWith("/ocr");
+  }
   return pathname.startsWith(href);
 }
 

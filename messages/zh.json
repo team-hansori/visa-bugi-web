@@ -129,10 +129,19 @@
       "viewSchedule": "일정 보기",
       "eyebrow": "签证旅程",
       "savedStepIndicator": "{total} 份文件中已准备 {ready} 份",
-      "stepIndicatorDynamic": "第 {step} 步 · {stage}"
+      "stepIndicatorDynamic": "第 {step} 步 · {stage}",
+      "detailHeading": "材料准备详细阶段",
+      "detailProgress": "第 {current}/{total} 阶段"
     },
     "tasks": {
       "heading": "材料准备清单",
+      "pendingHeading": "未提交的必需材料",
+      "pendingDescription": "随机显示最多 5 份尚未提交的必需材料。",
+      "requiredSummary": "必需材料已提交 {checked}/{total}",
+      "sampleHint": "可在提交材料状态中按阶段查看完整清单",
+      "allRequiredChecked": "所有必需材料均已确认",
+      "noPendingRequired": "没有未提交的必需材料。",
+      "viewAll": "查看全部提交材料",
       "stageDescription": "{stage} 阶段所需的材料。",
       "checkedSummary": "已确认 {checked}/{total}",
       "checkAriaLabel": "将 {document} 标记为已准备",
@@ -187,6 +196,38 @@
     },
     "savedBadge": "已保存的进度",
     "savedHeroDescription": "我们会根据已保存的 {count} 份文件的 OCR 结果，显示准备状态和下一步事项。"
+  },
+  "DocumentsHub": {
+    "eyebrow": "材料助手",
+    "title": "您需要处理哪类材料？",
+    "description": "可使用 OCR 检查申请表填写项目，或按阶段管理所选签证的全部提交材料。",
+    "ocr": {
+      "title": "检查签证申请表填写项目",
+      "description": "分析申请表照片、PDF 或 HWPX，提示需要填写及重新确认的项目。"
+    },
+    "status": {
+      "title": "签证提交材料状态",
+      "description": "按办理阶段查看并勾选入门设置中所选签证的全部提交材料。"
+    }
+  },
+  "DocumentStatus": {
+    "back": "返回材料菜单",
+    "eyebrow": "按阶段显示完整清单",
+    "title": "签证提交材料状态",
+    "description": "按详细提交阶段确认必需、有条件和可选材料，并勾选已准备的材料。",
+    "requiredProgress": "必需材料提交进度",
+    "requiredSummary": "{checked}/{total} 份",
+    "allSummary": "全部 {total} 份材料中已勾选 {checked} 份",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "详细阶段 {current}/{total}",
+    "stageComplete": "必需材料已完成",
+    "stageRequiredSummary": "必需 {checked}/{total}",
+    "checkAriaLabel": "将 {document} 标记为已提交",
+    "readyTitle": "已确认所有必需提交材料",
+    "remainingTitle": "仍有必需材料尚未提交",
+    "readyDescription": "进入下一阶段后，首页的乌龟位置和准备进度会一起更新。",
+    "remainingDescription": "勾选各阶段全部必需材料后即可进入下一阶段。",
+    "advance": "进入机构访问阶段"
   },
   "Chat": {
     "title": "签证咨询",

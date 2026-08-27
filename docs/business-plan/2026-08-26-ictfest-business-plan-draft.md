@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown (최종적으로 사용자가 hwp 편집기에 옮겨 붙일 원고). 스펙 문서와 노션 기획서는 주장 후보를 정하는 입력으로 사용하고, 최종 근거는 출처 원장에 등록해 재확인한 공식 원문·기사로 한정한다.
 
-**Spec:** `docs/superpowers/specs/2026-08-26-ictfest-business-plan-outline-design.md`
+**Spec:** `docs/business-plan/2026-08-26-ictfest-business-plan-outline-design.md`
 
 ## Global Constraints
 
@@ -28,7 +28,7 @@
 
 각 태스크의 "Step: 검증" 은 아래 4가지를 그대로 수행한다.
 
-1. **용어 일관성**: `grep -n "충북살이" docs/business-plan/2026-visa-bugi-사업계획서-초안.md` 실행 → 결과 없음(exit 1)이어야 함.
+1. **용어 일관성**: `grep -n "충북살이" docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` 실행 → 결과 없음(exit 1)이어야 함.
 2. **출처 검증**: 방금 작성한 절의 모든 숫자(인구·비율·금액·연도)와 제도 요건을 출처 원장의 개별 행과 대조한다. 원장에 없거나 URL/문서 경로를 다시 열어 확인할 수 없는 내용은 삭제하거나 `(출처 확인 필요)`로 표시한다. 내용 스펙에 적혀 있다는 사실만으로 검증 완료로 간주하지 않는다.
 3. **분량 확인**: 해당 절의 목표 분량(태스크별로 명시)과 비교해 크게 벗어나지 않는지 확인.
 4. **공식 양식 항목 커버리지**: 해당 절에 대응하는 공식 hwp 양식의 안내 문구(예: "제품 아이디어 제안 동기나 필요성, 현재 애로사항이나 문제점, 사업화 배경 및 목적")를 다시 읽고, 요구된 하위 항목이 모두 들어갔는지 체크.
@@ -39,7 +39,7 @@
 
 **Files:**
 - Create: `docs/business-plan/2026-visa-bugi-사업계획서-출처원장.md`
-- Create: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md`
+- Create: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md`
 
 **Interfaces:**
 - Consumes: 없음(최초 파일)
@@ -92,7 +92,7 @@
 - [ ] **Step 2: 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-출처원장.md docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026-visa-bugi-사업계획서-출처원장.md docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 초안 골격 생성"
 ```
 
@@ -101,7 +101,7 @@ git commit -m "docs: 사업계획서 초안 골격 생성"
 ### Task 2: "1. 요약" 작성
 
 **Files:**
-- Modify: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md` (`## 1. 요약` 아래)
+- Modify: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` (`## 1. 요약` 아래)
 
 **Interfaces:**
 - Consumes: Task 1의 골격 헤딩
@@ -131,7 +131,7 @@ git commit -m "docs: 사업계획서 초안 골격 생성"
 - [ ] **Step 3: 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 1.요약 작성"
 ```
 
@@ -140,7 +140,7 @@ git commit -m "docs: 사업계획서 1.요약 작성"
 ### Task 3: "2. 기획 배경" 작성
 
 **Files:**
-- Modify: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md` (`## 2. 기획 배경` 아래)
+- Modify: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` (`## 2. 기획 배경` 아래)
 
 **Interfaces:**
 - Consumes: Task 1의 골격 헤딩
@@ -195,7 +195,7 @@ git commit -m "docs: 사업계획서 1.요약 작성"
 - [ ] **Step 3: 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 2.기획배경 작성"
 ```
 
@@ -204,7 +204,7 @@ git commit -m "docs: 사업계획서 2.기획배경 작성"
 ### Task 4: "3. 기획 세부설명 — Part 1" 작성
 
 **Files:**
-- Modify: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md` (`### Part 1. 서비스별 핵심 기능 및 기술 설명` 아래)
+- Modify: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` (`### Part 1. 서비스별 핵심 기능 및 기술 설명` 아래)
 
 **Interfaces:**
 - Consumes: Task 1의 골격 헤딩
@@ -262,7 +262,7 @@ git commit -m "docs: 사업계획서 2.기획배경 작성"
    | 키워드 기반 위험 감지 + 규칙 기반 라우팅 | 노동/학사 위험 신호를 사용자 유형별로 구분 감지해 사전 정의된 전문기관 연결 경로로 강제 전환 |
 
    이 표 바로 뒤에, 규칙 기반 계산 엔진의 데이터 기반을 실제 레포 근거로 한 문단 추가:
-   > "이 계산 엔진의 데이터 기반은 team-hansori/visa-data 레포에서 이미 설계를 확정한 공통 스키마 v2(13개 테이블)다. 핵심은 `visa_requirements`(비자 기본정보), `visa_criterion_groups`(자격조건을 AND/OR로 결합하는 논리 트리), `visa_requirement_criteria`(개별 조건), `visa_process_stages`·`document_requirements`(절차·제출서류), `source_documents`(공고문 등 근거 문서)다. 예를 들어 F-2-R처럼 여러 대체 요건 경로가 있는 비자는 `visa_criterion_groups`의 OR 그룹으로, 모든 조건을 동시에 만족해야 하는 비자는 AND 그룹으로 표현되어, LLM이 아니라 이 구조화된 규칙 트리가 충족 여부를 판정한다."
+   > "이 계산 엔진의 데이터 기반은 team-hansori/visa-data 레포에서 설계·검수한 13개 공통 데이터 테이블이다. 핵심은 `visa_requirements`(비자 기본정보), `visa_criterion_groups`(자격조건을 AND/OR로 결합하는 논리 트리), `visa_requirement_criteria`(개별 조건), `visa_process_stages`·`document_requirements`(절차·제출서류), `source_documents`(공고문 등 근거 문서)다. 예를 들어 F-2-R처럼 여러 대체 요건 경로가 있는 비자는 `visa_criterion_groups`의 OR 그룹으로, 모든 조건을 동시에 만족해야 하는 비자는 AND 그룹으로 표현되어, LLM이 아니라 이 구조화된 규칙 트리가 충족 여부를 판정한다."
 
 4. **3-4 안전장치 설계**
    - 계산 로직은 공식 고시 요건표를 그대로 구조화한 규칙 기반 엔진만 사용. LLM은 사용자의 자연어 입력을 구조화된 값(체류기간, 연봉, 한국어등급 등)으로 변환하는 역할만 하고 최종 판정은 하지 않음
@@ -300,7 +300,7 @@ git commit -m "docs: 사업계획서 2.기획배경 작성"
 - [ ] **Step 3: 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 3부 Part1(핵심기능·기술설명) 작성"
 ```
 
@@ -309,7 +309,7 @@ git commit -m "docs: 사업계획서 3부 Part1(핵심기능·기술설명) 작�
 ### Task 5: "3. 기획 세부설명 — Part 2" 작성
 
 **Files:**
-- Modify: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md` (`### Part 2. 시나리오별 사용자 여정` 아래)
+- Modify: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` (`### Part 2. 시나리오별 사용자 여정` 아래)
 
 **Interfaces:**
 - Consumes: Task 4에서 정의한 핵심 기능 7개 번호(①~⑦)와 4단계 라이프사이클 용어를 그대로 재사용
@@ -355,7 +355,7 @@ git commit -m "docs: 사업계획서 3부 Part1(핵심기능·기술설명) 작�
 - [ ] **Step 3: 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 3부 Part2(사용자 여정) 작성"
 ```
 
@@ -364,7 +364,7 @@ git commit -m "docs: 사업계획서 3부 Part2(사용자 여정) 작성"
 ### Task 6: "4. 제품(아이디어) 실현 방안" 작성
 
 **Files:**
-- Modify: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md` (`## 4. 제품(아이디어) 실현 방안` 아래)
+- Modify: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` (`## 4. 제품(아이디어) 실현 방안` 아래)
 
 **Interfaces:**
 - Consumes: Task 4/5에서 완성형으로 서술한 기능들을 현실의 구현 상태와 연결
@@ -379,7 +379,7 @@ git commit -m "docs: 사업계획서 3부 Part2(사용자 여정) 작성"
    | 구분 | 항목 | 상태 |
    |---|---|---|
    | 완료 | 온보딩 화면, 마이허브, OCR 이미지 선택·로컬 미리보기 UI, Supabase 클라이언트/서버 연동 스캐폴딩(`visa-bugi-web`) | UI 구현 완료. OCR 분석·서버 전송은 미연동 |
-   | 완료 | 공통 스키마 v2 — 13개 테이블(`visa_requirements`, `visa_criterion_groups` 등), AND/OR 자격조건 논리 트리 설계(`visa-data`) | 설계·검수 확정 |
+   | 완료 | 검수된 공통 데이터 구조 — 13개 테이블(`visa_requirements`, `visa_criterion_groups` 등), AND/OR 자격조건 논리 트리 설계(`visa-data`) | 설계·검수 확정 |
    | 진행 중(데모) | 캘린더(`demo-calendar.tsx`), 지도 기반 기관 안내(`agency-map-demo.tsx`) | 데모 컴포넌트 단계, 실 데이터 연동 전 |
    | 구현 예정 | 규칙 기반 자격요건 계산 엔진, LLM 다국어 대화, RAG, 벡터DB 이력 관리, 위험 키워드 라우팅 | 데이터 모델 설계 완료 후 순차 구현 예정 |
 
@@ -407,7 +407,7 @@ git commit -m "docs: 사업계획서 3부 Part2(사용자 여정) 작성"
 - [ ] **Step 3: 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 4부(실현방안) 작성"
 ```
 
@@ -416,7 +416,7 @@ git commit -m "docs: 사업계획서 4부(실현방안) 작성"
 ### Task 7: "5. 기대효과 및 활용분야" 작성
 
 **Files:**
-- Modify: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md` (`## 5. 기대효과 및 활용분야` 아래)
+- Modify: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` (`## 5. 기대효과 및 활용분야` 아래)
 
 **Interfaces:**
 - Consumes: Task 3(기획배경 1.4절 인구소멸 접점)과 Task 6(정책 피드백·비자 제안제 연계)의 내용을 다시 인용
@@ -446,7 +446,7 @@ git commit -m "docs: 사업계획서 4부(실현방안) 작성"
 - [ ] **Step 3: 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 5부(기대효과 및 활용분야) 작성"
 ```
 
@@ -455,7 +455,7 @@ git commit -m "docs: 사업계획서 5부(기대효과 및 활용분야) 작성"
 ### Task 8: 전체 문서 최종 검증 및 마무리
 
 **Files:**
-- Modify: `docs/business-plan/2026-visa-bugi-사업계획서-초안.md` (전체)
+- Modify: `docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md` (전체)
 
 **Interfaces:**
 - Consumes: Task 1~7에서 작성된 전체 문서
@@ -464,7 +464,7 @@ git commit -m "docs: 사업계획서 5부(기대효과 및 활용분야) 작성"
 - [ ] **Step 1: 전체 용어 일관성 재검사**
 
 ```bash
-grep -n "충북살이" docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+grep -n "충북살이" docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 ```
 Expected: 결과 없음(매치 0건). 있다면 "비자부기(visa-bugi)"로 수정한다.
 
@@ -475,7 +475,7 @@ Expected: 결과 없음(매치 0건). 있다면 "비자부기(visa-bugi)"로 수
 - [ ] **Step 2: 기능 번호·용어 일관성 재검사**
 
 ```bash
-grep -n "①\|②\|③\|④\|⑤\|⑥\|⑦" docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+grep -n "①\|②\|③\|④\|⑤\|⑥\|⑦" docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 ```
 
 Part1(Task 4)에서 정의한 기능명과 Part2(Task 5)·4부(Task 6)에서 인용한 기능명이 동일한 번호·이름을 가리키는지 눈으로 대조한다.
@@ -495,7 +495,7 @@ Task 1에서 작성한 상단 메타데이터(참가분야/공모분야/작품�
 - [ ] **Step 6: 최종 커밋**
 
 ```bash
-git add docs/business-plan/2026-visa-bugi-사업계획서-초안.md
+git add docs/business-plan/2026_ICT융합공모전_비자부기_사업계획서_초안.md
 git commit -m "docs: 사업계획서 초안 최종 검증 및 마무리"
 ```
 

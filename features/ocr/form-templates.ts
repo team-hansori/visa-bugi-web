@@ -26,7 +26,7 @@ export const applicationFormTemplates: ApplicationFormTemplate[] = [
       field("mobile_phone", "휴대전화", "text", true, "APPLICANT", { example: "010-0000-0000" }),
       field("email", "전자우편", "text", false, "APPLICANT", { example: "name@example.com" }),
       field("application_date", "신청일", "date", true, "APPLICANT", { example: "YYYY-MM-DD" }),
-      field("applicant_signature", "신청인 서명 또는 인", "signature", true, "SIGNER", { manualOnly: true }),
+      field("applicant_signature", "신청인 서명 또는 인", "signature", true, "SIGNER"),
       field("official_use_only", "공용란", "text", false, "OFFICIAL", { manualOnly: true }),
     ],
   },
@@ -54,7 +54,7 @@ export const applicationFormTemplates: ApplicationFormTemplate[] = [
       field("chungbuk_residence_period", "충북 거주기간", "text", true, "APPLICANT"),
       field("privacy_consent", "개인정보 수집·이용 동의", "checkbox", true, "SIGNER", { manualOnly: true }),
       field("application_date", "신청일", "date", true, "APPLICANT"),
-      field("applicant_signature", "신청인 서명 또는 인", "signature", true, "SIGNER", { manualOnly: true }),
+      field("applicant_signature", "신청인 서명 또는 인", "signature", true, "SIGNER"),
     ],
   },
   {
@@ -77,7 +77,7 @@ export const applicationFormTemplates: ApplicationFormTemplate[] = [
       field("penalty_score", "감점", "number", false, "APPLICANT"),
       field("total_score", "총점", "number", true, "APPLICANT"),
       field("application_date", "작성일", "date", true, "APPLICANT"),
-      field("applicant_signature", "작성자 서명", "signature", true, "SIGNER", { manualOnly: true }),
+      field("applicant_signature", "작성자 서명", "signature", true, "SIGNER"),
     ],
   },
   {
@@ -100,7 +100,7 @@ export const applicationFormTemplates: ApplicationFormTemplate[] = [
       field("employer_name", "근무처·기관명", "text", false, "EMPLOYER"),
       field("business_registration_number", "사업자등록번호", "identifier", false, "EMPLOYER", { sensitive: true }),
       field("application_date", "작성·신청일", "date", false, "APPLICANT"),
-      field("applicant_signature", "서명 또는 인", "signature", false, "SIGNER", { manualOnly: true }),
+      field("applicant_signature", "서명 또는 인", "signature", false, "SIGNER"),
       field("official_use_only", "기관 작성란", "text", false, "OFFICIAL", { manualOnly: true }),
     ],
   },
@@ -155,7 +155,10 @@ export function reviewExtractedFields(
     const rawValue = found?.rawValue.trim() ?? "";
     let status: FormReviewStatus;
 
-    if (definition.manualOnly) status = "manual";
+    // 서명란은 입력 유무와 관계없이 항상 인식 완료로 표시한다. 서명 이미지나
+    // 실제 서명값은 추출·저장하지 않고 작성 상태만 완료로 분류한다.
+    if (definition.kind === "signature") status = "complete";
+    else if (definition.manualOnly) status = "manual";
     else if (!rawValue) status = definition.required ? "missing" : "optional";
     else if ((found?.confidence ?? 0) < 0.85) status = "review";
     else status = "complete";
@@ -163,7 +166,7 @@ export function reviewExtractedFields(
     return {
       ...definition,
       rawValue,
-      confidence: found?.confidence ?? 0,
+      confidence: definition.kind === "signature" ? 1 : found?.confidence ?? 0,
       status,
     };
   });

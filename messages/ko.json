@@ -807,6 +807,7 @@
       "required": "필수",
       "optional": "선택",
       "empty": "인식된 내용 없음",
+      "signatureDetected": "서명 인식 완료",
       "example": "예: {value}",
       "lowConfidence": "인식 확신도 {percent}% · 원본과 비교해 주세요."
     },
@@ -825,6 +826,7 @@
       "checkbox": "설명을 읽고 해당하는 칸에 체크해 주세요.",
       "address": "현재 실제 주소를 우편번호와 상세주소까지 적어 주세요.",
       "identifier": "공식 신분·사업 서류의 번호와 같은지 한 글자씩 확인해 주세요.",
+      "signature": "서명란을 인식 완료로 확인했습니다.",
       "manual": "서명·동의·기관 작성란은 OCR로 대신 채우지 않습니다. 원본에서 직접 작성해 주세요."
     },
     "status": {

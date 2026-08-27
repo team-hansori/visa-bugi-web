@@ -637,6 +637,7 @@
       "required": "Majburiy",
       "optional": "Ixtiyoriy",
       "empty": "Matn aniqlanmadi",
+      "signatureDetected": "Imzo aniqlandi",
       "example": "Masalan: {value}",
       "lowConfidence": "Aniqlash ishonchi {percent}% · Asl nusxa bilan solishtiring."
     },
@@ -655,6 +656,7 @@
       "checkbox": "Izohni o‘qib, mos katakka belgi qo‘ying.",
       "address": "Hozirgi haqiqiy manzilingizni pochta indeksi va batafsil manzil bilan yozing.",
       "identifier": "Rasmiy shaxsiy yoki korxona hujjatidagi raqam bilan har bir belgisini solishtiring.",
+      "signature": "Imzo maydoni aniqlangan deb belgilandi.",
       "manual": "Imzo, rozilik va idora uchun maydonlarni OCR to‘ldirmaydi. Ularni asl nusxada shaxsan to‘ldiring."
     },
     "status": {

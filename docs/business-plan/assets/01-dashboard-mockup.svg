@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#344c41" flood-opacity="0.08"/></filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f7f8f4"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <rect width="1200" height="72" fill="#f7f8f4"/>
+    <line x1="0" y1="71" x2="1200" y2="71" stroke="#e2e7e3"/>
+    <text x="46" y="45" fill="#173f36" font-size="25" font-weight="900" letter-spacing="-1">visa-bugi</text>
+    <g font-size="14" font-weight="700" text-anchor="middle">
+      <rect x="695" y="15" width="75" height="42" rx="12" fill="#e6f1ec"/><text x="732" y="41" fill="#1e5a4b">홈</text>
+      <text x="804" y="41" fill="#66736e">일정</text><text x="872" y="41" fill="#66736e">기관</text><text x="940" y="41" fill="#66736e">서류</text><text x="1008" y="41" fill="#66736e">설정</text>
+      <rect x="1060" y="16" width="92" height="40" rx="12" fill="#fff" stroke="#dfe6e1"/><text x="1106" y="41" fill="#44534d">한국어</text>
+    </g>
+
+    <rect x="45" y="96" width="1110" height="178" rx="28" fill="#173f36" filter="url(#shadow)"/>
+    <rect x="77" y="121" width="162" height="28" rx="14" fill="#2a554b"/><text x="158" y="140" text-anchor="middle" fill="#d9eee5" font-size="12" font-weight="700">로그인 없이 둘러보는 데모</text>
+    <text x="77" y="189" fill="#fff" font-size="34" font-weight="800">오늘 준비할 일을 한눈에 확인하세요</text>
+    <text x="77" y="226" fill="#d1dfda" font-size="15">공식 비자 요건과 사용자 진행상황을 연결해 다음 행동을 안내합니다.</text>
+    <rect x="922" y="184" width="199" height="50" rx="16" fill="#ffca68"/><text x="1021" y="215" text-anchor="middle" fill="#173f36" font-size="14" font-weight="800">내 정보 설정하기  →</text>
+
+    <rect x="45" y="302" width="360" height="410" rx="24" fill="#fff" stroke="#e0e7e2" filter="url(#shadow)"/>
+    <text x="73" y="346" fill="#20332c" font-size="22" font-weight="800">준비 현황</text>
+    <rect x="323" y="326" width="54" height="25" rx="13" fill="#fff1d4"/><text x="350" y="343" text-anchor="middle" fill="#8a5910" font-size="11" font-weight="800">DEMO</text>
+    <circle cx="225" cy="457" r="77" fill="none" stroke="#e5ebe7" stroke-width="13"/>
+    <circle cx="225" cy="457" r="77" fill="none" stroke="#2d6d5d" stroke-width="13" stroke-linecap="round" stroke-dasharray="329 155" transform="rotate(-90 225 457)"/>
+    <text x="225" y="462" text-anchor="middle" fill="#173f36" font-size="38" font-weight="800">68%</text>
+    <text x="225" y="487" text-anchor="middle" fill="#73807b" font-size="12" font-weight="700">예시 진행률</text>
+    <rect x="73" y="566" width="304" height="112" rx="16" fill="#f5f7f4"/>
+    <text x="94" y="603" fill="#64716c" font-size="14" font-weight="700">선택 비자</text><text x="355" y="603" text-anchor="end" fill="#20332c" font-size="14" font-weight="800">E-7-4R 예시</text>
+    <text x="94" y="643" fill="#64716c" font-size="14" font-weight="700">기준일</text><text x="355" y="643" text-anchor="end" fill="#8a5910" font-size="14" font-weight="800">아직 설정되지 않음</text>
+
+    <rect x="430" y="302" width="725" height="410" rx="24" fill="#fff" stroke="#e0e7e2" filter="url(#shadow)"/>
+    <text x="460" y="346" fill="#20332c" font-size="22" font-weight="800">현재 단계</text>
+    <text x="1125" y="345" text-anchor="end" fill="#2d6d5d" font-size="14" font-weight="800">2단계 · 서류 준비</text>
+    <line x1="520" y1="425" x2="1055" y2="425" stroke="#dce4df" stroke-width="4"/>
+    <line x1="520" y1="425" x2="700" y2="425" stroke="#2d6d5d" stroke-width="4"/>
+    <g text-anchor="middle" font-size="13" font-weight="800">
+      <circle cx="520" cy="425" r="20" fill="#2d6d5d"/><text x="520" y="430" fill="#fff">✓</text><text x="520" y="468" fill="#354b43">요건 확인</text><text x="520" y="491" fill="#8a938f" font-size="11">완료</text>
+      <circle cx="700" cy="425" r="20" fill="#e5f1ec" stroke="#2d6d5d" stroke-width="3"/><text x="700" y="430" fill="#245d4f">2</text><text x="700" y="468" fill="#205848">서류 준비</text><text x="700" y="491" fill="#8a938f" font-size="11">진행 중</text>
+      <circle cx="880" cy="425" r="20" fill="#fff" stroke="#dce4df" stroke-width="3"/><text x="880" y="430" fill="#87908c">3</text><text x="880" y="468" fill="#7d8883">기관 방문</text><text x="880" y="491" fill="#8a938f" font-size="11">예정</text>
+      <circle cx="1055" cy="425" r="20" fill="#fff" stroke="#dce4df" stroke-width="3"/><text x="1055" y="430" fill="#87908c">4</text><text x="1055" y="468" fill="#7d8883">결과 확인</text><text x="1055" y="491" fill="#8a938f" font-size="11">예정</text>
+    </g>
+    <rect x="460" y="541" width="665" height="112" rx="16" fill="#edf6f2" stroke="#dce8e2"/>
+    <text x="484" y="579" fill="#1d5748" font-size="16" font-weight="800">상대 일정은 자동으로 추정하지 않아요</text>
+    <text x="484" y="610" fill="#5d7068" font-size="13">기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.</text>
+    <rect x="1001" y="566" width="100" height="43" rx="12" fill="#fff"/><text x="1051" y="593" text-anchor="middle" fill="#205848" font-size="13" font-weight="800">일정 보기 ›</text>
+    <text x="460" y="684" fill="#73807b" font-size="12">현재 웹 홈 화면의 색상·카드·진행 단계 구조를 반영한 시제품 화면</text>
+  </g>
+</svg>

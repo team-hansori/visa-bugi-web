@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="610" viewBox="0 0 1400 610">
+  <rect width="1400" height="610" fill="#fff"/>
+  <g font-family="휴먼명조, Nanum Myeongjo, serif" fill="#000">
+    <text x="50" y="45" font-size="27" font-weight="700">그림 2. 공식 문서를 서비스 정보로 전환하는 데이터 신뢰 구조</text>
+    <rect x="50" y="70" width="1300" height="490" fill="#fff" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="125" x2="1350" y2="125" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="180" x2="1350" y2="180" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="290" x2="1350" y2="290" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="400" x2="1350" y2="400" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="500" x2="1350" y2="500" stroke="#000" stroke-width="1.5"/>
+    <line x1="220" y1="125" x2="220" y2="560" stroke="#000" stroke-width="1.5"/>
+    <line x1="502" y1="125" x2="502" y2="500" stroke="#000" stroke-width="1.5"/>
+    <line x1="784" y1="125" x2="784" y2="500" stroke="#000" stroke-width="1.5"/>
+    <line x1="1066" y1="125" x2="1066" y2="500" stroke="#000" stroke-width="1.5"/>
+    <text x="700" y="105" text-anchor="middle" font-size="22" font-weight="700">원문 보존 → 항목 추출 → 사람 검수 → 구조화 → 서비스 제공</text>
+    <g text-anchor="middle" font-size="19" font-weight="700">
+      <text x="135" y="158">구분</text><text x="361" y="158">1. 공식 원문</text><text x="643" y="158">2. 추출·검수</text><text x="925" y="158">3. 공통 데이터 구조</text><text x="1208" y="158">4. 서비스 제공</text>
+    </g>
+    <g text-anchor="middle" font-size="18">
+      <text x="135" y="240" font-weight="700">처리 내용</text>
+      <text x="361" y="214">법무부·충북도 공고</text><text x="361" y="242">PDF·HWPX·HWP</text><text x="361" y="270">원문·페이지 보존</text>
+      <text x="643" y="214">표·각주·붙임 분리</text><text x="643" y="242">사람이 원문 대조</text><text x="643" y="270">충돌·미확인 기록</text>
+      <text x="925" y="214">13개 관계형 테이블</text><text x="925" y="242">AND/OR 조건 논리</text><text x="925" y="270">절차·서류·출처 관리</text>
+      <text x="1208" y="214">규칙 계산·OCR</text><text x="1208" y="242">쉬운 설명·다국어</text><text x="1208" y="270">체크리스트·기관 연결</text>
+      <text x="135" y="350" font-weight="700">검증 항목</text>
+      <text x="361" y="326">공고 차수·적용기간</text><text x="361" y="354">문서 식별자</text><text x="361" y="382">페이지 기준</text>
+      <text x="643" y="326">표 병합셀·각주</text><text x="643" y="354">원문 내부 충돌</text><text x="643" y="382">미기재·미확인 구분</text>
+      <text x="925" y="326">UUID·FK·순환참조</text><text x="925" y="354">쿼터 산술·매핑 대상</text><text x="925" y="382">전체 트랜잭션 검증</text>
+      <text x="1208" y="326">출처·검증일 표시</text><text x="1208" y="354">검토 필요 분리</text><text x="1208" y="382">최종 판정 대체 금지</text>
+      <text x="135" y="455" font-weight="700">산출 결과</text>
+      <text x="361" y="438">검증 가능한</text><text x="361" y="466">원천 근거</text>
+      <text x="643" y="438">사람이 확인한</text><text x="643" y="466">항목별 데이터</text>
+      <text x="925" y="438">계산 가능한 규칙과</text><text x="925" y="466">변경 이력</text>
+      <text x="1208" y="438">근거 있는 자가진단과</text><text x="1208" y="466">다음 행동 안내</text>
+    </g>
+    <text x="135" y="535" text-anchor="middle" font-size="18" font-weight="700">핵심 원칙</text>
+    <text x="785" y="535" text-anchor="middle" font-size="19">생성형 AI가 자격을 추측하지 않고 검수된 규칙과 사람이 판단</text>
+  </g>
+</svg>

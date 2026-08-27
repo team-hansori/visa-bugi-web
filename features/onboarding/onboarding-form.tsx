@@ -248,6 +248,14 @@ export function OnboardingForm() {
     }
   }, [values]);
 
+  // 데모 진행을 위해 온보딩을 마쳐야 홈으로 넘어간다. 홈(app)/page.tsx가
+  // user_visa_profile 저장 여부로 같은 게이트를 서버에서도 다시 확인한다.
+  useEffect(() => {
+    if (state.status === "success") {
+      router.push("/");
+    }
+  }, [state.status, router]);
+
   const sequence = useMemo(
     () => getStepSequence(values.targetVisaCode),
     [values.targetVisaCode],

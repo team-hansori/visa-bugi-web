@@ -78,7 +78,7 @@
       "singleScope": "공고 지정 모집 단위",
       "policyScope": "비자 정원 정책",
       "notice": "공고에 발표된 기준 수치이며 실시간 잔여 인원과 다를 수 있어요.",
-      "supabaseBadge": "Supabase 최신 공고",
+      "supabaseBadge": "현재 공고",
       "previewBadge": "검수 데이터 미리보기",
       "cta": "내 비자 설정하기",
       "previous": "이전 비자 보기",

@@ -90,16 +90,23 @@ Phase 1 배포 전 Supabase 대시보드에서:
 | `lib/onboarding/target-visa.ts` | 수정. `resolveStoredTargetVisaCode`가 브라우저 `.from()` 대신 `/api/profile/target-visa` fetch. `isTargetVisaCode`는 유지 |
 | `tests/target-visa-profile.test.ts` | 수정. supabase client mock → `fetch` mock |
 
-### 이번 범위에서 제외 (근거 있는 축소)
+### 이번 범위에서 제외 (근거 있는 축소 — 확정)
 
 Spec §2는 공용 API 5개를 나열하지만, 현재 코드에서 브라우저가 `.from()`으로 애플리케이션 데이터를
 읽는 지점은 **`features/map/agency-map.tsx`와 `lib/onboarding/target-visa.ts` 2곳뿐**이다.
 `/api/home`, `/api/documents/catalog`, `/api/documents/progress`가 다룰 데이터
 (`getVisaQuotaOverview`, `getHomeVisaPreparationCatalog`, `getApplicationFormCatalog`,
-`getSavedDocumentProgress`)는 이미 `server-only` 모듈이고 Server Component에서만 호출된다.
-소비자가 없는 엔드포인트를 지금 만들지 않는다(YAGNI). Phase 2가 `lib/api/errors.ts` +
-route + 도메인 모듈 패턴을 정착시키므로, 이후 브라우저 소비자가 생기면 같은 패턴으로 3개를 추가한다.
-**이 축소에 이견이 있으면 Task 시작 전에 사람에게 확인한다.**
+`getSavedDocumentProgress`)는 이미 `server-only` 모듈이고 Server Component(`app/[locale]/(app)/page.tsx`,
+`documents/page.tsx`, `ocr/page.tsx`)에서만 호출된다. Spec §1도 "Server Component는 도메인 모듈을
+직접 호출"이라고 명시한다. 소비자 없는 엔드포인트는 end-to-end 검증이 불가하고 실제 소비자가 생길 때
+필요한 형태와 어긋나기 쉬우므로 지금 만들지 않는다(YAGNI). 이 결정은 사람이 승인했다.
+
+**나중에 이 3개가 필요해질 때(예: 홈 대시보드가 클라이언트 상호작용형으로 바뀜):** Task 10~11 또는
+Task 13~14와 동일한 3파일 패턴을 반복한다 —
+(1) `features/<domain>/server/<name>.ts` 도메인 모듈: 기존 `server-only` 함수를 감싸고 인증·오류를
+`ApiRouteError`로 표준화. (2) `app/api/<path>/route.ts`: `withApiRoute`로 감싼 `GET`, 캐시 정책은
+Spec §2 표대로(`/api/home`·`/api/documents/progress` = `no-store`, `/api/documents/catalog` =
+`public, max-age`). (3) 브라우저 소비자를 `fetch`로 이관 + 테스트. `lib/api/errors.ts`는 그대로 재사용.
 
 ---
 

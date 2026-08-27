@@ -82,6 +82,13 @@
 - Personalize visa preparation progress
 - Add staged document tracking hub
 - Use onboarding target visa profile
+- *(db)* Profiles에 username/name 컬럼과 대소문자 무시 유니크 인덱스 추가
+- *(types)* ProfileRow에 username/name 추가, 온보딩 upsert에서 두 컬럼 제외
+- *(auth)* 아이디 정규화(toIdEmail)와 가입/로그인 Zod 스키마
+- *(auth)* SignUpWithId/signInWithId Server Action
+- *(auth)* UseAuthState를 실제 Supabase 세션 구독으로 구현
+- *(auth)* 아이디/비밀번호 로그인·회원가입 폼과 Auth 메시지
+- *(auth)* 온보딩 진입 화면의 미구현 Google 버튼을 아이디/비밀번호 폼으로 교체
 
 ### 🐛 Bug Fixes
 
@@ -149,6 +156,7 @@
 - Map quota notices by visa type
 - Link D-2 card to Study in Chungbuk
 - 목표비자 인라인 드롭다운, 공고 유효기간을 새 VisaProgressDashboard에 재구현
+- *(auth)* 코드 리뷰 반영 — 세션 경쟁·서버 로그인 후 갱신·가입 세션 검사·radiogroup·1회 알림
 
 ### 💼 Other
 
@@ -228,6 +236,9 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- BFF/아이디 인증 설계안 + 구현 계획 추가
+- 제외한 3개 엔드포인트에 대한 결정 확정 및 추가 절차 명시
 
 ### 🎨 Styling
 

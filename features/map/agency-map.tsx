@@ -308,7 +308,7 @@ export function AgencyMap() {
         </p>
       </section>
 
-      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1" aria-label="기관 유형 필터">
+      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="기관 유형 필터">
         {typeFilters.map((item) => (
           <button
             key={item.id}
@@ -317,7 +317,7 @@ export function AgencyMap() {
             onClick={() => setTypeFilter(item.id)}
             className={`min-h-8 shrink-0 rounded-full px-2.5 text-[11px] font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               typeFilter === item.id
-                ? "bg-[#173f36]/55 text-white"
+                ? "bg-[#173f36]/90 text-white"
                 : "border border-[#dce4df] bg-white text-[#5e6d67]"
             }`}
           >
@@ -348,7 +348,7 @@ export function AgencyMap() {
         </p>
       )}
 
-      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1" aria-label="지도 위 기관 목록">
+      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="지도 위 기관 목록">
         {agencies.map((agency) => (
           <button
             key={agency.id}
@@ -357,7 +357,7 @@ export function AgencyMap() {
             onClick={() => setSelectedId(agency.id)}
             className={`min-h-8 shrink-0 rounded-full px-2.5 text-[11px] font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               selectedId === agency.id
-                ? "bg-[#e59b37]/55 text-white"
+                ? "bg-[#e59b37]/90 text-white"
                 : "border border-[#dce4df] bg-white text-[#5e6d67]"
             }`}
           >

@@ -26,7 +26,7 @@ export function DocumentSubmissionStatus({
 }) {
   const t = useTranslations("DocumentStatus");
   const router = useRouter();
-  const selectedVisa = useSelectedVisa(catalog);
+  const { selectedVisa } = useSelectedVisa(catalog);
   const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {

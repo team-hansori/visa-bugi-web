@@ -29,6 +29,9 @@ export type HomeVisaPreparation = {
   visaNameKr: string;
   source: "supabase" | "preview";
   stages: HomePreparationStage[];
+  /** visa_requirements.valid_from/valid_to — 이 요건 공고 자체의 유효기간(데이터 경계). */
+  validFrom?: string | null;
+  validTo?: string | null;
 };
 
 export type HomeVisaPreparationCatalog = {

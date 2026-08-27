@@ -124,6 +124,8 @@ function buildLivePreparations(
         visaCode: visa.visa_code,
         visaNameKr: visa.visa_name_kr,
         source: "supabase",
+        validFrom: visa.valid_from,
+        validTo: visa.valid_to,
         stages: candidateStages.map<HomePreparationStage>((stage) => ({
           id: stage.stage_id,
           code: stage.stage_code,

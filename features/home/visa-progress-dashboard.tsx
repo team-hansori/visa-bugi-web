@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useState, useTransition } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icon";
+import { updateTargetVisa } from "@/features/onboarding/actions";
 import { Link } from "@/i18n/navigation";
 import {
   getOrCreateSampleSeed,
@@ -33,6 +34,25 @@ const journeyStages = [
   { id: "resultCheck", number: 4 },
 ] as const;
 
+/**
+ * "공고 유효기간" 표시용 포맷. valid_from/valid_to는 마스터 데이터의
+ * 유효기간이지 사용자 개인 일정이 아니므로(데이터 경계 규칙), 날짜 범위
+ * 그대로만 보여주고 상대 기한을 추정하지 않는다.
+ */
+function formatVisaValidity(
+  validFrom: string | null | undefined,
+  validTo: string | null | undefined,
+  locale: string,
+): string | null {
+  if (!validFrom && !validTo) return null;
+  const formatter = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+  const from = validFrom ? formatter.format(new Date(validFrom)) : null;
+  const to = validTo ? formatter.format(new Date(validTo)) : null;
+  if (from && to) return `${from} – ${to}`;
+  if (from) return `${from} ~`;
+  return `~ ${to}`;
+}
+
 export function VisaProgressDashboard({
   catalog,
   savedReadyDocumentNames = [],
@@ -41,10 +61,13 @@ export function VisaProgressDashboard({
   savedReadyDocumentNames?: string[];
 }) {
   const t = useTranslations("Home");
-  const selectedVisa = useSelectedVisa(catalog);
+  const locale = useLocale();
+  const { selectedVisa, setSelectedVisaCode } = useSelectedVisa(catalog);
   const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set());
   const [storedJourneyStage, setStoredJourneyStage] = useState(2);
   const [sampleSeed, setSampleSeed] = useState(1);
+  const [isChangingVisa, startVisaChange] = useTransition();
+  const [visaChangeError, setVisaChangeError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!selectedVisa) return;
@@ -114,6 +137,23 @@ export function VisaProgressDashboard({
     writeStoredJourneyStage(selectedVisa.visaCode, 3);
   }
 
+  /**
+   * 예전에는 목표 비자를 바꾸려면 "변경" 링크로 온보딩 전체를 다시 거쳐야
+   * 했다. 이 드롭다운은 user_visa_profile.target_visa_code만 바로 갱신한다.
+   */
+  function changeVisaCode(nextVisaCode: string) {
+    if (nextVisaCode === selectedVisa.visaCode) return;
+    setVisaChangeError(null);
+    startVisaChange(async () => {
+      const result = await updateTargetVisa(nextVisaCode);
+      if (result.status === "error") {
+        setVisaChangeError(result.message);
+        return;
+      }
+      setSelectedVisaCode(nextVisaCode);
+    });
+  }
+
   return (
     <>
       <section className="grid gap-5 xl:grid-cols-12" aria-label={t("progress.sectionAriaLabel")}>
@@ -135,16 +175,35 @@ export function VisaProgressDashboard({
             />
             <div className="w-full rounded-2xl bg-[#f5f7f4] p-4">
               <div className="flex items-start justify-between gap-4 text-sm">
-                <span className="font-semibold text-[#64716c]">{t("progress.selectedVisaLabel")}</span>
-                <strong className="text-right text-[#20332c]">
-                  <span className="block">{selectedVisa.visaCode}</span>
-                  <span className="mt-0.5 block text-xs font-semibold text-[#65716c]">{selectedVisa.visaNameKr}</span>
-                </strong>
+                <span className="mt-1.5 font-semibold text-[#64716c]">{t("progress.selectedVisaLabel")}</span>
+                <div className="flex flex-col items-end gap-1">
+                  <select
+                    aria-label={t("progress.selectedVisaLabel")}
+                    aria-busy={isChangingVisa}
+                    value={selectedVisa.visaCode}
+                    onChange={(event) => changeVisaCode(event.target.value)}
+                    disabled={isChangingVisa}
+                    className={`rounded-lg border border-[#d4ddd8] bg-white px-2.5 py-1.5 text-right text-sm font-extrabold text-[#20332c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${isChangingVisa ? "opacity-60" : ""}`}
+                  >
+                    {catalog.visas.map((visa) => (
+                      <option key={visa.visaCode} value={visa.visaCode}>
+                        {visa.visaCode} ({visa.visaNameKr})
+                      </option>
+                    ))}
+                  </select>
+                  {visaChangeError ? (
+                    <span role="alert" className="text-xs font-semibold text-[#9f4038]">
+                      {visaChangeError}
+                    </span>
+                  ) : null}
+                </div>
               </div>
-              <div className="mt-3 border-t border-[#e3e8e5] pt-3 text-right">
-                <Link href="/onboarding" className="text-xs font-extrabold text-[#2d6d5d] underline decoration-[#9db9af] underline-offset-4">
-                  {t("progress.changeVisa")}
-                </Link>
+              <div className="mt-3 flex items-center justify-between gap-4 border-t border-[#e3e8e5] pt-3 text-xs">
+                <span className="font-semibold text-[#64716c]">{t("progress.validityLabel")}</span>
+                <strong className="text-[#8a5910]">
+                  {formatVisaValidity(selectedVisa.validFrom, selectedVisa.validTo, locale) ??
+                    t("progress.validityUnavailable")}
+                </strong>
               </div>
             </div>
           </div>

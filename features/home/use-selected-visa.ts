@@ -35,5 +35,8 @@ export function useSelectedVisa(catalog: HomeVisaPreparationCatalog) {
     };
   }, [catalog.visas]);
 
-  return catalog.visas.find((visa) => visa.visaCode === selectedVisaCode) ?? fallbackVisa;
+  return {
+    selectedVisa: catalog.visas.find((visa) => visa.visaCode === selectedVisaCode) ?? fallbackVisa,
+    setSelectedVisaCode,
+  };
 }

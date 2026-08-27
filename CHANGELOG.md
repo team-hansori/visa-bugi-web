@@ -159,6 +159,7 @@
 
 - LocaleSwitcher를 공용 컴포넌트로 분리
 - Google 로그인 클릭 핸들러를 handleGoogleLogin으로 분리 (연동 지점 명시)
+- 상단 네비게이션에서 상담 탭 제거
 
 ### 📚 Documentation
 
@@ -210,6 +211,7 @@
 - 계획서에 익명 세션 보장 태스크 반영, 스펙 문구 정밀화
 - 온보딩 진입 화면 개편 + 앱 셸 분리 설계 스펙 추가
 - 온보딩 진입 화면 개편 + 앱 셸 분리 구현 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

@@ -54,7 +54,7 @@ export function AuthForm({
       <button
         type="button"
         onClick={onBack}
-        className="mb-3 inline-flex min-h-10 cursor-pointer items-center gap-1 rounded-lg px-1 text-sm font-bold text-[#52615b] transition-colors hover:text-[#20332c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+        className="mb-3 inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-lg px-1 text-sm font-bold text-[#52615b] transition-colors hover:text-[#20332c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
       >
         <span aria-hidden="true">←</span> {t("back")}
       </button>

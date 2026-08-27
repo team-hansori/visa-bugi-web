@@ -140,32 +140,36 @@ export function DocumentSubmissionStatus({
                   const checked = checkedIds.has(document.id);
                   const noteItems = splitConditionNote(document.conditionNote);
                   return (
-                    <li key={document.id}>
-                      <label className="flex cursor-pointer items-start gap-3 rounded-xl py-4 transition-colors hover:bg-[#f8faf8] sm:px-2">
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          onChange={() => toggleDocument(document.id)}
-                          aria-label={t("checkAriaLabel", { document: document.name })}
-                          className="mt-0.5 size-5 shrink-0 accent-[#2d6d5d]"
-                        />
-                        <div className="min-w-0 flex-1">
-                          <span className={`block font-extrabold ${checked ? "text-[#6f7c76] line-through decoration-[#9aaca4]" : "text-[#293e36]"}`}>{document.name}</span>
-                          <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[#77827d]">
-                            <RequirementBadge status={document.requirementStatus} />
-                          </span>
-                          {noteItems.length > 0 ? (
-                            <ul className="mt-1.5 space-y-0.5 text-xs leading-5 text-[#77827d]">
-                              {noteItems.map((item, index) => (
-                                <li key={index} className="flex gap-1.5">
-                                  <span aria-hidden="true" className="mt-[0.4em] size-1 shrink-0 rounded-full bg-[#9aaca4]" />
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          ) : null}
-                        </div>
-                      </label>
+                    <li key={document.id} className="flex items-start gap-3 rounded-xl py-4 sm:px-2">
+                      <input
+                        type="checkbox"
+                        id={`doc-check-${document.id}`}
+                        checked={checked}
+                        onChange={() => toggleDocument(document.id)}
+                        aria-label={t("checkAriaLabel", { document: document.name })}
+                        className="mt-0.5 size-5 shrink-0 accent-[#2d6d5d]"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <label
+                          htmlFor={`doc-check-${document.id}`}
+                          className={`block cursor-pointer font-extrabold ${checked ? "text-[#6f7c76] line-through decoration-[#9aaca4]" : "text-[#293e36]"}`}
+                        >
+                          {document.name}
+                        </label>
+                        <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[#77827d]">
+                          <RequirementBadge status={document.requirementStatus} />
+                        </span>
+                        {noteItems.length > 0 ? (
+                          <ul className="mt-1.5 space-y-0.5 text-xs leading-5 text-[#77827d]">
+                            {noteItems.map((item, index) => (
+                              <li key={index} className="flex gap-1.5">
+                                <span aria-hidden="true" className="mt-[0.4em] size-1 shrink-0 rounded-full bg-[#9aaca4]" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
                     </li>
                   );
                 })}

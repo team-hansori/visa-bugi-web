@@ -95,6 +95,7 @@
 - *(profile)* 목표 비자 조회 서버 도메인 모듈(getCurrentUserTargetVisa)
 - *(api)* GET /api/profile/target-visa 라우트 핸들러
 - *(ui)* 로그인 3버튼 진입 화면 + 서류탭/홈 목록 정리
+- Always mark OCR signatures as recognized
 
 ### 🐛 Bug Fixes
 
@@ -252,6 +253,7 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - BFF/아이디 인증 설계안 + 구현 계획 추가
 - 제외한 3개 엔드포인트에 대한 결정 확정 및 추가 절차 명시
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

@@ -563,7 +563,7 @@
   "Ocr": {
     "eyebrow": "신청서 작성 도우미",
     "title": "비자 신청서 작성 항목 점검",
-    "description": "신청서 사진, PDF 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다. 결과는 자동 제출되지 않습니다.",
+    "description": "신청서 사진, PDF 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다.",
     "languageNotice": "서식의 한국어를 읽은 뒤 안내는 현재 선택한 앱 언어로 제공합니다.",
     "catalog": {
       "supabase": "Supabase 스키마 v2 연결",
@@ -667,12 +667,17 @@
     },
     "privacy": {
       "title": "첨부 파일 처리 원칙",
-      "temporary": "사진·PDF·HWPX는 분석을 위해서만 일시 전송",
-      "noDatabase": "원본 파일·인식값은 저장하지 않고 사용자가 선택한 진행 상태만 저장",
-      "reviewFirst": "인식 결과를 사용자가 확인한 뒤에만 활용"
+      "temporary": "사진·PDF·HWPX는 분석을 위해서만 일시 전송합니다.",
+      "noDatabase": "원본 파일·인식값은 저장하지 않고, 사용자가 선택한 진행 상태만 저장합니다.",
+      "reviewFirst": "인식 결과는 사용자가 확인한 뒤에만 활용하며, 자동으로 제출되지 않습니다."
     },
     "tips": {
       "eyebrow": "촬영 도움말",
+      "captureAction": "사진 촬영하러 가기",
+      "attachmentEyebrow": "파일 첨부 도움말",
+      "attachmentType": "PDF 또는 HWPX 원본 파일을 선택해 주세요.",
+      "attachmentCheck": "파일이 정상적으로 열리고 내용이 선명한지 확인해 주세요.",
+      "attachmentNext": "파일을 첨부한 뒤 분석을 시작해 주세요.",
       "edges": "문서의 네 모서리가 모두 보이게 촬영하세요.",
       "light": "빛 반사와 그림자를 피해 글자를 선명하게 찍으세요.",
       "onePage": "여러 장인 신청서는 한 페이지씩 순서대로 점검하세요."

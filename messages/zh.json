@@ -103,7 +103,13 @@
       "savedEyebrow": "已保存文件的填写进度",
       "savedTag": "已保存",
       "commonVisaValue": "通用申请表",
-      "lastUpdatedLabel": "最近保存"
+      "lastUpdatedLabel": "最近保存",
+      "onboardingEyebrow": "入门设置中选择的签证",
+      "liveTag": "实时数据",
+      "previewTag": "预览",
+      "dynamicAriaLabel": "签证准备进度 {percent}%",
+      "checklistCaption": "整体准备进度",
+      "changeVisa": "更改关注的签证"
     },
     "journey": {
       "heading": "현재 단계",
@@ -122,10 +128,27 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "签证旅程",
-      "savedStepIndicator": "{total} 份文件中已准备 {ready} 份"
+      "savedStepIndicator": "{total} 份文件中已准备 {ready} 份",
+      "stepIndicatorDynamic": "第 {step} 步 · {stage}"
     },
     "tasks": {
-      "heading": "서류 준비 체크",
+      "heading": "材料准备清单",
+      "stageDescription": "{stage} 阶段所需的材料。",
+      "checkedSummary": "已确认 {checked}/{total}",
+      "checkAriaLabel": "将 {document} 标记为已准备",
+      "allChecked": "已确认所有显示的材料",
+      "checkAllHint": "请逐一确认材料",
+      "advance": "进入下一阶段",
+      "advanced": "已进入机构访问阶段",
+      "sourceSupabase": "基于 Supabase 的 document_requirements 显示。",
+      "sourcePreview": "这是连接 Supabase 前可使用的预览清单。",
+      "empty": "目前没有可显示的材料。",
+      "status": {
+        "required": "必需",
+        "optional": "可选",
+        "conditional": "有条件",
+        "alternative": "任选一项"
+      },
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",

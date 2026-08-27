@@ -103,7 +103,13 @@
       "savedEyebrow": "Tiến trình điền tài liệu đã lưu",
       "savedTag": "Đã lưu",
       "commonVisaValue": "Đơn đăng ký chung",
-      "lastUpdatedLabel": "Lưu gần đây"
+      "lastUpdatedLabel": "Lưu gần đây",
+      "onboardingEyebrow": "Thị thực đã chọn khi bắt đầu",
+      "liveTag": "Dữ liệu thực",
+      "previewTag": "Xem trước",
+      "dynamicAriaLabel": "Tiến độ chuẩn bị thị thực {percent}%",
+      "checklistCaption": "Tiến độ chuẩn bị tổng thể",
+      "changeVisa": "Đổi thị thực quan tâm"
     },
     "journey": {
       "heading": "현재 단계",
@@ -122,10 +128,27 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "Hành trình thị thực",
-      "savedStepIndicator": "Đã chuẩn bị {ready}/{total} tài liệu"
+      "savedStepIndicator": "Đã chuẩn bị {ready}/{total} tài liệu",
+      "stepIndicatorDynamic": "Bước {step} · {stage}"
     },
     "tasks": {
-      "heading": "서류 준비 체크",
+      "heading": "Kiểm tra hồ sơ cần chuẩn bị",
+      "stageDescription": "Các giấy tờ cần cho giai đoạn {stage}.",
+      "checkedSummary": "Đã kiểm tra {checked}/{total}",
+      "checkAriaLabel": "Đánh dấu {document} là đã chuẩn bị",
+      "allChecked": "Đã kiểm tra tất cả giấy tờ hiển thị",
+      "checkAllHint": "Vui lòng kiểm tra từng giấy tờ",
+      "advance": "Chuyển sang bước tiếp theo",
+      "advanced": "Đã chuyển sang giai đoạn đến cơ quan",
+      "sourceSupabase": "Hiển thị theo document_requirements trong Supabase.",
+      "sourcePreview": "Đây là danh sách xem trước trước khi kết nối Supabase.",
+      "empty": "Hiện không có giấy tờ để hiển thị.",
+      "status": {
+        "required": "Bắt buộc",
+        "optional": "Tùy chọn",
+        "conditional": "Có điều kiện",
+        "alternative": "Chọn 1"
+      },
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",

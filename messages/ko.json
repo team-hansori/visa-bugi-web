@@ -103,7 +103,13 @@
       "savedEyebrow": "저장된 서류 작성 진행률",
       "savedTag": "저장됨",
       "commonVisaValue": "공통 신청서",
-      "lastUpdatedLabel": "최근 저장"
+      "lastUpdatedLabel": "최근 저장",
+      "onboardingEyebrow": "온보딩에서 선택한 관심 비자",
+      "liveTag": "실제 데이터",
+      "previewTag": "미리보기",
+      "dynamicAriaLabel": "비자 준비 진행률 {percent}퍼센트",
+      "checklistCaption": "전체 준비 진행률",
+      "changeVisa": "관심 비자 변경하기"
     },
     "journey": {
       "heading": "현재 단계",
@@ -122,10 +128,27 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "비자 여정",
-      "savedStepIndicator": "서류 {total}개 중 {ready}개 준비 완료"
+      "savedStepIndicator": "서류 {total}개 중 {ready}개 준비 완료",
+      "stepIndicatorDynamic": "{step}단계 · {stage}"
     },
     "tasks": {
       "heading": "서류 준비 체크",
+      "stageDescription": "{stage} 단계에 필요한 서류입니다.",
+      "checkedSummary": "{checked}/{total}개 확인",
+      "checkAriaLabel": "{document} 준비 완료로 표시",
+      "allChecked": "표시된 서류를 모두 확인했어요",
+      "checkAllHint": "서류를 하나씩 확인해 주세요",
+      "advance": "다음 단계로 넘어가기",
+      "advanced": "기관 방문 단계로 이동했어요",
+      "sourceSupabase": "Supabase의 document_requirements를 기준으로 표시합니다.",
+      "sourcePreview": "Supabase 연결 전에도 확인할 수 있는 미리보기 목록입니다.",
+      "empty": "현재 표시할 서류가 없습니다.",
+      "status": {
+        "required": "필수",
+        "optional": "선택",
+        "conditional": "조건부",
+        "alternative": "택1"
+      },
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",

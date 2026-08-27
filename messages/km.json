@@ -103,7 +103,13 @@
       "savedEyebrow": "វឌ្ឍនភាពបំពេញឯកសារដែលបានរក្សាទុក",
       "savedTag": "បានរក្សាទុក",
       "commonVisaValue": "ពាក្យស្នើសុំទូទៅ",
-      "lastUpdatedLabel": "បានរក្សាទុកថ្មីៗ"
+      "lastUpdatedLabel": "បានរក្សាទុកថ្មីៗ",
+      "onboardingEyebrow": "ទិដ្ឋាការដែលបានជ្រើសពេលចាប់ផ្តើម",
+      "liveTag": "ទិន្នន័យពិត",
+      "previewTag": "មើលជាមុន",
+      "dynamicAriaLabel": "វឌ្ឍនភាពរៀបចំទិដ្ឋាការ {percent} ភាគរយ",
+      "checklistCaption": "វឌ្ឍនភាពរៀបចំសរុប",
+      "changeVisa": "ប្តូរទិដ្ឋាការដែលចាប់អារម្មណ៍"
     },
     "journey": {
       "heading": "현재 단계",
@@ -122,10 +128,27 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "ដំណើរទិដ្ឋាការ",
-      "savedStepIndicator": "ឯកសារ {ready} ក្នុងចំណោម {total} បានរួចរាល់"
+      "savedStepIndicator": "ឯកសារ {ready} ក្នុងចំណោម {total} បានរួចរាល់",
+      "stepIndicatorDynamic": "ដំណាក់កាល {step} · {stage}"
     },
     "tasks": {
-      "heading": "서류 준비 체크",
+      "heading": "បញ្ជីត្រួតពិនិត្យឯកសារ",
+      "stageDescription": "ឯកសារដែលត្រូវការសម្រាប់ដំណាក់កាល {stage}។",
+      "checkedSummary": "បានពិនិត្យ {checked}/{total}",
+      "checkAriaLabel": "សម្គាល់ {document} ថាបានរៀបចំ",
+      "allChecked": "បានពិនិត្យឯកសារដែលបង្ហាញទាំងអស់",
+      "checkAllHint": "សូមពិនិត្យឯកសារម្តងមួយៗ",
+      "advance": "ទៅដំណាក់កាលបន្ទាប់",
+      "advanced": "បានទៅដំណាក់កាលទៅស្ថាប័ន",
+      "sourceSupabase": "បង្ហាញតាម document_requirements ក្នុង Supabase។",
+      "sourcePreview": "នេះជាបញ្ជីមើលជាមុនមុនភ្ជាប់ Supabase។",
+      "empty": "បច្ចុប្បន្នមិនមានឯកសារសម្រាប់បង្ហាញទេ។",
+      "status": {
+        "required": "ចាំបាច់",
+        "optional": "ជម្រើស",
+        "conditional": "មានលក្ខខណ្ឌ",
+        "alternative": "ជ្រើសមួយ"
+      },
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",

@@ -103,7 +103,13 @@
       "savedEyebrow": "सुरक्षित कागजात भर्ने प्रगति",
       "savedTag": "सुरक्षित",
       "commonVisaValue": "साझा आवेदन फाराम",
-      "lastUpdatedLabel": "हालै सुरक्षित गरिएको"
+      "lastUpdatedLabel": "हालै सुरक्षित गरिएको",
+      "onboardingEyebrow": "सुरुआती सेटअपमा छानिएको भिसा",
+      "liveTag": "वास्तविक डेटा",
+      "previewTag": "पूर्वावलोकन",
+      "dynamicAriaLabel": "भिसा तयारी प्रगति {percent} प्रतिशत",
+      "checklistCaption": "समग्र तयारी प्रगति",
+      "changeVisa": "रुचिको भिसा परिवर्तन गर्नुहोस्"
     },
     "journey": {
       "heading": "현재 단계",
@@ -122,10 +128,27 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "भिसा यात्रा",
-      "savedStepIndicator": "कागजात {total} मध्ये {ready} तयार"
+      "savedStepIndicator": "कागजात {total} मध्ये {ready} तयार",
+      "stepIndicatorDynamic": "चरण {step} · {stage}"
     },
     "tasks": {
-      "heading": "서류 준비 체크",
+      "heading": "कागजात तयारी जाँच",
+      "stageDescription": "{stage} चरणका लागि आवश्यक कागजातहरू।",
+      "checkedSummary": "{checked}/{total} जाँच गरियो",
+      "checkAriaLabel": "{document} तयार भएको चिन्ह लगाउनुहोस्",
+      "allChecked": "देखाइएका सबै कागजात जाँच भए",
+      "checkAllHint": "कृपया प्रत्येक कागजात जाँच गर्नुहोस्",
+      "advance": "अर्को चरणमा जानुहोस्",
+      "advanced": "कार्यालय भ्रमण चरणमा सारियो",
+      "sourceSupabase": "Supabase को document_requirements अनुसार देखाइएको छ।",
+      "sourcePreview": "यो Supabase जडानअघि प्रयोग हुने पूर्वावलोकन सूची हो।",
+      "empty": "अहिले देखाउन कुनै कागजात छैन।",
+      "status": {
+        "required": "अनिवार्य",
+        "optional": "ऐच्छिक",
+        "conditional": "सर्तसहित",
+        "alternative": "एउटा छान्नुहोस्"
+      },
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",

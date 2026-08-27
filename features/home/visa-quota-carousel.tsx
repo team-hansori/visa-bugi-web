@@ -3,7 +3,6 @@
 import { type TouchEvent, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icon";
-import { Link } from "@/i18n/navigation";
 import type { VisaQuotaItem } from "./quota-model";
 
 type VisaQuotaCarouselProps = {
@@ -17,6 +16,9 @@ const themes = [
   "from-[#5a421e] via-[#7a5924] to-[#9b7433]",
   "from-[#263b58] via-[#354f72] to-[#49678b]",
 ];
+
+const announcementUrl =
+  "https://www.chungbuk.go.kr/www/selectGosiPblancView.do?key=422&no=69043&pageUnit=10&pageIndex=1&searchCnd=all&searchKrwd=%EB%B9%84%EC%9E%90";
 
 export function VisaQuotaCarousel({ items, source }: VisaQuotaCarouselProps) {
   const t = useTranslations("Home.quota");
@@ -168,14 +170,14 @@ export function VisaQuotaCarousel({ items, source }: VisaQuotaCarouselProps) {
                   <p className="mt-3 border-t border-white/10 pt-3 text-xs leading-5 text-white/65">
                     {t("notice")}
                   </p>
-                  <Link
-                    href="/onboarding"
+                  <a
+                    href={announcementUrl}
                     tabIndex={index === activeIndex ? 0 : -1}
                     className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#ffce72] px-4 text-sm font-extrabold text-[#173f36] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-white"
                   >
                     {t("cta")}
                     <Icon name="arrow-right" className="size-4" />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </article>

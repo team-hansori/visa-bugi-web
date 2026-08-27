@@ -10,7 +10,6 @@ import {
   getOrCreateSampleSeed,
   readStoredChecks,
   readStoredJourneyStage,
-  writeStoredChecks,
   writeStoredJourneyStage,
 } from "./checklist-storage";
 import {
@@ -120,16 +119,6 @@ export function VisaProgressDashboard({
   const turtleTop = 8 + (journeyStage - 2) * 76;
 
   if (!selectedVisa) return null;
-
-  function toggleDocument(documentId: string) {
-    setCheckedIds((current) => {
-      const next = new Set(current);
-      if (next.has(documentId)) next.delete(documentId);
-      else next.add(documentId);
-      writeStoredChecks(selectedVisa.visaCode, next);
-      return next;
-    });
-  }
 
   function advanceToAgencyVisit() {
     if (!allRequiredChecked || journeyStage !== 2) return;
@@ -335,24 +324,12 @@ export function VisaProgressDashboard({
           {pendingSample.length ? (
             <ul className="mt-5 divide-y divide-[#edf0ee]">
               {pendingSample.map(({ stage, document }) => (
-                <li key={document.id} className="py-1 first:pt-0 last:pb-0">
-                  <label className="flex cursor-pointer items-start gap-3 rounded-xl px-1 py-3 transition-colors hover:bg-[#f7faf8]">
-                    <input
-                      type="checkbox"
-                      checked={false}
-                      onChange={() => toggleDocument(document.id)}
-                      aria-label={t("tasks.checkAriaLabel", { document: document.name })}
-                      className="mt-0.5 size-5 shrink-0 accent-[#2d6d5d]"
-                    />
-                    <span className="min-w-0 flex-1">
-                      <span className="font-extrabold text-[#2a3c35]">{document.name}</span>
-                      <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[#76817c]">
-                        <RequirementBadge status={document.requirementStatus} />
-                        <span className="rounded-full bg-[#edf2ef] px-2 py-0.5 font-bold text-[#596861]">{stage.nameKr}</span>
-                        {document.conditionNote ? <span>· {document.conditionNote}</span> : null}
-                      </span>
-                    </span>
-                  </label>
+                <li key={document.id} className="py-3 first:pt-1 last:pb-1">
+                  <span className="block font-extrabold text-[#2a3c35]">{document.name}</span>
+                  <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[#76817c]">
+                    <RequirementBadge status={document.requirementStatus} />
+                    <span className="rounded-full bg-[#edf2ef] px-2 py-0.5 font-bold text-[#596861]">{stage.nameKr}</span>
+                  </span>
                 </li>
               ))}
             </ul>

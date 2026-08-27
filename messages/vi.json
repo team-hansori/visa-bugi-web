@@ -30,6 +30,7 @@
   "Auth": {
     "tabSignIn": "Đăng nhập",
     "tabSignUp": "Đăng ký",
+    "back": "Quay lại",
     "username": "Tên đăng nhập",
     "usernameHint": "Chữ thường, số, gạch dưới, 3~30 ký tự",
     "password": "Mật khẩu",
@@ -280,7 +281,7 @@
     "consentNotice": "<terms>Điều khoản sử dụng</terms> và <privacy>Chính sách bảo mật</privacy> đang được chuẩn bị. Bạn có thể xem khi được đăng tải.",
     "welcomeTitle": "Hãy bắt đầu cùng Visa-bugi",
     "welcomeDescription": "Chúng tôi sẽ giúp bạn theo dõi yêu cầu visa và bước tiếp theo.",
-    "continueWithoutLogin": "Bắt đầu không cần đăng nhập",
+    "continueWithoutLogin": "Xem với tư cách khách",
     "addressManualPrompt": "Không tìm thấy? Tôi sẽ nhập trực tiếp",
     "addressManualRoadLabel": "Địa chỉ (tên đường hoặc số nhà)",
     "addressManualRoadPlaceholder": "Ví dụ: 295 Naeto-ro, Jecheon-si, Chungbuk",

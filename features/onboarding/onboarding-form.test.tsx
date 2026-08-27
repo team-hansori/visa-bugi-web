@@ -58,7 +58,7 @@ describe("OnboardingForm", () => {
   it("첫 진입 시(step 파라미터 없음) 시작 화면을 보여준다", () => {
     render(<OnboardingForm />);
     expect(
-      screen.getByRole("button", { name: "로그인 없이 시작하기" }),
+      screen.getByRole("button", { name: "비회원 조회" }),
     ).toBeInTheDocument();
     expect(
       screen.queryByRole("heading", { name: /어떤 언어가 편한가요/ }),
@@ -69,7 +69,7 @@ describe("OnboardingForm", () => {
     const user = userEvent.setup();
     render(<OnboardingForm />);
 
-    await user.click(screen.getByRole("button", { name: "로그인 없이 시작하기" }));
+    await user.click(screen.getByRole("button", { name: "비회원 조회" }));
 
     await waitFor(() =>
       expect(push).toHaveBeenCalledWith(expect.stringContaining("step=locale")),
@@ -257,7 +257,7 @@ describe("OnboardingForm", () => {
     );
     // Google 로그인 없이도 항상 진행할 수 있는 경로가 있어야 한다 — 로그인을 강제하지 않는다.
     expect(
-      screen.getByRole("button", { name: "로그인 없이 시작하기" }),
+      screen.getByRole("button", { name: "비회원 조회" }),
     ).toBeEnabled();
   });
 });

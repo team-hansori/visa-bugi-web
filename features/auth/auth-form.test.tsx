@@ -14,13 +14,25 @@ vi.mock("./actions", () => ({
 
 const { AuthForm } = await import("./auth-form");
 
-function renderForm(onAuthenticated = vi.fn()) {
+function renderForm(
+  props: Partial<{
+    mode: "signIn" | "signUp";
+    onAuthenticated: () => void;
+    onBack: () => void;
+  }> = {},
+) {
+  const onAuthenticated = props.onAuthenticated ?? vi.fn();
+  const onBack = props.onBack ?? vi.fn();
   render(
     <NextIntlClientProvider locale="ko" messages={messages}>
-      <AuthForm onAuthenticated={onAuthenticated} />
+      <AuthForm
+        mode={props.mode ?? "signIn"}
+        onAuthenticated={onAuthenticated}
+        onBack={onBack}
+      />
     </NextIntlClientProvider>,
   );
-  return { onAuthenticated };
+  return { onAuthenticated, onBack };
 }
 
 beforeEach(() => {
@@ -29,23 +41,24 @@ beforeEach(() => {
   signUpWithId.mockResolvedValue({ status: "idle" });
 });
 
-it("기본은 로그인 탭이고 아이디/비밀번호 필드를 보여준다", () => {
-  renderForm();
+it("signIn 모드는 아이디/비밀번호만 보여준다 (이름 필드 없음)", () => {
+  renderForm({ mode: "signIn" });
   expect(screen.getByLabelText("아이디")).toBeInTheDocument();
   expect(screen.getByLabelText("비밀번호")).toBeInTheDocument();
   expect(screen.queryByLabelText("이름")).not.toBeInTheDocument();
 });
 
-it("회원가입 모드로 바꾸면 이름 필드가 나타난다", async () => {
-  renderForm();
-  await userEvent.click(screen.getByRole("radio", { name: "회원가입" }));
+it("signUp 모드는 아이디/이름/비밀번호를 보여준다", () => {
+  renderForm({ mode: "signUp" });
+  expect(screen.getByLabelText("아이디")).toBeInTheDocument();
   expect(screen.getByLabelText("이름")).toBeInTheDocument();
+  expect(screen.getByLabelText("비밀번호")).toBeInTheDocument();
 });
 
-it("모드 전환은 radiogroup으로 노출된다", () => {
-  renderForm();
-  expect(screen.getByRole("radio", { name: "로그인" })).toBeChecked();
-  expect(screen.getByRole("radio", { name: "회원가입" })).not.toBeChecked();
+it("뒤로 버튼은 onBack을 호출한다", async () => {
+  const { onBack } = renderForm({ mode: "signUp" });
+  await userEvent.click(screen.getByRole("button", { name: "뒤로" }));
+  expect(onBack).toHaveBeenCalled();
 });
 
 it("로그인 실패 메시지를 표시한다", async () => {
@@ -53,7 +66,7 @@ it("로그인 실패 메시지를 표시한다", async () => {
     status: "error",
     message: "아이디 또는 비밀번호가 올바르지 않습니다.",
   });
-  renderForm();
+  renderForm({ mode: "signIn" });
   await userEvent.type(screen.getByLabelText("아이디"), "visa_bugi");
   await userEvent.type(screen.getByLabelText("비밀번호"), "wrongpass");
   await userEvent.click(screen.getByRole("button", { name: "로그인" }));
@@ -62,17 +75,19 @@ it("로그인 실패 메시지를 표시한다", async () => {
   );
 });
 
-it("성공하면 onAuthenticated를 호출한다", async () => {
-  const { onAuthenticated } = renderForm();
+it("성공하면 onAuthenticated를 한 번 호출한다", async () => {
+  const { onAuthenticated } = renderForm({ mode: "signIn" });
   signInWithId.mockResolvedValue({ status: "success" });
   await userEvent.type(screen.getByLabelText("아이디"), "visa_bugi");
   await userEvent.type(screen.getByLabelText("비밀번호"), "secret12");
   await userEvent.click(screen.getByRole("button", { name: "로그인" }));
-  await vi.waitFor(() => expect(onAuthenticated).toHaveBeenCalled());
+  await vi.waitFor(() => expect(onAuthenticated).toHaveBeenCalledTimes(1));
 });
 
 it("locale hidden 필드를 현재 locale로 채운다", () => {
-  renderForm();
-  const hidden = document.querySelector('input[name="locale"]') as HTMLInputElement;
+  renderForm({ mode: "signIn" });
+  const hidden = document.querySelector(
+    'input[name="locale"]',
+  ) as HTMLInputElement;
   expect(hidden.value).toBe("ko");
 });

@@ -30,6 +30,7 @@
   "Auth": {
     "tabSignIn": "लगइन",
     "tabSignUp": "दर्ता",
+    "back": "पछाडि",
     "username": "प्रयोगकर्ता नाम",
     "usernameHint": "सानो अक्षर, अंक, अन्डरस्कोर, ३~३० अक्षर",
     "password": "पासवर्ड",
@@ -280,7 +281,7 @@
     "consentNotice": "<terms>सेवा सर्तहरू</terms> र <privacy>गोपनीयता नीति</privacy> तयार गरिँदैछ। प्रकाशित भएपछि यहाँ हेर्न सकिन्छ।",
     "welcomeTitle": "भिसा-बुगीसँग सुरु गरौं",
     "welcomeDescription": "हामी तपाईंको भिसा आवश्यकता र अर्को चरण ट्र्याक गर्नेछौं।",
-    "continueWithoutLogin": "लगइन बिना सुरु गर्नुहोस्",
+    "continueWithoutLogin": "अतिथिको रूपमा हेर्नुहोस्",
     "addressManualPrompt": "फेला परेन? म आफैं प्रविष्ट गर्छु",
     "addressManualRoadLabel": "ठेगाना (सडकको नाम वा घर नम्बर)",
     "addressManualRoadPlaceholder": "उदाहरण: चुङ्बुक, जेचोन-सी, नेतो-रो २९५",

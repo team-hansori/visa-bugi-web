@@ -9,6 +9,7 @@ import {
   writeStoredChecks,
   writeStoredJourneyStage,
 } from "./checklist-storage";
+import { splitConditionNote } from "./condition-note";
 import {
   areAllRequiredDocumentsChecked,
   getRequiredVisaDocuments,
@@ -82,8 +83,7 @@ export function DocumentSubmissionStatus({
       <div className="mt-3 rounded-[28px] border border-[#dce6e1] bg-white p-5 shadow-[0_12px_36px_rgba(48,75,64,0.07)] sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div>
-            <p className="text-sm font-extrabold tracking-[0.07em] text-[#2d6d5d]">{t("eyebrow")}</p>
-            <h1 id="document-status-heading" className="mt-2 text-3xl font-black tracking-[-0.045em] text-[#20332c]">{t("title")}</h1>
+            <h1 id="document-status-heading" className="text-3xl font-black tracking-[-0.045em] text-[#20332c]">{t("title")}</h1>
             <p className="mt-2 text-sm leading-6 text-[#66736e]">{t("description")}</p>
           </div>
           <div className="rounded-2xl bg-[#edf6f2] px-4 py-3 text-right">
@@ -138,6 +138,7 @@ export function DocumentSubmissionStatus({
               <ul className="divide-y divide-[#edf0ee] px-4 sm:px-6">
                 {stage.documents.map((document) => {
                   const checked = checkedIds.has(document.id);
+                  const noteItems = splitConditionNote(document.conditionNote);
                   return (
                     <li key={document.id}>
                       <label className="flex cursor-pointer items-start gap-3 rounded-xl py-4 transition-colors hover:bg-[#f8faf8] sm:px-2">
@@ -148,14 +149,22 @@ export function DocumentSubmissionStatus({
                           aria-label={t("checkAriaLabel", { document: document.name })}
                           className="mt-0.5 size-5 shrink-0 accent-[#2d6d5d]"
                         />
-                        <span className="min-w-0 flex-1">
-                          <span className={`font-extrabold ${checked ? "text-[#6f7c76] line-through decoration-[#9aaca4]" : "text-[#293e36]"}`}>{document.name}</span>
+                        <div className="min-w-0 flex-1">
+                          <span className={`block font-extrabold ${checked ? "text-[#6f7c76] line-through decoration-[#9aaca4]" : "text-[#293e36]"}`}>{document.name}</span>
                           <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[#77827d]">
                             <RequirementBadge status={document.requirementStatus} />
-                            {document.category ? <span>{document.category}</span> : null}
-                            {document.conditionNote ? <span>· {document.conditionNote}</span> : null}
                           </span>
-                        </span>
+                          {noteItems.length > 0 ? (
+                            <ul className="mt-1.5 space-y-0.5 text-xs leading-5 text-[#77827d]">
+                              {noteItems.map((item, index) => (
+                                <li key={index} className="flex gap-1.5">
+                                  <span aria-hidden="true" className="mt-[0.4em] size-1 shrink-0 rounded-full bg-[#9aaca4]" />
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                        </div>
                       </label>
                     </li>
                   );

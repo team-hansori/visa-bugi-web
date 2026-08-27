@@ -89,6 +89,11 @@
 - *(auth)* UseAuthState를 실제 Supabase 세션 구독으로 구현
 - *(auth)* 아이디/비밀번호 로그인·회원가입 폼과 Auth 메시지
 - *(auth)* 온보딩 진입 화면의 미구현 Google 버튼을 아이디/비밀번호 폼으로 교체
+- *(api)* 공통 오류 계약(ApiError)과 withApiRoute 래퍼
+- *(map)* 기관 조회를 서버 도메인 모듈로 이동(getNearbyAgencies)
+- *(api)* GET /api/map/agencies 라우트 핸들러
+- *(profile)* 목표 비자 조회 서버 도메인 모듈(getCurrentUserTargetVisa)
+- *(api)* GET /api/profile/target-visa 라우트 핸들러
 
 ### 🐛 Bug Fixes
 
@@ -158,6 +163,7 @@
 - 목표비자 인라인 드롭다운, 공고 유효기간을 새 VisaProgressDashboard에 재구현
 - *(auth)* 코드 리뷰 반영 — 세션 경쟁·서버 로그인 후 갱신·가입 세션 검사·radiogroup·1회 알림
 - *(home)* 좁은 폭에서 안 접히던 요소들 반응형 처리
+- *(api)* Phase 2 코드 리뷰 반영 — 위치 프라이버시·캐시 request-id·오류 로깅·세션 독립 조회
 
 ### 💼 Other
 
@@ -169,6 +175,8 @@
 - LocaleSwitcher를 공용 컴포넌트로 분리
 - Google 로그인 클릭 핸들러를 handleGoogleLogin으로 분리 (연동 지점 명시)
 - 상단 네비게이션에서 상담 탭 제거
+- *(map)* 지도 화면이 브라우저 Supabase 대신 /api/map/agencies 사용
+- *(profile)* ResolveStoredTargetVisaCode가 /api/profile/target-visa 사용
 
 ### 📚 Documentation
 
@@ -240,6 +248,7 @@
 - CHANGELOG 자동 업데이트 [skip ci]
 - BFF/아이디 인증 설계안 + 구현 계획 추가
 - 제외한 3개 엔드포인트에 대한 결정 확정 및 추가 절차 명시
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 
 ### 🎨 Styling

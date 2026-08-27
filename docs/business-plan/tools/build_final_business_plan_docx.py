@@ -215,6 +215,7 @@ def configure_document(document):
     section.right_margin = Mm(15)
     section.header_distance = Mm(8)
     section.footer_distance = Mm(8)
+    section.different_first_page_header_footer = True
 
     style_name(
         document,
@@ -318,6 +319,12 @@ def set_header_footer(section):
     fld_run.append(text)
     fld.append(fld_run)
     p._p.append(fld)
+
+    # 공식 양식의 표지는 머리말·꼬리말 없이 사용한다.
+    first_header = section.first_page_header
+    first_header.paragraphs[0].text = ""
+    first_footer = section.first_page_footer
+    first_footer.paragraphs[0].text = ""
 
 
 def add_body(document, text, *, bold_lead=None, after=6, size=11, italic=False):
@@ -600,36 +607,159 @@ def add_source(document, number, title, organization, date_text, url):
     add_hyperlink(paragraph, "원문 보기", url)
 
 
-def add_title_block(document):
+def add_cover(document):
     p = document.add_paragraph()
     set_paragraph_format(
         p,
         alignment=WD_ALIGN_PARAGRAPH.CENTER,
-        before=0,
-        after=3,
-        line_spacing=1.0,
-    )
-    run = p.add_run("제13회 전국 ICT융합 공모전 사업계획서")
-    set_run_font(run, size=18, bold=True)
-    p = document.add_paragraph()
-    set_paragraph_format(
-        p,
-        alignment=WD_ALIGN_PARAGRAPH.CENTER,
-        before=0,
+        before=16,
         after=8,
         line_spacing=1.0,
     )
-    run = p.add_run("디지털 시제품 · 충북 현안 해결 AI 혁신")
-    set_run_font(run, size=10, color=GRAY)
+    run = p.add_run("- 2026년 지역주도 디지털혁신지원사업 -")
+    set_run_font(run, size=12, bold=True)
 
-    add_standard_table(
-        document,
-        ["작품명(사업명)", "신청인(팀장)", "작성 기준일"],
-        [["비자부기(visa-bugi)", "김태은", "2026년 8월 28일"]],
-        [4300, 2500, 3280],
-        font_size=9.5,
-        center_columns={0, 1, 2},
+    p = document.add_paragraph()
+    set_paragraph_format(
+        p,
+        alignment=WD_ALIGN_PARAGRAPH.CENTER,
+        before=10,
+        after=0,
+        line_spacing=1.35,
     )
+    run = p.add_run("제13회 전국 ICT융합 공모전\n사업계획서")
+    set_run_font(run, size=24, bold=True)
+
+    spacer = document.add_paragraph()
+    set_paragraph_format(spacer, before=0, after=0, line_spacing=1.0)
+    spacer.paragraph_format.space_before = Pt(105)
+
+    table = document.add_table(rows=3, cols=2)
+    labels = ["참   가   분   야", "작품명(사업명)", "신 청 인 ( 팀 장 )"]
+    values = ["디지털 시제품", "비자부기(visa-bugi)", "김태은"]
+    for row_index, (label, value) in enumerate(zip(labels, values)):
+        label_cell = table.cell(row_index, 0)
+        value_cell = table.cell(row_index, 1)
+        for cell in (label_cell, value_cell):
+            remove_cell_border(cell)
+            set_cell_fill(cell, WHITE)
+            set_cell_margins(cell, top=130, start=90, bottom=130, end=90)
+        set_cell_text(
+            label_cell,
+            label,
+            size=12,
+            alignment=WD_ALIGN_PARAGRAPH.RIGHT,
+            line_spacing=1.2,
+        )
+        set_cell_text(
+            value_cell,
+            f":  {value}",
+            size=12,
+            bold=row_index == 1,
+            alignment=WD_ALIGN_PARAGRAPH.LEFT,
+            line_spacing=1.2,
+        )
+    apply_table_geometry(table, [3550, 6530], indent=0)
+
+
+def add_picture_to_cell(cell, path, *, width_mm, alt_text, caption):
+    paragraph = cell.add_paragraph()
+    set_paragraph_format(
+        paragraph,
+        alignment=WD_ALIGN_PARAGRAPH.CENTER,
+        before=1,
+        after=1,
+        line_spacing=1.0,
+    )
+    run = paragraph.add_run()
+    shape = run.add_picture(str(path), width=Mm(width_mm))
+    shape._inline.docPr.set("descr", alt_text)
+    caption_paragraph = cell.add_paragraph()
+    set_paragraph_format(
+        caption_paragraph,
+        alignment=WD_ALIGN_PARAGRAPH.CENTER,
+        before=1,
+        after=0,
+        line_spacing=1.0,
+    )
+    caption_run = caption_paragraph.add_run(caption)
+    set_run_font(caption_run, size=8.2)
+
+
+def add_official_summary(document, assets):
+    document.add_heading("1. 요약", level=1)
+    rows = [
+        (
+            "제품\n(아이디어)명",
+            "비자부기(visa-bugi) — 외국인 주민의 비자 요건·서류·일정·지원기관을 한 번에 관리하는 충북형 AI 비자 동행 서비스",
+        ),
+        (
+            "제품\n(아이디어)\n소개",
+            "충북 외국인 주민의 다국어 질문, OCR 신청서 상태, 공식 공고 일정을 분석하여 비자정보·보완서류·행정일정·전문기관 중 적절한 다음 행동으로 연결하는 모바일 우선 웹 서비스이다. AI 챗봇은 질문의 의도·비자·지역·위험 신호를 파악하고, OCR은 서류를 완성·확인 필요·누락·수동 확인으로 구분한다. 자격·점수와 날짜는 검수된 데이터와 결정론적 규칙으로 계산한다.",
+        ),
+        (
+            "제품\n(아이디어)\n사업성",
+            "개인에게 핵심 기능을 무료로 제공하고, 대학·기업·지자체·외국인지원기관의 사용료로 AI 처리비와 행정데이터 갱신비를 충당하는 B2C 기반 B2G/B2B 모델이다. OCR 분석비는 현재 시험 가정에서 문서 1건당 약 0.009달러로 추산되어 낮은 처리비로 외국인 주민의 비자 준비와 충북 정착을 지원할 수 있다. [13]",
+        ),
+        (
+            "제품\n(아이디어)\n가치",
+            "질문→근거 조회→OCR 서류 점검→공고 일정 연결→기관 안내를 하나의 사용자 여정으로 통합한다. 구축 대상 공식 원천문서 24건 전체를 파싱해 원문 계층·근거 계층·규칙 계층·서비스 계층을 구성했으며, 684개 원천→서비스 매핑으로 결과를 원문까지 추적한다.",
+        ),
+        (
+            "제품\n(아이디어)\n기대효과",
+            "정보 탐색시간과 필수서류 누락을 줄이고 외국인 인재의 취업·비자 전환·지역 정착을 연결한다. 대학·기업·지원기관에는 반복 상담 부담 완화와 동일한 최신 근거를 공유하는 업무 기반을 제공한다.",
+        ),
+    ]
+
+    table = document.add_table(rows=6, cols=2)
+    for row_index, (label, value) in enumerate(rows):
+        left = table.cell(row_index, 0)
+        right = table.cell(row_index, 1)
+        for cell in (left, right):
+            set_cell_fill(cell, WHITE)
+            set_cell_border(cell, size=9)
+            set_cell_margins(cell, top=70, start=100, bottom=70, end=100)
+        set_cell_text(
+            left,
+            label,
+            size=9.0,
+            bold=True,
+            alignment=WD_ALIGN_PARAGRAPH.CENTER,
+            line_spacing=1.15,
+        )
+        set_cell_text(
+            right,
+            value,
+            size=8.6,
+            alignment=WD_ALIGN_PARAGRAPH.LEFT,
+            line_spacing=1.2,
+        )
+
+    image_left = table.cell(5, 0)
+    image_right = table.cell(5, 1)
+    for cell in (image_left, image_right):
+        set_cell_fill(cell, WHITE)
+        set_cell_border(cell, size=9)
+        set_cell_margins(cell, top=55, start=90, bottom=55, end=90)
+    set_cell_text(
+        image_left,
+        "관련 이미지",
+        size=9.0,
+        bold=True,
+        alignment=WD_ALIGN_PARAGRAPH.CENTER,
+        line_spacing=1.15,
+    )
+    image_right.text = ""
+    add_picture_to_cell(
+        image_right,
+        assets / "01-dashboard-mockup.png",
+        width_mm=88,
+        alt_text="준비 현황과 비자 여정, 다음 할 일을 보여주는 비자부기 대시보드",
+        caption="그림 1. 복잡한 비자 행정을 오늘 할 일로 바꾸는 비자부기 대시보드",
+    )
+    for row in table.rows:
+        prevent_row_split(row)
+    apply_table_geometry(table, [1850, 8230])
 
 
 def add_page_break(document):
@@ -641,47 +771,14 @@ def build(output_path):
     configure_document(document)
     assets = Path(__file__).resolve().parents[1] / "assets"
 
-    # 1쪽 — 요약
-    add_title_block(document)
-    document.add_heading("1. 요약", level=1)
-    add_standard_table(
-        document,
-        ["구분", "내용"],
-        [
-            [
-                "제품 소개",
-                "충북 외국인 주민의 다국어 질문, OCR 신청서 상태, 공식 공고 일정을 분석하여 비자정보·보완서류·행정일정·전문기관 중 적절한 다음 행동으로 연결하는 모바일 우선 AI 비자 동행 서비스이다.",
-            ],
-            [
-                "사업성",
-                "개인에게 핵심 기능을 무료로 제공하고, 대학·기업·지자체·외국인지원기관의 사용료로 AI 처리비와 행정데이터 갱신비를 충당하는 B2C 기반 B2G/B2B 모델이다. OCR 분석비는 현재 시험 가정에서 문서 1건당 약 0.009달러로 추산되어, 낮은 처리비로 외국인 주민의 비자 준비와 지역 정착을 지원할 수 있다. [13]",
-            ],
-            [
-                "핵심 가치",
-                "AI 챗봇이 질문의 의도·비자·지역·위험 신호를 파악하고, OCR이 서류의 누락·확인 항목을 구조화하며, 공고 스케줄러가 검증된 기한을 캘린더 행동으로 변환한다.",
-            ],
-            [
-                "주요 기능",
-                "근거형 다국어 AI 챗봇, 위험상황 선제 라우팅, OCR 서류 사전 점검, 공고 일정 자동 연결, 요건·점수 계산, 서류 체크리스트와 기관 안내를 제공한다.",
-            ],
-            [
-                "기대효과",
-                "정보 탐색시간과 서류 누락을 줄이고, 외국인 인재의 취업·비자 전환·지역 정착을 연결하며, 대학·기업·지원기관의 반복 상담 부담을 완화한다.",
-            ],
-        ],
-        [1700, 8380],
-        font_size=9.1,
-        first_col_bold=True,
-    )
-    add_picture(
-        document,
-        assets / "01-dashboard-mockup.png",
-        width_mm=148,
-        alt_text="준비 현황 68퍼센트와 비자 여정, 다음 할 일을 보여주는 비자부기 대시보드",
-        caption="그림 1. 복잡한 비자 행정을 오늘 할 일로 바꾸는 비자부기 대시보드",
-    )
+    # 1쪽 — 공식 양식 표지
+    add_cover(document)
 
-    # 2쪽 — 기획 배경: 문제와 정책
+    # 2쪽 — 공식 양식 1. 요약
+    add_page_break(document)
+    add_official_summary(document, assets)
+
+    # 3쪽 — 기획 배경: 문제와 정책
     add_page_break(document)
     document.add_heading("2. 기획 배경", level=1)
     document.add_heading("2-1. 문제 정의", level=2)
@@ -718,7 +815,7 @@ def build(output_path):
         "외국인 인재가 채용 이후 비자 전환 과정에서 이탈하지 않도록 돕는 것은 산업인력 확보와 지역 정착을 동시에 지원하는 디지털 행정 과제다.",
     )
 
-    # 3쪽 — 제안 동기
+    # 4쪽 — 제안 동기
     add_page_break(document)
     document.add_heading("2-3. 제안 동기", level=2)
     add_body(
@@ -755,7 +852,7 @@ def build(output_path):
         after=0,
     )
 
-    # 4쪽 — 목표 사용자와 전체 흐름
+    # 5쪽 — 목표 사용자와 전체 흐름
     add_page_break(document)
     document.add_heading("3. 기획 세부설명", level=1)
     document.add_heading("3-1. 목표 사용자와 대표 시나리오", level=2)
@@ -785,7 +882,7 @@ def build(output_path):
     add_bullet(document, "근거 없는 상대일정은 특정 날짜로 추정하지 않는다.")
     add_bullet(document, "위험 신호에는 일반 답변을 중단하고 검증된 전문기관으로 연결한다.")
 
-    # 5쪽 — 서비스 기능
+    # 6쪽 — 서비스 기능
     add_page_break(document)
     document.add_heading("3-2. 서비스 구성과 핵심 기능", level=2)
     add_standard_table(
@@ -814,7 +911,7 @@ def build(output_path):
         "질문을 알아듣고, 서류를 읽고, 행정기한을 놓치지 않도록 돕는 충북형 AI 비자 동행 서비스다.",
     )
 
-    # 6쪽 — 데이터와 판정
+    # 7쪽 — 데이터와 판정
     add_page_break(document)
     document.add_heading("3-3. AI 행정·안전 라우팅과 데이터 신뢰 구조", level=2)
     add_body(
@@ -853,7 +950,7 @@ def build(output_path):
         "13개 관계형 테이블과 684개 원천→서비스 매핑으로 답변을 원문까지 추적한다. 데이터에 없는 답변·연락처는 생성하지 않고, 자격 AND/OR·점수와 날짜는 코드로 계산하며 검토 항목은 자동 통과시키지 않는다.",
     )
 
-    # 7쪽 — 통합 기능과 책임 경계
+    # 8쪽 — 통합 기능과 책임 경계
     add_page_break(document)
     document.add_heading("3-4. AI 챗봇·OCR·공고 일정의 통합", level=2)
     add_body(
@@ -881,13 +978,15 @@ def build(output_path):
     add_bullet(document, "위험상황은 일반 대화에서 분리해 전문기관 또는 전국 단위 긴급기관으로 라우팅한다.")
     add_bullet(document, "모든 자가진단 화면에 공식 결정 대체가 아니라는 책임 경계를 표시한다.")
 
-    # 8쪽 — 근로자 여정
+    # 9쪽 — 대표 사용자 여정 2종
     add_page_break(document)
-    document.add_heading("3-5. 사용자 여정 ① 이주노동자", level=2)
-    add_note_box(
+    document.add_heading("3-5. 대표 사용자 여정", level=2)
+    document.add_heading("① 이주노동자: 비자 준비와 노동권 보호", level=3)
+    add_body(
         document,
-        "가상 페르소나",
-        "응우옌 반 A · 27세 · 베트남 · E-9 · 음성군 제조업체 근무 2년 차. 장기체류 전환 가능성과 근로계약 조건 문제를 함께 확인하고 싶다.",
+        "응우옌 반 A · 27세 · 베트남 · E-9 · 음성군 제조업체 근무 2년 차. E-7-4R 전환 가능성과 임금체불 문제를 함께 확인하는 상황이다.",
+        size=9.5,
+        after=3,
     )
     add_caption(document, "그림 5. 이주노동자의 E-7-4R 준비와 위험상황 연결")
     add_compact_flow(
@@ -901,24 +1000,15 @@ def build(output_path):
         ],
         "자가진단·준비는 비자부기가 지원하고 신청·판정은 공식기관에서 수행",
     )
-    add_numbered(document, "사용자가 ‘E-7-4R로 바꾸고 싶은데 월급도 받지 못했다’고 질문하면 AI가 비자 문의와 임금체불 신호를 함께 파악한다.")
-    add_numbered(document, "위험상황에서는 비자 설명보다 사용자 유형·지역에 맞는 노동 전문기관 연결을 우선한다.")
-    add_numbered(document, "기관명·전화번호·URL은 검수된 데이터의 값을 그대로 제공하고 출처와 검증일을 표시한다.")
-    add_numbered(document, "이후 E-7-4R 요건과 OCR 서류 상태를 대조해 부족 항목을 체크리스트로 제시한다.")
-    add_numbered(document, "공고 마감일과 확인된 방문·제출 일정을 사용자 동의 후 캘린더에 연결한다.")
+    add_bullet(document, "AI가 비자 문의와 임금체불 신호를 함께 파악하면 일반 답변보다 지역·사용자 유형에 맞는 노동 전문기관 연결을 우선한다.", size=9.2)
+    add_bullet(document, "이후 검수된 E-7-4R 요건·OCR 서류 상태·공고 마감일을 체크리스트와 캘린더 행동으로 연결한다.", size=9.2)
+
+    document.add_heading("② 외국인 유학생: 유학→취업→정착", level=3)
     add_body(
         document,
-        "이 여정의 핵심은 비자 준비와 노동권 보호를 하나의 대화에서 발견하되, 서로 다른 책임 경로로 안전하게 분리하는 것이다.",
-        after=0,
-    )
-
-    # 9쪽 — 유학생 여정
-    add_page_break(document)
-    document.add_heading("3-6. 사용자 여정 ② 외국인 유학생", level=2)
-    add_note_box(
-        document,
-        "가상 페르소나",
-        "바트 체첵 · 22세 · 몽골 · D-2 · 충북 소재 대학 재학. 시간제취업 허가와 졸업 후 충북 정착 경로를 함께 준비하고 싶다.",
+        "바트 체첵 · 22세 · 몽골 · D-2 · 충북 소재 대학 재학. 시간제취업 허가와 졸업 후 충북 정착 경로를 함께 준비하는 상황이다.",
+        size=9.5,
+        after=3,
     )
     add_caption(document, "그림 6. 유학생의 유학→취업→정착 준비 과정")
     add_compact_flow(
@@ -932,16 +1022,8 @@ def build(output_path):
         ],
         "학업·취업 허가와 졸업 후 정착 준비를 하나의 연속된 여정으로 관리",
     )
-    add_numbered(document, "사용자가 신청서를 촬영한 뒤 ‘이 항목은 학교가 작성하나요?’라고 질문하면 AI가 선택 필드의 맥락을 파악한다.")
-    add_numbered(document, "OCR 결과에서 작성 주체·필수 여부·누락·수동 확인 항목을 구분한다.")
-    add_numbered(document, "AI 챗봇은 실제 개인정보 대신 필드 상태를 사용해 작성 방법과 재확인 사항을 설명한다.")
-    add_numbered(document, "목표 비자의 현재 공고와 절차를 조회해 접수기간·출처·담당기관을 제시한다.")
-    add_numbered(document, "누락서류는 체크리스트에, 확인된 마감일은 캘린더에 연결해 다음 행동을 추적한다.")
-    add_body(
-        document,
-        "채용박람회에서 시작된 만남이 취업·비자 전환·지역 정착으로 이어지도록 후속 행동을 관리하는 것이 이 시나리오의 지역적 가치다.",
-        after=0,
-    )
+    add_bullet(document, "OCR이 작성 주체·필수 여부·누락·수동 확인을 구분하고, 챗봇은 실제 개인정보 대신 필드 상태로 작성 방법을 설명한다.", size=9.2)
+    add_bullet(document, "목표 비자의 공고·절차·기관을 조회해 누락서류는 체크리스트에, 확인된 마감일은 캘린더에 연결한다.", size=9.2)
 
     # 10쪽 — 차별점과 데이터 자산
     add_page_break(document)

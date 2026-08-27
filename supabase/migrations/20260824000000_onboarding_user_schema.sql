@@ -60,6 +60,18 @@ create index if not exists user_visa_profile_visa_details_idx
 alter table public.profiles enable row level security;
 alter table public.user_visa_profile enable row level security;
 
+-- CREATE POLICY는 CREATE TABLE/INDEX와 달리 IF NOT EXISTS를 지원하지
+-- 않는다. 이 마이그레이션을 다시 실행해도(예: 실수로 두 번 Run) 정책
+-- 충돌로 실패하지 않도록 먼저 지우고 다시 만든다.
+drop policy if exists profiles_select_own on public.profiles;
+drop policy if exists profiles_insert_own on public.profiles;
+drop policy if exists profiles_update_own on public.profiles;
+drop policy if exists profiles_delete_own on public.profiles;
+drop policy if exists user_visa_profile_select_own on public.user_visa_profile;
+drop policy if exists user_visa_profile_insert_own on public.user_visa_profile;
+drop policy if exists user_visa_profile_update_own on public.user_visa_profile;
+drop policy if exists user_visa_profile_delete_own on public.user_visa_profile;
+
 create policy profiles_select_own on public.profiles
   for select using ((select auth.uid()) = user_id);
 create policy profiles_insert_own on public.profiles

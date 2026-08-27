@@ -51,6 +51,13 @@ export async function signUpWithId(
     return { status: "error", message: GENERIC_ERROR };
   }
 
+  // Confirm Email이 켜진 프로젝트에서는 user는 있지만 session이 없어 쿠키가
+  // 세팅되지 않는다. 이 경우 success로 돌리면 홈↔온보딩 리다이렉트 루프가 되므로
+  // 명시적으로 오류를 낸다(운영 전제는 Confirm Email 비활성).
+  if (!data.session) {
+    return { status: "error", message: GENERIC_ERROR };
+  }
+
   const profileRow: Pick<
     ProfileInsert,
     "user_id" | "locale" | "username" | "name"

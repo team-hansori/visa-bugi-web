@@ -26,7 +26,10 @@ beforeEach(() => {
 
 describe("signUpWithId", () => {
   it("가상 이메일로 auth.signUp 후 profiles에 username/name/locale upsert", async () => {
-    signUp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    signUp.mockResolvedValue({
+      data: { user: { id: "u1" }, session: { access_token: "t" } },
+      error: null,
+    });
 
     const result = await signUpWithId(
       { status: "idle" },
@@ -73,8 +76,26 @@ describe("signUpWithId", () => {
     expect(result).toEqual({ status: "error", message: "이미 사용 중인 아이디입니다." });
   });
 
+  it("세션 없이 user만 온 경우(Confirm Email 켜짐) 오류로 응답한다", async () => {
+    signUp.mockResolvedValue({
+      data: { user: { id: "u1" }, session: null },
+      error: null,
+    });
+
+    const result = await signUpWithId(
+      { status: "idle" },
+      fd({ username: "visa_bugi", password: "secret12", name: "홍길동", locale: "ko" }),
+    );
+
+    expect(result.status).toBe("error");
+    expect(upsertProfiles).not.toHaveBeenCalled();
+  });
+
   it("profiles upsert 실패는 일반 오류로 응답한다", async () => {
-    signUp.mockResolvedValue({ data: { user: { id: "u1" } }, error: null });
+    signUp.mockResolvedValue({
+      data: { user: { id: "u1" }, session: { access_token: "t" } },
+      error: null,
+    });
     upsertProfiles.mockResolvedValue({ error: { message: "boom" } });
 
     const result = await signUpWithId(

@@ -9,13 +9,14 @@ vi.mock("next-intl", () => ({
 }));
 
 const push = vi.fn();
+const refresh = vi.fn();
 vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
     <a href={href} {...props}>
       {children}
     </a>
   ),
-  useRouter: () => ({ push }),
+  useRouter: () => ({ push, refresh }),
 }));
 
 vi.mock("@/features/auth/auth-form", () => ({
@@ -47,13 +48,15 @@ describe("OnboardingWelcome", () => {
     expect(onContinueWithoutLogin).toHaveBeenCalledTimes(1);
   });
 
-  it("인증에 성공하면 홈으로 이동한다", async () => {
+  it("인증에 성공하면 RSC를 새로고침하고 홈으로 이동한다", async () => {
     const user = userEvent.setup();
     push.mockClear();
+    refresh.mockClear();
     render(<OnboardingWelcome onContinueWithoutLogin={vi.fn()} />);
 
     await user.click(screen.getByRole("button", { name: "mock-authenticate" }));
 
+    expect(refresh).toHaveBeenCalled();
     expect(push).toHaveBeenCalledWith("/");
   });
 

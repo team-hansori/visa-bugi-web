@@ -13,13 +13,29 @@ export function toIdEmail(username: string): string {
   return `${normalizeUsername(username)}@${ID_EMAIL_DOMAIN}`;
 }
 
+// 관리자 사칭·시스템 계정 혼동을 유발할 수 있는 아이디는 막는다.
+const RESERVED_USERNAMES = new Set([
+  "admin",
+  "administrator",
+  "root",
+  "system",
+  "support",
+  "help",
+  "official",
+  "staff",
+  "moderator",
+]);
+
 const usernameSchema = z
   .string()
   .transform(normalizeUsername)
   .pipe(
     z
       .string()
-      .regex(/^[a-z0-9_]{3,30}$/, "아이디는 영문 소문자·숫자·밑줄 3~30자입니다."),
+      .regex(/^[a-z0-9_]{3,30}$/, "아이디는 영문 소문자·숫자·밑줄 3~30자입니다.")
+      .refine((value) => !RESERVED_USERNAMES.has(value), {
+        message: "사용할 수 없는 아이디입니다.",
+      }),
   );
 
 const passwordSchema = z

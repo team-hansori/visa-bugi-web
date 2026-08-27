@@ -36,10 +36,16 @@ it("기본은 로그인 탭이고 아이디/비밀번호 필드를 보여준다"
   expect(screen.queryByLabelText("이름")).not.toBeInTheDocument();
 });
 
-it("회원가입 탭으로 바꾸면 이름 필드가 나타난다", async () => {
+it("회원가입 모드로 바꾸면 이름 필드가 나타난다", async () => {
   renderForm();
-  await userEvent.click(screen.getByRole("tab", { name: "회원가입" }));
+  await userEvent.click(screen.getByRole("radio", { name: "회원가입" }));
   expect(screen.getByLabelText("이름")).toBeInTheDocument();
+});
+
+it("모드 전환은 radiogroup으로 노출된다", () => {
+  renderForm();
+  expect(screen.getByRole("radio", { name: "로그인" })).toBeChecked();
+  expect(screen.getByRole("radio", { name: "회원가입" })).not.toBeChecked();
 });
 
 it("로그인 실패 메시지를 표시한다", async () => {

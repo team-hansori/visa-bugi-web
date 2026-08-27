@@ -47,7 +47,15 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
       </div>
 
       <div className="grid w-full max-w-xs justify-items-center gap-3">
-        <AuthForm onAuthenticated={() => router.push("/")} />
+        <AuthForm
+          onAuthenticated={() => {
+            // Server Action이 세팅한 인증 쿠키를 RSC 트리가 다시 읽도록
+            // refresh 후 홈으로 보낸다. 홈의 완료 가드가 미완료 프로필을
+            // 온보딩으로 되돌린다.
+            router.refresh();
+            router.push("/");
+          }}
+        />
 
         <button
           type="button"

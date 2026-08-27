@@ -42,6 +42,12 @@ describe("signUpSchema", () => {
     expect(signUpSchema.parse({ ...base, username: "Visa_Bugi" }).username).toBe("visa_bugi");
   });
 
+  it("예약된 아이디는 거부한다", () => {
+    expect(signUpSchema.safeParse({ ...base, username: "admin" }).success).toBe(false);
+    expect(signUpSchema.safeParse({ ...base, username: "Support" }).success).toBe(false);
+    expect(signUpSchema.safeParse({ ...base, username: "MODERATOR" }).success).toBe(false);
+  });
+
   it("지원하지 않는 locale은 거부한다", () => {
     expect(signUpSchema.safeParse({ ...base, locale: "en" }).success).toBe(false);
   });

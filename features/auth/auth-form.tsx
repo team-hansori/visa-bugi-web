@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { signInWithId, signUpWithId, type AuthActionState } from "./actions";
 
 type Mode = "signIn" | "signUp";
@@ -28,32 +28,38 @@ export function AuthForm({ onAuthenticated }: { onAuthenticated: () => void }) {
   const state = mode === "signIn" ? signInState : signUpState;
   const pending = mode === "signIn" ? signInPending : signUpPending;
 
+  // 성공 전환은 한 번만 알린다 — onAuthenticated는 인라인 콜백이라 매 렌더
+  // 참조가 바뀌고, success 상태가 유지되는 동안 이펙트가 반복 실행될 수 있다.
+  const notifiedRef = useRef(false);
   useEffect(() => {
-    if (state.status === "success") onAuthenticated();
+    if (state.status === "success" && !notifiedRef.current) {
+      notifiedRef.current = true;
+      onAuthenticated();
+    }
   }, [state.status, onAuthenticated]);
 
   return (
     <div className="w-full max-w-xs">
-      <div
-        role="tablist"
-        aria-label={`${t("tabSignIn")} / ${t("tabSignUp")}`}
-        className="mb-4 grid grid-cols-2 gap-1 rounded-2xl bg-[#eef2f0] p-1"
-      >
+      <fieldset className="mb-4 grid grid-cols-2 gap-1 rounded-2xl bg-[#eef2f0] p-1">
+        <legend className="sr-only">{`${t("tabSignIn")} / ${t("tabSignUp")}`}</legend>
         {(["signIn", "signUp"] as const).map((m) => (
-          <button
+          <label
             key={m}
-            role="tab"
-            type="button"
-            aria-selected={mode === m}
-            onClick={() => setMode(m)}
-            className={`min-h-11 rounded-xl text-sm font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
+            className={`flex min-h-11 cursor-pointer items-center justify-center rounded-xl text-sm font-extrabold focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#2d6d5d] ${
               mode === m ? "bg-white text-[#20332c] shadow-sm" : "text-[#6c7873]"
             }`}
           >
+            <input
+              type="radio"
+              name="auth-mode"
+              className="sr-only"
+              checked={mode === m}
+              onChange={() => setMode(m)}
+            />
             {m === "signIn" ? t("tabSignIn") : t("tabSignUp")}
-          </button>
+          </label>
         ))}
-      </div>
+      </fieldset>
 
       <form
         action={mode === "signIn" ? signInAction : signUpAction}

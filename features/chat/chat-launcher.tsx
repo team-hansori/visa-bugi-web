@@ -32,12 +32,12 @@ export function ChatLauncher({ surface }: ChatLauncherProps) {
           className="grid size-16 shrink-0 place-items-center overflow-hidden rounded-full border-4 border-white bg-[#e6f1ec] shadow-[0_12px_28px_rgba(24,73,59,0.28)] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#2d6d5d]"
         >
           <Image
-            src="/brand/chatbot/bugi-chatbot-face-128.png"
+            src="/brand/chatbot/bugi-chatbot-face-transparent.png"
             alt=""
             aria-hidden="true"
             width={128}
             height={128}
-            className="size-full object-cover"
+            className="size-full object-contain"
           />
         </button>
       </div>

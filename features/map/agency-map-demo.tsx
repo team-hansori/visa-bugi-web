@@ -129,12 +129,11 @@ export function AgencyMapDemo() {
         {categories.map((item) => <button key={item.id} type="button" aria-pressed={category === item.id} onClick={() => selectCategory(item.id)} className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${category === item.id ? "bg-[#173f36] text-white" : "border border-[#dce4df] bg-white text-[#5e6d67]"}`}>{item.label}</button>)}
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-1" role="list" aria-label="지도 위 기관 목록">
+      <div className="flex gap-2 overflow-x-auto pb-1" aria-label="지도 위 기관 목록">
         {visibleAgencies.map((agency) => (
           <button
             key={agency.id}
             type="button"
-            role="listitem"
             aria-pressed={selectedId === agency.id}
             onClick={() => setSelectedId(agency.id)}
             className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${

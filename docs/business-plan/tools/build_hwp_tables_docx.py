@@ -6,7 +6,7 @@ from docx.enum.table import WD_ALIGN_VERTICAL, WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Mm, Pt
+from docx.shared import Mm, Pt, RGBColor
 
 
 FONT_NAME = "휴먼명조"
@@ -14,6 +14,7 @@ TABLE_WIDTH_DXA = 10080
 TABLE_INDENT_DXA = 120
 BLACK = "000000"
 WHITE = "FFFFFF"
+BRAND_GREEN = "173F36"
 
 
 def set_run_font(run, size=11, bold=False):
@@ -26,24 +27,25 @@ def set_run_font(run, size=11, bold=False):
         rfonts.set(qn(f"w:{attr}"), FONT_NAME)
 
 
-def format_paragraph(paragraph, alignment=WD_ALIGN_PARAGRAPH.CENTER):
+def format_paragraph(paragraph, alignment=WD_ALIGN_PARAGRAPH.CENTER, line_spacing=1.6):
     paragraph.alignment = alignment
     paragraph.paragraph_format.space_before = Pt(0)
     paragraph.paragraph_format.space_after = Pt(0)
-    paragraph.paragraph_format.line_spacing = 1.6
+    paragraph.paragraph_format.line_spacing = line_spacing
 
 
-def set_cell_text(cell, text, bold=False, size=11):
+def set_cell_text(cell, text, bold=False, size=11, color=BLACK, line_spacing=1.6):
     cell.text = ""
     lines = str(text).split("\n")
     paragraph = cell.paragraphs[0]
-    format_paragraph(paragraph)
+    format_paragraph(paragraph, line_spacing=line_spacing)
     for index, line in enumerate(lines):
         if index:
             run = paragraph.add_run()
             run.add_break()
         run = paragraph.add_run(line)
         set_run_font(run, size=size, bold=bold)
+        run.font.color.rgb = RGBColor.from_string(color)
     cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
 
 
@@ -199,6 +201,67 @@ def add_structured_table(document, title, rows, widths, merges):
     return table
 
 
+def add_compact_flow(document, title, steps, footer=None):
+    add_caption(document, title)
+    step_count = len(steps)
+    if step_count == 5:
+        box_width, arrow_width = 1776, 300
+    elif step_count == 4:
+        box_width, arrow_width = 2250, 360
+    elif step_count == 3:
+        box_width, arrow_width = 3060, 450
+    else:
+        raise ValueError("compact flow supports 3 to 5 steps")
+
+    widths = []
+    for index in range(step_count):
+        widths.append(box_width)
+        if index < step_count - 1:
+            widths.append(arrow_width)
+    assert sum(widths) == TABLE_WIDTH_DXA
+
+    table = document.add_table(rows=2, cols=len(widths))
+    table.alignment = WD_TABLE_ALIGNMENT.LEFT
+
+    for step_index, (heading, body) in enumerate(steps):
+        column = step_index * 2
+        header_cell = table.cell(0, column)
+        body_cell = table.cell(1, column)
+        set_cell_fill(header_cell, BRAND_GREEN)
+        set_cell_fill(body_cell, WHITE)
+        set_cell_margins(header_cell, top=140, start=100, bottom=140, end=100)
+        set_cell_margins(body_cell, top=180, start=100, bottom=180, end=100)
+        set_cell_text(header_cell, heading, bold=True, color=WHITE, line_spacing=1.35)
+        set_cell_text(body_cell, body, color=BLACK, line_spacing=1.45)
+        border = {"val": "single", "sz": 10, "color": BLACK}
+        set_cell_border(header_cell, top=border, bottom=border, start=border, end=border)
+        set_cell_border(body_cell, top=border, bottom=border, start=border, end=border)
+
+        if step_index < step_count - 1:
+            arrow_column = column + 1
+            arrow_cell = table.cell(0, arrow_column).merge(table.cell(1, arrow_column))
+            set_cell_fill(arrow_cell, WHITE)
+            set_cell_margins(arrow_cell, top=0, start=0, bottom=0, end=0)
+            set_cell_text(arrow_cell, "→", bold=True, size=18, color=BRAND_GREEN, line_spacing=1.0)
+            no_border = {"val": "nil", "sz": 0, "color": WHITE}
+            set_cell_border(arrow_cell, top=no_border, bottom=no_border, start=no_border, end=no_border)
+
+    prevent_row_split(table.rows[0])
+    prevent_row_split(table.rows[1])
+    apply_table_geometry(table, widths)
+
+    if footer:
+        paragraph = document.add_paragraph()
+        paragraph.paragraph_format.space_before = Pt(7)
+        paragraph.paragraph_format.space_after = Pt(0)
+        paragraph.paragraph_format.line_spacing = 1.3
+        paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = paragraph.add_run(footer)
+        set_run_font(run, size=10, bold=True)
+        run.font.color.rgb = RGBColor.from_string(BRAND_GREEN)
+    return table
+
+
 def add_page_break(document):
     document.add_page_break()
 
@@ -229,13 +292,93 @@ def build(output_path):
     document = Document()
     configure_document(document)
 
+    add_compact_flow(
+        document,
+        "그림 1. 비자부기 전체 서비스 흐름",
+        [
+            ("1. 사용자 확인", "언어·국적·지역\n관심 체류자격"),
+            ("2. 상황 입력", "대화형 질문\n공문서·일정"),
+            ("3. 규칙 처리", "AND/OR 계산\n검토 필요 분리"),
+            ("4. 행동 안내", "서류·다음 할 일\n확정 일정 관리"),
+            ("5. 기관 연결", "전화·길찾기\n공식 문의 경로"),
+        ],
+        "공식 근거와 검증일을 표시하고 사용자가 동의한 정보만 저장",
+    )
+    add_page_break(document)
+
+    add_compact_flow(
+        document,
+        "그림 2. 공식 문서를 서비스 정보로 전환하는 데이터 신뢰 구조",
+        [
+            ("1. 공식 원문", "공고·지침·서식\n페이지·적용기간 보존"),
+            ("2. 추출·사람 검수", "표·각주 대조\n충돌·미확인 기록"),
+            ("3. 공통 데이터 구조", "13개 관계형 테이블\n조건·절차·서류·출처"),
+            ("4. 서비스 제공", "규칙 계산·OCR\n다국어·기관 연결"),
+        ],
+        "생성형 AI가 자격을 추측하지 않고 검수된 규칙과 사람이 판단",
+    )
+    add_page_break(document)
+
+    add_compact_flow(
+        document,
+        "그림 3. 비자 여정 단계별 서비스 책임 경계",
+        [
+            ("1. 추적", "요건·진행 현황\n비자부기 지원"),
+            ("2. 준비", "서류·OCR·일정\n비자부기+사용자"),
+            ("3. 제출", "공식 링크·제출처\n공식 접수기관"),
+            ("4. 판정", "승인·불허·보완\n관할 행정기관"),
+        ],
+        "준비까지는 비자부기가 지원하고 제출·판정은 공식기관에서 수행",
+    )
+    add_page_break(document)
+
+    add_compact_flow(
+        document,
+        "그림 4. 이주노동자의 E-7-4R 준비 과정",
+        [
+            ("1. 상황 파악", "체류기간·근무처\n연봉·한국어등급"),
+            ("2. 요건 대조", "공식 기준 비교\n부족 항목 확인"),
+            ("3. 일정 관리", "확정된 방문·제출\n일정만 관리"),
+            ("4. 위험 확인", "계약조건 불일치\n일반 답변 중단"),
+            ("5. 전문기관 연결", "노동·행정기관\n전화·위치 안내"),
+        ],
+        "자가진단·준비는 비자부기가 지원하고 신청·판정은 공식기관에서 수행",
+    )
+    add_page_break(document)
+
+    add_compact_flow(
+        document,
+        "그림 5. 유학생의 유학→취업→정착 준비 과정",
+        [
+            ("1. 대상 확인", "학적·TOPIK\n허가 필요성"),
+            ("2. 기준 안내", "허용시간\n제한업종"),
+            ("3. 서류 이해", "OCR 사전 점검\n기한·금액·제출처"),
+            ("4. 서류 준비", "체크리스트\n확정 일정 관리"),
+            ("5. 장기 준비", "졸업 후 F-2-R\n요건 사전 점검"),
+        ],
+        "학업·취업 허가와 졸업 후 정착 준비를 하나의 연속된 여정으로 관리",
+    )
+    add_page_break(document)
+
+    add_compact_flow(
+        document,
+        "그림 6. 현재 구현 상태와 다음 단계",
+        [
+            ("완료", "공통 데이터 구조\n온보딩·마이허브\nOCR 미리보기"),
+            ("데모 구현", "진행 캘린더\n기관 지도\n반응형 흐름"),
+            ("구현 예정", "규칙 계산 엔진\n다국어·근거 검색\n위험 상황 라우팅"),
+        ],
+        "1차 실증: 이주노동자 × E-7-4R 체류자격 트래커",
+    )
+    add_page_break(document)
+
     six_columns = [1300, 1756, 1756, 1756, 1756, 1756]
     five_columns = [1300, 2195, 2195, 2195, 2195]
     four_columns = [1300, 2927, 2927, 2926]
 
     add_structured_table(
         document,
-        "그림 1. 비자부기 전체 서비스 흐름",
+        "상세 참고표 1. 비자부기 전체 서비스 흐름",
         [
             ["사용자 상황을 확인하고 근거 있는 다음 행동으로 연결", "", "", "", "", ""],
             ["구분", "1. 사용자 확인", "2. 상황 입력", "3. 규칙 처리", "4. 행동 안내", "5. 기관 연결"],
@@ -251,7 +394,7 @@ def build(output_path):
 
     add_structured_table(
         document,
-        "그림 2. 공식 문서를 서비스 정보로 전환하는 데이터 신뢰 구조",
+        "상세 참고표 2. 공식 문서를 서비스 정보로 전환하는 데이터 신뢰 구조",
         [
             ["원문 보존 → 항목 추출 → 사람 검수 → 구조화 → 서비스 제공", "", "", "", ""],
             ["구분", "1. 공식 원문", "2. 추출·검수", "3. 공통 데이터 구조", "4. 서비스 제공"],
@@ -267,7 +410,7 @@ def build(output_path):
 
     add_structured_table(
         document,
-        "그림 3. 비자 여정 단계별 서비스 책임 경계",
+        "상세 참고표 3. 비자 여정 단계별 서비스 책임 경계",
         [
             ["준비까지는 비자부기가 지원하고 제출·판정은 공식기관에서 수행", "", "", "", ""],
             ["구분", "1. 추적", "2. 준비", "3. 제출", "4. 판정"],
@@ -282,7 +425,7 @@ def build(output_path):
 
     add_structured_table(
         document,
-        "그림 4. 이주노동자의 E-7-4R 준비 과정",
+        "상세 참고표 4. 이주노동자의 E-7-4R 준비 과정",
         [
             ["응우옌 반 A · 27세 · 베트남 · E-9 · 음성군 제조업체 근무 2년 차", "", "", "", "", ""],
             ["구분", "1. 상황 파악", "2. 요건 대조", "3. 일정 관리", "4. 위험 확인", "5. 전문기관 연결"],
@@ -298,7 +441,7 @@ def build(output_path):
 
     add_structured_table(
         document,
-        "그림 5. 유학생의 유학→취업→정착 준비 과정",
+        "상세 참고표 5. 유학생의 유학→취업→정착 준비 과정",
         [
             ["바트 체첵 · 22세 · 몽골 · D-2 · 충북 소재 대학 재학", "", "", "", "", ""],
             ["구분", "1. 대상 확인", "2. 기준 안내", "3. 서류 이해", "4. 서류 준비", "5. 장기 준비"],
@@ -314,7 +457,7 @@ def build(output_path):
 
     add_structured_table(
         document,
-        "그림 6. 현재 구현 상태와 다음 단계",
+        "상세 참고표 6. 현재 구현 상태와 다음 단계",
         [
             ["완료·데모·구현 예정 항목을 구분해 과장 없이 표시", "", "", ""],
             ["구분", "완료", "데모 구현", "구현 예정"],
@@ -327,10 +470,10 @@ def build(output_path):
     )
 
     core_props = document.core_properties
-    core_props.title = "2026 ICT융합공모전 비자부기 한글 복붙용 표 모음"
-    core_props.subject = "사업계획서 표 자료"
+    core_props.title = "2026 ICT융합공모전 비자부기 한글 복붙용 도식·표 모음"
+    core_props.subject = "사업계획서 간략 도식 및 상세표 자료"
     core_props.author = "비자부기 팀"
-    core_props.keywords = "비자부기, 사업계획서, 표"
+    core_props.keywords = "비자부기, 사업계획서, 도식, 표"
     document.save(output_path)
 
 

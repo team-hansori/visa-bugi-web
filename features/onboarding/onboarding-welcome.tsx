@@ -33,27 +33,29 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
   return (
     <section
       aria-labelledby="welcome-title"
-      className="flex min-h-[480px] flex-col items-center justify-center gap-6 rounded-[28px] border border-[#e0e7e2] bg-white p-5 text-center shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-8 lg:p-10"
+      className="mx-auto flex min-h-[calc(100dvh-4rem)] max-w-sm flex-col items-center justify-between gap-10 px-4 py-10 text-center"
     >
-      <Image
-        src="/brand/onboarding/visa-bugi-login-hero-v1.png"
-        alt="비자부기"
-        width={1145}
-        height={1373}
-        priority
-        className="h-auto w-40 sm:w-48"
-      />
+      <div className="flex flex-1 flex-col items-center justify-center gap-6">
+        <Image
+          src="/brand/onboarding/visa-bugi-login-hero-v1.png"
+          alt="비자부기"
+          width={1145}
+          height={1373}
+          priority
+          className="h-auto w-40 sm:w-48"
+        />
 
-      <div>
-        <h2
-          id="welcome-title"
-          className="text-2xl font-black leading-tight tracking-[-0.04em] text-[#20332c] sm:text-3xl"
-        >
-          {t("welcomeTitle")}
-        </h2>
-        <p className="mt-3 text-sm leading-6 text-[#6c7873] sm:text-base">
-          {t("welcomeDescription")}
-        </p>
+        <div>
+          <h2
+            id="welcome-title"
+            className="text-2xl font-black leading-tight tracking-[-0.04em] text-[#20332c] sm:text-3xl"
+          >
+            {t("welcomeTitle")}
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-[#6c7873] sm:text-base">
+            {t("welcomeDescription")}
+          </p>
+        </div>
       </div>
 
       <div className="grid w-full max-w-xs gap-3">

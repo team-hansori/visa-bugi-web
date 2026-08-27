@@ -150,6 +150,9 @@ describe("OnboardingForm", () => {
   });
 
   it("자동 판정이 아니라 참고용임을 고지한다", () => {
+    // 시작 화면(웰컴 카드)은 전체화면 이미지+버튼만 보여주고, 이 고지는
+    // 실제 질문 스텝의 사이드 카드에 있다.
+    searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
     expect(screen.getByText(/참고용/)).toBeInTheDocument();
   });

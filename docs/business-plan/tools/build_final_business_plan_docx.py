@@ -1069,11 +1069,11 @@ def build(output_path):
     # 11쪽 — 구현 상태
     add_page_break(document)
     document.add_heading("4. 제품(아이디어) 실현 방안", level=1)
-    document.add_heading("4-1. 현재 구현 수준", level=2)
+    document.add_heading("4-1. 시제품 구현 현황", level=2)
     add_caption(document, "표 5. 기능별 구현 상태 점검표")
     add_standard_table(
         document,
-        ["구분", "현재 구현 내용", "상태"],
+        ["구분", "구현 기능 및 기술 근거", "상태"],
         [
             ["데이터", "공식 원천문서 24건 전체 파싱, 원문·근거·규칙·서비스 4계층, 13개 관계형 테이블과 684개 근거 매핑", "구축 완료"],
             ["AI 챗봇", "의도·위험·사용자·지역·비자·언어 스크리닝, 제한형 데이터 조회, 다국어 답변", "시제품 적용"],

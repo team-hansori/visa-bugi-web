@@ -297,7 +297,11 @@
     "verifiedAtLabel": "核验日期",
     "contactsLabel": "指引机构",
     "unverifiedNotice": "此信息按外来务工人员情况核验。具体情况可能不同，请直接向机构确认。",
-    "outOfScopeContacts": "您可以从以下机构获得帮助。"
+    "outOfScopeContacts": "您可以从以下机构获得帮助。",
+    "open": "打开咨询",
+    "close": "关闭",
+    "ocrLauncherHint": "询问有关您上传文件的问题",
+    "ocrIntegrationNotice": "基于已上传文件的回答功能正在准备中。您仍可使用一般签证咨询。"
   },
   "My": {
     "eyebrow": "MY",

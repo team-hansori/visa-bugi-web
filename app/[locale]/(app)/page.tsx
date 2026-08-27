@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Icon } from "@/components/ui/icon";
+import { ChatLauncher } from "@/features/chat/chat-launcher";
 import { getSavedDocumentProgress } from "@/features/ocr/saved-progress";
 import { Link, redirect } from "@/i18n/navigation";
 import { hasCompletedOnboarding } from "@/lib/onboarding/completion";
@@ -230,6 +231,7 @@ export default async function Home({
           </div>
         </article>
       </section>
+      <ChatLauncher surface="home" />
     </div>
   );
 }

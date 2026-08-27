@@ -297,7 +297,11 @@
     "verifiedAtLabel": "Tasdiqlangan sana",
     "contactsLabel": "Yo‘naltiriladigan tashkilotlar",
     "unverifiedNotice": "Bu ma’lumot migrant ishchilar uchun tasdiqlangan. Vaziyatga qarab farq qilishi mumkin, shuning uchun tashkilot bilan bevosita tasdiqlang.",
-    "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin."
+    "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin.",
+    "open": "Maslahatni ochish",
+    "close": "Yopish",
+    "ocrLauncherHint": "Yuklagan hujjatingiz haqida so‘rang",
+    "ocrIntegrationNotice": "Yuklangan hujjatga asoslangan javob xizmati tayyorlanmoqda. Umumiy viza maslahatidan foydalanishingiz mumkin."
   },
   "My": {
     "eyebrow": "MY",

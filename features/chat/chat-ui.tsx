@@ -9,7 +9,7 @@ type Entry =
   | { role: "user"; content: string }
   | { role: "assistant"; response: ChatResponse };
 
-export function ChatUi() {
+export function ChatUi({ embedded = false }: { embedded?: boolean }) {
   const t = useTranslations("Chat");
   const locale = useLocale();
   const [entries, setEntries] = useState<Entry[]>([]);
@@ -72,12 +72,12 @@ export function ChatUi() {
   }
 
   return (
-    <div className="space-y-4">
-      <header>
+    <div className={embedded ? "" : "space-y-4"}>
+      {!embedded ? <header>
         <h1 className="text-xl font-extrabold tracking-[-0.03em] text-[#173f36]">{t("title")}</h1>
         <p className="mt-1 text-sm text-[#66736e]">{t("description")}</p>
-      </header>
-    <section className="mx-auto flex h-[calc(100dvh-14rem)] max-w-3xl flex-col rounded-2xl border border-[#e2e7e3] bg-white">
+      </header> : null}
+    <section className={`mx-auto flex flex-col rounded-2xl border border-[#e2e7e3] bg-white ${embedded ? "h-[min(34rem,calc(100dvh-10rem))] max-w-none" : "h-[calc(100dvh-14rem)] max-w-3xl"}`}>
       <header className="flex items-center justify-between border-b border-[#eef1ee] px-4 py-3">
         <p className="text-sm text-[#66736e]">{t("disclaimer")}</p>
         <button

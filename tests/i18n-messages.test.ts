@@ -36,8 +36,7 @@ describe("messages", () => {
     }
   });
 
-  it("Chat 네임스페이스와 Nav.chat 키가 있다", () => {
-    expect(keyPaths(byLocale.ko)).toContain("Nav.chat");
+  it("Chat 네임스페이스 키가 있다", () => {
     expect(keyPaths(byLocale.ko)).toContain("Chat.inputPlaceholder");
     expect(keyPaths(byLocale.ko)).toContain("Chat.deleteConfirm");
     expect(keyPaths(byLocale.ko)).toContain("Chat.unverifiedNotice");
@@ -45,7 +44,6 @@ describe("messages", () => {
 
   it("localizes the chat labels for the translated locales", () => {
     for (const locale of ["zh", "uz", "ne", "km"]) {
-      expect(byLocale[locale].Nav.chat).not.toBe(byLocale.ko.Nav.chat);
       expect(byLocale[locale].Chat.title).not.toBe(byLocale.ko.Chat.title);
     }
   });

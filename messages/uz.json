@@ -151,10 +151,6 @@
     "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi."
   },
   "Onboarding": {
-    "badge": "Oddiy sozlash · taxminan 2 daqiqa",
-    "heroTitle": "Sizga mos ko'rsatmani tayyorlaymiz",
-    "heroDescription": "Kirish ekranisiz darhol foydalanishingiz mumkin, tanlov natijalari ushbu brauzerda xavfsiz saqlanadi. Hujjat rasmlari saqlanmaydi.",
-    "privacyTitle": "Shaxsiy ma'lumotlarni minimal yig'ish",
     "privacyNotice": "Bu yerdagi ma'lumot faqat ma'lumot uchun bo'lib, yakuniy huquqiy qaror tegishli immigratsiya idorasida tasdiqlanishi kerak.",
     "questionLabel": "Savol {index}",
     "previous": "Oldingi",

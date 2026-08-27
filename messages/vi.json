@@ -151,10 +151,6 @@
     "savedHeroDescription": "Chúng tôi hiển thị tình trạng chuẩn bị và việc cần làm tiếp theo dựa trên kết quả OCR của {count} tài liệu đã lưu."
   },
   "Onboarding": {
-    "badge": "Thiết lập nhanh · khoảng 2 phút",
-    "heroTitle": "Chúng tôi sẽ chuẩn bị hướng dẫn phù hợp với bạn",
-    "heroDescription": "Bạn có thể sử dụng ngay mà không cần đăng nhập, kết quả lựa chọn được lưu trữ an toàn trên trình duyệt này. Chúng tôi không lưu hình ảnh tài liệu.",
-    "privacyTitle": "Thu thập thông tin cá nhân tối thiểu",
     "privacyNotice": "Nội dung hướng dẫn ở đây chỉ mang tính tham khảo, việc xác định tư cách cuối cùng cần được xác nhận tại cơ quan xuất nhập cảnh có thẩm quyền.",
     "questionLabel": "Câu hỏi {index}",
     "previous": "Trước",

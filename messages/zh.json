@@ -151,10 +151,6 @@
     "savedHeroDescription": "我们会根据已保存的 {count} 份文件的 OCR 结果，显示准备状态和下一步事项。"
   },
   "Onboarding": {
-    "badge": "简单设置 · 约2分钟",
-    "heroTitle": "为您准备合适的指南",
-    "heroDescription": "无需登录即可立即使用，选择结果将安全保存在此浏览器中。不会保存文件图片。",
-    "privacyTitle": "最小化收集个人信息",
     "privacyNotice": "此处提供的内容仅供参考，最终资格判定须在管辖出入境·外国人厅确认。",
     "questionLabel": "问题 {index}",
     "previous": "上一步",

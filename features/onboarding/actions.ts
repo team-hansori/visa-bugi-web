@@ -6,6 +6,7 @@ import type {
   VisaDetails,
 } from "@/lib/supabase/database.types";
 import { createClient } from "@/lib/supabase/server";
+import { TARGET_VISA_CODES, type TargetVisaCode } from "./constants";
 import { type OnboardingSubmission, onboardingSubmissionSchema } from "./schema";
 
 export type SaveOnboardingState =
@@ -118,6 +119,46 @@ export async function saveOnboarding(
     .from("user_visa_profile")
     .upsert(visaProfileRow, { onConflict: "user_id" });
   if (visaProfileResult.error) {
+    return { status: "error", message: "저장에 실패했습니다. 다시 시도해 주세요." };
+  }
+
+  return { status: "success" };
+}
+
+export type UpdateTargetVisaState =
+  | { status: "idle" }
+  | { status: "success" }
+  | { status: "error"; message: string };
+
+/**
+ * 홈 화면에서 목표 비자만 바꿀 때 쓴다. 온보딩 전체를 다시 거치지 않고
+ * `user_visa_profile.target_visa_code` 한 컬럼만 갱신한다.
+ * 이 행은 `hasCompletedOnboarding`이 이미 확인한 뒤라 항상 존재한다고
+ * 가정할 수 있지만, upsert가 아닌 update를 써서 다른 컬럼을 건드리지 않는다.
+ */
+export async function updateTargetVisa(
+  targetVisaCode: string,
+): Promise<UpdateTargetVisaState> {
+  if (!TARGET_VISA_CODES.includes(targetVisaCode as TargetVisaCode)) {
+    return { status: "error", message: "올바르지 않은 비자 코드입니다." };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return {
+      status: "error",
+      message: "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+    };
+  }
+
+  const { error } = await supabase
+    .from("user_visa_profile")
+    .update({ target_visa_code: targetVisaCode as TargetVisaCode })
+    .eq("user_id", user.id);
+  if (error) {
     return { status: "error", message: "저장에 실패했습니다. 다시 시도해 주세요." };
   }
 

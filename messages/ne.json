@@ -122,6 +122,8 @@
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
       "baseDateValue": "아직 설정되지 않음",
+      "validityLabel": "सूचनाको वैधता अवधि",
+      "validityUnavailable": "सूचना अवधिको जानकारी उपलब्ध छैन",
       "savedAriaLabel": "सुरक्षित कागजात भर्ने प्रगति {percent} प्रतिशत",
       "savedCaption": "कागजात भर्ने प्रगति",
       "eyebrow": "कुल आवश्यकताहरू पूरा भएको दर",

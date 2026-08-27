@@ -122,6 +122,8 @@
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
       "baseDateValue": "아직 설정되지 않음",
+      "validityLabel": "រយៈពេលមានសុពលភាពនៃសេចក្តីជូនដំណឹង",
+      "validityUnavailable": "គ្មានព័ត៌មានអំពីរយៈពេលសេចក្តីជូនដំណឹងទេ",
       "savedAriaLabel": "វឌ្ឍនភាពបំពេញឯកសារដែលបានរក្សាទុក {percent} ភាគរយ",
       "savedCaption": "វឌ្ឍនភាពបំពេញឯកសារ",
       "eyebrow": "អត្រាបំពេញលក្ខខណ្ឌសរុប",

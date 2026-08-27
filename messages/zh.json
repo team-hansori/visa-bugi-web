@@ -122,6 +122,8 @@
       "selectedVisaValue": "E-7-4R 예시",
       "baseDateLabel": "기준일",
       "baseDateValue": "아직 설정되지 않음",
+      "validityLabel": "公告有效期",
+      "validityUnavailable": "暂无公告有效期信息",
       "savedAriaLabel": "已保存文件的填写进度 {percent}%",
       "savedCaption": "文件填写进度",
       "eyebrow": "总体要求完成率",

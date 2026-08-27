@@ -114,6 +114,7 @@
 - 모바일 내비게이션 6개 탭 한 줄 정렬
 - 테스트 목의 MessageTree 타입이 배열 값을 허용하도록 확장
 - Harden OCR upload and result validation
+- 캘린더 목표 비자를 온보딩 스키마(user_visa_profile)에서 읽도록 변경
 
 ### 💼 Other
 
@@ -171,6 +172,7 @@
 - 챗봇 MVP 구현 계획 작성 (11개 태스크, TDD)
 - Role spoofing 완화·잔여 리스크 계획 문서에 기록
 - README에서 이전 서비스명 제거
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

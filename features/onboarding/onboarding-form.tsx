@@ -424,28 +424,7 @@ export function OnboardingForm() {
   }
 
   return (
-    <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch">
-      <aside className="rounded-[28px] bg-[#173f36] p-6 text-white sm:p-8 lg:flex lg:flex-col lg:justify-between lg:p-10">
-        <div>
-          <span className="inline-flex min-h-8 items-center rounded-full bg-white/12 px-3 text-xs font-bold text-[#d9eee5]">
-            {t("badge")}
-          </span>
-          <h1 className="mt-5 text-3xl font-black leading-tight tracking-[-0.05em] sm:text-4xl">
-            {t("heroTitle")}
-          </h1>
-          <p className="mt-4 text-sm leading-6 text-[#d1dfda] sm:text-base sm:leading-7">
-            {t("heroDescription")}
-          </p>
-        </div>
-        <div className="mt-8 rounded-2xl bg-white/10 p-4 text-sm leading-6 text-[#e1ede8]">
-          <div className="flex items-center gap-2 font-extrabold text-white">
-            <Icon name="shield" className="size-5" aria-hidden="true" />
-            {t("privacyTitle")}
-          </div>
-          <p className="mt-2">{t("privacyNotice")}</p>
-        </div>
-      </aside>
-
+    <div className="mx-auto max-w-2xl">
       <section
         className="flex min-h-[480px] flex-col rounded-[28px] border border-[#e0e7e2] bg-white p-5 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-8 lg:p-10"
         aria-labelledby="question-title"
@@ -688,6 +667,10 @@ export function OnboardingForm() {
             </button>
           )}
         </div>
+
+        <p className="mt-5 text-center text-xs leading-5 text-[#8a938e]">
+          {t("privacyNotice")}
+        </p>
       </section>
     </div>
   );

@@ -315,7 +315,7 @@ export function AgencyMap() {
             type="button"
             aria-pressed={typeFilter === item.id}
             onClick={() => setTypeFilter(item.id)}
-            className={`min-h-9 shrink-0 rounded-full px-3 text-xs font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
+            className={`min-h-8 shrink-0 rounded-full px-2.5 text-[11px] font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               typeFilter === item.id
                 ? "bg-[#173f36]/80 text-white"
                 : "border border-[#dce4df] bg-white text-[#5e6d67]"
@@ -355,7 +355,7 @@ export function AgencyMap() {
             type="button"
             aria-pressed={selectedId === agency.id}
             onClick={() => setSelectedId(agency.id)}
-            className={`min-h-9 shrink-0 rounded-full px-3 text-xs font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
+            className={`min-h-8 shrink-0 rounded-full px-2.5 text-[11px] font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               selectedId === agency.id
                 ? "bg-[#e59b37]/80 text-white"
                 : "border border-[#dce4df] bg-white text-[#5e6d67]"

@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icon";
-import { createClient } from "@/lib/supabase/client";
 import { KakaoMap, type KakaoMapMarker } from "@/features/map/kakao-map";
 import { REGION_CENTERS, type LatLng, type RegionId } from "@/features/map/geo";
-import { fetchNearbyAgencies, type Agency, type AgencyType } from "@/features/map/agency-queries";
+import type { Agency, AgencyType } from "@/features/map/agency-queries";
 
 const NEARBY_LIMIT = 3;
+
+/** 위치 좌표를 ~1km 정밀도로 낮춰 API 쿼리스트링에 정밀 위치가 남지 않게 한다. */
+function roundCoord(value: number): string {
+  return (Math.round(value * 100) / 100).toString();
+}
 
 const regions = [
   { id: "cheongju", translationKey: "cheongju" },
@@ -139,15 +143,6 @@ function AgencyDetails({
 
 export function AgencyMap() {
   const t = useTranslations("Map");
-  const supabase = useMemo(() => {
-    if (
-      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-      !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-    ) {
-      return null;
-    }
-    return createClient();
-  }, []);
   const [selectedRegion, setSelectedRegion] = useState<RegionId>("cheongju");
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [userPosition, setUserPosition] = useState<LatLng | null>(null);
@@ -174,29 +169,37 @@ export function AgencyMap() {
       setAgencies([]);
       setSelectedId(null);
 
-      if (!supabase) {
-        if (cancelled) return;
-        setLoadError(t("errors.notConfigured"));
-        setAgencies([]);
-        setSelectedId(null);
-        setLoading(false);
-        return;
+      const params = new URLSearchParams();
+      if (userPosition) {
+        // 정밀 좌표가 캐시 URL·접근 로그에 그대로 남지 않도록 소수 2자리
+        // (~1km)로 반올림해 보낸다. 3개 최근접 목록 정렬에는 이 정밀도로 충분하다.
+        params.set("lat", roundCoord(userPosition.lat));
+        params.set("lng", roundCoord(userPosition.lng));
+      } else {
+        // A real GPS fix searches across every pilot region; without one the
+        // server derives the sort origin from the selected region's center.
+        params.set("region", selectedRegion);
       }
+      if (typeFilter !== "all") params.set("type", typeFilter);
+      params.set("limit", String(NEARBY_LIMIT));
 
       try {
-        const result = await fetchNearbyAgencies(
-          supabase,
-          // A real GPS fix searches across every pilot region instead of
-          // whatever region happens to be selected in the dropdown, so
-          // "가까운 기관" always matches what the map actually centers on.
-          userPosition ? null : selectedRegion,
-          typeFilter === "all" ? null : typeFilter,
-          near,
-          NEARBY_LIMIT,
-        );
+        const response = await fetch(`/api/map/agencies?${params.toString()}`);
         if (cancelled) return;
-        setAgencies(result);
-        setSelectedId(result[0]?.id ?? null);
+        if (!response.ok) {
+          setLoadError(
+            response.status === 503
+              ? t("errors.notConfigured")
+              : t("errors.loadFailed"),
+          );
+          setAgencies([]);
+          setSelectedId(null);
+          return;
+        }
+        const body = (await response.json()) as { agencies: Agency[] };
+        if (cancelled) return;
+        setAgencies(body.agencies);
+        setSelectedId(body.agencies[0]?.id ?? null);
       } catch {
         if (cancelled) return;
         setLoadError(t("errors.loadFailed"));
@@ -220,7 +223,7 @@ export function AgencyMap() {
     // identity via setUserPosition, so it's safe to depend on directly —
     // it's what decides whether the query filters by `selectedRegion` at all.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase, selectedRegion, typeFilter, userPosition, near.lat, near.lng]);
+  }, [selectedRegion, typeFilter, userPosition, near.lat, near.lng]);
 
   const selectedAgency = agencies.find((agency) => agency.id === selectedId) ?? null;
   // KakaoMapMarker.id is a number (from the prior plan's KakaoMap component,

@@ -1,4 +1,3 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
 import type { LatLng, RegionId } from "@/features/map/geo";
 
 export type AgencyType =
@@ -31,7 +30,7 @@ export const REGION_QUERY_TOKENS: Record<RegionId, string> = {
   eumseong: "음성",
 };
 
-const PROVINCE_WIDE_TOKEN = "충청북도";
+export const PROVINCE_WIDE_TOKEN = "충청북도";
 
 function toRadians(degrees: number): number {
   return (degrees * Math.PI) / 180;
@@ -56,7 +55,7 @@ export function sortByDistance(agencies: Agency[], from: LatLng): Agency[] {
   );
 }
 
-type AgencyRow = {
+export type AgencyRow = {
   agency_id: string;
   department_name: string;
   agency_type: AgencyType;
@@ -68,7 +67,7 @@ type AgencyRow = {
   operating_hours: string | null;
 };
 
-function toAgency(row: AgencyRow): Agency {
+export function toAgency(row: AgencyRow): Agency {
   return {
     id: row.agency_id,
     name: row.department_name,
@@ -79,41 +78,4 @@ function toAgency(row: AgencyRow): Agency {
     url: row.url,
     operatingHours: row.operating_hours,
   };
-}
-
-export async function fetchNearbyAgencies(
-  supabase: SupabaseClient,
-  // `null` means "don't filter by region" — used when sorting from a real
-  // GPS fix, where the query should cover every pilot region and let
-  // distance sorting find whichever is actually closest, rather than being
-  // locked to whatever region the user happened to have selected in the
-  // dropdown before requesting their location.
-  region: RegionId | null,
-  agencyType: AgencyType | null,
-  near: LatLng,
-  limit: number,
-): Promise<Agency[]> {
-  // Plain equality is correct for the current map-visible dataset — none of
-  // its rows use the legacy table's "|"-delimited multi-region format
-  // (e.g. "옥천|영동"). Revisit if that ever changes.
-  let query = supabase
-    .from("map_visible_agency_contacts")
-    .select(
-      "agency_id, department_name, agency_type, road_address, latitude, longitude, phone, url, operating_hours",
-    );
-
-  if (region) {
-    const regionToken = REGION_QUERY_TOKENS[region];
-    query = query.or(`region.eq.${regionToken},region.eq.${PROVINCE_WIDE_TOKEN}`);
-  }
-
-  if (agencyType) {
-    query = query.eq("agency_type", agencyType);
-  }
-
-  const { data, error } = await query;
-  if (error) throw error;
-
-  const agencies = (data ?? []).map(toAgency);
-  return sortByDistance(agencies, near).slice(0, limit);
 }

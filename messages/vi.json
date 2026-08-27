@@ -8,6 +8,7 @@
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
     "openSettings": "Mở cài đặt",
+    "backToHome": "Quay lại trang chủ",
     "closeDialog": "Đóng"
   },
   "Brand": {
@@ -139,6 +140,140 @@
     },
     "savedBadge": "Tiến trình đã lưu",
     "savedHeroDescription": "Chúng tôi hiển thị tình trạng chuẩn bị và việc cần làm tiếp theo dựa trên kết quả OCR của {count} tài liệu đã lưu."
+  },
+  "Onboarding": {
+    "badge": "Thiết lập nhanh · khoảng 2 phút",
+    "heroTitle": "Chúng tôi sẽ chuẩn bị hướng dẫn phù hợp với bạn",
+    "heroDescription": "Bạn có thể sử dụng ngay mà không cần đăng nhập, kết quả lựa chọn được lưu trữ an toàn trên trình duyệt này. Chúng tôi không lưu hình ảnh tài liệu.",
+    "privacyTitle": "Thu thập thông tin cá nhân tối thiểu",
+    "privacyNotice": "Nội dung hướng dẫn ở đây chỉ mang tính tham khảo, việc xác định tư cách cuối cùng cần được xác nhận tại cơ quan xuất nhập cảnh có thẩm quyền.",
+    "questionLabel": "Câu hỏi {index}",
+    "previous": "Trước",
+    "next": "Tiếp theo",
+    "submit": "Hoàn tất thiết lập",
+    "submitting": "Đang lưu...",
+    "saveSuccess": "Đã lưu thiết lập.",
+    "addressLabel": "Địa chỉ cư trú (mong muốn)",
+    "addressPlaceholder": "Nhập địa chỉ theo tên đường hoặc số nhà",
+    "addressEligible": "{region} là khu vực áp dụng visa đặc thù vùng.",
+    "addressNotEligible": "{region} không phải là khu vực áp dụng visa đặc thù vùng (F-2-R·E-7-4R·F-4-R). Đây chỉ là thông tin tham khảo, vui lòng xác nhận quyết định cuối cùng tại cơ quan xuất nhập cảnh có thẩm quyền.",
+    "searchResultCount": "{count} kết quả tìm kiếm",
+    "searchNoResult": "Không có kết quả tìm kiếm.",
+    "searchError": "Không thể tải địa chỉ. Vui lòng thử lại sau.",
+    "saveError": "Không thể lưu do lỗi tạm thời. Vui lòng thử lại sau.",
+    "consentNotice": "<terms>Điều khoản sử dụng</terms> và <privacy>Chính sách bảo mật</privacy> đang được chuẩn bị. Bạn có thể xem khi được đăng tải.",
+    "welcomeTitle": "Hãy bắt đầu cùng Visa-bugi",
+    "welcomeDescription": "Chúng tôi sẽ giúp bạn theo dõi yêu cầu visa và bước tiếp theo.",
+    "googleStart": "Bắt đầu bằng Google",
+    "googleComingSoon": "Đăng nhập Google đang được chuẩn bị. Bạn có thể sử dụng ngay bằng nút bên dưới.",
+    "continueWithoutLogin": "Bắt đầu không cần đăng nhập",
+    "addressManualPrompt": "Không tìm thấy? Tôi sẽ nhập trực tiếp",
+    "addressManualRoadLabel": "Địa chỉ (tên đường hoặc số nhà)",
+    "addressManualRoadPlaceholder": "Ví dụ: 295 Naeto-ro, Jecheon-si, Chungbuk",
+    "addressManualSigunguLabel": "Thành phố/Quận nơi cư trú",
+    "addressManualSigunguPlaceholder": "Ví dụ: Jecheon-si",
+    "addressManualBack": "Quay lại tìm kiếm địa chỉ",
+    "addressManualSubmit": "Đặt làm địa chỉ này",
+    "birthdateLabel": "Ngày sinh",
+    "koreanTopikLabel": "TOPIK",
+    "koreanTopikDescription": "Cấp độ kỳ thi năng lực tiếng Hàn",
+    "koreanKiipLabel": "Chương trình hòa nhập xã hội",
+    "koreanKiipDescription": "Giai đoạn hoàn thành",
+    "koreanNoneLabel": "Chưa có",
+    "koreanTopikSelectLabel": "Cấp độ TOPIK",
+    "koreanKiipSelectLabel": "Giai đoạn chương trình hòa nhập xã hội",
+    "koreanSelectPlaceholder": "Vui lòng chọn",
+    "koreanTopikUnit": "cấp",
+    "koreanKiipUnit": "giai đoạn",
+    "d2UniversityLabel": "Trường đại học đang theo học",
+    "d2DepartmentLabel": "Ngành học",
+    "d2AcademicStatusLabel": "Quá trình học hiện tại",
+    "d2ProgramStartDateLabel": "Ngày nhập học (hoặc bắt đầu khóa tiếng)",
+    "d2SelectPlaceholder": "Vui lòng chọn",
+    "stepTitles": {
+      "locale": "Bạn thích ngôn ngữ nào?",
+      "nationality": "Vui lòng chọn quốc tịch",
+      "gender": "Vui lòng chọn giới tính",
+      "birthdate": "Ngày sinh của bạn là khi nào?",
+      "currentVisa": "Tư cách lưu trú hiện tại của bạn là gì?",
+      "address": "Bạn đang sống ở đâu?",
+      "koreanLevel": "Bạn có chứng chỉ năng lực tiếng Hàn không?",
+      "targetVisa": "Bạn đang chuẩn bị cho tư cách lưu trú nào?",
+      "f2rDetail": "Bạn có bằng cao đẳng trở lên tại Hàn Quốc không?",
+      "e74rDetail": "Trong 10 năm gần đây, bạn đã lưu trú theo diện E-9·E-10·H-2 bao nhiêu năm?",
+      "f4rDetail": "Trường hợp nào sau đây gần với bạn nhất?",
+      "d2Detail": "Vui lòng cho biết thông tin học tập"
+    },
+    "stepDescriptions": {
+      "locale": "Vui lòng chọn ngôn ngữ hiển thị trên màn hình.",
+      "nationality": "Được dùng để chuẩn bị hướng dẫn phù hợp với bạn.",
+      "gender": "Bạn có thể chuyển sang bước tiếp theo mà không cần chọn.",
+      "birthdate": "Được dùng để xác nhận điều kiện về độ tuổi.",
+      "currentVisa": "Câu trả lời này giúp thu hẹp các tư cách lưu trú mà bạn có thể chuẩn bị.",
+      "address": "Visa đặc thù vùng yêu cầu điều kiện cư trú (hoặc mong muốn cư trú) tại khu vực suy giảm dân số.",
+      "koreanLevel": "Vui lòng chọn tất cả chứng chỉ phù hợp. Bạn có cả TOPIK và chương trình hòa nhập xã hội cũng không sao.",
+      "targetVisa": "Chỉ hiển thị các tư cách bạn có thể chuẩn bị dựa trên tư cách lưu trú hiện tại.",
+      "f2rDetail": "Bạn chỉ cần đáp ứng một trong hai điều kiện: bằng cấp hoặc mức lương sinh hoạt.",
+      "e74rDetail": "Thời gian ước lượng là đủ.",
+      "f4rDetail": "Giấy tờ cần thiết khác nhau tùy theo loại hình di trú.",
+      "d2Detail": "Được dùng để xác nhận ngành học có thuộc diện visa vùng mở rộng hay không."
+    },
+    "genderOptions": {
+      "female": "Nữ",
+      "male": "Nam",
+      "unspecified": "Không chọn"
+    },
+    "nationalityOptions": {
+      "VN": "Việt Nam",
+      "UZ": "Uzbekistan",
+      "NP": "Nepal",
+      "KH": "Campuchia",
+      "CN": "Trung Quốc",
+      "OT": "Khác"
+    },
+    "currentVisaOptions": {
+      "D-2": "D-2 (Du học)",
+      "D-10": "D-10 (Tìm việc)",
+      "E-9": "E-9 (Lao động phổ thông)",
+      "E-10": "E-10 (Thuyền viên)",
+      "H-2": "H-2 (Thăm thân kết hợp làm việc)",
+      "F-4": "F-4 (Kiều bào)",
+      "OTHER": "Tư cách lưu trú khác",
+      "UNKNOWN": "Tôi không chắc"
+    },
+    "targetVisaOptions": {
+      "F-2-R": "F-2-R (Nhân tài xuất sắc đặc thù vùng)",
+      "E-7-4R": "E-7-4R (Lao động tay nghề đặc thù vùng)",
+      "F-4-R": "F-4-R (Kiều bào đặc thù vùng)",
+      "D-2": "D-2 (Du học diện vùng mở rộng Chungbuk)"
+    },
+    "educationOptions": {
+      "ASSOCIATE_OR_ABOVE": "Có bằng cao đẳng trở lên",
+      "BELOW_ASSOCIATE": "Không có"
+    },
+    "residenceYearOptions": {
+      "1": "Dưới 1 năm",
+      "2": "Từ 2 năm trở lên",
+      "3": "Từ 3 năm trở lên",
+      "4": "Từ 4 năm trở lên"
+    },
+    "migrationTypeLabels": {
+      "EXISTING_RESIDENT": "Cư dân hiện hữu",
+      "DOMESTIC_TRANSFER": "Người chuyển đến trong nước",
+      "OVERSEAS_TRANSFER": "Người chuyển đến từ nước ngoài"
+    },
+    "migrationTypeDescriptions": {
+      "EXISTING_RESIDENT": "Đã cư trú tại khu vực suy giảm dân số từ 2 năm trở lên",
+      "DOMESTIC_TRANSFER": "Chuyển đến cùng gia đình từ khu vực khác trong nước",
+      "OVERSEAS_TRANSFER": "Chuyển đến cùng gia đình từ nước ngoài"
+    },
+    "academicStatusOptions": {
+      "LANGUAGE_COURSE": "Khóa học tiếng",
+      "ASSOCIATE": "Cao đẳng",
+      "BACHELOR_1_2": "Đại học năm 1-2",
+      "BACHELOR_3_4": "Đại học năm 3-4",
+      "GRADUATE": "Thạc sĩ·Tiến sĩ"
+    }
   },
   "Chat": {
     "title": "비자 상담",

@@ -8,6 +8,7 @@
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
     "openSettings": "Sozlamalarni ochish",
+    "backToHome": "Bosh sahifaga qaytish",
     "closeDialog": "Yopish"
   },
   "Brand": {
@@ -139,6 +140,140 @@
     },
     "savedBadge": "Saqlangan jarayon",
     "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi."
+  },
+  "Onboarding": {
+    "badge": "Oddiy sozlash · taxminan 2 daqiqa",
+    "heroTitle": "Sizga mos ko'rsatmani tayyorlaymiz",
+    "heroDescription": "Kirish ekranisiz darhol foydalanishingiz mumkin, tanlov natijalari ushbu brauzerda xavfsiz saqlanadi. Hujjat rasmlari saqlanmaydi.",
+    "privacyTitle": "Shaxsiy ma'lumotlarni minimal yig'ish",
+    "privacyNotice": "Bu yerdagi ma'lumot faqat ma'lumot uchun bo'lib, yakuniy huquqiy qaror tegishli immigratsiya idorasida tasdiqlanishi kerak.",
+    "questionLabel": "Savol {index}",
+    "previous": "Oldingi",
+    "next": "Keyingi",
+    "submit": "Sozlashni yakunlash",
+    "submitting": "Saqlanmoqda...",
+    "saveSuccess": "Sozlamalar saqlandi.",
+    "addressLabel": "Yashash (istalgan) manzili",
+    "addressPlaceholder": "Ko'cha nomi yoki uy raqamini kiriting",
+    "addressEligible": "{region} hududga xos viza uchun mos hudud hisoblanadi.",
+    "addressNotEligible": "{region} hududga xos viza (F-2-R·E-7-4R·F-4-R) uchun mos hudud emas. Bu faqat ma'lumot uchun, yakuniy qarorni tegishli immigratsiya idorasida tasdiqlang.",
+    "searchResultCount": "{count} ta qidiruv natijasi",
+    "searchNoResult": "Qidiruv natijasi topilmadi.",
+    "searchError": "Manzilni yuklab bo'lmadi. Birozdan so'ng qayta urinib ko'ring.",
+    "saveError": "Vaqtinchalik xatolik tufayli saqlanmadi. Birozdan so'ng qayta urinib ko'ring.",
+    "consentNotice": "<terms>Foydalanish shartlari</terms> va <privacy>Maxfiylik siyosati</privacy> tayyorlanmoqda. E'lon qilingach shu yerda ko'rishingiz mumkin.",
+    "welcomeTitle": "Visa-bugi bilan boshlaymiz",
+    "welcomeDescription": "Viza talablaringiz va keyingi bosqichni kuzatib boramiz.",
+    "googleStart": "Google orqali boshlash",
+    "googleComingSoon": "Google orqali kirish tayyorlanmoqda. Quyidagi tugma orqali darhol foydalanishingiz mumkin.",
+    "continueWithoutLogin": "Kirishsiz boshlash",
+    "addressManualPrompt": "Topilmadimi? Qo'lda kiritaman",
+    "addressManualRoadLabel": "Manzil (ko'cha nomi yoki uy raqami)",
+    "addressManualRoadPlaceholder": "Masalan: Chungbuk, Jecheon-si, Naeto-ro 295",
+    "addressManualSigunguLabel": "Yashaydigan shahar/tuman",
+    "addressManualSigunguPlaceholder": "Masalan: Jecheon-si",
+    "addressManualBack": "Manzil qidiruviga qaytish",
+    "addressManualSubmit": "Ushbu manzilni belgilash",
+    "birthdateLabel": "Tug'ilgan sana",
+    "koreanTopikLabel": "TOPIK",
+    "koreanTopikDescription": "Koreys tili bilimi darajasi",
+    "koreanKiipLabel": "Ijtimoiy integratsiya dasturi",
+    "koreanKiipDescription": "Bosqichi",
+    "koreanNoneLabel": "Hali yo'q",
+    "koreanTopikSelectLabel": "TOPIK darajasi",
+    "koreanKiipSelectLabel": "Ijtimoiy integratsiya dasturi bosqichi",
+    "koreanSelectPlaceholder": "Tanlang",
+    "koreanTopikUnit": "-daraja",
+    "koreanKiipUnit": "-bosqich",
+    "d2UniversityLabel": "O'qiyotgan universitet",
+    "d2DepartmentLabel": "Mutaxassislik",
+    "d2AcademicStatusLabel": "Hozirgi bosqich",
+    "d2ProgramStartDateLabel": "Qabul (yoki til kursi boshlanish) sanasi",
+    "d2SelectPlaceholder": "Tanlang",
+    "stepTitles": {
+      "locale": "Qaysi til qulay?",
+      "nationality": "Fuqarolikni tanlang",
+      "gender": "Jinsni tanlang",
+      "birthdate": "Tug'ilgan sanangiz qachon?",
+      "currentVisa": "Hozirgi turar joy maqomingiz nima?",
+      "address": "Qayerda yashaysiz?",
+      "koreanLevel": "Koreys tili sertifikatingiz bormi?",
+      "targetVisa": "Qanday turar joy maqomiga tayyorlanyapsiz?",
+      "f2rDetail": "Koreyada kollej darajasidan yuqori diplomingiz bormi?",
+      "e74rDetail": "So'nggi 10 yil ichida E-9·E-10·H-2 bilan necha yil turdingiz?",
+      "f4rDetail": "Quyidagilardan qaysi biri sizga yaqinroq?",
+      "d2Detail": "O'qish ma'lumotlarini kiriting"
+    },
+    "stepDescriptions": {
+      "locale": "Ekranda ko'rsatiladigan tilni tanlang.",
+      "nationality": "Shaxsiylashtirilgan ko'rsatma tayyorlash uchun ishlatiladi.",
+      "gender": "Tanlamasangiz ham keyingi bosqichga o'tishingiz mumkin.",
+      "birthdate": "Yosh talabini tekshirish uchun ishlatiladi.",
+      "currentVisa": "Bu javob orqali tayyorlanishi mumkin bo'lgan maqomlar torayadi.",
+      "address": "Hududga xos viza aholisi kamayayotgan hududda yashash (yoki yashashni xohlash) shartini talab qiladi.",
+      "koreanLevel": "Mos keladigan barcha sertifikatlarni tanlang. TOPIK va ijtimoiy integratsiya dasturi ikkalasiga ham ega bo'lsangiz muammo emas.",
+      "targetVisa": "Hozirgi turar joy maqomingizga asoslanib faqat tayyorlanishi mumkin bo'lgan maqomlar ko'rsatiladi.",
+      "f2rDetail": "Diplom yoki minimal yashash maoshi talablaridan birini qondirsangiz yetarli.",
+      "e74rDetail": "Taxminiy muddat yetarli.",
+      "f4rDetail": "Ko'chish turiga qarab kerakli hujjatlar farq qiladi.",
+      "d2Detail": "Kengaytirilgan hududiy viza uchun mos mutaxassislik ekanini tekshirish uchun ishlatiladi."
+    },
+    "genderOptions": {
+      "female": "Ayol",
+      "male": "Erkak",
+      "unspecified": "Tanlamayman"
+    },
+    "nationalityOptions": {
+      "VN": "Vyetnam",
+      "UZ": "O'zbekiston",
+      "NP": "Nepal",
+      "KH": "Kambodja",
+      "CN": "Xitoy",
+      "OT": "Boshqa"
+    },
+    "currentVisaOptions": {
+      "D-2": "D-2 (Talaba)",
+      "D-10": "D-10 (Ish qidiruvchi)",
+      "E-9": "E-9 (Malakasiz ishchi)",
+      "E-10": "E-10 (Dengizchi)",
+      "H-2": "H-2 (Tashrif-ish)",
+      "F-4": "F-4 (Xorijdagi vatandosh)",
+      "OTHER": "Boshqa turar joy maqomi",
+      "UNKNOWN": "Aniq bilmayman"
+    },
+    "targetVisaOptions": {
+      "F-2-R": "F-2-R (Hududga xos yuqori malakali mutaxassis)",
+      "E-7-4R": "E-7-4R (Hududga xos malakali ishchi kuchi)",
+      "F-4-R": "F-4-R (Hududga xos xorijdagi vatandosh)",
+      "D-2": "D-2 (Chungbuk kengaytirilgan hududiy talaba)"
+    },
+    "educationOptions": {
+      "ASSOCIATE_OR_ABOVE": "Kollej darajasidan yuqori diplom bor",
+      "BELOW_ASSOCIATE": "Yo'q"
+    },
+    "residenceYearOptions": {
+      "1": "1 yildan kam",
+      "2": "2 yildan ko'p",
+      "3": "3 yildan ko'p",
+      "4": "4 yildan ko'p"
+    },
+    "migrationTypeLabels": {
+      "EXISTING_RESIDENT": "Mavjud aholi",
+      "DOMESTIC_TRANSFER": "Mamlakat ichida ko'chib kelgan",
+      "OVERSEAS_TRANSFER": "Xorijdan ko'chib kelgan"
+    },
+    "migrationTypeDescriptions": {
+      "EXISTING_RESIDENT": "Aholisi kamayayotgan hududda 2 yildan ortiq yashagan",
+      "DOMESTIC_TRANSFER": "Mamlakat ichidagi boshqa hududdan oila bilan ko'chib kelgan",
+      "OVERSEAS_TRANSFER": "Xorijdan oila bilan ko'chib kelgan"
+    },
+    "academicStatusOptions": {
+      "LANGUAGE_COURSE": "Til kursi",
+      "ASSOCIATE": "Kollej",
+      "BACHELOR_1_2": "Bakalavr 1-2 kurs",
+      "BACHELOR_3_4": "Bakalavr 3-4 kurs",
+      "GRADUATE": "Magistr·Doktorantura"
+    }
   },
   "Chat": {
     "title": "Viza bo‘yicha maslahat",

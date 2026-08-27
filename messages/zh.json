@@ -8,7 +8,7 @@
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
     "openSettings": "설정 열기",
-    "backToHome": "홈으로 돌아가기",
+    "goBack": "뒤로 가기",
     "closeDialog": "关闭"
   },
   "Brand": {
@@ -52,6 +52,15 @@
         "d2": "广域型留学签证"
       }
     }
+  },
+  "Map": {
+    "title": "附近机构", "description": "离开此页面后当前位置将被丢弃，不会保存。即使拒绝位置权限，也可以手动选择地区。",
+    "location": { "initial": "请允许位置权限，或手动选择地区。", "checking": "正在确认当前位置…", "nearby": "正在显示当前位置附近的机构。", "failed": "无法确认位置。请在下方手动选择地区。", "unsupported": "此浏览器不支持定位功能。请手动选择地区。", "invalidRegion": "不支持的地区。请从列表中重新选择地区。", "selectedRegion": "正在显示{region}附近的机构。", "searchLabel": "设置搜索位置", "selectRegion": "手动选择地区", "useCurrent": "使用当前位置", "checkingButton": "确认中" },
+    "regions": { "cheongju": "清州市", "chungju": "忠州市", "jincheon": "镇川郡", "eumseong": "阴城郡" },
+    "filters": { "label": "机构类型筛选", "all": "全部", "communityCenter": "居民中心", "administrativeAgency": "行政机构", "universityDeptOffice": "大学院系办公室", "foreignSupportCenter": "外国人支援机构", "other": "其他" },
+    "loading": "正在加载机构信息…", "errors": { "notConfigured": "机构信息尚未设置完成。", "loadFailed": "无法加载机构信息。请稍后重试。" },
+    "empty": "找不到符合该地区和类型的机构。请尝试其他地区或选择“全部”。", "agencyListLabel": "地图上的机构列表", "mapLabel": "机构地图", "directions": "路线",
+    "details": { "address": "地址", "phone": "电话", "hours": "营业时间", "addressUnavailable": "暂无地址", "phoneUnavailable": "暂无电话号码", "hoursUnavailable": "暂无营业时间", "call": "拨打电话" }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",

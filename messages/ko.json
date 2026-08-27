@@ -8,7 +8,7 @@
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
     "openSettings": "설정 열기",
-    "backToHome": "홈으로 돌아가기",
+    "goBack": "뒤로 가기",
     "closeDialog": "닫기"
   },
   "Brand": {
@@ -52,6 +52,16 @@
         "d2": "광역형 유학비자"
       }
     }
+  },
+  "Map": {
+    "title": "주변 기관",
+    "description": "현재 위치는 화면을 벗어나면 폐기하며 저장하지 않습니다. 위치를 거부해도 지역을 직접 선택할 수 있습니다.",
+    "location": { "initial": "위치 권한을 허용하거나 지역을 직접 선택하세요.", "checking": "현재 위치를 확인하고 있어요…", "nearby": "현재 위치 기준으로 가까운 기관을 보여드려요.", "failed": "위치를 확인하지 못했습니다. 아래에서 지역을 직접 선택해 주세요.", "unsupported": "이 브라우저에서는 위치 기능을 사용할 수 없습니다. 지역을 직접 선택해 주세요.", "invalidRegion": "지원하지 않는 지역입니다. 목록에서 지역을 다시 선택해 주세요.", "selectedRegion": "선택 지역: {region} 기준으로 가까운 기관을 보여드려요.", "searchLabel": "검색 위치 설정", "selectRegion": "지역 직접 선택", "useCurrent": "현재 위치 사용", "checkingButton": "확인 중" },
+    "regions": { "cheongju": "청주시", "chungju": "충주시", "jincheon": "진천군", "eumseong": "음성군" },
+    "filters": { "label": "기관 유형 필터", "all": "전체", "communityCenter": "주민센터", "administrativeAgency": "행정기관", "universityDeptOffice": "대학 과사무실", "foreignSupportCenter": "외국인지원기관", "other": "기타" },
+    "loading": "기관 정보를 불러오는 중입니다…", "errors": { "notConfigured": "기관 정보 설정이 완료되지 않았습니다.", "loadFailed": "기관 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요." },
+    "empty": "이 지역·유형에 해당하는 기관을 찾지 못했습니다. 다른 지역이나 &quot;전체&quot;를 선택해 보세요.", "agencyListLabel": "지도 위 기관 목록", "mapLabel": "기관 지도", "directions": "길찾기",
+    "details": { "address": "주소", "phone": "전화", "hours": "운영", "addressUnavailable": "주소 확인 안됨", "phoneUnavailable": "전화번호 확인 안됨", "hoursUnavailable": "운영시간 확인 안됨", "call": "전화하기" }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",

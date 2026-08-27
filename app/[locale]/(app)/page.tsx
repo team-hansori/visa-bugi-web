@@ -2,7 +2,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Icon } from "@/components/ui/icon";
 import { ChatLauncher } from "@/features/chat/chat-launcher";
 import { getSavedDocumentProgress } from "@/features/ocr/saved-progress";
-import { Link } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
+import { hasCompletedOnboarding } from "@/lib/onboarding/completion";
 
 const stages = [
   { id: "requirementCheck", state: "done" },
@@ -45,6 +46,11 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  if (!(await hasCompletedOnboarding())) {
+    redirect({ href: "/onboarding", locale });
+  }
+
   const t = await getTranslations("Home");
   const savedProgress = await getSavedDocumentProgress();
   const progressPercentage = savedProgress?.percentage ?? 68;

@@ -8,7 +8,7 @@
     "skipToContent": "본문으로 바로가기",
     "backToMy": "설정으로 돌아가기",
     "openSettings": "Sozlamalarni ochish",
-    "backToHome": "Bosh sahifaga qaytish",
+    "goBack": "Orqaga qaytish",
     "closeDialog": "Yopish"
   },
   "Brand": {
@@ -52,6 +52,15 @@
         "d2": "Hududiy talaba vizasi"
       }
     }
+  },
+  "Map": {
+    "title": "Yaqin atrofdagi muassasalar", "description": "Joriy joylashuv sahifadan chiqilganda o‘chiriladi va saqlanmaydi. Joylashuvga ruxsat bermasangiz ham hududni qo‘lda tanlashingiz mumkin.",
+    "location": { "initial": "Joylashuvga ruxsat bering yoki hududni qo‘lda tanlang.", "checking": "Joriy joylashuv aniqlanmoqda…", "nearby": "Joriy joylashuv yaqinidagi muassasalar ko‘rsatilmoqda.", "failed": "Joylashuvni aniqlab bo‘lmadi. Quyidan hududni qo‘lda tanlang.", "unsupported": "Bu brauzer joylashuv funksiyasini qo‘llab-quvvatlamaydi. Hududni qo‘lda tanlang.", "invalidRegion": "Qo‘llab-quvvatlanmaydigan hudud. Ro‘yxatdan qayta tanlang.", "selectedRegion": "{region} yaqinidagi muassasalar ko‘rsatilmoqda.", "searchLabel": "Qidiruv joylashuvini sozlash", "selectRegion": "Hududni qo‘lda tanlash", "useCurrent": "Joriy joylashuvdan foydalanish", "checkingButton": "Tekshirilmoqda" },
+    "regions": { "cheongju": "Cheongju shahri", "chungju": "Chungju shahri", "jincheon": "Jincheon tumani", "eumseong": "Eumseong tumani" },
+    "filters": { "label": "Muassasa turi filtri", "all": "Barchasi", "communityCenter": "Mahalla markazi", "administrativeAgency": "Ma’muriy idora", "universityDeptOffice": "Universitet bo‘limi", "foreignSupportCenter": "Chet elliklarni qo‘llab-quvvatlash markazi", "other": "Boshqa" },
+    "loading": "Muassasalar ma’lumotlari yuklanmoqda…", "errors": { "notConfigured": "Muassasalar ma’lumotlari sozlanmagan.", "loadFailed": "Muassasalar ma’lumotlarini yuklab bo‘lmadi. Keyinroq qayta urinib ko‘ring." },
+    "empty": "Bu hudud va turga mos muassasa topilmadi. Boshqa hududni yoki “Barchasi”ni tanlang.", "agencyListLabel": "Xaritadagi muassasalar ro‘yxati", "mapLabel": "Muassasalar xaritasi", "directions": "Yo‘nalish",
+    "details": { "address": "Manzil", "phone": "Telefon", "hours": "Ish vaqti", "addressUnavailable": "Manzil mavjud emas", "phoneUnavailable": "Telefon raqami mavjud emas", "hoursUnavailable": "Ish vaqti mavjud emas", "call": "Qo‘ng‘iroq qilish" }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",

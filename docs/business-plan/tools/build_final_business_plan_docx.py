@@ -1070,7 +1070,7 @@ def build(output_path):
     add_page_break(document)
     document.add_heading("4. 제품(아이디어) 실현 방안", level=1)
     document.add_heading("4-1. 현재 구현 수준", level=2)
-    add_caption(document, "그림 6. 기능별 구현 상태 점검표")
+    add_caption(document, "표 5. 기능별 구현 상태 점검표")
     add_standard_table(
         document,
         ["구분", "현재 구현 내용", "상태"],
@@ -1111,18 +1111,15 @@ def build(output_path):
     # 12쪽 — 로드맵과 사업화
     add_page_break(document)
     document.add_heading("4-2. 단계별 개발 로드맵", level=2)
-    add_standard_table(
+    add_caption(document, "그림 6. 단계별 개발 로드맵")
+    add_compact_flow(
         document,
-        ["단계", "기간(안)", "주요 내용", "완료 기준"],
         [
-            ["1단계: AI 행동연결", "2026.09~11", "챗봇 라우팅, OCR, 규칙·공고 일정 통합", "위험·서류·일정 경로별 검증"],
-            ["2단계: 현장 실증", "2026.11~2027.02", "유학생·근로자·상담자 사용성 테스트", "2개 기관·사용자 30명 이상 실증"],
-            ["3단계: 기관형 확장", "2027.03 이후", "운영자 검수, 통계, 대학·기업·지자체 도입", "유료 실증 1건 또는 도입의향·협약 3곳"],
+            ("1단계 · 행동연결", "2026.09~11\n챗봇·OCR·규칙·공고 일정 통합\n완료: 위험·서류·일정 경로 검증"),
+            ("2단계 · 현장 실증", "2026.11~2027.02\n유학생·근로자·상담자 테스트\n완료: 2개 기관·30명 이상 실증"),
+            ("3단계 · 기관형 확장", "2027.03 이후\n운영자 검수·통계·기관 도입\n완료: 유료 실증 1건 또는 협약 3곳"),
         ],
-        [2100, 1700, 3500, 2780],
-        font_size=8.9,
-        first_col_bold=True,
-        center_columns={1},
+        "각 단계의 과업 결과를 다음 단계 확장 기준으로 사용",
     )
     document.add_heading("4-3. 사업화 모델", level=2)
     add_body(
@@ -1153,6 +1150,17 @@ def build(output_path):
         [1900, 4570, 3610],
         font_size=8.2,
         first_col_bold=True,
+    )
+    add_caption(document, "그림 7. 기관 운영비가 외국인 주민과 충북에 환류되는 구조")
+    add_compact_flow(
+        document,
+        [
+            ("기관", "대학·기업·지자체\n연간 사용료·운영비 부담"),
+            ("비자부기", "공고 갱신·AI 처리\n검수·서비스 운영"),
+            ("외국인 주민", "무료 요건·서류·\n일정 준비"),
+            ("충북 지역", "비자 전환 이탈 감소\n기업 인력 유지·정착"),
+        ],
+        "기관의 운영비가 외국인 주민의 행정 접근성과 지역 정착 지원으로 연결",
     )
     add_body(
         document,

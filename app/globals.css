@@ -60,6 +60,36 @@ textarea {
   background-size: 72px 72px, 72px 72px, 180px 180px;
 }
 
+@keyframes bugi-crawl {
+  0%,
+  100% {
+    transform: translate(-50%, 0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translate(calc(-50% + 8px), -2px) rotate(1deg);
+  }
+}
+
+.bugi-crawl {
+  animation: bugi-crawl 2.2s ease-in-out infinite;
+}
+
+@keyframes bugi-crawl-vertical {
+  0%,
+  100% {
+    transform: translate(-50%, 0) rotate(90deg);
+  }
+
+  50% {
+    transform: translate(-50%, 6px) rotate(90deg);
+  }
+}
+
+.bugi-crawl-vertical {
+  animation: bugi-crawl-vertical 2.2s ease-in-out infinite;
+}
+
 @media (min-width: 48rem) {
   .app-main {
     padding-bottom: 3rem;

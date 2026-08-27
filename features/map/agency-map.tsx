@@ -59,17 +59,11 @@ function AgencyDetails({
   }
 
   if (!agency) {
-    return (
-      <div
-        className={
-          mobile
-            ? "rounded-[20px] bg-white p-4 shadow-[0_14px_36px_rgba(25,46,37,0.2)]"
-            : "flex h-full flex-col items-center justify-center rounded-[24px] border border-[#e0e7e2] bg-white p-6 text-center text-sm font-bold text-[#77827d] shadow-[0_10px_32px_rgba(52,76,65,0.06)]"
-        }
-      >
-        표시할 기관이 없습니다. 지역이나 필터를 바꿔보세요.
-      </div>
-    );
+    // Once loading/error are ruled out above, `!agency` only happens when
+    // the fetch genuinely succeeded with zero rows — the page-level "이 지역·
+    // 유형에 해당하는 기관을 찾지 못했습니다" banner already covers that case,
+    // so render nothing here instead of a second, redundant empty message.
+    return null;
   }
 
   const hasPhone = Boolean(agency.phone && agency.phone.trim());
@@ -173,6 +167,11 @@ export function AgencyMap() {
     async function loadAgencies() {
       setLoading(true);
       setLoadError(null);
+      // Clear the previous region/filter's results immediately so a stale,
+      // still-clickable agency list and map markers never linger under the
+      // loading banner while the new fetch is in flight.
+      setAgencies([]);
+      setSelectedId(null);
 
       if (!supabase) {
         if (cancelled) return;
@@ -246,6 +245,10 @@ export function AgencyMap() {
       () => {
         if (locationRequestId.current !== requestId) return;
         setLocating(false);
+        // Clear any earlier successful fix so a failed retry doesn't keep
+        // querying against stale coordinates while the message tells the
+        // user to pick a region manually.
+        setUserPosition(null);
         setLocationStatus("위치를 확인하지 못했습니다. 아래에서 지역을 직접 선택해 주세요.");
       },
       { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 },

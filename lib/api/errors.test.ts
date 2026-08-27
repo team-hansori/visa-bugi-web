@@ -23,6 +23,51 @@ describe("withApiRoute", () => {
     expect(res.headers.get("x-request-id")).toBe(body.requestId);
   });
 
+  it("형식에 맞지 않는 inbound x-request-id는 무시하고 새로 생성한다", async () => {
+    const wrapped = withApiRoute(async (_req, { requestId }) =>
+      Response.json({ requestId }),
+    );
+    const res = await wrapped(
+      new Request("https://x/api/t", {
+        headers: { "x-request-id": "bad id with spaces & symbols!" },
+      }),
+    );
+    const body = (await res.json()) as { requestId: string };
+    expect(body.requestId).not.toContain(" ");
+    expect(body.requestId).toMatch(/^[A-Za-z0-9-]{10,}$/);
+  });
+
+  it("공개 캐시(public) 응답에는 요청별 x-request-id 헤더를 붙이지 않는다", async () => {
+    const wrapped = withApiRoute(async () =>
+      Response.json(
+        { ok: true },
+        { headers: { "Cache-Control": "public, max-age=60" } },
+      ),
+    );
+    const res = await wrapped(
+      new Request("https://x/api/t", { headers: { "x-request-id": "req-9" } }),
+    );
+    expect(res.headers.get("x-request-id")).toBeNull();
+    expect(res.headers.get("Cache-Control")).toBe("public, max-age=60");
+  });
+
+  it("ApiRouteError의 cause를 서버 로그에 남긴다", async () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const wrapped = withApiRoute(async () => {
+      throw new ApiRouteError(502, "MAP_QUERY_FAILED", "불러오지 못했습니다.", {
+        cause: { message: "supabase: relation does not exist" },
+      });
+    });
+    await wrapped(new Request("https://x/api/t"));
+    expect(spy).toHaveBeenCalledWith(
+      "[api]",
+      expect.objectContaining({
+        code: "MAP_QUERY_FAILED",
+        cause: { message: "supabase: relation does not exist" },
+      }),
+    );
+  });
+
   it("ApiRouteError를 공통 오류 형태로 직렬화한다", async () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     const wrapped = withApiRoute(async () => {

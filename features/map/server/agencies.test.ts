@@ -5,8 +5,8 @@ let queryError: unknown = null;
 const orSpy = vi.fn();
 const eqSpy = vi.fn();
 
-vi.mock("@/lib/supabase/server", () => ({
-  createClient: async () => ({
+vi.mock("@supabase/supabase-js", () => ({
+  createClient: () => ({
     from: () => {
       const builder = {
         select: () => builder,
@@ -93,7 +93,7 @@ describe("getNearbyAgencies", () => {
     ).rejects.toMatchObject({ status: 503, code: "MAP_NOT_CONFIGURED" });
   });
 
-  it("Supabase 오류면 MAP_QUERY_FAILED", async () => {
+  it("Supabase 오류면 MAP_QUERY_FAILED이고 원본 오류를 cause로 싣는다", async () => {
     queryError = { message: "boom" };
     await expect(
       getNearbyAgencies({
@@ -102,6 +102,10 @@ describe("getNearbyAgencies", () => {
         near: { lat: 36.6, lng: 127.5 },
         limit: 3,
       }),
-    ).rejects.toMatchObject({ status: 502, code: "MAP_QUERY_FAILED" });
+    ).rejects.toMatchObject({
+      status: 502,
+      code: "MAP_QUERY_FAILED",
+      cause: { message: "boom" },
+    });
   });
 });

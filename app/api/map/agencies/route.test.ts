@@ -39,11 +39,20 @@ describe("GET /api/map/agencies", () => {
     );
   });
 
-  it("lat/lng가 둘 다 오면 그 좌표를 near로 쓴다", async () => {
-    await GET(new Request("https://x/api/map/agencies?lat=36.64&lng=127.49"));
+  it("lat/lng가 둘 다 오면 그 좌표를 near로 쓰고 private 캐시로 응답한다", async () => {
+    const res = await GET(
+      new Request("https://x/api/map/agencies?lat=36.64&lng=127.49"),
+    );
     expect(getNearbyAgencies).toHaveBeenCalledWith(
       expect.objectContaining({ near: { lat: 36.64, lng: 127.49 } }),
     );
+    expect(res.headers.get("Cache-Control")).toBe("private, max-age=30");
+  });
+
+  it("lat 또는 lng 한쪽만 오면 400", async () => {
+    const res = await GET(new Request("https://x/api/map/agencies?lat=36.64"));
+    expect(res.status).toBe(400);
+    expect((await res.json()).error.code).toBe("INVALID_QUERY");
   });
 
   it("lat/lng 없으면 region 중심 좌표를 near로 쓴다", async () => {

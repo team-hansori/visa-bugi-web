@@ -491,6 +491,11 @@
     },
     "tips": {
       "eyebrow": "拍摄提示",
+      "captureAction": "去拍摄照片",
+      "attachmentEyebrow": "文件上传提示",
+      "attachmentType": "请选择 PDF 或 HWPX 原文件。",
+      "attachmentCheck": "请确认文件可以正常打开且内容清晰。",
+      "attachmentNext": "上传文件后即可开始分析。",
       "edges": "拍摄时请让文件四个角全部可见。",
       "light": "避开反光和阴影，确保文字清晰。",
       "onePage": "多页申请表请按顺序逐页检查。"

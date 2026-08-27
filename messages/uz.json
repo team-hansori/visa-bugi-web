@@ -491,6 +491,11 @@
     },
     "tips": {
       "eyebrow": "Rasmga olish bo‘yicha maslahat",
+      "captureAction": "Rasmga olishga o‘tish",
+      "attachmentEyebrow": "Fayl biriktirish bo‘yicha yordam",
+      "attachmentType": "Asl PDF yoki HWPX faylini tanlang.",
+      "attachmentCheck": "Fayl odatdagidek ochilishi va mazmuni aniq ekanini tekshiring.",
+      "attachmentNext": "Faylni biriktirgach, tahlilni boshlang.",
       "edges": "Hujjatning to‘rt burchagi ham ko‘rinsin.",
       "light": "Matn aniq chiqishi uchun yorug‘lik aksi va soyadan saqlaning.",
       "onePage": "Ko‘p sahifali arizani har bir sahifa bo‘yicha tartib bilan tekshiring."

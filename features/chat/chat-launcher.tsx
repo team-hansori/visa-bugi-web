@@ -19,7 +19,7 @@ export function ChatLauncher({ surface }: ChatLauncherProps) {
     <>
       <div className="fixed bottom-24 right-4 z-50 flex items-end gap-3 md:bottom-6 md:right-6">
         {isOcr ? (
-          <p className="max-w-52 rounded-2xl border border-[#d5e4dc] bg-white px-3.5 py-2.5 text-xs font-bold leading-5 text-[#3d5c51] shadow-[0_8px_24px_rgba(31,64,53,0.12)]">
+          <p className="hidden max-w-52 rounded-2xl border border-[#d5e4dc] bg-white px-3.5 py-2.5 text-xs font-bold leading-5 text-[#3d5c51] shadow-[0_8px_24px_rgba(31,64,53,0.12)] sm:block">
             {t("ocrLauncherHint")}
           </p>
         ) : null}

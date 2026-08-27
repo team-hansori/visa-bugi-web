@@ -491,6 +491,11 @@
     },
     "tips": {
       "eyebrow": "Mẹo chụp ảnh",
+      "captureAction": "Đi chụp ảnh",
+      "attachmentEyebrow": "Hướng dẫn đính kèm tệp",
+      "attachmentType": "Vui lòng chọn tệp PDF hoặc HWPX gốc.",
+      "attachmentCheck": "Hãy đảm bảo tệp mở được bình thường và nội dung rõ ràng.",
+      "attachmentNext": "Sau khi đính kèm tệp, hãy bắt đầu phân tích.",
       "edges": "Chụp sao cho thấy đủ bốn góc của tài liệu.",
       "light": "Tránh ánh sáng phản chiếu và bóng đổ để chữ rõ nét.",
       "onePage": "Với đơn nhiều trang, hãy kiểm tra từng trang theo thứ tự."

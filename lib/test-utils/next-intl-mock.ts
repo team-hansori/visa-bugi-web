@@ -1,7 +1,8 @@
 import { createElement, Fragment, type ReactNode } from "react";
 import koMessages from "@/messages/ko.json";
 
-type MessageTree = { [key: string]: string | MessageTree };
+type MessageValue = string | MessageTree | MessageValue[];
+type MessageTree = { [key: string]: MessageValue };
 
 const namespaces = koMessages as Record<string, MessageTree>;
 

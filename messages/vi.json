@@ -292,7 +292,11 @@
     "verifiedAtLabel": "확인일",
     "contactsLabel": "안내 기관",
     "unverifiedNotice": "이 안내는 이주노동자 기준으로 확인된 정보입니다. 상황에 따라 다를 수 있으니 기관에 직접 확인해 주세요.",
-    "outOfScopeContacts": "아래 기관에서 도움을 받을 수 있어요."
+    "outOfScopeContacts": "아래 기관에서 도움을 받을 수 있어요.",
+    "open": "Mở tư vấn",
+    "close": "Đóng",
+    "ocrLauncherHint": "Hỏi về tài liệu bạn đã tải lên",
+    "ocrIntegrationNotice": "Tính năng trả lời dựa trên tài liệu đã tải lên đang được chuẩn bị. Bạn vẫn có thể sử dụng tư vấn thị thực chung."
   },
   "My": {
     "eyebrow": "MY",

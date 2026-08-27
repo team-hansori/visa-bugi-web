@@ -11,6 +11,7 @@ import {
   inspectApplicationFormImage,
 } from "./image-quality";
 import { OcrHelpChat } from "./ocr-help-chat";
+import { ChatLauncher } from "@/features/chat/chat-launcher";
 import type {
   ApplicationFormAnalysis,
   ApplicationFormCatalog,
@@ -461,6 +462,7 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           saveError={saveError}
         />
       ) : null}
+      <ChatLauncher surface="ocr" />
     </div>
   );
 }

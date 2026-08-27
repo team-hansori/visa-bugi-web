@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useState } from "react";
 import { AuthForm } from "@/features/auth/auth-form";
 import { Link, useRouter } from "@/i18n/navigation";
 
@@ -9,14 +10,25 @@ type Props = {
   onContinueWithoutLogin: () => void;
 };
 
+type View = "choice" | "signIn" | "signUp";
+
 /**
- * 온보딩 진입 전 첫 화면. 아이디/비밀번호 가입·로그인 폼을 보여주고,
- * 로그인 없이도 항상 진행할 수 있는 게스트 경로를 유지한다 — 로그인은 강제하지 않는다.
- * 인증 성공 시 홈으로 보내고, 홈의 완료 가드가 미완료 프로필을 다시 온보딩으로 돌린다.
+ * 온보딩 진입 전 첫 화면. 회원가입 / 로그인 / 비회원 조회 3버튼으로 나뉘고,
+ * 회원가입·로그인을 누르면 해당 입력 폼으로 바뀐다(뒤로가기로 3버튼 복귀).
+ * 비회원 조회는 로그인 없이 익명 계정으로 온보딩을 시작한다 — 로그인은 강제하지 않는다.
  */
 export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
   const t = useTranslations("Onboarding");
+  const authT = useTranslations("Auth");
   const router = useRouter();
+  const [view, setView] = useState<View>("choice");
+
+  function goHome() {
+    // Server Action이 세팅한 인증 쿠키를 RSC 트리가 다시 읽도록 refresh 후
+    // 홈으로 보낸다. 홈의 완료 가드가 미완료 프로필을 온보딩으로 되돌린다.
+    router.refresh();
+    router.push("/");
+  }
 
   return (
     <section
@@ -46,24 +58,38 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
         </div>
       </div>
 
-      <div className="grid w-full max-w-xs justify-items-center gap-3">
-        <AuthForm
-          onAuthenticated={() => {
-            // Server Action이 세팅한 인증 쿠키를 RSC 트리가 다시 읽도록
-            // refresh 후 홈으로 보낸다. 홈의 완료 가드가 미완료 프로필을
-            // 온보딩으로 되돌린다.
-            router.refresh();
-            router.push("/");
-          }}
-        />
-
-        <button
-          type="button"
-          onClick={onContinueWithoutLogin}
-          className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl border border-[#dfe5e1] bg-white px-5 text-sm font-extrabold text-[#33453e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
-        >
-          {t("continueWithoutLogin")}
-        </button>
+      <div className="grid w-full max-w-xs gap-3">
+        {view === "choice" ? (
+          <>
+            <button
+              type="button"
+              onClick={() => setView("signUp")}
+              className="inline-flex min-h-14 w-full cursor-pointer items-center justify-center rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm transition-colors hover:bg-[#245d4f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+            >
+              {authT("tabSignUp")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setView("signIn")}
+              className="inline-flex min-h-14 w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-[#2d6d5d] bg-white px-5 text-sm font-extrabold text-[#245d4f] transition-colors hover:bg-[#eef5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+            >
+              {authT("tabSignIn")}
+            </button>
+            <button
+              type="button"
+              onClick={onContinueWithoutLogin}
+              className="inline-flex min-h-14 w-full cursor-pointer items-center justify-center rounded-2xl border border-[#dfe5e1] bg-white px-5 text-sm font-extrabold text-[#33453e] transition-colors hover:border-[#c4cfc9] hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+            >
+              {t("continueWithoutLogin")}
+            </button>
+          </>
+        ) : (
+          <AuthForm
+            mode={view}
+            onAuthenticated={goHome}
+            onBack={() => setView("choice")}
+          />
+        )}
 
         <p className="mt-1 max-w-xs text-center text-xs leading-5 text-[#8a938e]">
           {t.rich("consentNotice", {

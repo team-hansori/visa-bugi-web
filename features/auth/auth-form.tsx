@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { signInWithId, signUpWithId, type AuthActionState } from "./actions";
 
 type Mode = "signIn" | "signUp";
@@ -12,10 +12,21 @@ const inputClass =
   "min-h-12 rounded-xl border border-[#dfe5e1] bg-white px-3 text-sm text-[#20332c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]";
 const hintClass = "font-normal text-[#8a938e]";
 
-export function AuthForm({ onAuthenticated }: { onAuthenticated: () => void }) {
+/**
+ * 단일 모드(로그인 또는 회원가입) 폼. 모드 선택과 뒤로가기는 상위(OnboardingWelcome)가
+ * 3버튼 진입 화면으로 관리하고, 여기서는 넘겨받은 mode에 맞는 입력 칸만 그린다.
+ */
+export function AuthForm({
+  mode,
+  onAuthenticated,
+  onBack,
+}: {
+  mode: Mode;
+  onAuthenticated: () => void;
+  onBack: () => void;
+}) {
   const t = useTranslations("Auth");
   const locale = useLocale();
-  const [mode, setMode] = useState<Mode>("signIn");
   const [signInState, signInAction, signInPending] = useActionState(
     signInWithId,
     IDLE,
@@ -39,31 +50,18 @@ export function AuthForm({ onAuthenticated }: { onAuthenticated: () => void }) {
   }, [state.status, onAuthenticated]);
 
   return (
-    <div className="w-full max-w-xs">
-      <fieldset className="mb-4 grid grid-cols-2 gap-1 rounded-2xl bg-[#eef2f0] p-1">
-        <legend className="sr-only">{`${t("tabSignIn")} / ${t("tabSignUp")}`}</legend>
-        {(["signIn", "signUp"] as const).map((m) => (
-          <label
-            key={m}
-            className={`flex min-h-11 cursor-pointer items-center justify-center rounded-xl text-sm font-extrabold focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#2d6d5d] ${
-              mode === m ? "bg-white text-[#20332c] shadow-sm" : "text-[#6c7873]"
-            }`}
-          >
-            <input
-              type="radio"
-              name="auth-mode"
-              className="sr-only"
-              checked={mode === m}
-              onChange={() => setMode(m)}
-            />
-            {m === "signIn" ? t("tabSignIn") : t("tabSignUp")}
-          </label>
-        ))}
-      </fieldset>
+    <div className="w-full max-w-xs text-left">
+      <button
+        type="button"
+        onClick={onBack}
+        className="mb-3 inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-lg px-1 text-sm font-bold text-[#52615b] transition-colors hover:text-[#20332c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+      >
+        <span aria-hidden="true">←</span> {t("back")}
+      </button>
 
       <form
         action={mode === "signIn" ? signInAction : signUpAction}
-        className="grid gap-3 text-left"
+        className="grid gap-3"
       >
         <input type="hidden" name="locale" value={locale} />
 
@@ -123,7 +121,7 @@ export function AuthForm({ onAuthenticated }: { onAuthenticated: () => void }) {
         <button
           type="submit"
           disabled={pending}
-          className="mt-1 inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] disabled:bg-[#c7d1cc]"
+          className="mt-1 inline-flex min-h-12 cursor-pointer items-center justify-center rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm transition-colors hover:bg-[#245d4f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] disabled:cursor-not-allowed disabled:bg-[#c7d1cc]"
         >
           {pending
             ? t("submitting")

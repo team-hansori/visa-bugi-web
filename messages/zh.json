@@ -30,6 +30,7 @@
   "Auth": {
     "tabSignIn": "登录",
     "tabSignUp": "注册",
+    "back": "返回",
     "username": "用户名",
     "usernameHint": "小写字母、数字、下划线，3~30 个字符",
     "password": "密码",
@@ -280,7 +281,7 @@
     "consentNotice": "<terms>服务条款</terms>和<privacy>隐私政策</privacy>正在准备中，发布后可在此查看。",
     "welcomeTitle": "与Visa-bugi一起开始吧",
     "welcomeDescription": "我们将为您追踪签证要求和下一步。",
-    "continueWithoutLogin": "无需登录开始",
+    "continueWithoutLogin": "游客浏览",
     "addressManualPrompt": "搜索不到吗？我自己输入",
     "addressManualRoadLabel": "地址（道路名或地号）",
     "addressManualRoadPlaceholder": "例：忠北堤川市内土路295",

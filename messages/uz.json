@@ -30,6 +30,7 @@
   "Auth": {
     "tabSignIn": "Kirish",
     "tabSignUp": "Ro‘yxatdan o‘tish",
+    "back": "Orqaga",
     "username": "Foydalanuvchi nomi",
     "usernameHint": "Kichik harflar, raqamlar, pastki chiziq, 3~30 belgi",
     "password": "Parol",
@@ -280,7 +281,7 @@
     "consentNotice": "<terms>Foydalanish shartlari</terms> va <privacy>Maxfiylik siyosati</privacy> tayyorlanmoqda. E'lon qilingach shu yerda ko'rishingiz mumkin.",
     "welcomeTitle": "Visa-bugi bilan boshlaymiz",
     "welcomeDescription": "Viza talablaringiz va keyingi bosqichni kuzatib boramiz.",
-    "continueWithoutLogin": "Kirishsiz boshlash",
+    "continueWithoutLogin": "Mehmon sifatida ko‘rish",
     "addressManualPrompt": "Topilmadimi? Qo'lda kiritaman",
     "addressManualRoadLabel": "Manzil (ko'cha nomi yoki uy raqami)",
     "addressManualRoadPlaceholder": "Masalan: Chungbuk, Jecheon-si, Naeto-ro 295",

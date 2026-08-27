@@ -55,12 +55,52 @@
   "Map": {
     "title": "주변 기관",
     "description": "현재 위치는 화면을 벗어나면 폐기하며 저장하지 않습니다. 위치를 거부해도 지역을 직접 선택할 수 있습니다.",
-    "location": { "initial": "위치 권한을 허용하거나 지역을 직접 선택하세요.", "checking": "현재 위치를 확인하고 있어요…", "nearby": "현재 위치 기준으로 가까운 기관을 보여드려요.", "failed": "위치를 확인하지 못했습니다. 아래에서 지역을 직접 선택해 주세요.", "unsupported": "이 브라우저에서는 위치 기능을 사용할 수 없습니다. 지역을 직접 선택해 주세요.", "invalidRegion": "지원하지 않는 지역입니다. 목록에서 지역을 다시 선택해 주세요.", "selectedRegion": "선택 지역: {region} 기준으로 가까운 기관을 보여드려요.", "searchLabel": "검색 위치 설정", "selectRegion": "지역 직접 선택", "useCurrent": "현재 위치 사용", "checkingButton": "확인 중" },
-    "regions": { "cheongju": "청주시", "chungju": "충주시", "jincheon": "진천군", "eumseong": "음성군" },
-    "filters": { "label": "기관 유형 필터", "all": "전체", "communityCenter": "주민센터", "administrativeAgency": "행정기관", "universityDeptOffice": "대학 과사무실", "foreignSupportCenter": "외국인지원기관", "other": "기타" },
-    "loading": "기관 정보를 불러오는 중입니다…", "errors": { "notConfigured": "기관 정보 설정이 완료되지 않았습니다.", "loadFailed": "기관 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요." },
-    "empty": "이 지역·유형에 해당하는 기관을 찾지 못했습니다. 다른 지역이나 &quot;전체&quot;를 선택해 보세요.", "agencyListLabel": "지도 위 기관 목록", "mapLabel": "기관 지도", "directions": "길찾기",
-    "details": { "address": "주소", "phone": "전화", "hours": "운영", "addressUnavailable": "주소 확인 안됨", "phoneUnavailable": "전화번호 확인 안됨", "hoursUnavailable": "운영시간 확인 안됨", "call": "전화하기" }
+    "location": {
+      "initial": "위치 권한을 허용하거나 지역을 직접 선택하세요.",
+      "checking": "현재 위치를 확인하고 있어요…",
+      "nearby": "현재 위치 기준으로 가까운 기관을 보여드려요.",
+      "failed": "위치를 확인하지 못했습니다. 아래에서 지역을 직접 선택해 주세요.",
+      "unsupported": "이 브라우저에서는 위치 기능을 사용할 수 없습니다. 지역을 직접 선택해 주세요.",
+      "invalidRegion": "지원하지 않는 지역입니다. 목록에서 지역을 다시 선택해 주세요.",
+      "selectedRegion": "선택 지역: {region} 기준으로 가까운 기관을 보여드려요.",
+      "searchLabel": "검색 위치 설정",
+      "selectRegion": "지역 직접 선택",
+      "useCurrent": "현재 위치 사용",
+      "checkingButton": "확인 중"
+    },
+    "regions": {
+      "cheongju": "청주시",
+      "chungju": "충주시",
+      "jincheon": "진천군",
+      "eumseong": "음성군"
+    },
+    "filters": {
+      "label": "기관 유형 필터",
+      "all": "전체",
+      "communityCenter": "주민센터",
+      "administrativeAgency": "행정기관",
+      "universityDeptOffice": "대학 과사무실",
+      "foreignSupportCenter": "외국인지원기관",
+      "other": "기타"
+    },
+    "loading": "기관 정보를 불러오는 중입니다…",
+    "errors": {
+      "notConfigured": "기관 정보 설정이 완료되지 않았습니다.",
+      "loadFailed": "기관 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
+    },
+    "empty": "이 지역·유형에 해당하는 기관을 찾지 못했습니다. 다른 지역이나 &quot;전체&quot;를 선택해 보세요.",
+    "agencyListLabel": "지도 위 기관 목록",
+    "mapLabel": "기관 지도",
+    "directions": "길찾기",
+    "details": {
+      "address": "주소",
+      "phone": "전화",
+      "hours": "운영",
+      "addressUnavailable": "주소 확인 안됨",
+      "phoneUnavailable": "전화번호 확인 안됨",
+      "hoursUnavailable": "운영시간 확인 안됨",
+      "call": "전화하기"
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
@@ -90,7 +130,13 @@
       "savedEyebrow": "저장된 서류 작성 진행률",
       "savedTag": "저장됨",
       "commonVisaValue": "공통 신청서",
-      "lastUpdatedLabel": "최근 저장"
+      "lastUpdatedLabel": "최근 저장",
+      "onboardingEyebrow": "온보딩에서 선택한 관심 비자",
+      "liveTag": "실제 데이터",
+      "previewTag": "미리보기",
+      "dynamicAriaLabel": "비자 준비 진행률 {percent}퍼센트",
+      "checklistCaption": "전체 준비 진행률",
+      "changeVisa": "관심 비자 변경하기"
     },
     "journey": {
       "heading": "현재 단계",
@@ -109,7 +155,10 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "비자 여정",
-      "savedStepIndicator": "서류 {total}개 중 {ready}개 준비 완료"
+      "savedStepIndicator": "서류 {total}개 중 {ready}개 준비 완료",
+      "stepIndicatorDynamic": "{step}단계 · {stage}",
+      "detailHeading": "서류 준비 세부 단계",
+      "detailProgress": "{current}/{total}단계"
     },
     "tasks": {
       "heading": "서류 준비 체크",
@@ -141,6 +190,29 @@
           "label": "{document} 제출 전 최종 확인",
           "meta": "OCR 결과 · 준비 완료"
         }
+      },
+      "pendingHeading": "미제출 필수 서류",
+      "pendingDescription": "아직 제출하지 않은 필수 서류 중 최대 5개를 보여드려요.",
+      "requiredSummary": "필수 {checked}/{total}개 제출",
+      "sampleHint": "전체 목록은 제출 서류 현황에서 단계별로 확인할 수 있어요",
+      "allRequiredChecked": "필수 서류를 모두 확인했어요",
+      "noPendingRequired": "미제출 필수 서류가 없습니다.",
+      "viewAll": "전체 제출 서류 보기",
+      "stageDescription": "{stage} 단계에 필요한 서류입니다.",
+      "checkedSummary": "{checked}/{total}개 확인",
+      "checkAriaLabel": "{document} 준비 완료로 표시",
+      "allChecked": "표시된 서류를 모두 확인했어요",
+      "checkAllHint": "서류를 하나씩 확인해 주세요",
+      "advance": "다음 단계로 넘어가기",
+      "advanced": "기관 방문 단계로 이동했어요",
+      "sourceSupabase": "Supabase의 document_requirements를 기준으로 표시합니다.",
+      "sourcePreview": "Supabase 연결 전에도 확인할 수 있는 미리보기 목록입니다.",
+      "empty": "현재 표시할 서류가 없습니다.",
+      "status": {
+        "required": "필수",
+        "optional": "선택",
+        "conditional": "조건부",
+        "alternative": "택1"
       }
     },
     "agencies": {
@@ -150,7 +222,32 @@
       "eyebrow": "주변 기관"
     },
     "savedBadge": "저장된 진행 상황",
-    "savedHeroDescription": "저장한 문서 {count}개의 OCR 점검 결과를 바탕으로 준비 상태와 다음 할 일을 보여줍니다."
+    "savedHeroDescription": "저장한 문서 {count}개의 OCR 점검 결과를 바탕으로 준비 상태와 다음 할 일을 보여줍니다.",
+    "quota": {
+      "sectionAriaLabel": "비자별 잔여 모집 인원",
+      "eyebrow": "비자별 모집 현황",
+      "remaining": "남은 모집 인원",
+      "people": "명",
+      "unlimited": "정원 제한 없음",
+      "unavailable": "공개된 잔여 인원 없음",
+      "allocated": "전체 배정 {count}명 중 남은 비율",
+      "round": "{round}차 공고",
+      "asOf": "{date} 기준",
+      "dateUnavailable": "기준일 확인 중",
+      "municipalityScope": "충북 {count}개 시·군 합계",
+      "provinceScope": "충청북도 전체",
+      "singleScope": "공고 지정 모집 단위",
+      "policyScope": "비자 정원 정책",
+      "notice": "공고에 발표된 기준 수치이며 실시간 잔여 인원과 다를 수 있어요.",
+      "supabaseBadge": "현재 공고",
+      "previewBadge": "검수 데이터 미리보기",
+      "cta": "공고 원문 확인하기",
+      "previous": "이전 비자 보기",
+      "next": "다음 비자 보기",
+      "pagination": "비자 슬라이드 선택",
+      "goTo": "{visa} 잔여 인원 보기",
+      "position": "{current}/{total}"
+    }
   },
   "Onboarding": {
     "privacyNotice": "여기서 안내하는 내용은 참고용이며, 최종 자격 판정은 관할 출입국·외국인관서에서 확인해야 합니다.",
@@ -169,13 +266,11 @@
     "searchError": "주소를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
     "saveError": "일시적인 오류로 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
     "consentNotice": "<terms>이용약관</terms>과 <privacy>개인정보처리방침</privacy>을 준비하고 있어요. 게시되면 이 화면에서 확인하실 수 있습니다.",
-
     "welcomeTitle": "비자부기와 함께 시작해요",
     "welcomeDescription": "내 비자 요건과 다음 단계를 추적해 드릴게요.",
     "googleStart": "Google로 시작하기",
     "googleComingSoon": "Google 로그인은 준비 중입니다. 아래 버튼으로 바로 이용하실 수 있어요.",
     "continueWithoutLogin": "로그인 없이 시작하기",
-
     "addressManualPrompt": "검색이 안 되나요? 직접 입력할게요",
     "addressManualRoadLabel": "주소 (도로명 또는 지번)",
     "addressManualRoadPlaceholder": "예: 충북 제천시 내토로 295",
@@ -183,9 +278,7 @@
     "addressManualSigunguPlaceholder": "예: 제천시",
     "addressManualBack": "주소 검색으로 돌아가기",
     "addressManualSubmit": "이 주소로 설정",
-
     "birthdateLabel": "생년월일",
-
     "koreanTopikLabel": "TOPIK",
     "koreanTopikDescription": "한국어능력시험 급수",
     "koreanKiipLabel": "사회통합프로그램",
@@ -196,13 +289,11 @@
     "koreanSelectPlaceholder": "선택해 주세요",
     "koreanTopikUnit": "급",
     "koreanKiipUnit": "단계",
-
     "d2UniversityLabel": "재학 중인 대학",
     "d2DepartmentLabel": "학과",
     "d2AcademicStatusLabel": "현재 과정",
     "d2ProgramStartDateLabel": "입학(또는 어학연수 시작)일",
     "d2SelectPlaceholder": "선택해 주세요",
-
     "stepTitles": {
       "locale": "어떤 언어가 편한가요?",
       "nationality": "국적을 선택해 주세요",
@@ -556,15 +647,10 @@
     ],
     "locationNotice": "위치정보 수집·이용에 대한 별도 처리방침은 위치정보 정책이 확정된 뒤 이 화면에 추가됩니다."
   },
-  "NotFound": {
-    "title": "페이지를 찾을 수 없어요",
-    "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",
-    "backHome": "홈으로 돌아가기"
-  },
   "Ocr": {
     "eyebrow": "신청서 작성 도우미",
     "title": "비자 신청서 작성 항목 점검",
-    "description": "신청서 사진, PDF 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다.",
+    "description": "신청서 사진, PDF 또는 HWPX 파일에서 작성된 항목을 읽고, 비어 있거나 다시 확인할 항목을 안내합니다. 결과는 자동 제출되지 않습니다.",
     "languageNotice": "서식의 한국어를 읽은 뒤 안내는 현재 선택한 앱 언어로 제공합니다.",
     "catalog": {
       "supabase": "Supabase 스키마 v2 연결",
@@ -668,9 +754,9 @@
     },
     "privacy": {
       "title": "첨부 파일 처리 원칙",
-      "temporary": "사진·PDF·HWPX는 분석을 위해서만 일시 전송합니다.",
-      "noDatabase": "원본 파일·인식값은 저장하지 않고, 사용자가 선택한 진행 상태만 저장합니다.",
-      "reviewFirst": "인식 결과는 사용자가 확인한 뒤에만 활용하며, 자동으로 제출되지 않습니다."
+      "temporary": "사진·PDF·HWPX는 분석을 위해서만 일시 전송",
+      "noDatabase": "원본 파일·인식값은 저장하지 않고 사용자가 선택한 진행 상태만 저장",
+      "reviewFirst": "인식 결과를 사용자가 확인한 뒤에만 활용"
     },
     "tips": {
       "eyebrow": "촬영 도움말",
@@ -755,5 +841,37 @@
       "demoData": "무료 테스트 모드라 예시 결과를 표시합니다. OpenAI API는 호출되지 않았으며 실제 인식값이 아닙니다.",
       "unknown": "원본 신청서와 인식 결과를 다시 비교해 주세요."
     }
+  },
+  "DocumentsHub": {
+    "eyebrow": "서류 도우미",
+    "title": "어떤 서류 작업이 필요한가요?",
+    "description": "신청서 작성 항목을 OCR로 점검하거나, 관심 비자의 전체 제출 서류를 단계별로 관리할 수 있어요.",
+    "ocr": {
+      "title": "비자신청서 작성 항목 점검",
+      "description": "작성 중인 신청서 사진·PDF·HWPX를 분석해 작성할 항목과 다시 확인할 내용을 안내합니다."
+    },
+    "status": {
+      "title": "비자 제출 서류 현황",
+      "description": "온보딩에서 선택한 비자의 모든 제출 서류를 절차 단계별로 나누어 확인하고 직접 체크합니다."
+    }
+  },
+  "DocumentStatus": {
+    "back": "서류 메뉴로 돌아가기",
+    "eyebrow": "단계별 전체 목록",
+    "title": "비자 제출 서류 현황",
+    "description": "필수·조건부·선택 서류를 세부 제출 단계별로 확인하고 준비된 서류를 직접 체크하세요.",
+    "requiredProgress": "필수 서류 제출 진행률",
+    "requiredSummary": "{checked}/{total}개",
+    "allSummary": "전체 서류 {total}개 중 {checked}개 체크",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "세부 단계 {current}/{total}",
+    "stageComplete": "필수 서류 완료",
+    "stageRequiredSummary": "필수 {checked}/{total}",
+    "checkAriaLabel": "{document} 제출 완료로 표시",
+    "readyTitle": "필수 제출 서류를 모두 확인했어요",
+    "remainingTitle": "아직 제출하지 않은 필수 서류가 있어요",
+    "readyDescription": "다음 단계로 이동하면 메인 화면의 거북이와 준비 진행률이 함께 바뀝니다.",
+    "remainingDescription": "각 단계의 필수 서류를 모두 체크하면 다음 단계로 이동할 수 있습니다.",
+    "advance": "기관 방문 단계로 넘어가기"
   }
 }

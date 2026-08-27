@@ -10,14 +10,15 @@ import { Link, usePathname } from "@/i18n/navigation";
 type NavItem = {
   href: string;
   icon: IconName;
-  key: "home" | "calendar" | "map" | "ocr" | "my";
+  key: "home" | "calendar" | "map" | "chat" | "ocr" | "my";
 };
 
 const navItems: NavItem[] = [
   { href: "/", icon: "home", key: "home" },
   { href: "/calendar", icon: "calendar", key: "calendar" },
   { href: "/map", icon: "map-pin", key: "map" },
-  { href: "/ocr", icon: "document", key: "ocr" },
+  { href: "/chat", icon: "chat", key: "chat" },
+  { href: "/documents", icon: "document", key: "ocr" },
   { href: "/my", icon: "menu", key: "my" },
 ];
 
@@ -26,6 +27,9 @@ const mySubPagePaths = new Set(["/contact", "/terms", "/privacy"]);
 function isCurrentPath(pathname: string, href: string) {
   if (href === "/") return pathname === href;
   if (href === "/my") return pathname === href || mySubPagePaths.has(pathname);
+  if (href === "/documents") {
+    return pathname.startsWith("/documents") || pathname.startsWith("/ocr");
+  }
   return pathname.startsWith(href);
 }
 
@@ -110,7 +114,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
       aria-label={t("mobileMenuAriaLabel")}
       className="mobile-safe-bottom fixed inset-x-0 bottom-0 z-50 border-t border-[#dfe6e1] bg-white/95 px-3 pt-2 shadow-[0_-8px_28px_rgba(34,54,46,0.08)] backdrop-blur-xl md:hidden"
     >
-      <div className="mx-auto grid max-w-md grid-cols-5 gap-1">
+      <div className="mx-auto grid max-w-md grid-cols-6 gap-1">
         {navItems.map((item) => {
           const current = isCurrentPath(pathname, item.href);
 

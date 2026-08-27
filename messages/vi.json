@@ -53,13 +53,54 @@
     }
   },
   "Map": {
-    "title": "Cơ quan gần đây", "description": "Vị trí hiện tại sẽ bị xóa khi bạn rời màn hình và không được lưu. Bạn vẫn có thể chọn khu vực thủ công nếu từ chối quyền vị trí.",
-    "location": { "initial": "Hãy cho phép quyền vị trí hoặc chọn khu vực thủ công.", "checking": "Đang xác định vị trí hiện tại…", "nearby": "Đang hiển thị các cơ quan gần vị trí hiện tại.", "failed": "Không thể xác định vị trí. Vui lòng chọn khu vực bên dưới.", "unsupported": "Trình duyệt này không hỗ trợ định vị. Vui lòng chọn khu vực thủ công.", "invalidRegion": "Khu vực không được hỗ trợ. Vui lòng chọn lại từ danh sách.", "selectedRegion": "Đang hiển thị các cơ quan gần {region}.", "searchLabel": "Thiết lập vị trí tìm kiếm", "selectRegion": "Chọn khu vực thủ công", "useCurrent": "Dùng vị trí hiện tại", "checkingButton": "Đang kiểm tra" },
-    "regions": { "cheongju": "Thành phố Cheongju", "chungju": "Thành phố Chungju", "jincheon": "Huyện Jincheon", "eumseong": "Huyện Eumseong" },
-    "filters": { "label": "Lọc loại cơ quan", "all": "Tất cả", "communityCenter": "Trung tâm hành chính", "administrativeAgency": "Cơ quan hành chính", "universityDeptOffice": "Văn phòng khoa đại học", "foreignSupportCenter": "Trung tâm hỗ trợ người nước ngoài", "other": "Khác" },
-    "loading": "Đang tải thông tin cơ quan…", "errors": { "notConfigured": "Chưa hoàn tất cài đặt thông tin cơ quan.", "loadFailed": "Không thể tải thông tin cơ quan. Vui lòng thử lại sau." },
-    "empty": "Không tìm thấy cơ quan phù hợp với khu vực và loại đã chọn. Hãy thử khu vực khác hoặc chọn “Tất cả”.", "agencyListLabel": "Danh sách cơ quan trên bản đồ", "mapLabel": "Bản đồ cơ quan", "directions": "Chỉ đường",
-    "details": { "address": "Địa chỉ", "phone": "Điện thoại", "hours": "Giờ hoạt động", "addressUnavailable": "Chưa có địa chỉ", "phoneUnavailable": "Chưa có số điện thoại", "hoursUnavailable": "Chưa có giờ hoạt động", "call": "Gọi điện" }
+    "title": "Cơ quan gần đây",
+    "description": "Vị trí hiện tại sẽ bị xóa khi bạn rời màn hình và không được lưu. Bạn vẫn có thể chọn khu vực thủ công nếu từ chối quyền vị trí.",
+    "location": {
+      "initial": "Hãy cho phép quyền vị trí hoặc chọn khu vực thủ công.",
+      "checking": "Đang xác định vị trí hiện tại…",
+      "nearby": "Đang hiển thị các cơ quan gần vị trí hiện tại.",
+      "failed": "Không thể xác định vị trí. Vui lòng chọn khu vực bên dưới.",
+      "unsupported": "Trình duyệt này không hỗ trợ định vị. Vui lòng chọn khu vực thủ công.",
+      "invalidRegion": "Khu vực không được hỗ trợ. Vui lòng chọn lại từ danh sách.",
+      "selectedRegion": "Đang hiển thị các cơ quan gần {region}.",
+      "searchLabel": "Thiết lập vị trí tìm kiếm",
+      "selectRegion": "Chọn khu vực thủ công",
+      "useCurrent": "Dùng vị trí hiện tại",
+      "checkingButton": "Đang kiểm tra"
+    },
+    "regions": {
+      "cheongju": "Thành phố Cheongju",
+      "chungju": "Thành phố Chungju",
+      "jincheon": "Huyện Jincheon",
+      "eumseong": "Huyện Eumseong"
+    },
+    "filters": {
+      "label": "Lọc loại cơ quan",
+      "all": "Tất cả",
+      "communityCenter": "Trung tâm hành chính",
+      "administrativeAgency": "Cơ quan hành chính",
+      "universityDeptOffice": "Văn phòng khoa đại học",
+      "foreignSupportCenter": "Trung tâm hỗ trợ người nước ngoài",
+      "other": "Khác"
+    },
+    "loading": "Đang tải thông tin cơ quan…",
+    "errors": {
+      "notConfigured": "Chưa hoàn tất cài đặt thông tin cơ quan.",
+      "loadFailed": "Không thể tải thông tin cơ quan. Vui lòng thử lại sau."
+    },
+    "empty": "Không tìm thấy cơ quan phù hợp với khu vực và loại đã chọn. Hãy thử khu vực khác hoặc chọn “Tất cả”.",
+    "agencyListLabel": "Danh sách cơ quan trên bản đồ",
+    "mapLabel": "Bản đồ cơ quan",
+    "directions": "Chỉ đường",
+    "details": {
+      "address": "Địa chỉ",
+      "phone": "Điện thoại",
+      "hours": "Giờ hoạt động",
+      "addressUnavailable": "Chưa có địa chỉ",
+      "phoneUnavailable": "Chưa có số điện thoại",
+      "hoursUnavailable": "Chưa có giờ hoạt động",
+      "call": "Gọi điện"
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
@@ -89,7 +130,13 @@
       "savedEyebrow": "Tiến trình điền tài liệu đã lưu",
       "savedTag": "Đã lưu",
       "commonVisaValue": "Đơn đăng ký chung",
-      "lastUpdatedLabel": "Lưu gần đây"
+      "lastUpdatedLabel": "Lưu gần đây",
+      "onboardingEyebrow": "Thị thực đã chọn khi bắt đầu",
+      "liveTag": "Dữ liệu thực",
+      "previewTag": "Xem trước",
+      "dynamicAriaLabel": "Tiến độ chuẩn bị thị thực {percent}%",
+      "checklistCaption": "Tiến độ chuẩn bị tổng thể",
+      "changeVisa": "Đổi thị thực quan tâm"
     },
     "journey": {
       "heading": "현재 단계",
@@ -108,10 +155,13 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "Hành trình thị thực",
-      "savedStepIndicator": "Đã chuẩn bị {ready}/{total} tài liệu"
+      "savedStepIndicator": "Đã chuẩn bị {ready}/{total} tài liệu",
+      "stepIndicatorDynamic": "Bước {step} · {stage}",
+      "detailHeading": "Các bước chuẩn bị hồ sơ chi tiết",
+      "detailProgress": "Bước {current}/{total}"
     },
     "tasks": {
-      "heading": "서류 준비 체크",
+      "heading": "Kiểm tra hồ sơ cần chuẩn bị",
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",
@@ -140,6 +190,29 @@
           "label": "{document}: kiểm tra cuối trước khi nộp",
           "meta": "Kết quả OCR · đã sẵn sàng"
         }
+      },
+      "pendingHeading": "Giấy tờ bắt buộc chưa nộp",
+      "pendingDescription": "Hiển thị ngẫu nhiên tối đa 5 giấy tờ bắt buộc chưa nộp.",
+      "requiredSummary": "Đã nộp {checked}/{total} giấy tờ bắt buộc",
+      "sampleHint": "Xem danh sách đầy đủ theo từng bước trong trạng thái hồ sơ",
+      "allRequiredChecked": "Đã kiểm tra tất cả giấy tờ bắt buộc",
+      "noPendingRequired": "Không còn giấy tờ bắt buộc chưa nộp.",
+      "viewAll": "Xem toàn bộ giấy tờ",
+      "stageDescription": "Các giấy tờ cần cho giai đoạn {stage}.",
+      "checkedSummary": "Đã kiểm tra {checked}/{total}",
+      "checkAriaLabel": "Đánh dấu {document} là đã chuẩn bị",
+      "allChecked": "Đã kiểm tra tất cả giấy tờ hiển thị",
+      "checkAllHint": "Vui lòng kiểm tra từng giấy tờ",
+      "advance": "Chuyển sang bước tiếp theo",
+      "advanced": "Đã chuyển sang giai đoạn đến cơ quan",
+      "sourceSupabase": "Hiển thị theo document_requirements trong Supabase.",
+      "sourcePreview": "Đây là danh sách xem trước trước khi kết nối Supabase.",
+      "empty": "Hiện không có giấy tờ để hiển thị.",
+      "status": {
+        "required": "Bắt buộc",
+        "optional": "Tùy chọn",
+        "conditional": "Có điều kiện",
+        "alternative": "Chọn 1"
       }
     },
     "agencies": {
@@ -149,7 +222,32 @@
       "eyebrow": "Cơ quan gần đây"
     },
     "savedBadge": "Tiến trình đã lưu",
-    "savedHeroDescription": "Chúng tôi hiển thị tình trạng chuẩn bị và việc cần làm tiếp theo dựa trên kết quả OCR của {count} tài liệu đã lưu."
+    "savedHeroDescription": "Chúng tôi hiển thị tình trạng chuẩn bị và việc cần làm tiếp theo dựa trên kết quả OCR của {count} tài liệu đã lưu.",
+    "quota": {
+      "sectionAriaLabel": "Số suất còn lại theo từng loại visa",
+      "eyebrow": "Tình trạng chỉ tiêu visa",
+      "remaining": "Số suất còn lại",
+      "people": "người",
+      "unlimited": "Không giới hạn chỉ tiêu",
+      "unavailable": "Chưa công bố số suất còn lại",
+      "allocated": "Tỷ lệ còn lại trong tổng {count} suất",
+      "round": "Thông báo đợt {round}",
+      "asOf": "Tính đến {date}",
+      "dateUnavailable": "Đang xác nhận ngày dữ liệu",
+      "municipalityScope": "Tổng của {count} thành phố/huyện tại Chungbuk",
+      "provinceScope": "Toàn tỉnh Chungcheongbuk-do",
+      "singleScope": "Đơn vị tuyển theo thông báo",
+      "policyScope": "Chính sách chỉ tiêu visa",
+      "notice": "Đây là số liệu theo thông báo và có thể khác số suất còn lại theo thời gian thực.",
+      "supabaseBadge": "Thông báo mới nhất trên Supabase",
+      "previewBadge": "Xem trước dữ liệu đã kiểm duyệt",
+      "cta": "Xem bản gốc thông báo",
+      "previous": "Xem visa trước",
+      "next": "Xem visa tiếp theo",
+      "pagination": "Chọn trang visa",
+      "goTo": "Xem số suất còn lại của {visa}",
+      "position": "{current}/{total}"
+    }
   },
   "Onboarding": {
     "privacyNotice": "Nội dung hướng dẫn ở đây chỉ mang tính tham khảo, việc xác định tư cách cuối cùng cần được xác nhận tại cơ quan xuất nhập cảnh có thẩm quyền.",
@@ -282,23 +380,23 @@
     }
   },
   "Chat": {
-    "title": "비자 상담",
-    "description": "검수된 비자 데이터를 근거로 답하고, 범위 밖 문제는 담당 기관을 안내해 드려요.",
-    "disclaimer": "안내는 참고용입니다. 최종 확인은 관할 기관에 문의해 주세요.",
-    "inputPlaceholder": "비자 요건, 절차, 서류에 대해 물어보세요",
-    "inputAriaLabel": "질문 입력",
-    "send": "보내기",
-    "sending": "답변 작성 중…",
-    "deleteHistory": "대화 삭제",
-    "deleteConfirm": "저장된 대화를 모두 삭제할까요? 되돌릴 수 없습니다.",
-    "deleted": "대화가 삭제되었습니다.",
-    "error": "오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-    "empty": "궁금한 점을 입력하면 상담이 시작됩니다.",
-    "sourcesLabel": "출처",
-    "verifiedAtLabel": "확인일",
-    "contactsLabel": "안내 기관",
-    "unverifiedNotice": "이 안내는 이주노동자 기준으로 확인된 정보입니다. 상황에 따라 다를 수 있으니 기관에 직접 확인해 주세요.",
-    "outOfScopeContacts": "아래 기관에서 도움을 받을 수 있어요.",
+    "title": "Tư vấn thị thực",
+    "description": "Chúng tôi trả lời dựa trên dữ liệu thị thực đã được xác minh và hướng dẫn cơ quan phụ trách đối với các vấn đề ngoài phạm vi.",
+    "disclaimer": "Thông tin chỉ để tham khảo. Vui lòng xác nhận cuối cùng với cơ quan có thẩm quyền.",
+    "inputPlaceholder": "Hãy hỏi về điều kiện, thủ tục hoặc hồ sơ thị thực",
+    "inputAriaLabel": "Nhập câu hỏi",
+    "send": "Gửi",
+    "sending": "Đang soạn câu trả lời…",
+    "deleteHistory": "Xóa cuộc trò chuyện",
+    "deleteConfirm": "Bạn có muốn xóa toàn bộ cuộc trò chuyện đã lưu không? Không thể hoàn tác.",
+    "deleted": "Cuộc trò chuyện đã được xóa.",
+    "error": "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+    "empty": "Hãy nhập điều bạn muốn biết để bắt đầu tư vấn.",
+    "sourcesLabel": "Nguồn",
+    "verifiedAtLabel": "Ngày xác minh",
+    "contactsLabel": "Cơ quan hỗ trợ",
+    "unverifiedNotice": "Thông tin này được xác minh theo tiêu chuẩn dành cho người lao động di cư. Tùy tình huống có thể khác nhau, vì vậy vui lòng xác nhận trực tiếp với cơ quan.",
+    "outOfScopeContacts": "Bạn có thể nhận hỗ trợ từ các cơ quan dưới đây.",
     "open": "Mở tư vấn",
     "close": "Đóng",
     "ocrLauncherHint": "Hỏi về tài liệu bạn đã tải lên",
@@ -573,5 +671,37 @@
       "demoData": "Đây là kết quả mẫu trong chế độ thử nghiệm miễn phí. OpenAI API không được gọi và đây không phải dữ liệu nhận diện thật.",
       "unknown": "Hãy so sánh lại đơn gốc với kết quả nhận diện."
     }
+  },
+  "DocumentsHub": {
+    "eyebrow": "Trợ lý hồ sơ",
+    "title": "Bạn cần làm việc gì với hồ sơ?",
+    "description": "Kiểm tra mục cần điền bằng OCR hoặc quản lý toàn bộ giấy tờ của thị thực đã chọn theo từng bước.",
+    "ocr": {
+      "title": "Kiểm tra mục điền trong đơn xin thị thực",
+      "description": "Phân tích ảnh, PDF hoặc HWPX của đơn để hướng dẫn mục cần điền và cần kiểm tra lại."
+    },
+    "status": {
+      "title": "Tình trạng giấy tờ nộp xin thị thực",
+      "description": "Xem và đánh dấu toàn bộ giấy tờ của thị thực đã chọn theo từng giai đoạn thủ tục."
+    }
+  },
+  "DocumentStatus": {
+    "back": "Quay lại menu hồ sơ",
+    "eyebrow": "Danh sách đầy đủ theo từng bước",
+    "title": "Tình trạng giấy tờ nộp xin thị thực",
+    "description": "Kiểm tra giấy tờ bắt buộc, có điều kiện và tùy chọn theo từng bước nộp hồ sơ.",
+    "requiredProgress": "Tiến độ nộp giấy tờ bắt buộc",
+    "requiredSummary": "{checked}/{total}",
+    "allSummary": "Đã đánh dấu {checked}/{total} giấy tờ",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "Bước chi tiết {current}/{total}",
+    "stageComplete": "Đã đủ giấy tờ bắt buộc",
+    "stageRequiredSummary": "Bắt buộc {checked}/{total}",
+    "checkAriaLabel": "Đánh dấu {document} là đã nộp",
+    "readyTitle": "Đã kiểm tra tất cả giấy tờ bắt buộc",
+    "remainingTitle": "Vẫn còn giấy tờ bắt buộc chưa nộp",
+    "readyDescription": "Khi chuyển bước, vị trí rùa và tiến độ trên trang chính cũng được cập nhật.",
+    "remainingDescription": "Đánh dấu tất cả giấy tờ bắt buộc ở mỗi bước để tiếp tục.",
+    "advance": "Chuyển sang bước đến cơ quan"
   }
 }

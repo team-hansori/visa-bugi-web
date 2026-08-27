@@ -11,6 +11,7 @@ import {
 } from "react";
 import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
+import { useAuthState } from "@/lib/auth/use-auth-state";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { localeNames, routing } from "@/i18n/routing";
 import type { AddressSuggestion } from "@/lib/address/normalize";
@@ -201,6 +202,7 @@ export function OnboardingForm() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const auth = useAuthState();
   const [values, setValues] = useState<FormValues>(EMPTY_VALUES);
   const [stepError, setStepError] = useState("");
   const [state, formAction, isPending] = useActionState<
@@ -287,6 +289,15 @@ export function OnboardingForm() {
     },
     [pathname, router, searchParams, sequence],
   );
+
+  // 회원가입·로그인을 마친 사용자가 step 없이 이 화면에 오면(홈 완료 가드가
+  // 여기로 되돌린 경우 포함) 로그인/선택 화면을 다시 보여주지 않고 첫 스텝으로
+  // 바로 보낸다. 온보딩을 이미 마친 사용자는 홈 가드가 통과시키므로 여기 오지 않는다.
+  useEffect(() => {
+    if (searchParams.get("step") === null && auth.status === "authenticated") {
+      goToStep(0);
+    }
+  }, [searchParams, auth.status, goToStep]);
 
   function update<K extends keyof FormValues>(key: K, value: FormValues[K]) {
     setStepError("");
@@ -428,12 +439,18 @@ export function OnboardingForm() {
     isStepComplete &&
     onboardingSubmissionSchema.safeParse(submissionPayload).success;
 
-  // URL에 step 파라미터가 전혀 없으면(첫 진입) 로그인/비로그인 시작 화면을
-  // 먼저 보여준다. "로그인 없이 시작하기"를 누르면 첫 스텝으로 이동한다.
+  // URL에 step 파라미터가 전혀 없으면(첫 진입) 진입 방식을 고르는 시작 화면을
+  // 보여준다. 단, 이미 인증된 사용자는 위 이펙트가 첫 스텝으로 보내므로
+  // 그 사이에는 로딩만 보여준다(로그인 화면이 잠깐이라도 다시 뜨지 않게).
   const hasStepParam = searchParams.get("step") !== null;
 
   if (!hasStepParam) {
-    return <OnboardingWelcome onContinueWithoutLogin={() => goToStep(0)} />;
+    if (auth.status === "guest") {
+      return <OnboardingWelcome onContinueWithoutLogin={() => goToStep(0)} />;
+    }
+    return (
+      <p className="mx-auto max-w-2xl p-6 text-sm text-[#6c7873]">불러오는 중...</p>
+    );
   }
 
   return (

@@ -53,6 +53,15 @@
       }
     }
   },
+  "Map": {
+    "title": "Cơ quan gần đây", "description": "Vị trí hiện tại sẽ bị xóa khi bạn rời màn hình và không được lưu. Bạn vẫn có thể chọn khu vực thủ công nếu từ chối quyền vị trí.",
+    "location": { "initial": "Hãy cho phép quyền vị trí hoặc chọn khu vực thủ công.", "checking": "Đang xác định vị trí hiện tại…", "nearby": "Đang hiển thị các cơ quan gần vị trí hiện tại.", "failed": "Không thể xác định vị trí. Vui lòng chọn khu vực bên dưới.", "unsupported": "Trình duyệt này không hỗ trợ định vị. Vui lòng chọn khu vực thủ công.", "invalidRegion": "Khu vực không được hỗ trợ. Vui lòng chọn lại từ danh sách.", "selectedRegion": "Đang hiển thị các cơ quan gần {region}.", "searchLabel": "Thiết lập vị trí tìm kiếm", "selectRegion": "Chọn khu vực thủ công", "useCurrent": "Dùng vị trí hiện tại", "checkingButton": "Đang kiểm tra" },
+    "regions": { "cheongju": "Thành phố Cheongju", "chungju": "Thành phố Chungju", "jincheon": "Huyện Jincheon", "eumseong": "Huyện Eumseong" },
+    "filters": { "label": "Lọc loại cơ quan", "all": "Tất cả", "communityCenter": "Trung tâm hành chính", "administrativeAgency": "Cơ quan hành chính", "universityDeptOffice": "Văn phòng khoa đại học", "foreignSupportCenter": "Trung tâm hỗ trợ người nước ngoài", "other": "Khác" },
+    "loading": "Đang tải thông tin cơ quan…", "errors": { "notConfigured": "Chưa hoàn tất cài đặt thông tin cơ quan.", "loadFailed": "Không thể tải thông tin cơ quan. Vui lòng thử lại sau." },
+    "empty": "Không tìm thấy cơ quan phù hợp với khu vực và loại đã chọn. Hãy thử khu vực khác hoặc chọn “Tất cả”.", "agencyListLabel": "Danh sách cơ quan trên bản đồ", "mapLabel": "Bản đồ cơ quan", "directions": "Chỉ đường",
+    "details": { "address": "Địa chỉ", "phone": "Điện thoại", "hours": "Giờ hoạt động", "addressUnavailable": "Chưa có địa chỉ", "phoneUnavailable": "Chưa có số điện thoại", "hoursUnavailable": "Chưa có giờ hoạt động", "call": "Gọi điện" }
+  },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
     "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",

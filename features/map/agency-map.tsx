@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icon";
 import { createClient } from "@/lib/supabase/client";
 import { KakaoMap, type KakaoMapMarker } from "@/features/map/kakao-map";
@@ -10,20 +11,20 @@ import { fetchNearbyAgencies, type Agency, type AgencyType } from "@/features/ma
 const NEARBY_LIMIT = 3;
 
 const regions = [
-  { id: "cheongju", label: "청주시" },
-  { id: "chungju", label: "충주시" },
-  { id: "jincheon", label: "진천군" },
-  { id: "eumseong", label: "음성군" },
-] as const satisfies readonly { id: RegionId; label: string }[];
+  { id: "cheongju", translationKey: "cheongju" },
+  { id: "chungju", translationKey: "chungju" },
+  { id: "jincheon", translationKey: "jincheon" },
+  { id: "eumseong", translationKey: "eumseong" },
+] as const satisfies readonly { id: RegionId; translationKey: string }[];
 
 const typeFilters = [
-  { id: "all", label: "전체" },
-  { id: "COMMUNITY_CENTER", label: "주민센터" },
-  { id: "ADMINISTRATIVE_AGENCY", label: "행정기관" },
-  { id: "UNIVERSITY_DEPT_OFFICE", label: "대학 과사무실" },
-  { id: "FOREIGN_SUPPORT_CENTER", label: "외국인지원기관" },
-  { id: "OTHER", label: "기타" },
-] as const satisfies readonly { id: "all" | AgencyType; label: string }[];
+  { id: "all", translationKey: "all" },
+  { id: "COMMUNITY_CENTER", translationKey: "communityCenter" },
+  { id: "ADMINISTRATIVE_AGENCY", translationKey: "administrativeAgency" },
+  { id: "UNIVERSITY_DEPT_OFFICE", translationKey: "universityDeptOffice" },
+  { id: "FOREIGN_SUPPORT_CENTER", translationKey: "foreignSupportCenter" },
+  { id: "OTHER", translationKey: "other" },
+] as const satisfies readonly { id: "all" | AgencyType; translationKey: string }[];
 
 type TypeFilter = (typeof typeFilters)[number]["id"];
 
@@ -52,6 +53,7 @@ function AgencyDetails({
   loadError: string | null;
   mobile?: boolean;
 }) {
+  const t = useTranslations("Map");
   if (loading || loadError) {
     // The outer loading/error banners already communicate this state; avoid
     // rendering a second, contradictory "no agencies" message underneath.
@@ -86,23 +88,23 @@ function AgencyDetails({
           <Icon name="map-pin" className="size-5" />
         </span>
       </div>
-      <dl className={`mt-4 space-y-2.5 text-sm ${mobile ? "hidden sm:block" : ""}`}>
+      <dl className="mt-4 space-y-2.5 text-sm">
         <div className="flex gap-3">
-          <dt className="w-14 shrink-0 font-bold text-[#77827d]">주소</dt>
+          <dt className="w-14 shrink-0 font-bold text-[#77827d]">{t("details.address")}</dt>
           <dd className="font-semibold text-[#475a52]">
-            {displayOrFallback(agency.roadAddress, "주소 확인 안됨")}
+            {displayOrFallback(agency.roadAddress, t("details.addressUnavailable"))}
           </dd>
         </div>
         <div className="flex gap-3">
-          <dt className="w-14 shrink-0 font-bold text-[#77827d]">전화</dt>
+          <dt className="w-14 shrink-0 font-bold text-[#77827d]">{t("details.phone")}</dt>
           <dd className="font-semibold text-[#475a52]">
-            {displayOrFallback(agency.phone, "전화번호 확인 안됨")}
+            {displayOrFallback(agency.phone, t("details.phoneUnavailable"))}
           </dd>
         </div>
         <div className="flex gap-3">
-          <dt className="w-14 shrink-0 font-bold text-[#77827d]">운영</dt>
+          <dt className="w-14 shrink-0 font-bold text-[#77827d]">{t("details.hours")}</dt>
           <dd className="font-semibold text-[#475a52]">
-            {displayOrFallback(agency.operatingHours, "운영시간 확인 안됨")}
+            {displayOrFallback(agency.operatingHours, t("details.hoursUnavailable"))}
           </dd>
         </div>
       </dl>
@@ -113,12 +115,12 @@ function AgencyDetails({
             className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[#2d6d5d] px-3 text-xs font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173f36]"
           >
             <Icon name="phone" className="size-4" />
-            전화하기
+            {t("details.call")}
           </a>
         ) : (
           <span className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[#c9d3ce] px-3 text-xs font-extrabold text-white">
             <Icon name="phone" className="size-4" />
-            전화번호 확인 안됨
+            {t("details.phoneUnavailable")}
           </span>
         )}
         <a
@@ -128,7 +130,7 @@ function AgencyDetails({
           className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[#2d6d5d] px-3 text-xs font-extrabold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173f36]"
         >
           <Icon name="navigation" className="size-4" />
-          길찾기
+          {t("directions")}
         </a>
       </div>
     </div>
@@ -136,6 +138,7 @@ function AgencyDetails({
 }
 
 export function AgencyMap() {
+  const t = useTranslations("Map");
   const supabase = useMemo(() => {
     if (
       !process.env.NEXT_PUBLIC_SUPABASE_URL ||
@@ -148,9 +151,7 @@ export function AgencyMap() {
   const [selectedRegion, setSelectedRegion] = useState<RegionId>("cheongju");
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [userPosition, setUserPosition] = useState<LatLng | null>(null);
-  const [locationStatus, setLocationStatus] = useState(
-    "위치 권한을 허용하거나 지역을 직접 선택하세요.",
-  );
+  const [locationStatus, setLocationStatus] = useState(t("location.initial"));
   const [locating, setLocating] = useState(false);
   const locationRequestId = useRef(0);
 
@@ -175,7 +176,7 @@ export function AgencyMap() {
 
       if (!supabase) {
         if (cancelled) return;
-        setLoadError("기관 정보 설정이 완료되지 않았습니다.");
+        setLoadError(t("errors.notConfigured"));
         setAgencies([]);
         setSelectedId(null);
         setLoading(false);
@@ -198,7 +199,7 @@ export function AgencyMap() {
         setSelectedId(result[0]?.id ?? null);
       } catch {
         if (cancelled) return;
-        setLoadError("기관 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+        setLoadError(t("errors.loadFailed"));
         setAgencies([]);
         setSelectedId(null);
       } finally {
@@ -233,19 +234,19 @@ export function AgencyMap() {
 
   function requestLocation() {
     if (!navigator.geolocation) {
-      setLocationStatus("이 브라우저에서는 위치 기능을 사용할 수 없습니다. 지역을 직접 선택해 주세요.");
+      setLocationStatus(t("location.unsupported"));
       return;
     }
     const requestId = locationRequestId.current + 1;
     locationRequestId.current = requestId;
     setLocating(true);
-    setLocationStatus("현재 위치를 확인하고 있어요…");
+    setLocationStatus(t("location.checking"));
     navigator.geolocation.getCurrentPosition(
       (position) => {
         if (locationRequestId.current !== requestId) return;
         setLocating(false);
         setUserPosition({ lat: position.coords.latitude, lng: position.coords.longitude });
-        setLocationStatus("현재 위치 기준으로 가까운 기관을 보여드려요.");
+        setLocationStatus(t("location.nearby"));
       },
       () => {
         if (locationRequestId.current !== requestId) return;
@@ -254,7 +255,7 @@ export function AgencyMap() {
         // querying against stale coordinates while the message tells the
         // user to pick a region manually.
         setUserPosition(null);
-        setLocationStatus("위치를 확인하지 못했습니다. 아래에서 지역을 직접 선택해 주세요.");
+        setLocationStatus(t("location.failed"));
       },
       { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 },
     );
@@ -263,29 +264,28 @@ export function AgencyMap() {
   function selectRegion(value: string) {
     const region = regions.find((item) => item.id === value);
     if (!region) {
-      setLocationStatus("지원하지 않는 지역입니다. 목록에서 지역을 다시 선택해 주세요.");
+      setLocationStatus(t("location.invalidRegion"));
       return;
     }
     locationRequestId.current += 1;
     setLocating(false);
     setUserPosition(null);
     setSelectedRegion(region.id);
-    setLocationStatus(`선택 지역: ${region.label} 기준으로 가까운 기관을 보여드려요.`);
+    setLocationStatus(t("location.selectedRegion", { region: t(`regions.${region.translationKey}`) }));
   }
 
   return (
     <div className="space-y-5">
       <header>
-        <h1 className="text-3xl font-black tracking-[-0.05em] sm:text-4xl">주변 기관</h1>
+        <h1 className="text-3xl font-black tracking-[-0.05em] sm:text-4xl">{t("title")}</h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6d7974] sm:text-base">
-          현재 위치는 화면을 벗어나면 폐기하며 저장하지 않습니다. 위치를 거부해도 지역을 직접
-          선택할 수 있습니다.
+          {t("description")}
         </p>
       </header>
 
       <section
         className="grid gap-3 rounded-[24px] border border-[#dce5e0] bg-white p-4 sm:grid-cols-[auto_minmax(180px,280px)_1fr] sm:items-center sm:p-5"
-        aria-label="검색 위치 설정"
+        aria-label={t("location.searchLabel")}
       >
         <button
           type="button"
@@ -294,10 +294,10 @@ export function AgencyMap() {
           className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#2d6d5d] px-4 text-sm font-extrabold text-white disabled:bg-[#849d93] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] sm:w-fit"
         >
           <Icon name="navigation" className="size-4" />
-          {locating ? "확인 중" : "현재 위치 사용"}
+          {locating ? t("location.checkingButton") : t("location.useCurrent")}
         </button>
         <label className="sr-only" htmlFor="region">
-          지역 직접 선택
+          {t("location.selectRegion")}
         </label>
         <select
           id="region"
@@ -307,7 +307,7 @@ export function AgencyMap() {
         >
           {regions.map((region) => (
             <option key={region.id} value={region.id}>
-              {region.label}
+          {t(`regions.${region.translationKey}`)}
             </option>
           ))}
         </select>
@@ -316,7 +316,7 @@ export function AgencyMap() {
         </p>
       </section>
 
-      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="기관 유형 필터">
+      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label={t("filters.label")}>
         {typeFilters.map((item) => (
           <button
             key={item.id}
@@ -329,7 +329,7 @@ export function AgencyMap() {
                 : "border border-[#dce4df] bg-white text-[#5e6d67]"
             }`}
           >
-            {item.label}
+            {t(`filters.${item.translationKey}`)}
           </button>
         ))}
       </div>
@@ -340,7 +340,7 @@ export function AgencyMap() {
           aria-live="polite"
           className="rounded-xl bg-[#f4f6f4] px-4 py-3 text-sm font-bold text-[#5e6d67]"
         >
-          기관 정보를 불러오는 중입니다…
+          {t("loading")}
         </p>
       )}
 
@@ -352,11 +352,11 @@ export function AgencyMap() {
 
       {!loading && !loadError && agencies.length === 0 && (
         <p className="rounded-xl bg-[#f4f6f4] px-4 py-3 text-sm font-bold text-[#5e6d67]">
-          이 지역·유형에 해당하는 기관을 찾지 못했습니다. 다른 지역이나 &quot;전체&quot;를 선택해 보세요.
+          {t("empty")}
         </p>
       )}
 
-      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="지도 위 기관 목록">
+      <div className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label={t("agencyListLabel")}>
         {agencies.map((agency) => (
           <button
             key={agency.id}
@@ -377,7 +377,7 @@ export function AgencyMap() {
       <div className="grid min-h-[560px] gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
         <section
           className="map-grid relative min-h-[68dvh] overflow-hidden rounded-[24px] border border-[#cedbd2] lg:min-h-[560px]"
-          aria-label="기관 지도"
+          aria-label={t("mapLabel")}
         >
           <KakaoMap
             center={near}

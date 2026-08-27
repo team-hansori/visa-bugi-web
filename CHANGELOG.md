@@ -135,6 +135,7 @@
 - 온보딩 스키마 마이그레이션의 RLS 정책 생성을 재실행 가능하게 수정
 - 온보딩 스키마에 authenticated 역할 GRANT 추가
 - 온보딩 뒤로가기를 히스토리 대신 stepIndex 기준으로 결정론적으로 처리 + 상단 진행바 UI
+- Remove chatbot icon container styling
 
 ### 💼 Other
 
@@ -196,6 +197,7 @@
 - 계획서에 익명 세션 보장 태스크 반영, 스펙 문구 정밀화
 - 온보딩 진입 화면 개편 + 앱 셸 분리 설계 스펙 추가
 - 온보딩 진입 화면 개편 + 앱 셸 분리 구현 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

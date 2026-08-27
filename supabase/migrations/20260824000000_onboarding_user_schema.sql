@@ -55,6 +55,14 @@ create index if not exists user_visa_profile_target_visa_code_idx
 create index if not exists user_visa_profile_visa_details_idx
   on public.user_visa_profile using gin (visa_details jsonb_path_ops);
 
+-- SQL Editor로 직접 만든 테이블은 Table Editor로 만들 때와 달리
+-- authenticated 역할에 기본 권한이 자동으로 부여되지 않는다. GRANT가
+-- 없으면 RLS 정책과 무관하게 "permission denied for table"로 막힌다
+-- (익명 로그인 사용자도 authenticated 역할이다).
+grant usage on schema public to authenticated;
+grant select, insert, update, delete on public.profiles to authenticated;
+grant select, insert, update, delete on public.user_visa_profile to authenticated;
+
 -- RLS: 본인 행만 읽기·쓰기 가능. Supabase RLS는 default-deny다.
 -- 익명 로그인 사용자도 auth.users에 실제 행을 가지므로 이 정책이 그대로 적용된다.
 alter table public.profiles enable row level security;

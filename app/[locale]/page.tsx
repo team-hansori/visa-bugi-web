@@ -1,5 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Icon } from "@/components/ui/icon";
+import { getVisaQuotaOverview } from "@/features/home/quota-data";
+import { VisaQuotaCarousel } from "@/features/home/visa-quota-carousel";
 import { getSavedDocumentProgress } from "@/features/ocr/saved-progress";
 import { Link } from "@/i18n/navigation";
 
@@ -45,7 +47,10 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Home");
-  const savedProgress = await getSavedDocumentProgress();
+  const [savedProgress, quotaOverview] = await Promise.all([
+    getSavedDocumentProgress(),
+    getVisaQuotaOverview(),
+  ]);
   const progressPercentage = savedProgress?.percentage ?? 68;
   const selectedVisa = savedProgress
     ? savedProgress.visaCodes.length
@@ -89,25 +94,7 @@ export default async function Home({
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      <section className="flex flex-col gap-5 rounded-[28px] bg-[#173f36] px-5 py-7 text-white shadow-[0_18px_50px_rgba(23,63,54,0.18)] sm:px-8 sm:py-9 lg:flex-row lg:items-end lg:justify-between lg:px-10">
-        <div className="max-w-2xl">
-          <span className="inline-flex min-h-8 items-center rounded-full bg-white/12 px-3 text-xs font-bold text-[#d9eee5]">{savedProgress ? t("savedBadge") : t("demoBadge")}</span>
-          <h1 className="mt-4 text-[clamp(1.75rem,7vw,3.25rem)] font-black leading-[1.12] tracking-[-0.055em]">
-            {t("heroTitle")}
-          </h1>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-[#d1dfda] sm:text-base sm:leading-7">
-            {savedProgress
-              ? t("savedHeroDescription", {
-                  count: savedProgress.totalDocuments,
-                })
-              : t("heroDescription")}
-          </p>
-        </div>
-        <Link href="/onboarding" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#ffca68] px-5 text-sm font-extrabold text-[#173f36] shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-fit">
-          {t("heroCta")}
-          <Icon name="arrow-right" className="size-4" />
-        </Link>
-      </section>
+      <VisaQuotaCarousel items={quotaOverview.items} source={quotaOverview.source} />
 
       <section className="grid gap-5 xl:grid-cols-12" aria-label={t("progress.sectionAriaLabel")}>
         <article className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 shadow-[0_10px_32px_rgba(52,76,65,0.06)] sm:p-7 xl:col-span-4">

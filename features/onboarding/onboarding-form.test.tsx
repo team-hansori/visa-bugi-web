@@ -75,7 +75,9 @@ describe("OnboardingForm", () => {
   it("진행률을 표시한다", () => {
     searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
-    expect(screen.getByText("1 / 8")).toBeInTheDocument();
+    const progressBar = screen.getByRole("progressbar");
+    expect(progressBar).toHaveAttribute("aria-valuenow", "1");
+    expect(progressBar).toHaveAttribute("aria-valuemax", "8");
   });
 
   it("URL의 step 파라미터에 해당하는 스텝을 보여준다", () => {
@@ -113,10 +115,28 @@ describe("OnboardingForm", () => {
     );
   });
 
-  it("첫 스텝에서는 이전 버튼이 비활성화된다", () => {
+  it("첫 스텝에서 뒤로가기를 누르면 웰컴 화면으로 돌아간다 (브라우저 히스토리에 의존하지 않는다)", async () => {
+    const user = userEvent.setup();
     searchParams = new URLSearchParams("step=locale");
     render(<OnboardingForm />);
-    expect(screen.getByRole("button", { name: /이전/ })).toBeDisabled();
+
+    await user.click(screen.getByRole("button", { name: "이전" }));
+
+    expect(push).toHaveBeenCalledWith("/onboarding");
+  });
+
+  it("중간 스텝에서 뒤로가기를 누르면 이전 스텝으로 이동한다", async () => {
+    const user = userEvent.setup();
+    searchParams = new URLSearchParams("step=gender");
+    render(<OnboardingForm />);
+
+    await user.click(screen.getByRole("button", { name: "이전" }));
+
+    await waitFor(() =>
+      expect(push).toHaveBeenCalledWith(
+        expect.stringContaining("step=nationality"),
+      ),
+    );
   });
 
   it("답변을 sessionStorage에 보존한다", async () => {

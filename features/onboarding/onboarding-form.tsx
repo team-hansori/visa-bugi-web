@@ -399,6 +399,19 @@ export function OnboardingForm() {
     goToStep(stepIndex + 1);
   }
 
+  /**
+   * 브라우저 히스토리(router.back())에 의존하지 않는다 — 홈 게이트
+   * 리다이렉트가 끼어있으면 히스토리 스택이 예상과 달라져 엉뚱한 곳으로
+   * 돌아가는 문제가 있었다. stepIndex 기준으로 목적지를 직접 결정한다.
+   */
+  function handleBack() {
+    if (stepIndex === 0) {
+      router.push(pathname);
+      return;
+    }
+    goToStep(stepIndex - 1);
+  }
+
   const targetVisaOptions = useMemo(() => {
     const recommended = values.currentVisaCode
       ? recommendTargetVisas(
@@ -425,29 +438,32 @@ export function OnboardingForm() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <section
-        className="flex min-h-[480px] flex-col rounded-[28px] border border-[#e0e7e2] bg-white p-5 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-8 lg:p-10"
-        aria-labelledby="question-title"
-      >
-        <div>
-          <div className="flex items-center justify-between gap-4 text-xs font-extrabold text-[#6e7a75]">
-            <span>
-              {stepIndex + 1} / {totalSteps}
-            </span>
-            <span>{Math.round(((stepIndex + 1) / totalSteps) * 100)}%</span>
-          </div>
+      <div className="mb-8 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={handleBack}
+          aria-label={t("previous")}
+          className="grid size-9 shrink-0 place-items-center rounded-xl text-[#3a4a44] hover:bg-[#f2f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+        >
+          <Icon name="chevron-left" className="size-5" aria-hidden="true" />
+        </button>
+        <div
+          className="h-3 flex-1 overflow-hidden rounded-full bg-[#e8edea]"
+          role="progressbar"
+          aria-valuenow={stepIndex + 1}
+          aria-valuemin={1}
+          aria-valuemax={totalSteps}
+          aria-label={`${stepIndex + 1} / ${totalSteps}`}
+        >
           <div
-            className="mt-2 h-2 overflow-hidden rounded-full bg-[#e8edea]"
-            aria-hidden="true"
-          >
-            <div
-              className="h-full rounded-full bg-[#2d6d5d] transition-[width]"
-              style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
-            />
-          </div>
+            className="h-full rounded-full bg-[#2d6d5d] transition-[width]"
+            style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
+          />
         </div>
+      </div>
 
-        <div className="mt-8">
+      <section aria-labelledby="question-title" className="flex flex-col">
+        <div>
           <p className="text-xs font-extrabold text-[#2d6d5d]">
             {t("questionLabel", { index: stepIndex + 1 })}
           </p>
@@ -629,16 +645,6 @@ export function OnboardingForm() {
         ) : null}
 
         <div className="mt-auto flex gap-3 pt-8">
-          <button
-            type="button"
-            onClick={() => goToStep(stepIndex - 1)}
-            disabled={stepIndex === 0}
-            className="inline-flex min-h-12 items-center justify-center gap-1 rounded-2xl border border-[#dce3df] px-4 text-sm font-extrabold text-[#52615b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            <Icon name="chevron-left" className="size-4" aria-hidden="true" />
-            {t("previous")}
-          </button>
-
           {isLastStep ? (
             <form action={formAction} className="flex-1">
               <input

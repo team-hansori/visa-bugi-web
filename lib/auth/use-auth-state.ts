@@ -1,13 +1,56 @@
 "use client";
 
-export type AuthState = { status: "loading" } | { status: "guest" } | { status: "authenticated"; userId: string };
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+
+export type AuthState =
+  | { status: "loading" }
+  | { status: "guest" }
+  | { status: "authenticated"; userId: string };
+
+function hasSupabaseEnv(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  );
+}
+
+function toState(
+  user: { id: string; is_anonymous?: boolean } | null | undefined,
+): AuthState {
+  if (user && user.is_anonymous !== true) {
+    return { status: "authenticated", userId: user.id };
+  }
+  return { status: "guest" };
+}
 
 /**
- * Google 로그인이 아직 없어 항상 게스트로 고정된 mock 구현.
- * 실제 로그인이 붙으면(https://github.com/team-hansori/visa-bugi-web/issues/10)
- * 이 함수 본문만 supabase.auth.getSession()/onAuthStateChange로 교체한다.
- * 반환 타입(AuthState)과 훅 시그니처는 유지해 호출부를 건드리지 않는다.
+ * 실제 Supabase 세션을 반영한다. 비익명 사용자만 authenticated,
+ * 익명 세션·세션 없음·env 미설정은 guest로 본다.
  */
 export function useAuthState(): AuthState {
-  return { status: "guest" };
+  const [state, setState] = useState<AuthState>(
+    hasSupabaseEnv() ? { status: "loading" } : { status: "guest" },
+  );
+
+  useEffect(() => {
+    if (!hasSupabaseEnv()) return;
+    const supabase = createClient();
+    let active = true;
+
+    supabase.auth.getUser().then(({ data }) => {
+      if (active) setState(toState(data.user));
+    });
+
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (active) setState(toState(session?.user ?? null));
+    });
+
+    return () => {
+      active = false;
+      data.subscription.unsubscribe();
+    };
+  }, []);
+
+  return state;
 }

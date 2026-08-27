@@ -101,7 +101,7 @@ describe("POST /api/ocr/results", () => {
         expect.objectContaining({
           fieldIdentifier: "applicant_signature",
           required: true,
-          status: "manual",
+          status: "complete",
         }),
       ]),
     });

@@ -624,6 +624,7 @@
       "required": "Bắt buộc",
       "optional": "Không bắt buộc",
       "empty": "Không nhận diện được nội dung",
+      "signatureDetected": "Đã nhận diện chữ ký",
       "example": "Ví dụ: {value}",
       "lowConfidence": "Độ tin cậy {percent}% · Hãy đối chiếu với bản gốc."
     },
@@ -642,6 +643,7 @@
       "checkbox": "Đọc nội dung và đánh dấu vào ô phù hợp.",
       "address": "Điền địa chỉ đang ở, gồm mã bưu chính và địa chỉ chi tiết.",
       "identifier": "Kiểm tra từng ký tự để khớp với số trên giấy tờ chính thức hoặc giấy tờ doanh nghiệp.",
+      "signature": "Ô chữ ký đã được đánh dấu là nhận diện hoàn tất.",
       "manual": "OCR không điền thay chữ ký, đồng ý hoặc phần dành cho cơ quan. Hãy tự điền trên bản gốc."
     },
     "status": {

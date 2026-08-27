@@ -677,11 +677,17 @@ function FieldReviewCard({ field }: { field: ReviewedFormField }) {
       </div>
 
       <div className="mt-4 rounded-xl bg-white px-3.5 py-3 text-sm font-bold text-[#3f514a] ring-1 ring-[#e3e9e6]">
-        {field.rawValue || <span className="font-medium text-[#929d98]">{t("field.empty")}</span>}
+        {field.kind === "signature" && field.status === "complete"
+          ? t("field.signatureDetected")
+          : field.rawValue || <span className="font-medium text-[#929d98]">{t("field.empty")}</span>}
       </div>
 
       <p className="mt-3 text-sm leading-6 text-[#627069]">
-        {field.manualOnly ? t("guide.manual") : kindGuide(field.kind, t)}
+        {field.kind === "signature"
+          ? t("guide.signature")
+          : field.manualOnly
+            ? t("guide.manual")
+            : kindGuide(field.kind, t)}
         {field.example ? ` ${t("field.example", { value: field.example })}` : ""}
       </p>
       {field.status === "review" ? <p className="mt-2 text-xs font-extrabold text-[#895b13]">{t("field.lowConfidence", { percent: Math.round(field.confidence * 100) })}</p> : null}
@@ -711,7 +717,7 @@ function kindGuide(kind: FormFieldKind, t: Translator) {
     checkbox: t("guide.checkbox"),
     address: t("guide.address"),
     identifier: t("guide.identifier"),
-    signature: t("guide.manual"),
+    signature: t("guide.signature"),
   };
   return guides[kind];
 }

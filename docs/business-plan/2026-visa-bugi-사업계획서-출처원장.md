@@ -14,6 +14,7 @@
 | C-01 | 6개 언어 유학생 정보와 AI 번역 챗봇 제공 | 충청북도 | Study in Chungbuk 외국인 유학생 플랫폼 | https://www.studyinchungbuk.or.kr/ | 상시 | 2026-08-28 | 실명 경쟁·보완 서비스 비교 근거 |
 | C-02 | 체류 관련 전자민원·신청·조회 | 법무부 출입국·외국인정책본부 | 하이코리아 | https://www.hikorea.go.kr/ | 상시 | 2026-08-28 | 실명 경쟁·보완 서비스 비교 근거 |
 | C-03 | 범정부 민원 신청과 공식 절차 안내 | 정부24 | 외국인 체류지 변경 신고 민원 안내 | https://m.gov.kr/mw/AA020InfoCappView.do?CappBizCD=12700000026&HighCtgCD=A01010 | 상시 | 2026-08-28 | 실명 경쟁·보완 서비스 비교 근거 |
+| C-04 | 비자 내비게이터, 체류자격별 공통 제출서류 안내, 전자비자·비자발급인정서 신청과 결과 조회 | 법무부 | 대한민국 비자포털 | https://www.visa.go.kr/openPage.do?MENU_ID=1020502 | 상시 | 2026-08-28 | 공식 신청 채널과 비자부기의 신청 전 준비 역할 비교 근거 |
 | R-01 | 검수된 공통 데이터 구조 13개 테이블·AND/OR 논리 트리 | 비자부기 팀 | visa-data 데이터 구조 문서 | https://github.com/team-hansori/visa-data | 2026-08-26 | 2026-08-28 | 저장소 검증 스냅샷 |
 | R-02 | 온보딩·홈·OCR·캘린더·지도·채팅 구현 상태 | 비자부기 팀 | visa-bugi-web 코드 | https://github.com/team-hansori/visa-bugi-web | 2026-08-28 | 2026-08-28 | 코드 대조 완료 |
 | T-01 | GPT-5.4 Mini 표준 요금은 입력 100만 토큰당 0.75달러, 캐시 입력 0.075달러, 출력 4.50달러이며, 기준 가정(입력 6,000·출력 1,000토큰)에서 OCR 1건 약 0.009달러·1,000건 약 9달러로 추산 | OpenAI | GPT-5.4 Mini Model | https://developers.openai.com/api/docs/models/gpt-5.4-mini | 상시 | 2026-08-28 | 공식 단가 확인 완료·문서당 비용은 실측이 아닌 시험 가정 |

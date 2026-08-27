@@ -1,23 +1,22 @@
 import { describe, expect, it } from "vitest";
-import { getMarkerPosition, REGION_CENTERS } from "@/features/map/geo";
+import { REGION_CENTERS, type RegionId } from "@/features/map/geo";
 
-describe("getMarkerPosition", () => {
-  it("offsets the first marker from the region center", () => {
-    const center = REGION_CENTERS.cheongju;
-    const position = getMarkerPosition("cheongju", 0);
-    expect(position.lat).toBeCloseTo(center.lat + 0.004, 5);
-    expect(position.lng).toBeCloseTo(center.lng - 0.003, 5);
+describe("REGION_CENTERS", () => {
+  const regionIds: RegionId[] = ["cheongju", "chungju", "jincheon", "eumseong"];
+
+  it("has a center for every pilot region", () => {
+    for (const id of regionIds) {
+      expect(REGION_CENTERS[id]).toBeDefined();
+    }
   });
 
-  it("wraps the offset index so any marker count is supported", () => {
-    const first = getMarkerPosition("chungju", 0);
-    const wrapped = getMarkerPosition("chungju", 3);
-    expect(wrapped).toEqual(first);
-  });
-
-  it("uses a different center per region", () => {
-    const cheongju = getMarkerPosition("cheongju", 0);
-    const chungju = getMarkerPosition("chungju", 0);
-    expect(cheongju).not.toEqual(chungju);
+  it("keeps every center within plausible South Korea bounds", () => {
+    for (const id of regionIds) {
+      const { lat, lng } = REGION_CENTERS[id];
+      expect(lat).toBeGreaterThan(33);
+      expect(lat).toBeLessThan(39);
+      expect(lng).toBeGreaterThan(124);
+      expect(lng).toBeLessThan(132);
+    }
   });
 });

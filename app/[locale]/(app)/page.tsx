@@ -1,18 +1,33 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Icon } from "@/components/ui/icon";
 import { ChatLauncher } from "@/features/chat/chat-launcher";
-import { getSavedDocumentProgress } from "@/features/ocr/saved-progress";
+import { TargetVisaSelect } from "@/features/home/target-visa-select";
+import { getTargetVisaCode } from "@/features/onboarding/get-target-visa";
+import { getSavedDocumentProgress, type SavedDocumentProgress } from "@/features/ocr/saved-progress";
 import { Link, redirect } from "@/i18n/navigation";
 import { hasCompletedOnboarding } from "@/lib/onboarding/completion";
 
-const stages = [
-  { id: "requirementCheck", state: "done" },
-  { id: "documentPrep", state: "current" },
-  { id: "agencyVisit", state: "upcoming" },
-  { id: "resultCheck", state: "upcoming" },
-] as const;
-
 const sampleTasks = ["passport", "schedule", "agency"] as const;
+
+/**
+ * "서류 준비" 단계만 저장된 OCR 진행률(user_document_reviews)로 실데이터화한다.
+ * "기관 방문"·"결과 확인"은 아직 이를 추적할 마스터 데이터 개념이 없어
+ * upcoming으로 고정해 둔다(별도 논의 필요 — Task B 계획 참고).
+ */
+function buildStages(savedProgress: SavedDocumentProgress | null) {
+  const documentPrepDone = Boolean(
+    savedProgress &&
+      savedProgress.totalDocuments > 0 &&
+      savedProgress.readyDocuments === savedProgress.totalDocuments,
+  );
+
+  return [
+    { id: "requirementCheck", state: "done" },
+    { id: "documentPrep", state: documentPrepDone ? "done" : "current" },
+    { id: "agencyVisit", state: "upcoming" },
+    { id: "resultCheck", state: "upcoming" },
+  ] as const;
+}
 
 function ProgressRing({
   ariaLabel,
@@ -52,13 +67,12 @@ export default async function Home({
   }
 
   const t = await getTranslations("Home");
-  const savedProgress = await getSavedDocumentProgress();
+  const [savedProgress, targetVisaCode] = await Promise.all([
+    getSavedDocumentProgress(),
+    getTargetVisaCode(),
+  ]);
+  const stages = buildStages(savedProgress);
   const progressPercentage = savedProgress?.percentage ?? 68;
-  const selectedVisa = savedProgress
-    ? savedProgress.visaCodes.length
-      ? savedProgress.visaCodes.join(", ")
-      : t("progress.commonVisaValue")
-    : t("progress.selectedVisaValue");
   const baseDate = savedProgress
     ? new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(
         new Date(savedProgress.lastUpdatedAt),
@@ -110,10 +124,6 @@ export default async function Home({
               : t("heroDescription")}
           </p>
         </div>
-        <Link href="/onboarding" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#ffca68] px-5 text-sm font-extrabold text-[#173f36] shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-fit">
-          {t("heroCta")}
-          <Icon name="arrow-right" className="size-4" />
-        </Link>
       </section>
 
       <section className="grid gap-5 xl:grid-cols-12" aria-label={t("progress.sectionAriaLabel")}>
@@ -134,7 +144,11 @@ export default async function Home({
             <div className="w-full rounded-2xl bg-[#f5f7f4] p-4">
               <div className="flex items-center justify-between gap-4 text-sm">
                 <span className="font-semibold text-[#64716c]">{t("progress.selectedVisaLabel")}</span>
-                <strong className="text-[#20332c]">{selectedVisa}</strong>
+                {targetVisaCode ? (
+                  <TargetVisaSelect value={targetVisaCode} />
+                ) : (
+                  <strong className="text-[#20332c]">{t("progress.selectedVisaValue")}</strong>
+                )}
               </div>
               <div className="mt-3 flex items-center justify-between gap-4 text-sm">
                 <span className="font-semibold text-[#64716c]">{savedProgress ? t("progress.lastUpdatedLabel") : t("progress.baseDateLabel")}</span>

@@ -1,74 +1,61 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-
-const mocks = vi.hoisted(() => ({
-  createClient: vi.fn(),
-}));
-
-vi.mock("@/lib/supabase/client", () => ({
-  createClient: mocks.createClient,
-}));
-
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   isTargetVisaCode,
   resolveStoredTargetVisaCode,
 } from "@/lib/onboarding/target-visa";
 
-function mockClient({
-  userId = "user-1",
-  targetVisaCode = "F-2-R",
-  queryError = null,
-}: {
-  userId?: string | null;
-  targetVisaCode?: unknown;
-  queryError?: { message: string } | null;
-} = {}) {
-  const maybeSingle = vi.fn().mockResolvedValue({
-    data: targetVisaCode === undefined
-      ? null
-      : { target_visa_code: targetVisaCode },
-    error: queryError,
-  });
-  const eq = vi.fn().mockReturnValue({ maybeSingle });
-  const select = vi.fn().mockReturnValue({ eq });
-  const from = vi.fn().mockReturnValue({ select });
-  mocks.createClient.mockReturnValue({
-    auth: {
-      getUser: vi.fn().mockResolvedValue({ data: { user: userId ? { id: userId } : null } }),
-    },
-    from,
-  });
-  return { from, select, eq };
+function jsonResponse(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), { status });
 }
 
 beforeEach(() => {
   vi.clearAllMocks();
 });
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("resolveStoredTargetVisaCode", () => {
-  it("reads target_visa_code for the authenticated or anonymous user", async () => {
-    const query = mockClient({ targetVisaCode: "E-7-4R" });
+  it("공용 API가 유효한 코드를 주면 그 값을 반환한다", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ targetVisaCode: "E-7-4R" }));
+    vi.stubGlobal("fetch", fetchMock);
 
     await expect(resolveStoredTargetVisaCode()).resolves.toBe("E-7-4R");
-    expect(query.from).toHaveBeenCalledWith("user_visa_profile");
-    expect(query.select).toHaveBeenCalledWith("target_visa_code");
-    expect(query.eq).toHaveBeenCalledWith("user_id", "user-1");
+    expect(String(fetchMock.mock.calls[0][0])).toBe("/api/profile/target-visa");
   });
 
-  it("returns null when no Supabase user session exists", async () => {
-    const query = mockClient({ userId: null });
-
+  it("API가 null을 주면 null", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(jsonResponse({ targetVisaCode: null })),
+    );
     await expect(resolveStoredTargetVisaCode()).resolves.toBeNull();
-    expect(query.from).not.toHaveBeenCalled();
   });
 
-  it("returns null for an empty, invalid, or unreadable profile value", async () => {
-    mockClient({ targetVisaCode: null });
+  it("세션 없음(401)이면 null", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(jsonResponse({ error: {} }, 401)),
+    );
     await expect(resolveStoredTargetVisaCode()).resolves.toBeNull();
+  });
 
-    mockClient({ targetVisaCode: "UNKNOWN" });
+  it("유효하지 않은 코드면 null", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(jsonResponse({ targetVisaCode: "UNKNOWN" })),
+    );
     await expect(resolveStoredTargetVisaCode()).resolves.toBeNull();
+  });
 
-    mockClient({ queryError: { message: "permission denied" } });
+  it("네트워크 예외면 null", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockRejectedValue(new Error("offline")),
+    );
     await expect(resolveStoredTargetVisaCode()).resolves.toBeNull();
   });
 });

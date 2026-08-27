@@ -53,13 +53,54 @@
     }
   },
   "Map": {
-    "title": "附近机构", "description": "离开此页面后当前位置将被丢弃，不会保存。即使拒绝位置权限，也可以手动选择地区。",
-    "location": { "initial": "请允许位置权限，或手动选择地区。", "checking": "正在确认当前位置…", "nearby": "正在显示当前位置附近的机构。", "failed": "无法确认位置。请在下方手动选择地区。", "unsupported": "此浏览器不支持定位功能。请手动选择地区。", "invalidRegion": "不支持的地区。请从列表中重新选择地区。", "selectedRegion": "正在显示{region}附近的机构。", "searchLabel": "设置搜索位置", "selectRegion": "手动选择地区", "useCurrent": "使用当前位置", "checkingButton": "确认中" },
-    "regions": { "cheongju": "清州市", "chungju": "忠州市", "jincheon": "镇川郡", "eumseong": "阴城郡" },
-    "filters": { "label": "机构类型筛选", "all": "全部", "communityCenter": "居民中心", "administrativeAgency": "行政机构", "universityDeptOffice": "大学院系办公室", "foreignSupportCenter": "外国人支援机构", "other": "其他" },
-    "loading": "正在加载机构信息…", "errors": { "notConfigured": "机构信息尚未设置完成。", "loadFailed": "无法加载机构信息。请稍后重试。" },
-    "empty": "找不到符合该地区和类型的机构。请尝试其他地区或选择“全部”。", "agencyListLabel": "地图上的机构列表", "mapLabel": "机构地图", "directions": "路线",
-    "details": { "address": "地址", "phone": "电话", "hours": "营业时间", "addressUnavailable": "暂无地址", "phoneUnavailable": "暂无电话号码", "hoursUnavailable": "暂无营业时间", "call": "拨打电话" }
+    "title": "附近机构",
+    "description": "离开此页面后当前位置将被丢弃，不会保存。即使拒绝位置权限，也可以手动选择地区。",
+    "location": {
+      "initial": "请允许位置权限，或手动选择地区。",
+      "checking": "正在确认当前位置…",
+      "nearby": "正在显示当前位置附近的机构。",
+      "failed": "无法确认位置。请在下方手动选择地区。",
+      "unsupported": "此浏览器不支持定位功能。请手动选择地区。",
+      "invalidRegion": "不支持的地区。请从列表中重新选择地区。",
+      "selectedRegion": "正在显示{region}附近的机构。",
+      "searchLabel": "设置搜索位置",
+      "selectRegion": "手动选择地区",
+      "useCurrent": "使用当前位置",
+      "checkingButton": "确认中"
+    },
+    "regions": {
+      "cheongju": "清州市",
+      "chungju": "忠州市",
+      "jincheon": "镇川郡",
+      "eumseong": "阴城郡"
+    },
+    "filters": {
+      "label": "机构类型筛选",
+      "all": "全部",
+      "communityCenter": "居民中心",
+      "administrativeAgency": "行政机构",
+      "universityDeptOffice": "大学院系办公室",
+      "foreignSupportCenter": "外国人支援机构",
+      "other": "其他"
+    },
+    "loading": "正在加载机构信息…",
+    "errors": {
+      "notConfigured": "机构信息尚未设置完成。",
+      "loadFailed": "无法加载机构信息。请稍后重试。"
+    },
+    "empty": "找不到符合该地区和类型的机构。请尝试其他地区或选择“全部”。",
+    "agencyListLabel": "地图上的机构列表",
+    "mapLabel": "机构地图",
+    "directions": "路线",
+    "details": {
+      "address": "地址",
+      "phone": "电话",
+      "hours": "营业时间",
+      "addressUnavailable": "暂无地址",
+      "phoneUnavailable": "暂无电话号码",
+      "hoursUnavailable": "暂无营业时间",
+      "call": "拨打电话"
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
@@ -87,7 +128,13 @@
       "savedEyebrow": "已保存文件的填写进度",
       "savedTag": "已保存",
       "commonVisaValue": "通用申请表",
-      "lastUpdatedLabel": "最近保存"
+      "lastUpdatedLabel": "最近保存",
+      "onboardingEyebrow": "入门设置中选择的签证",
+      "liveTag": "实时数据",
+      "previewTag": "预览",
+      "dynamicAriaLabel": "签证准备进度 {percent}%",
+      "checklistCaption": "整体准备进度",
+      "changeVisa": "更改关注的签证"
     },
     "journey": {
       "heading": "현재 단계",
@@ -106,10 +153,13 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "签证旅程",
-      "savedStepIndicator": "{total} 份文件中已准备 {ready} 份"
+      "savedStepIndicator": "{total} 份文件中已准备 {ready} 份",
+      "stepIndicatorDynamic": "第 {step} 步 · {stage}",
+      "detailHeading": "材料准备详细阶段",
+      "detailProgress": "第 {current}/{total} 阶段"
     },
     "tasks": {
-      "heading": "서류 준비 체크",
+      "heading": "材料准备清单",
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",
@@ -138,6 +188,29 @@
           "label": "{document}：提交前最终确认",
           "meta": "OCR 结果 · 已准备完成"
         }
+      },
+      "pendingHeading": "未提交的必需材料",
+      "pendingDescription": "随机显示最多 5 份尚未提交的必需材料。",
+      "requiredSummary": "必需材料已提交 {checked}/{total}",
+      "sampleHint": "可在提交材料状态中按阶段查看完整清单",
+      "allRequiredChecked": "所有必需材料均已确认",
+      "noPendingRequired": "没有未提交的必需材料。",
+      "viewAll": "查看全部提交材料",
+      "stageDescription": "{stage} 阶段所需的材料。",
+      "checkedSummary": "已确认 {checked}/{total}",
+      "checkAriaLabel": "将 {document} 标记为已准备",
+      "allChecked": "已确认所有显示的材料",
+      "checkAllHint": "请逐一确认材料",
+      "advance": "进入下一阶段",
+      "advanced": "已进入机构访问阶段",
+      "sourceSupabase": "基于 Supabase 的 document_requirements 显示。",
+      "sourcePreview": "这是连接 Supabase 前可使用的预览清单。",
+      "empty": "目前没有可显示的材料。",
+      "status": {
+        "required": "必需",
+        "optional": "可选",
+        "conditional": "有条件",
+        "alternative": "任选一项"
       }
     },
     "agencies": {
@@ -147,7 +220,32 @@
       "eyebrow": "附近机构"
     },
     "savedBadge": "已保存的进度",
-    "savedHeroDescription": "我们会根据已保存的 {count} 份文件的 OCR 结果，显示准备状态和下一步事项。"
+    "savedHeroDescription": "我们会根据已保存的 {count} 份文件的 OCR 结果，显示准备状态和下一步事项。",
+    "quota": {
+      "sectionAriaLabel": "各签证剩余名额",
+      "eyebrow": "签证名额现状",
+      "remaining": "剩余名额",
+      "people": "人",
+      "unlimited": "无名额限制",
+      "unavailable": "暂无公开剩余名额",
+      "allocated": "总名额 {count} 人中的剩余比例",
+      "round": "第 {round} 次公告",
+      "asOf": "截至 {date}",
+      "dateUnavailable": "正在确认基准日期",
+      "municipalityScope": "忠北 {count} 个市郡合计",
+      "provinceScope": "忠清北道全域",
+      "singleScope": "公告指定招生单位",
+      "policyScope": "签证名额政策",
+      "notice": "这是公告发布的基准数字，可能与实时剩余名额不同。",
+      "supabaseBadge": "Supabase 最新公告",
+      "previewBadge": "已审核数据预览",
+      "cta": "查看公告原文",
+      "previous": "查看上一个签证",
+      "next": "查看下一个签证",
+      "pagination": "选择签证幻灯片",
+      "goTo": "查看 {visa} 剩余名额",
+      "position": "{current}/{total}"
+    }
   },
   "Onboarding": {
     "privacyNotice": "此处提供的内容仅供参考，最终资格判定须在管辖出入境·外国人厅确认。",
@@ -571,5 +669,37 @@
       "demoData": "当前为免费测试模式，显示的是示例结果。未调用 OpenAI API，也不是真实识别内容。",
       "unknown": "请再次比较原申请表和识别结果。"
     }
+  },
+  "DocumentsHub": {
+    "eyebrow": "材料助手",
+    "title": "您需要处理哪类材料？",
+    "description": "可使用 OCR 检查申请表填写项目，或按阶段管理所选签证的全部提交材料。",
+    "ocr": {
+      "title": "检查签证申请表填写项目",
+      "description": "分析申请表照片、PDF 或 HWPX，提示需要填写及重新确认的项目。"
+    },
+    "status": {
+      "title": "签证提交材料状态",
+      "description": "按办理阶段查看并勾选入门设置中所选签证的全部提交材料。"
+    }
+  },
+  "DocumentStatus": {
+    "back": "返回材料菜单",
+    "eyebrow": "按阶段显示完整清单",
+    "title": "签证提交材料状态",
+    "description": "按详细提交阶段确认必需、有条件和可选材料，并勾选已准备的材料。",
+    "requiredProgress": "必需材料提交进度",
+    "requiredSummary": "{checked}/{total} 份",
+    "allSummary": "全部 {total} 份材料中已勾选 {checked} 份",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "详细阶段 {current}/{total}",
+    "stageComplete": "必需材料已完成",
+    "stageRequiredSummary": "必需 {checked}/{total}",
+    "checkAriaLabel": "将 {document} 标记为已提交",
+    "readyTitle": "已确认所有必需提交材料",
+    "remainingTitle": "仍有必需材料尚未提交",
+    "readyDescription": "进入下一阶段后，首页的乌龟位置和准备进度会一起更新。",
+    "remainingDescription": "勾选各阶段全部必需材料后即可进入下一阶段。",
+    "advance": "进入机构访问阶段"
   }
 }

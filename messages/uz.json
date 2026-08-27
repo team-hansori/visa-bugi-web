@@ -53,13 +53,54 @@
     }
   },
   "Map": {
-    "title": "Yaqin atrofdagi muassasalar", "description": "Joriy joylashuv sahifadan chiqilganda o‘chiriladi va saqlanmaydi. Joylashuvga ruxsat bermasangiz ham hududni qo‘lda tanlashingiz mumkin.",
-    "location": { "initial": "Joylashuvga ruxsat bering yoki hududni qo‘lda tanlang.", "checking": "Joriy joylashuv aniqlanmoqda…", "nearby": "Joriy joylashuv yaqinidagi muassasalar ko‘rsatilmoqda.", "failed": "Joylashuvni aniqlab bo‘lmadi. Quyidan hududni qo‘lda tanlang.", "unsupported": "Bu brauzer joylashuv funksiyasini qo‘llab-quvvatlamaydi. Hududni qo‘lda tanlang.", "invalidRegion": "Qo‘llab-quvvatlanmaydigan hudud. Ro‘yxatdan qayta tanlang.", "selectedRegion": "{region} yaqinidagi muassasalar ko‘rsatilmoqda.", "searchLabel": "Qidiruv joylashuvini sozlash", "selectRegion": "Hududni qo‘lda tanlash", "useCurrent": "Joriy joylashuvdan foydalanish", "checkingButton": "Tekshirilmoqda" },
-    "regions": { "cheongju": "Cheongju shahri", "chungju": "Chungju shahri", "jincheon": "Jincheon tumani", "eumseong": "Eumseong tumani" },
-    "filters": { "label": "Muassasa turi filtri", "all": "Barchasi", "communityCenter": "Mahalla markazi", "administrativeAgency": "Ma’muriy idora", "universityDeptOffice": "Universitet bo‘limi", "foreignSupportCenter": "Chet elliklarni qo‘llab-quvvatlash markazi", "other": "Boshqa" },
-    "loading": "Muassasalar ma’lumotlari yuklanmoqda…", "errors": { "notConfigured": "Muassasalar ma’lumotlari sozlanmagan.", "loadFailed": "Muassasalar ma’lumotlarini yuklab bo‘lmadi. Keyinroq qayta urinib ko‘ring." },
-    "empty": "Bu hudud va turga mos muassasa topilmadi. Boshqa hududni yoki “Barchasi”ni tanlang.", "agencyListLabel": "Xaritadagi muassasalar ro‘yxati", "mapLabel": "Muassasalar xaritasi", "directions": "Yo‘nalish",
-    "details": { "address": "Manzil", "phone": "Telefon", "hours": "Ish vaqti", "addressUnavailable": "Manzil mavjud emas", "phoneUnavailable": "Telefon raqami mavjud emas", "hoursUnavailable": "Ish vaqti mavjud emas", "call": "Qo‘ng‘iroq qilish" }
+    "title": "Yaqin atrofdagi muassasalar",
+    "description": "Joriy joylashuv sahifadan chiqilganda o‘chiriladi va saqlanmaydi. Joylashuvga ruxsat bermasangiz ham hududni qo‘lda tanlashingiz mumkin.",
+    "location": {
+      "initial": "Joylashuvga ruxsat bering yoki hududni qo‘lda tanlang.",
+      "checking": "Joriy joylashuv aniqlanmoqda…",
+      "nearby": "Joriy joylashuv yaqinidagi muassasalar ko‘rsatilmoqda.",
+      "failed": "Joylashuvni aniqlab bo‘lmadi. Quyidan hududni qo‘lda tanlang.",
+      "unsupported": "Bu brauzer joylashuv funksiyasini qo‘llab-quvvatlamaydi. Hududni qo‘lda tanlang.",
+      "invalidRegion": "Qo‘llab-quvvatlanmaydigan hudud. Ro‘yxatdan qayta tanlang.",
+      "selectedRegion": "{region} yaqinidagi muassasalar ko‘rsatilmoqda.",
+      "searchLabel": "Qidiruv joylashuvini sozlash",
+      "selectRegion": "Hududni qo‘lda tanlash",
+      "useCurrent": "Joriy joylashuvdan foydalanish",
+      "checkingButton": "Tekshirilmoqda"
+    },
+    "regions": {
+      "cheongju": "Cheongju shahri",
+      "chungju": "Chungju shahri",
+      "jincheon": "Jincheon tumani",
+      "eumseong": "Eumseong tumani"
+    },
+    "filters": {
+      "label": "Muassasa turi filtri",
+      "all": "Barchasi",
+      "communityCenter": "Mahalla markazi",
+      "administrativeAgency": "Ma’muriy idora",
+      "universityDeptOffice": "Universitet bo‘limi",
+      "foreignSupportCenter": "Chet elliklarni qo‘llab-quvvatlash markazi",
+      "other": "Boshqa"
+    },
+    "loading": "Muassasalar ma’lumotlari yuklanmoqda…",
+    "errors": {
+      "notConfigured": "Muassasalar ma’lumotlari sozlanmagan.",
+      "loadFailed": "Muassasalar ma’lumotlarini yuklab bo‘lmadi. Keyinroq qayta urinib ko‘ring."
+    },
+    "empty": "Bu hudud va turga mos muassasa topilmadi. Boshqa hududni yoki “Barchasi”ni tanlang.",
+    "agencyListLabel": "Xaritadagi muassasalar ro‘yxati",
+    "mapLabel": "Muassasalar xaritasi",
+    "directions": "Yo‘nalish",
+    "details": {
+      "address": "Manzil",
+      "phone": "Telefon",
+      "hours": "Ish vaqti",
+      "addressUnavailable": "Manzil mavjud emas",
+      "phoneUnavailable": "Telefon raqami mavjud emas",
+      "hoursUnavailable": "Ish vaqti mavjud emas",
+      "call": "Qo‘ng‘iroq qilish"
+    }
   },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
@@ -87,7 +128,13 @@
       "savedEyebrow": "Saqlangan hujjatlarni to‘ldirish jarayoni",
       "savedTag": "Saqlangan",
       "commonVisaValue": "Umumiy ariza shakli",
-      "lastUpdatedLabel": "Yaqinda saqlandi"
+      "lastUpdatedLabel": "Yaqinda saqlandi",
+      "onboardingEyebrow": "Boshlang‘ich sozlamada tanlangan viza",
+      "liveTag": "Haqiqiy ma’lumot",
+      "previewTag": "Oldindan ko‘rish",
+      "dynamicAriaLabel": "Viza tayyorgarligi {percent} foiz",
+      "checklistCaption": "Umumiy tayyorgarlik",
+      "changeVisa": "Qiziqish vizasini o‘zgartirish"
     },
     "journey": {
       "heading": "현재 단계",
@@ -106,10 +153,13 @@
       "noticeBody": "기준일이 정해지면 캘린더에 직접 추가할 수 있습니다.",
       "viewSchedule": "일정 보기",
       "eyebrow": "Viza jarayoni",
-      "savedStepIndicator": "{total} hujjatdan {ready} tasi tayyor"
+      "savedStepIndicator": "{total} hujjatdan {ready} tasi tayyor",
+      "stepIndicatorDynamic": "{step}-bosqich · {stage}",
+      "detailHeading": "Hujjat tayyorlashning batafsil bosqichlari",
+      "detailProgress": "{current}/{total}-bosqich"
     },
     "tasks": {
-      "heading": "서류 준비 체크",
+      "heading": "Hujjatlar tayyorgarligi",
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",
@@ -138,6 +188,29 @@
           "label": "{document}: topshirishdan oldin yakuniy tekshiruv",
           "meta": "OCR natijasi · tayyor"
         }
+      },
+      "pendingHeading": "Topshirilmagan majburiy hujjatlar",
+      "pendingDescription": "Topshirilmagan majburiy hujjatlardan tasodifiy 5 tagacha ko‘rsatiladi.",
+      "requiredSummary": "Majburiy hujjatlar {checked}/{total} topshirildi",
+      "sampleHint": "To‘liq ro‘yxatni hujjatlar holatida bosqichma-bosqich ko‘ring",
+      "allRequiredChecked": "Barcha majburiy hujjatlar tekshirildi",
+      "noPendingRequired": "Topshirilmagan majburiy hujjat yo‘q.",
+      "viewAll": "Barcha hujjatlarni ko‘rish",
+      "stageDescription": "{stage} bosqichi uchun kerakli hujjatlar.",
+      "checkedSummary": "{checked}/{total} ta tekshirildi",
+      "checkAriaLabel": "{document} hujjatini tayyor deb belgilash",
+      "allChecked": "Ko‘rsatilgan barcha hujjatlar tekshirildi",
+      "checkAllHint": "Hujjatlarni birma-bir tekshiring",
+      "advance": "Keyingi bosqichga o‘tish",
+      "advanced": "Tashkilotga borish bosqichiga o‘tildi",
+      "sourceSupabase": "Supabase document_requirements ma’lumotlari asosida ko‘rsatiladi.",
+      "sourcePreview": "Bu Supabase ulanishidan oldingi namunaviy ro‘yxat.",
+      "empty": "Hozir ko‘rsatiladigan hujjatlar yo‘q.",
+      "status": {
+        "required": "Majburiy",
+        "optional": "Ixtiyoriy",
+        "conditional": "Shartli",
+        "alternative": "Bittasini tanlang"
       }
     },
     "agencies": {
@@ -147,7 +220,32 @@
       "eyebrow": "Yaqin atrofdagi muassasalar"
     },
     "savedBadge": "Saqlangan jarayon",
-    "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi."
+    "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi.",
+    "quota": {
+      "sectionAriaLabel": "Har bir viza bo‘yicha qolgan o‘rinlar",
+      "eyebrow": "Viza kvotalari holati",
+      "remaining": "Qolgan o‘rinlar",
+      "people": "kishi",
+      "unlimited": "Kvota cheklovi yo‘q",
+      "unavailable": "Qolgan o‘rinlar e’lon qilinmagan",
+      "allocated": "Jami {count} o‘rindan qolgan ulush",
+      "round": "{round}-e’lon",
+      "asOf": "{date} holatiga",
+      "dateUnavailable": "Sana tekshirilmoqda",
+      "municipalityScope": "Chungbukdagi {count} ta shahar va tuman jami",
+      "provinceScope": "Butun Chungcheongbuk-do",
+      "singleScope": "E’londa ko‘rsatilgan qabul birligi",
+      "policyScope": "Viza kvotasi siyosati",
+      "notice": "Bu e’londagi ma’lumot bo‘lib, real vaqtdagi qolgan o‘rinlardan farq qilishi mumkin.",
+      "supabaseBadge": "Supabase’dagi so‘nggi e’lon",
+      "previewBadge": "Tekshirilgan ma’lumot namunasi",
+      "cta": "E’lonning asl nusxasini ko‘rish",
+      "previous": "Oldingi vizani ko‘rish",
+      "next": "Keyingi vizani ko‘rish",
+      "pagination": "Viza slaydini tanlash",
+      "goTo": "{visa} qolgan o‘rinlarini ko‘rish",
+      "position": "{current}/{total}"
+    }
   },
   "Onboarding": {
     "privacyNotice": "Bu yerdagi ma'lumot faqat ma'lumot uchun bo'lib, yakuniy huquqiy qaror tegishli immigratsiya idorasida tasdiqlanishi kerak.",
@@ -571,5 +669,37 @@
       "demoData": "Bepul sinov rejimida namuna natijasi ko‘rsatilmoqda. OpenAI API chaqirilmagan va bu haqiqiy aniqlangan ma’lumot emas.",
       "unknown": "Asl ariza va aniqlangan natijani qayta solishtiring."
     }
+  },
+  "DocumentsHub": {
+    "eyebrow": "Hujjat yordamchisi",
+    "title": "Qaysi hujjat ishini bajarmoqchisiz?",
+    "description": "Ariza maydonlarini OCR orqali tekshiring yoki tanlangan viza hujjatlarini bosqichma-bosqich boshqaring.",
+    "ocr": {
+      "title": "Viza arizasi maydonlarini tekshirish",
+      "description": "Ariza rasmi, PDF yoki HWPX faylini tahlil qilib, to‘ldiriladigan va qayta tekshiriladigan joylarni ko‘rsatadi."
+    },
+    "status": {
+      "title": "Viza topshirish hujjatlari holati",
+      "description": "Tanlangan viza uchun barcha hujjatlarni jarayon bosqichlari bo‘yicha ko‘ring va belgilang."
+    }
+  },
+  "DocumentStatus": {
+    "back": "Hujjatlar menyusiga qaytish",
+    "eyebrow": "Bosqichlar bo‘yicha to‘liq ro‘yxat",
+    "title": "Viza topshirish hujjatlari holati",
+    "description": "Majburiy, shartli va ixtiyoriy hujjatlarni topshirish bosqichlari bo‘yicha tekshiring.",
+    "requiredProgress": "Majburiy hujjatlar topshirish jarayoni",
+    "requiredSummary": "{checked}/{total}",
+    "allSummary": "Jami {total} hujjatdan {checked} tasi belgilandi",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "Batafsil bosqich {current}/{total}",
+    "stageComplete": "Majburiy hujjatlar tayyor",
+    "stageRequiredSummary": "Majburiy {checked}/{total}",
+    "checkAriaLabel": "{document} hujjatini topshirilgan deb belgilash",
+    "readyTitle": "Barcha majburiy hujjatlar tekshirildi",
+    "remainingTitle": "Hali topshirilmagan majburiy hujjatlar bor",
+    "readyDescription": "Keyingi bosqichda bosh sahifadagi toshbaqa va foiz ham yangilanadi.",
+    "remainingDescription": "Davom etish uchun har bosqichdagi majburiy hujjatlarni belgilang.",
+    "advance": "Tashkilotga borish bosqichiga o‘tish"
   }
 }

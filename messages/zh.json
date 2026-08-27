@@ -281,8 +281,6 @@
     "consentNotice": "<terms>服务条款</terms>和<privacy>隐私政策</privacy>正在准备中，发布后可在此查看。",
     "welcomeTitle": "与Visa-bugi一起开始吧",
     "welcomeDescription": "我们将为您追踪签证要求和下一步。",
-    "googleStart": "使用Google开始",
-    "googleComingSoon": "Google登录正在准备中。您可以通过下方按钮立即使用。",
     "continueWithoutLogin": "无需登录开始",
     "addressManualPrompt": "搜索不到吗？我自己输入",
     "addressManualRoadLabel": "地址（道路名或地号）",

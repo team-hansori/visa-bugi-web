@@ -25,6 +25,10 @@ vi.mock("./actions", () => ({
   saveOnboarding: vi.fn(async () => ({ status: "success" as const })),
 }));
 
+vi.mock("@/features/auth/auth-form", () => ({
+  AuthForm: () => <div data-testid="auth-form" />,
+}));
+
 vi.mock("next-intl", () => ({
   useTranslations: (namespace: string) => createTestTranslator(namespace),
 }));

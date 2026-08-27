@@ -281,8 +281,6 @@
     "consentNotice": "<terms>सेवा सर्तहरू</terms> र <privacy>गोपनीयता नीति</privacy> तयार गरिँदैछ। प्रकाशित भएपछि यहाँ हेर्न सकिन्छ।",
     "welcomeTitle": "भिसा-बुगीसँग सुरु गरौं",
     "welcomeDescription": "हामी तपाईंको भिसा आवश्यकता र अर्को चरण ट्र्याक गर्नेछौं।",
-    "googleStart": "Google बाट सुरु गर्नुहोस्",
-    "googleComingSoon": "Google लगइन तयारी हुँदैछ। तलको बटनबाट तुरुन्त प्रयोग गर्न सकिन्छ।",
     "continueWithoutLogin": "लगइन बिना सुरु गर्नुहोस्",
     "addressManualPrompt": "फेला परेन? म आफैं प्रविष्ट गर्छु",
     "addressManualRoadLabel": "ठेगाना (सडकको नाम वा घर नम्बर)",

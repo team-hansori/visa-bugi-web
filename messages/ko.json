@@ -281,8 +281,6 @@
     "consentNotice": "<terms>이용약관</terms>과 <privacy>개인정보처리방침</privacy>을 준비하고 있어요. 게시되면 이 화면에서 확인하실 수 있습니다.",
     "welcomeTitle": "비자부기와 함께 시작해요",
     "welcomeDescription": "내 비자 요건과 다음 단계를 추적해 드릴게요.",
-    "googleStart": "Google로 시작하기",
-    "googleComingSoon": "Google 로그인은 준비 중입니다. 아래 버튼으로 바로 이용하실 수 있어요.",
     "continueWithoutLogin": "로그인 없이 시작하기",
     "addressManualPrompt": "검색이 안 되나요? 직접 입력할게요",
     "addressManualRoadLabel": "주소 (도로명 또는 지번)",

@@ -2,38 +2,26 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { AuthForm } from "@/features/auth/auth-form";
+import { Link, useRouter } from "@/i18n/navigation";
 
 type Props = {
   onContinueWithoutLogin: () => void;
 };
 
 /**
- * 온보딩 진입 전 첫 화면. Google 로그인은 아직 연동 전(외부 OAuth 설정
- * 필요)이라 클릭해도 이동하지 않고 준비 중 안내만 보여준다. 로그인 없이도
- * 항상 진행할 수 있는 경로를 유지한다 — 로그인은 강제하지 않는다.
+ * 온보딩 진입 전 첫 화면. 아이디/비밀번호 가입·로그인 폼을 보여주고,
+ * 로그인 없이도 항상 진행할 수 있는 게스트 경로를 유지한다 — 로그인은 강제하지 않는다.
+ * 인증 성공 시 홈으로 보내고, 홈의 완료 가드가 미완료 프로필을 다시 온보딩으로 돌린다.
  */
 export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
   const t = useTranslations("Onboarding");
-  const [showGoogleNotice, setShowGoogleNotice] = useState(false);
-
-  function handleGoogleLogin() {
-    // 실제 Google OAuth 연동 시 이 함수를 async로 바꾸고 이 자리를 아래로 교체한다.
-    // (Supabase에 Google 프로바이더 설정 + 아래 호출로 대체 — 익명 세션과
-    //  동일하게 Supabase Auth를 쓰므로 별도 인증 라이브러리를 추가하지 않는다.)
-    //
-    //   await createClient().auth.signInWithOAuth({
-    //     provider: "google",
-    //     options: { redirectTo: `${window.location.origin}/auth/callback` },
-    //   });
-    setShowGoogleNotice(true);
-  }
+  const router = useRouter();
 
   return (
     <section
       aria-labelledby="welcome-title"
-      className="mx-auto flex min-h-[calc(100dvh-4rem)] max-w-sm flex-col items-center justify-between gap-10 px-4 py-10 text-center"
+      className="mx-auto flex min-h-[calc(100dvh-4rem)] max-w-sm flex-col items-center justify-between gap-8 px-4 py-10 text-center"
     >
       <div className="flex flex-1 flex-col items-center justify-center gap-6">
         <Image
@@ -42,7 +30,7 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
           width={1145}
           height={1373}
           priority
-          className="h-auto w-40 sm:w-48"
+          className="h-auto w-32 sm:w-40"
         />
 
         <div>
@@ -58,25 +46,13 @@ export function OnboardingWelcome({ onContinueWithoutLogin }: Props) {
         </div>
       </div>
 
-      <div className="grid w-full max-w-xs gap-3">
-        <button
-          type="button"
-          onClick={handleGoogleLogin}
-          className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-[#dfe5e1] bg-white px-5 text-sm font-extrabold text-[#33453e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
-        >
-          {t("googleStart")}
-        </button>
-
-        {showGoogleNotice ? (
-          <p role="status" className="text-sm font-semibold text-[#6c7873]">
-            {t("googleComingSoon")}
-          </p>
-        ) : null}
+      <div className="grid w-full max-w-xs justify-items-center gap-3">
+        <AuthForm onAuthenticated={() => router.push("/")} />
 
         <button
           type="button"
           onClick={onContinueWithoutLogin}
-          className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-[#2d6d5d] px-5 text-sm font-extrabold text-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+          className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl border border-[#dfe5e1] bg-white px-5 text-sm font-extrabold text-[#33453e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
         >
           {t("continueWithoutLogin")}
         </button>

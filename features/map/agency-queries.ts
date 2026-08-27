@@ -83,12 +83,16 @@ function toAgency(row: AgencyRow): Agency {
 
 export async function fetchNearbyAgencies(
   supabase: SupabaseClient,
-  region: RegionId,
+  // `null` means "don't filter by region" — used when sorting from a real
+  // GPS fix, where the query should cover every pilot region and let
+  // distance sorting find whichever is actually closest, rather than being
+  // locked to whatever region the user happened to have selected in the
+  // dropdown before requesting their location.
+  region: RegionId | null,
   agencyType: AgencyType | null,
   near: LatLng,
   limit: number,
 ): Promise<Agency[]> {
-  const regionToken = REGION_QUERY_TOKENS[region];
   // Plain equality is correct for the current map-visible dataset — none of
   // its rows use the legacy table's "|"-delimited multi-region format
   // (e.g. "옥천|영동"). Revisit if that ever changes.
@@ -96,8 +100,12 @@ export async function fetchNearbyAgencies(
     .from("map_visible_agency_contacts")
     .select(
       "agency_id, department_name, agency_type, road_address, latitude, longitude, phone, url, operating_hours",
-    )
-    .or(`region.eq.${regionToken},region.eq.${PROVINCE_WIDE_TOKEN}`);
+    );
+
+  if (region) {
+    const regionToken = REGION_QUERY_TOKENS[region];
+    query = query.or(`region.eq.${regionToken},region.eq.${PROVINCE_WIDE_TOKEN}`);
+  }
 
   if (agencyType) {
     query = query.eq("agency_type", agencyType);

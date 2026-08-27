@@ -185,7 +185,10 @@ export function AgencyMap() {
       try {
         const result = await fetchNearbyAgencies(
           supabase,
-          selectedRegion,
+          // A real GPS fix searches across every pilot region instead of
+          // whatever region happens to be selected in the dropdown, so
+          // "가까운 기관" always matches what the map actually centers on.
+          userPosition ? null : selectedRegion,
           typeFilter === "all" ? null : typeFilter,
           near,
           NEARBY_LIMIT,
@@ -212,9 +215,11 @@ export function AgencyMap() {
     // the object itself, since `near` is a new object reference every render
     // (userPosition ?? REGION_CENTERS[selectedRegion]) and including it
     // directly would refetch on every render instead of only when the
-    // underlying coordinates change.
+    // underlying coordinates change. `userPosition` itself only changes
+    // identity via setUserPosition, so it's safe to depend on directly —
+    // it's what decides whether the query filters by `selectedRegion` at all.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase, selectedRegion, typeFilter, near.lat, near.lng]);
+  }, [supabase, selectedRegion, typeFilter, userPosition, near.lat, near.lng]);
 
   const selectedAgency = agencies.find((agency) => agency.id === selectedId) ?? null;
   // KakaoMapMarker.id is a number (from the prior plan's KakaoMap component,

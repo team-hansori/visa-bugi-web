@@ -317,7 +317,7 @@ export function AgencyMap() {
             onClick={() => setTypeFilter(item.id)}
             className={`min-h-8 shrink-0 rounded-full px-2.5 text-[11px] font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               typeFilter === item.id
-                ? "bg-[#173f36]/80 text-white"
+                ? "bg-[#173f36]/55 text-white"
                 : "border border-[#dce4df] bg-white text-[#5e6d67]"
             }`}
           >
@@ -357,7 +357,7 @@ export function AgencyMap() {
             onClick={() => setSelectedId(agency.id)}
             className={`min-h-8 shrink-0 rounded-full px-2.5 text-[11px] font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d] ${
               selectedId === agency.id
-                ? "bg-[#e59b37]/80 text-white"
+                ? "bg-[#e59b37]/55 text-white"
                 : "border border-[#dce4df] bg-white text-[#5e6d67]"
             }`}
           >

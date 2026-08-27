@@ -24,6 +24,7 @@ const announcementUrls: Partial<Record<string, string>> = {
     "https://www.chungbuk.go.kr/www/selectGosiPblancView.do?key=422&no=69044&pageUnit=10&pageIndex=1&searchCnd=all&searchKrwd=%EB%B9%84%EC%9E%90",
   "F-4-R":
     "https://www.chungbuk.go.kr/www/selectGosiPblancView.do?key=422&no=69045&pageUnit=10&pageIndex=1&searchCnd=all&searchKrwd=%EB%B9%84%EC%9E%90",
+  "D-2": "https://studyinchungbuk.or.kr/?lang=en",
 };
 
 export function VisaQuotaCarousel({ items, source }: VisaQuotaCarouselProps) {

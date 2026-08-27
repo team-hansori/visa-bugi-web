@@ -73,6 +73,7 @@
 - 온보딩용 MinimalShell 컴포넌트 추가
 - Route group으로 앱 셸(AppShell)과 온보딩 최소 셸(MinimalShell) 분리
 - 온보딩 진입 화면에 약관 동의 링크 추가, t.rich() 테스트 목 지원
+- 온보딩을 마쳐야 홈으로 넘어가도록 진입 라우팅 변경 (데모용)
 
 ### 🐛 Bug Fixes
 
@@ -187,6 +188,7 @@
 - 계획서에 익명 세션 보장 태스크 반영, 스펙 문구 정밀화
 - 온보딩 진입 화면 개편 + 앱 셸 분리 설계 스펙 추가
 - 온보딩 진입 화면 개편 + 앱 셸 분리 구현 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]

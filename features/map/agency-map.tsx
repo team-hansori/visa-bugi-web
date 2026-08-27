@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icon";
-import { createClient } from "@/lib/supabase/client";
 import { KakaoMap, type KakaoMapMarker } from "@/features/map/kakao-map";
 import { REGION_CENTERS, type LatLng, type RegionId } from "@/features/map/geo";
-import { fetchNearbyAgencies, type Agency, type AgencyType } from "@/features/map/agency-queries";
+import type { Agency, AgencyType } from "@/features/map/agency-queries";
 
 const NEARBY_LIMIT = 3;
 
@@ -139,15 +138,6 @@ function AgencyDetails({
 
 export function AgencyMap() {
   const t = useTranslations("Map");
-  const supabase = useMemo(() => {
-    if (
-      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-      !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-    ) {
-      return null;
-    }
-    return createClient();
-  }, []);
   const [selectedRegion, setSelectedRegion] = useState<RegionId>("cheongju");
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [userPosition, setUserPosition] = useState<LatLng | null>(null);
@@ -174,29 +164,33 @@ export function AgencyMap() {
       setAgencies([]);
       setSelectedId(null);
 
-      if (!supabase) {
-        if (cancelled) return;
-        setLoadError(t("errors.notConfigured"));
-        setAgencies([]);
-        setSelectedId(null);
-        setLoading(false);
-        return;
-      }
+      const params = new URLSearchParams();
+      // A real GPS fix searches across every pilot region instead of
+      // whatever region happens to be selected in the dropdown, so
+      // "가까운 기관" always matches what the map actually centers on.
+      if (!userPosition) params.set("region", selectedRegion);
+      if (typeFilter !== "all") params.set("type", typeFilter);
+      params.set("lat", String(near.lat));
+      params.set("lng", String(near.lng));
+      params.set("limit", String(NEARBY_LIMIT));
 
       try {
-        const result = await fetchNearbyAgencies(
-          supabase,
-          // A real GPS fix searches across every pilot region instead of
-          // whatever region happens to be selected in the dropdown, so
-          // "가까운 기관" always matches what the map actually centers on.
-          userPosition ? null : selectedRegion,
-          typeFilter === "all" ? null : typeFilter,
-          near,
-          NEARBY_LIMIT,
-        );
+        const response = await fetch(`/api/map/agencies?${params.toString()}`);
         if (cancelled) return;
-        setAgencies(result);
-        setSelectedId(result[0]?.id ?? null);
+        if (!response.ok) {
+          setLoadError(
+            response.status === 503
+              ? t("errors.notConfigured")
+              : t("errors.loadFailed"),
+          );
+          setAgencies([]);
+          setSelectedId(null);
+          return;
+        }
+        const body = (await response.json()) as { agencies: Agency[] };
+        if (cancelled) return;
+        setAgencies(body.agencies);
+        setSelectedId(body.agencies[0]?.id ?? null);
       } catch {
         if (cancelled) return;
         setLoadError(t("errors.loadFailed"));
@@ -220,7 +214,7 @@ export function AgencyMap() {
     // identity via setUserPosition, so it's safe to depend on directly —
     // it's what decides whether the query filters by `selectedRegion` at all.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase, selectedRegion, typeFilter, userPosition, near.lat, near.lng]);
+  }, [selectedRegion, typeFilter, userPosition, near.lat, near.lng]);
 
   const selectedAgency = agencies.find((agency) => agency.id === selectedId) ?? null;
   // KakaoMapMarker.id is a number (from the prior plan's KakaoMap component,

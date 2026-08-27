@@ -16,6 +16,7 @@
 | C-03 | 범정부 민원 신청과 공식 절차 안내 | 정부24 | 외국인 체류지 변경 신고 민원 안내 | https://m.gov.kr/mw/AA020InfoCappView.do?CappBizCD=12700000026&HighCtgCD=A01010 | 상시 | 2026-08-28 | 실명 경쟁·보완 서비스 비교 근거 |
 | R-01 | 검수된 공통 데이터 구조 13개 테이블·AND/OR 논리 트리 | 비자부기 팀 | visa-data 데이터 구조 문서 | https://github.com/team-hansori/visa-data | 2026-08-26 | 2026-08-28 | 저장소 검증 스냅샷 |
 | R-02 | 온보딩·홈·OCR·캘린더·지도·채팅 구현 상태 | 비자부기 팀 | visa-bugi-web 코드 | https://github.com/team-hansori/visa-bugi-web | 2026-08-28 | 2026-08-28 | 코드 대조 완료 |
+| T-01 | GPT-5.4 Mini 표준 요금은 입력 100만 토큰당 0.75달러, 캐시 입력 0.075달러, 출력 4.50달러이며, 기준 가정(입력 6,000·출력 1,000토큰)에서 OCR 1건 약 0.009달러·1,000건 약 9달러로 추산 | OpenAI | GPT-5.4 Mini Model | https://developers.openai.com/api/docs/models/gpt-5.4-mini | 상시 | 2026-08-28 | 공식 단가 확인 완료·문서당 비용은 실측이 아닌 시험 가정 |
 
 ## 최종안에서 제외한 미검증 주장
 

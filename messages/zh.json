@@ -52,6 +52,56 @@
       }
     }
   },
+  "Map": {
+    "title": "附近机构",
+    "description": "离开此页面后当前位置将被丢弃，不会保存。即使拒绝位置权限，也可以手动选择地区。",
+    "location": {
+      "initial": "请允许位置权限，或手动选择地区。",
+      "checking": "正在确认当前位置…",
+      "nearby": "正在显示当前位置附近的机构。",
+      "failed": "无法确认位置。请在下方手动选择地区。",
+      "unsupported": "此浏览器不支持定位功能。请手动选择地区。",
+      "invalidRegion": "不支持的地区。请从列表中重新选择地区。",
+      "selectedRegion": "正在显示{region}附近的机构。",
+      "searchLabel": "设置搜索位置",
+      "selectRegion": "手动选择地区",
+      "useCurrent": "使用当前位置",
+      "checkingButton": "确认中"
+    },
+    "regions": {
+      "cheongju": "清州市",
+      "chungju": "忠州市",
+      "jincheon": "镇川郡",
+      "eumseong": "阴城郡"
+    },
+    "filters": {
+      "label": "机构类型筛选",
+      "all": "全部",
+      "communityCenter": "居民中心",
+      "administrativeAgency": "行政机构",
+      "universityDeptOffice": "大学院系办公室",
+      "foreignSupportCenter": "外国人支援机构",
+      "other": "其他"
+    },
+    "loading": "正在加载机构信息…",
+    "errors": {
+      "notConfigured": "机构信息尚未设置完成。",
+      "loadFailed": "无法加载机构信息。请稍后重试。"
+    },
+    "empty": "找不到符合该地区和类型的机构。请尝试其他地区或选择“全部”。",
+    "agencyListLabel": "地图上的机构列表",
+    "mapLabel": "机构地图",
+    "directions": "路线",
+    "details": {
+      "address": "地址",
+      "phone": "电话",
+      "hours": "营业时间",
+      "addressUnavailable": "暂无地址",
+      "phoneUnavailable": "暂无电话号码",
+      "hoursUnavailable": "暂无营业时间",
+      "call": "拨打电话"
+    }
+  },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
     "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",
@@ -62,31 +112,6 @@
     "heroTitle": "오늘 준비할 일을 한눈에 확인하세요",
     "heroDescription": "현재 화면은 반응형 UI 확인용 예시입니다. 공식 비자 요건과 사용자 진행상황은 검수된 데이터 연결 후 표시됩니다.",
     "heroCta": "내 정보 설정하기",
-    "quota": {
-      "sectionAriaLabel": "各签证剩余名额",
-      "eyebrow": "签证名额现状",
-      "remaining": "剩余名额",
-      "people": "人",
-      "unlimited": "无名额限制",
-      "unavailable": "暂无公开剩余名额",
-      "allocated": "总名额 {count} 人中的剩余比例",
-      "round": "第 {round} 次公告",
-      "asOf": "截至 {date}",
-      "dateUnavailable": "正在确认基准日期",
-      "municipalityScope": "忠北 {count} 个市郡合计",
-      "provinceScope": "忠清北道全域",
-      "singleScope": "公告指定招生单位",
-      "policyScope": "签证名额政策",
-      "notice": "这是公告发布的基准数字，可能与实时剩余名额不同。",
-      "supabaseBadge": "Supabase 最新公告",
-      "previewBadge": "已审核数据预览",
-      "cta": "查看公告原文",
-      "previous": "查看上一个签证",
-      "next": "查看下一个签证",
-      "pagination": "选择签证幻灯片",
-      "goTo": "查看 {visa} 剩余名额",
-      "position": "{current}/{total}"
-    },
     "progress": {
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
@@ -135,29 +160,6 @@
     },
     "tasks": {
       "heading": "材料准备清单",
-      "pendingHeading": "未提交的必需材料",
-      "pendingDescription": "随机显示最多 5 份尚未提交的必需材料。",
-      "requiredSummary": "必需材料已提交 {checked}/{total}",
-      "sampleHint": "可在提交材料状态中按阶段查看完整清单",
-      "allRequiredChecked": "所有必需材料均已确认",
-      "noPendingRequired": "没有未提交的必需材料。",
-      "viewAll": "查看全部提交材料",
-      "stageDescription": "{stage} 阶段所需的材料。",
-      "checkedSummary": "已确认 {checked}/{total}",
-      "checkAriaLabel": "将 {document} 标记为已准备",
-      "allChecked": "已确认所有显示的材料",
-      "checkAllHint": "请逐一确认材料",
-      "advance": "进入下一阶段",
-      "advanced": "已进入机构访问阶段",
-      "sourceSupabase": "基于 Supabase 的 document_requirements 显示。",
-      "sourcePreview": "这是连接 Supabase 前可使用的预览清单。",
-      "empty": "目前没有可显示的材料。",
-      "status": {
-        "required": "必需",
-        "optional": "可选",
-        "conditional": "有条件",
-        "alternative": "任选一项"
-      },
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",
@@ -186,6 +188,29 @@
           "label": "{document}：提交前最终确认",
           "meta": "OCR 结果 · 已准备完成"
         }
+      },
+      "pendingHeading": "未提交的必需材料",
+      "pendingDescription": "随机显示最多 5 份尚未提交的必需材料。",
+      "requiredSummary": "必需材料已提交 {checked}/{total}",
+      "sampleHint": "可在提交材料状态中按阶段查看完整清单",
+      "allRequiredChecked": "所有必需材料均已确认",
+      "noPendingRequired": "没有未提交的必需材料。",
+      "viewAll": "查看全部提交材料",
+      "stageDescription": "{stage} 阶段所需的材料。",
+      "checkedSummary": "已确认 {checked}/{total}",
+      "checkAriaLabel": "将 {document} 标记为已准备",
+      "allChecked": "已确认所有显示的材料",
+      "checkAllHint": "请逐一确认材料",
+      "advance": "进入下一阶段",
+      "advanced": "已进入机构访问阶段",
+      "sourceSupabase": "基于 Supabase 的 document_requirements 显示。",
+      "sourcePreview": "这是连接 Supabase 前可使用的预览清单。",
+      "empty": "目前没有可显示的材料。",
+      "status": {
+        "required": "必需",
+        "optional": "可选",
+        "conditional": "有条件",
+        "alternative": "任选一项"
       }
     },
     "agencies": {
@@ -195,39 +220,162 @@
       "eyebrow": "附近机构"
     },
     "savedBadge": "已保存的进度",
-    "savedHeroDescription": "我们会根据已保存的 {count} 份文件的 OCR 结果，显示准备状态和下一步事项。"
-  },
-  "DocumentsHub": {
-    "eyebrow": "材料助手",
-    "title": "您需要处理哪类材料？",
-    "description": "可使用 OCR 检查申请表填写项目，或按阶段管理所选签证的全部提交材料。",
-    "ocr": {
-      "title": "检查签证申请表填写项目",
-      "description": "分析申请表照片、PDF 或 HWPX，提示需要填写及重新确认的项目。"
-    },
-    "status": {
-      "title": "签证提交材料状态",
-      "description": "按办理阶段查看并勾选入门设置中所选签证的全部提交材料。"
+    "savedHeroDescription": "我们会根据已保存的 {count} 份文件的 OCR 结果，显示准备状态和下一步事项。",
+    "quota": {
+      "sectionAriaLabel": "各签证剩余名额",
+      "eyebrow": "签证名额现状",
+      "remaining": "剩余名额",
+      "people": "人",
+      "unlimited": "无名额限制",
+      "unavailable": "暂无公开剩余名额",
+      "allocated": "总名额 {count} 人中的剩余比例",
+      "round": "第 {round} 次公告",
+      "asOf": "截至 {date}",
+      "dateUnavailable": "正在确认基准日期",
+      "municipalityScope": "忠北 {count} 个市郡合计",
+      "provinceScope": "忠清北道全域",
+      "singleScope": "公告指定招生单位",
+      "policyScope": "签证名额政策",
+      "notice": "这是公告发布的基准数字，可能与实时剩余名额不同。",
+      "supabaseBadge": "Supabase 最新公告",
+      "previewBadge": "已审核数据预览",
+      "cta": "查看公告原文",
+      "previous": "查看上一个签证",
+      "next": "查看下一个签证",
+      "pagination": "选择签证幻灯片",
+      "goTo": "查看 {visa} 剩余名额",
+      "position": "{current}/{total}"
     }
   },
-  "DocumentStatus": {
-    "back": "返回材料菜单",
-    "eyebrow": "按阶段显示完整清单",
-    "title": "签证提交材料状态",
-    "description": "按详细提交阶段确认必需、有条件和可选材料，并勾选已准备的材料。",
-    "requiredProgress": "必需材料提交进度",
-    "requiredSummary": "{checked}/{total} 份",
-    "allSummary": "全部 {total} 份材料中已勾选 {checked} 份",
-    "actorFlow": "{from} → {to}",
-    "stageNumber": "详细阶段 {current}/{total}",
-    "stageComplete": "必需材料已完成",
-    "stageRequiredSummary": "必需 {checked}/{total}",
-    "checkAriaLabel": "将 {document} 标记为已提交",
-    "readyTitle": "已确认所有必需提交材料",
-    "remainingTitle": "仍有必需材料尚未提交",
-    "readyDescription": "进入下一阶段后，首页的乌龟位置和准备进度会一起更新。",
-    "remainingDescription": "勾选各阶段全部必需材料后即可进入下一阶段。",
-    "advance": "进入机构访问阶段"
+  "Onboarding": {
+    "privacyNotice": "此处提供的内容仅供参考，最终资格判定须在管辖出入境·外国人厅确认。",
+    "questionLabel": "问题 {index}",
+    "previous": "上一步",
+    "next": "下一步",
+    "submit": "完成设置",
+    "submitting": "正在保存...",
+    "saveSuccess": "设置已保存。",
+    "addressLabel": "居住（希望）地址",
+    "addressPlaceholder": "请输入道路名或地号",
+    "addressEligible": "{region}是地区特化型签证的适用地区。",
+    "addressNotEligible": "{region}不是地区特化型签证（F-2-R·E-7-4R·F-4-R）的适用地区。此为参考信息，最终判定请在管辖出入境·外国人厅确认。",
+    "searchResultCount": "搜索结果 {count} 条",
+    "searchNoResult": "没有搜索结果。",
+    "searchError": "无法加载地址。请稍后重试。",
+    "saveError": "因临时错误未能保存。请稍后重试。",
+    "consentNotice": "<terms>服务条款</terms>和<privacy>隐私政策</privacy>正在准备中，发布后可在此查看。",
+    "welcomeTitle": "与Visa-bugi一起开始吧",
+    "welcomeDescription": "我们将为您追踪签证要求和下一步。",
+    "googleStart": "使用Google开始",
+    "googleComingSoon": "Google登录正在准备中。您可以通过下方按钮立即使用。",
+    "continueWithoutLogin": "无需登录开始",
+    "addressManualPrompt": "搜索不到吗？我自己输入",
+    "addressManualRoadLabel": "地址（道路名或地号）",
+    "addressManualRoadPlaceholder": "例：忠北堤川市内土路295",
+    "addressManualSigunguLabel": "居住的市/郡",
+    "addressManualSigunguPlaceholder": "例：堤川市",
+    "addressManualBack": "返回地址搜索",
+    "addressManualSubmit": "设为此地址",
+    "birthdateLabel": "出生日期",
+    "koreanTopikLabel": "TOPIK",
+    "koreanTopikDescription": "韩国语能力考试等级",
+    "koreanKiipLabel": "社会统合项目",
+    "koreanKiipDescription": "已完成阶段",
+    "koreanNoneLabel": "还没有",
+    "koreanTopikSelectLabel": "TOPIK等级",
+    "koreanKiipSelectLabel": "社会统合项目阶段",
+    "koreanSelectPlaceholder": "请选择",
+    "koreanTopikUnit": "级",
+    "koreanKiipUnit": "阶段",
+    "d2UniversityLabel": "就读大学",
+    "d2DepartmentLabel": "专业",
+    "d2AcademicStatusLabel": "当前阶段",
+    "d2ProgramStartDateLabel": "入学（或语言研修开始）日期",
+    "d2SelectPlaceholder": "请选择",
+    "stepTitles": {
+      "locale": "您偏好哪种语言？",
+      "nationality": "请选择国籍",
+      "gender": "请选择性别",
+      "birthdate": "您的出生日期是？",
+      "currentVisa": "您目前持有的签证资格是什么？",
+      "address": "您住在哪里？",
+      "koreanLevel": "您有韩国语能力证书吗？",
+      "targetVisa": "您正在准备哪种签证资格？",
+      "f2rDetail": "您在韩国有专科以上学历吗？",
+      "e74rDetail": "最近10年内以E-9·E-10·H-2身份居留了几年？",
+      "f4rDetail": "以下哪种情况更符合您的状况？",
+      "d2Detail": "请提供在读信息"
+    },
+    "stepDescriptions": {
+      "locale": "请选择屏幕上显示的语言。",
+      "nationality": "用于准备个性化指南。",
+      "gender": "即使不选择也可以进入下一步。",
+      "birthdate": "用于确认年龄要求。",
+      "currentVisa": "此回答将缩小可准备的签证资格范围。",
+      "address": "地区特化型签证要求在人口减少地区居住（或希望居住）。",
+      "koreanLevel": "请选择所有符合的证书。同时拥有TOPIK和社会统合项目也没关系。",
+      "targetVisa": "仅显示基于当前签证资格可准备的资格。",
+      "f2rDetail": "只需满足学历或最低生活工资要求之一即可。",
+      "e74rDetail": "大致的期限即可。",
+      "f4rDetail": "所需材料因迁移类型而异。",
+      "d2Detail": "用于确认是否为广域型签证适用专业。"
+    },
+    "genderOptions": {
+      "female": "女性",
+      "male": "男性",
+      "unspecified": "不选择"
+    },
+    "nationalityOptions": {
+      "VN": "越南",
+      "UZ": "乌兹别克斯坦",
+      "NP": "尼泊尔",
+      "KH": "柬埔寨",
+      "CN": "中国",
+      "OT": "其他"
+    },
+    "currentVisaOptions": {
+      "D-2": "D-2（留学）",
+      "D-10": "D-10（求职）",
+      "E-9": "E-9（非专业就业）",
+      "E-10": "E-10（船员就业）",
+      "H-2": "H-2（访问就业）",
+      "F-4": "F-4（海外同胞）",
+      "OTHER": "其他签证资格",
+      "UNKNOWN": "不太清楚"
+    },
+    "targetVisaOptions": {
+      "F-2-R": "F-2-R（地区特化优秀人才）",
+      "E-7-4R": "E-7-4R（地区特化熟练技能人才）",
+      "F-4-R": "F-4-R（地区特化海外同胞）",
+      "D-2": "D-2（忠北广域型留学）"
+    },
+    "educationOptions": {
+      "ASSOCIATE_OR_ABOVE": "有专科以上学历",
+      "BELOW_ASSOCIATE": "没有"
+    },
+    "residenceYearOptions": {
+      "1": "不满1年",
+      "2": "2年以上",
+      "3": "3年以上",
+      "4": "4年以上"
+    },
+    "migrationTypeLabels": {
+      "EXISTING_RESIDENT": "现有居住者",
+      "DOMESTIC_TRANSFER": "国内迁入者",
+      "OVERSEAS_TRANSFER": "海外迁入者"
+    },
+    "migrationTypeDescriptions": {
+      "EXISTING_RESIDENT": "已在人口减少地区居住2年以上",
+      "DOMESTIC_TRANSFER": "与家人一起从国内其他地区迁入",
+      "OVERSEAS_TRANSFER": "与家人一起从海外迁入"
+    },
+    "academicStatusOptions": {
+      "LANGUAGE_COURSE": "语言研修",
+      "ASSOCIATE": "专科",
+      "BACHELOR_1_2": "本科1~2年级",
+      "BACHELOR_3_4": "本科3~4年级",
+      "GRADUATE": "硕士·博士"
+    }
   },
   "Chat": {
     "title": "签证咨询",
@@ -246,7 +394,11 @@
     "verifiedAtLabel": "核验日期",
     "contactsLabel": "指引机构",
     "unverifiedNotice": "此信息按外来务工人员情况核验。具体情况可能不同，请直接向机构确认。",
-    "outOfScopeContacts": "您可以从以下机构获得帮助。"
+    "outOfScopeContacts": "您可以从以下机构获得帮助。",
+    "open": "打开咨询",
+    "close": "关闭",
+    "ocrLauncherHint": "询问有关您上传文件的问题",
+    "ocrIntegrationNotice": "基于已上传文件的回答功能正在准备中。您仍可使用一般签证咨询。"
   },
   "My": {
     "eyebrow": "MY",
@@ -436,6 +588,11 @@
     },
     "tips": {
       "eyebrow": "拍摄提示",
+      "captureAction": "去拍摄照片",
+      "attachmentEyebrow": "文件上传提示",
+      "attachmentType": "请选择 PDF 或 HWPX 原文件。",
+      "attachmentCheck": "请确认文件可以正常打开且内容清晰。",
+      "attachmentNext": "上传文件后即可开始分析。",
       "edges": "拍摄时请让文件四个角全部可见。",
       "light": "避开反光和阴影，确保文字清晰。",
       "onePage": "多页申请表请按顺序逐页检查。"
@@ -512,5 +669,37 @@
       "demoData": "当前为免费测试模式，显示的是示例结果。未调用 OpenAI API，也不是真实识别内容。",
       "unknown": "请再次比较原申请表和识别结果。"
     }
+  },
+  "DocumentsHub": {
+    "eyebrow": "材料助手",
+    "title": "您需要处理哪类材料？",
+    "description": "可使用 OCR 检查申请表填写项目，或按阶段管理所选签证的全部提交材料。",
+    "ocr": {
+      "title": "检查签证申请表填写项目",
+      "description": "分析申请表照片、PDF 或 HWPX，提示需要填写及重新确认的项目。"
+    },
+    "status": {
+      "title": "签证提交材料状态",
+      "description": "按办理阶段查看并勾选入门设置中所选签证的全部提交材料。"
+    }
+  },
+  "DocumentStatus": {
+    "back": "返回材料菜单",
+    "eyebrow": "按阶段显示完整清单",
+    "title": "签证提交材料状态",
+    "description": "按详细提交阶段确认必需、有条件和可选材料，并勾选已准备的材料。",
+    "requiredProgress": "必需材料提交进度",
+    "requiredSummary": "{checked}/{total} 份",
+    "allSummary": "全部 {total} 份材料中已勾选 {checked} 份",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "详细阶段 {current}/{total}",
+    "stageComplete": "必需材料已完成",
+    "stageRequiredSummary": "必需 {checked}/{total}",
+    "checkAriaLabel": "将 {document} 标记为已提交",
+    "readyTitle": "已确认所有必需提交材料",
+    "remainingTitle": "仍有必需材料尚未提交",
+    "readyDescription": "进入下一阶段后，首页的乌龟位置和准备进度会一起更新。",
+    "remainingDescription": "勾选各阶段全部必需材料后即可进入下一阶段。",
+    "advance": "进入机构访问阶段"
   }
 }

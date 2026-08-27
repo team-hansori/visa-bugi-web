@@ -10,7 +10,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 type NavItem = {
   href: string;
   icon: IconName;
-  key: "home" | "calendar" | "map" | "ocr" | "chat" | "my";
+  key: "home" | "calendar" | "map" | "chat" | "ocr" | "my";
 };
 
 const navItems: NavItem[] = [

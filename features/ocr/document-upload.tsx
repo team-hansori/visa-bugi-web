@@ -11,9 +11,9 @@ import {
   inspectApplicationFormImage,
 } from "./image-quality";
 import { OcrHelpChat } from "./ocr-help-chat";
+import { ChatLauncher } from "@/features/chat/chat-launcher";
 import type {
   ApplicationFormAnalysis,
-  ApplicationFormCatalog,
   ApplicationFormOption,
   FormFieldKind,
   FormFieldOwner,
@@ -41,7 +41,6 @@ const attachmentAccept = [
 
 type DocumentUploadProps = {
   forms: ApplicationFormOption[];
-  catalogSource: ApplicationFormCatalog["source"];
 };
 
 function groupForms(forms: ApplicationFormOption[]) {
@@ -64,7 +63,7 @@ function groupForms(forms: ApplicationFormOption[]) {
   return [...groups.values()];
 }
 
-export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
+export function DocumentUpload({ forms }: DocumentUploadProps) {
   const t = useTranslations("Ocr");
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
@@ -72,11 +71,13 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [selectedFormId, setSelectedFormId] = useState("auto");
   const [analysis, setAnalysis] = useState<ApplicationFormAnalysis | null>(null);
-  const [message, setMessage] = useState(t("upload.types"));
+  const [message, setMessage] = useState("");
   const [photoIssue, setPhotoIssue] = useState<ClientImageIssue | null>(null);
   const [error, setError] = useState("");
   const [isPreparing, setIsPreparing] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isTipsOpen, setIsTipsOpen] = useState(false);
+  const [tipsTarget, setTipsTarget] = useState<"camera" | "gallery">("camera");
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
   const [saveError, setSaveError] = useState("");
 
@@ -174,11 +175,18 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
   }
 
   function openCamera() {
-    openFileInput(cameraInputRef.current);
+    setTipsTarget("camera");
+    setIsTipsOpen(true);
   }
 
   function openGallery() {
-    openFileInput(galleryInputRef.current);
+    setTipsTarget("gallery");
+    setIsTipsOpen(true);
+  }
+
+  function continueToAttachment() {
+    setIsTipsOpen(false);
+    openFileInput(tipsTarget === "camera" ? cameraInputRef.current : galleryInputRef.current);
   }
 
   function removeFile() {
@@ -310,20 +318,14 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
+    <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
       <header>
-        <div className="flex flex-wrap items-center gap-2">
-          <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{t("eyebrow")}</p>
-          <span className="rounded-full bg-[#edf3ef] px-2.5 py-1 text-[0.68rem] font-extrabold text-[#3d6256]">
-            {catalogSource === "supabase_v2" ? t("catalog.supabase") : t("catalog.builtIn")}
-          </span>
-        </div>
-        <h1 className="mt-2 text-3xl font-black tracking-[-0.05em] sm:text-4xl">{t("title")}</h1>
+        <h1 className="text-3xl font-black tracking-[-0.05em] sm:text-4xl">{t("title")}</h1>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-[#6d7974] sm:text-base">{t("description")}</p>
         <p className="mt-2 max-w-3xl text-xs leading-5 text-[#72807a]">{t("languageNotice")}</p>
       </header>
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
+      <div className="grid gap-5">
         <section className="rounded-[28px] border border-[#e0e7e2] bg-white p-4 shadow-[0_12px_36px_rgba(52,76,65,0.07)] sm:p-6" aria-labelledby="upload-title">
           <div>
             <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{t("upload.step")}</p>
@@ -333,28 +335,31 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           <label className="mt-5 block text-sm font-extrabold text-[#40554c]" htmlFor="form-template">
             {t("form.label")}
           </label>
-          <select
-            id="form-template"
-            value={selectedFormId}
-            onChange={(event) => {
-              setSelectedFormId(event.target.value);
-              setAnalysis(null);
-              setSaveState("idle");
-              setSaveError("");
-            }}
-            className="mt-2 min-h-12 w-full rounded-2xl border border-[#cfdad4] bg-white px-4 text-sm font-bold text-[#31463d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
-          >
-            <option value="auto">{t("form.auto")}</option>
-            {groupForms(forms).map((group) => (
-              <optgroup key={group.key} label={group.label}>
-                {group.forms.map((form) => (
-                  <option key={form.documentRequirementId} value={form.documentRequirementId}>
-                    {form.documentName}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
+          <div className="relative mt-2">
+            <select
+              id="form-template"
+              value={selectedFormId}
+              onChange={(event) => {
+                setSelectedFormId(event.target.value);
+                setAnalysis(null);
+                setSaveState("idle");
+                setSaveError("");
+              }}
+              className="min-h-12 w-full appearance-none rounded-2xl border border-[#cfdad4] bg-white px-4 pr-12 text-sm font-bold text-[#31463d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"
+            >
+              <option value="auto">{t("form.auto")}</option>
+              {groupForms(forms).map((group) => (
+                <optgroup key={group.key} label={group.label}>
+                  {group.forms.map((form) => (
+                    <option key={form.documentRequirementId} value={form.documentRequirementId}>
+                      {form.documentName}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <Icon name="chevron-right" className="pointer-events-none absolute right-4 top-1/2 size-5 -translate-y-1/2 rotate-90 text-[#40554c]" aria-hidden="true" />
+          </div>
           <p className="mt-2 text-xs leading-5 text-[#71807a]">
             {t("form.count", { count: forms.length })} {t("form.hint")}
           </p>
@@ -362,7 +367,7 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           <div className="mt-5">
             {file ? (
               previewUrl ? (
-                <div className="relative min-h-[360px] overflow-hidden rounded-[22px] bg-[#e9eeeb] sm:min-h-[500px]">
+                <div className="relative min-h-[300px] overflow-hidden rounded-[22px] bg-[#e9eeeb] sm:min-h-[500px]">
                   <Image src={previewUrl} alt={t("upload.previewAlt", { name: file.name })} fill unoptimized className="object-contain p-3 sm:p-5" />
                   <button type="button" onClick={removeFile} className="absolute right-3 top-3 z-10 min-h-11 rounded-xl bg-[#27342f]/90 px-4 text-xs font-extrabold text-white shadow-lg backdrop-blur focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                     {t("upload.remove")}
@@ -382,10 +387,9 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
                 </div>
               )
             ) : (
-              <div className="flex min-h-[360px] w-full flex-col items-center justify-center rounded-[22px] border-2 border-dashed border-[#b9cbc2] bg-[#f7faf8] px-6 text-center sm:min-h-[500px]">
+              <div className="flex min-h-[300px] w-full flex-col items-center justify-center rounded-[22px] border-2 border-dashed border-[#b9cbc2] bg-[#f7faf8] px-4 py-8 text-center sm:min-h-[420px] sm:px-6 sm:py-10">
                 <span className="grid size-16 place-items-center rounded-[22px] bg-[#e5f1ec] text-[#2d6d5d]"><Icon name="camera" className="size-8" /></span>
                 <strong className="mt-5 text-lg font-black text-[#294038]">{t("upload.chooseTitle")}</strong>
-                <span className="mt-2 max-w-sm text-sm leading-6 text-[#71807a]">{t("upload.chooseDescription")}</span>
                 <div className="mt-5 grid w-full max-w-md gap-3 sm:grid-cols-2">
                   <button type="button" onClick={openCamera} disabled={isPreparing} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#266452] px-4 text-sm font-extrabold text-white transition-colors hover:bg-[#1f5546] disabled:cursor-wait disabled:bg-[#91aaa1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="camera" className="size-5" />{t("upload.capture")}</button>
                   <button type="button" onClick={openGallery} disabled={isPreparing} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#cddbd4] bg-white px-4 text-sm font-extrabold text-[#255e4f] transition-colors hover:bg-[#edf5f1] disabled:cursor-wait disabled:text-[#91aaa1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name="upload" className="size-5" />{t("upload.select")}</button>
@@ -396,6 +400,15 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
             <input ref={galleryInputRef} type="file" accept={attachmentAccept} onChange={chooseFile} className="sr-only" aria-label={t("upload.galleryInputLabel")} />
             <p className="mt-3 text-sm leading-6 text-[#6c7a74]" aria-live="polite">{message}</p>
           </div>
+
+          <section className="mt-6 border-t border-[#e5ebe7] pt-5">
+            <h3 className="text-base font-black tracking-[-0.02em] text-[#202b27]">{t("privacy.title")}</h3>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-[#69756f] marker:text-[#8d9792]">
+              {[t("privacy.temporary"), t("privacy.noDatabase"), t("privacy.reviewFirst")].map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
 
           {photoIssue ? (
             <div role="alert" className="mt-4 rounded-2xl border border-[#f0c7bf] bg-[#fff0ed] p-4 text-[#8b392f]">
@@ -429,26 +442,6 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           {error ? <p role="alert" className="mt-4 rounded-2xl bg-[#fff0ed] px-4 py-3 text-sm font-bold leading-6 text-[#9a3f33]">{error}</p> : null}
         </section>
 
-        <aside className="space-y-4">
-          <section className="rounded-[24px] bg-[#173f36] p-5 text-white sm:p-6">
-            <span className="grid size-11 place-items-center rounded-2xl bg-white/12 text-[#cce8dd]"><Icon name="shield" className="size-5" /></span>
-            <h2 className="mt-4 text-xl font-black tracking-[-0.035em]">{t("privacy.title")}</h2>
-            <ul className="mt-4 space-y-3 text-sm leading-6 text-[#d3e2dc]">
-              {[t("privacy.temporary"), t("privacy.noDatabase"), t("privacy.reviewFirst")].map((item) => (
-                <li key={item} className="flex gap-2"><Icon name="check" className="mt-1 size-4 shrink-0 text-[#ffca68]" />{item}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="rounded-[24px] border border-[#e0e7e2] bg-white p-5 sm:p-6">
-            <p className="text-xs font-extrabold tracking-[0.08em] text-[#2d6d5d]">{t("tips.eyebrow")}</p>
-            <ol className="mt-4 space-y-4">
-              {[t("tips.edges"), t("tips.light"), t("tips.onePage")].map((tip, index) => (
-                <li key={tip} className="flex gap-3 text-sm leading-6 text-[#5f6d67]"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#edf3ef] text-xs font-black text-[#2d6d5d]">{index + 1}</span><span>{tip}</span></li>
-              ))}
-            </ol>
-          </section>
-        </aside>
       </div>
 
       {analysis ? (
@@ -461,6 +454,35 @@ export function DocumentUpload({ forms, catalogSource }: DocumentUploadProps) {
           saveError={saveError}
         />
       ) : null}
+
+      {isTipsOpen ? (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-[#173f36]/35 px-4 py-6" role="presentation" onClick={() => setIsTipsOpen(false)}>
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="photo-tips-dialog-title"
+            className="w-full max-w-lg rounded-[28px] bg-white p-6 shadow-[0_24px_80px_rgba(23,63,54,0.22)] sm:p-8"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <h2 id="photo-tips-dialog-title" className="text-xl font-black tracking-[-0.035em] text-[#202b27]">{t(tipsTarget === "camera" ? "tips.eyebrow" : "tips.attachmentEyebrow")}</h2>
+              <button type="button" onClick={() => setIsTipsOpen(false)} className="grid size-10 shrink-0 place-items-center rounded-xl text-[#65736d] hover:bg-[#f0f5f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]" aria-label={t("chat.close")}>
+                <Icon name="close" className="size-5" />
+              </button>
+            </div>
+            <ol className="mt-5 space-y-4">
+              {(tipsTarget === "camera"
+                ? [t("tips.edges"), t("tips.light"), t("tips.onePage")]
+                : [t("tips.attachmentType"), t("tips.attachmentCheck"), t("tips.attachmentNext")]
+              ).map((tip, index) => (
+                <li key={tip} className="flex gap-3 text-sm leading-6 text-[#69756f]"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#edf3ef] text-xs font-black text-[#2d6d5d]">{index + 1}</span><span>{tip}</span></li>
+              ))}
+            </ol>
+            <button type="button" onClick={continueToAttachment} className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#266452] px-4 text-sm font-extrabold text-white hover:bg-[#1f5546] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2d6d5d]"><Icon name={tipsTarget === "camera" ? "camera" : "upload"} className="size-5" />{tipsTarget === "camera" ? t("tips.captureAction") : t("upload.select")}</button>
+          </section>
+        </div>
+      ) : null}
+      <ChatLauncher surface="ocr" />
     </div>
   );
 }

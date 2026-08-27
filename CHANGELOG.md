@@ -50,6 +50,32 @@
 - 캘린더 일정 검색 모드 추가
 - 캘린더 검색 결과와 전체 비자 기본값 개선
 - 비자 선택 색상과 초기화 기능 추가
+- Add region center and marker offset geo helper
+- Add Kakao Maps SDK wrapper component
+- Render agency map demo with real Kakao Maps SDK
+- Add real agency query module with distance sorting
+- Replace demo agencies with real Supabase data in map component
+- 비자 상수와 현재 체류자격 기반 목표비자 추천 함수 추가
+- 온보딩 zod 스키마 추가 (스텝 검증·서버 재검증 공용)
+- 온보딩 스텝 시퀀스와 목표비자별 분기 로직 추가
+- 온보딩 user 스키마 마이그레이션과 DB 타입 추가
+- Kakao Local API 주소 검색 프록시 Route Handler 추가
+- 주소 자동완성 combobox 컴포넌트 추가
+- 익명 세션 보장 유틸 + 온보딩 저장 Server Action 추가
+- 온보딩 스텝 UI 컴포넌트 추가
+- 온보딩 폼을 URL 기반 퍼널로 재작성
+- 온보딩 UI 문구를 next-intl 메시지로 연결
+- 한국어능력 질문을 TOPIK·사회통합프로그램 중복 선택 가능하도록 변경
+- 온보딩 진입 전 로그인/비로그인 시작 화면 추가
+- 온보딩 화면 전체를 next-intl 번역 가능하도록 연결
+- 온보딩 5개 언어(중국어·베트남어·우즈베크어·네팔어·크메르어) 초역 추가
+- A11y.backToHome 번역 키 추가
+- 온보딩용 MinimalShell 컴포넌트 추가
+- Route group으로 앱 셸(AppShell)과 온보딩 최소 셸(MinimalShell) 분리
+- 온보딩 진입 화면에 약관 동의 링크 추가, t.rich() 테스트 목 지원
+- 온보딩을 마쳐야 홈으로 넘어가도록 진입 라우팅 변경 (데모용)
+- Add floating chat launcher
+- 신청서 촬영 및 첨부 UI 개선
 
 ### 🐛 Bug Fixes
 
@@ -92,6 +118,24 @@
 - 캘린더 선택 바 글씨 크기 통일
 - CodeRabbit 캘린더 리뷰 반영
 - 모바일 내비게이션 6개 탭 한 줄 정렬
+- Remove invalid ARIA role override on map agency list
+- Fix map marker rendering, container sizing, and missing-key state
+- Guard missing Supabase env, fix loading/error/empty state precedence
+- Clear stale agency results/GPS fix on refetch and failed geolocation
+- 주소 검색 실패 시 온보딩이 완전히 막히던 문제 수정
+- Kakao 주소검색 프록시의 응답 캐시 제거
+- 온보딩 동의 문구를 준비 중 상태에 맞게 수정하고 테스트 목/주석 보강
+- 테스트 목의 MessageTree 타입이 배열 값을 허용하도록 확장
+- 캘린더 목표 비자를 온보딩 스키마(user_visa_profile)에서 읽도록 변경
+- Search all pilot regions when using real GPS location
+- 다국어 미지원 + 모바일 기관 상세정보 숨김 버그 (#39)
+- 온보딩 뒤로가기가 홈으로 튕기는 문제 수정 + 웰컴 화면을 전체화면 단일 카드로 변경
+- 온보딩 질문 스텝에서도 초록색 히어로 카드 제거
+- Use transparent chatbot launcher asset
+- 온보딩 스키마 마이그레이션의 RLS 정책 생성을 재실행 가능하게 수정
+- 온보딩 스키마에 authenticated 역할 GRANT 추가
+- 온보딩 뒤로가기를 히스토리 대신 stepIndex 기준으로 결정론적으로 처리 + 상단 진행바 UI
+- Remove chatbot icon container styling
 
 ### 💼 Other
 
@@ -101,6 +145,7 @@
 ### 🚜 Refactor
 
 - LocaleSwitcher를 공용 컴포넌트로 분리
+- Google 로그인 클릭 핸들러를 handleGoogleLogin으로 분리 (연동 지점 명시)
 
 ### 📚 Documentation
 
@@ -143,11 +188,37 @@
 - 캘린더 게스트/로그인 분리 구현 계획 추가
 - CHANGELOG 자동 업데이트 [skip ci]
 - CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- Add implementation plans for map SDK integration and real agency data
+- 온보딩 질문 + user 스키마 설계 스펙 추가
+- 온보딩 스펙을 2026 BP 검증 결과로 개정
+- 온보딩 퍼널·user 스키마 구현 계획 추가
+- 온보딩 저장 방식을 sessionStorage에서 익명 로그인으로 변경
+- 계획서에 익명 세션 보장 태스크 반영, 스펙 문구 정밀화
+- 온보딩 진입 화면 개편 + 앱 셸 분리 설계 스펙 추가
+- 온보딩 진입 화면 개편 + 앱 셸 분리 구현 계획 추가
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
+- CHANGELOG 자동 업데이트 [skip ci]
 
 ### 🎨 Styling
 
 - 비자 선택 칩 색상 톤 완화
 - 캘린더와 내비게이션 UI 정리
+- Shrink mobile filter/agency chip rows, soften selected chip color
+- Shrink mobile chip rows further (11px text, 32px height)
+- Make selected chip colors more transparent
+- Restore chip color legibility, hide scrollbar track on chip rows
 
 ### 🧪 Testing
 
@@ -170,3 +241,5 @@
 - Add app icon PNG assets
 - Add transparent crawling Bugi poses
 - Merge latest main before grounded OCR chat PR
+- Remove dead demo marker-offset code from geo.ts
+- Vitest 테스트 인프라 구축 및 CI 연결

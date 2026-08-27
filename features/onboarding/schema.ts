@@ -1,0 +1,97 @@
+import { z } from "zod";
+import { CURRENT_VISA_OPTIONS } from "./constants";
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** `YYYY-MM-DD` 문자열이 실제 달력에 존재하는 날짜인지 확인한다. */
+function isRealCalendarDate(value: string): boolean {
+  if (!ISO_DATE.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return (
+    date.getUTCFullYear() === year &&
+    date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day
+  );
+}
+
+/** 과거(또는 오늘)의 실제 날짜만 통과시킨다. 스텝별 검증에서도 재사용한다. */
+export const pastDateSchema = z
+  .string()
+  .min(1, "날짜를 입력해 주세요.")
+  .refine(isRealCalendarDate, { message: "달력에 없는 날짜입니다." })
+  .refine((value) => new Date(`${value}T00:00:00Z`) <= new Date(), {
+    message: "미래 날짜는 입력할 수 없습니다.",
+  });
+
+/**
+ * 모든 목표비자에서 공통으로 수집하는 1단계 답변 (스펙 §2.1).
+ *
+ * 한국어능력은 TOPIK·사회통합프로그램(KIIP)을 동시에 가진 사용자도 있을 수
+ * 있어 두 필드를 서로 독립적인 nullable 값으로 둔다(단일 enum이 아님).
+ * "선택했지만 급수를 아직 안 골랐다"는 중간 상태는 UI 쪽 상태(스텝 완료
+ * 여부 판단)에서만 다루고, 제출 스키마에는 최종 급수 값만 들어오므로
+ * 여기엔 별도 refine이 필요 없다 — null/1~6 조합은 전부 유효하다.
+ */
+export const commonAnswersSchema = z.object({
+  locale: z.enum(["ko", "zh", "vi", "uz", "ne", "km"]),
+  gender: z.enum(["male", "female", "unspecified"]),
+  birthdate: pastDateSchema,
+  nationality: z
+    .string()
+    .regex(/^[A-Z]{2}$/, "국가 코드는 대문자 2자리입니다."),
+  currentVisaCode: z.enum(CURRENT_VISA_OPTIONS),
+  addressRoad: z.string().min(1, "주소를 선택해 주세요."),
+  addressJibun: z.string().min(1),
+  regionSigungu: z.string().min(1),
+  // 대한민국 본토·제주를 넉넉히 감싸는 범위. 오입력·좌표계 혼동을 걸러낸다.
+  // 주소를 직접 입력한 경우(Kakao 검색 불가 시 대체 경로) 좌표를 알 수 없어 null이다.
+  lat: z.number().min(33).max(39).nullable(),
+  lng: z.number().min(124).max(132).nullable(),
+  topikLevel: z.number().int().min(1).max(6).nullable(),
+  kiipLevel: z.number().int().min(1).max(6).nullable(),
+});
+
+/** 목표비자별 2단계 답변 (스펙 §2.3). targetVisaCode로 판별한다. */
+export const visaDetailSchema = z.discriminatedUnion("targetVisaCode", [
+  z.object({
+    targetVisaCode: z.literal("F-2-R"),
+    educationLevel: z.enum(["ASSOCIATE_OR_ABOVE", "BELOW_ASSOCIATE"]),
+  }),
+  z.object({
+    targetVisaCode: z.literal("E-7-4R"),
+    e9E10H2ResidenceYears: z.number().int().min(0).max(10),
+  }),
+  z.object({
+    targetVisaCode: z.literal("F-4-R"),
+    migrationType: z.enum([
+      "EXISTING_RESIDENT",
+      "DOMESTIC_TRANSFER",
+      "OVERSEAS_TRANSFER",
+    ]),
+  }),
+  z.object({
+    targetVisaCode: z.literal("D-2"),
+    universityName: z.string().min(1, "대학명을 입력해 주세요."),
+    departmentName: z.string().min(1, "학과명을 입력해 주세요."),
+    academicStatus: z.enum([
+      "LANGUAGE_COURSE",
+      "ASSOCIATE",
+      "BACHELOR_1_2",
+      "BACHELOR_3_4",
+      "GRADUATE",
+    ]),
+    programStartDate: pastDateSchema,
+  }),
+]);
+
+/**
+ * Server Action이 받는 최종 제출 스키마.
+ * 공통 답변과 목표비자별 상세 답변을 모두 만족해야 통과한다.
+ */
+export const onboardingSubmissionSchema = z.intersection(
+  commonAnswersSchema,
+  visaDetailSchema,
+);
+
+export type OnboardingSubmission = z.infer<typeof onboardingSubmissionSchema>;

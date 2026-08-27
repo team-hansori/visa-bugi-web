@@ -1,9 +1,12 @@
 import { setRequestLocale } from "next-intl/server";
+import { ChatLauncher } from "@/features/chat/chat-launcher";
 import { getHomeVisaPreparationCatalog } from "@/features/home/preparation-data";
 import { getVisaQuotaOverview } from "@/features/home/quota-data";
 import { VisaProgressDashboard } from "@/features/home/visa-progress-dashboard";
 import { VisaQuotaCarousel } from "@/features/home/visa-quota-carousel";
 import { getSavedDocumentProgress } from "@/features/ocr/saved-progress";
+import { redirect } from "@/i18n/navigation";
+import { hasCompletedOnboarding } from "@/lib/onboarding/completion";
 
 export default async function Home({
   params,
@@ -12,6 +15,11 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  if (!(await hasCompletedOnboarding())) {
+    redirect({ href: "/onboarding", locale });
+  }
+
   const [quotaOverview, preparationCatalog, savedProgress] = await Promise.all([
     getVisaQuotaOverview(),
     getHomeVisaPreparationCatalog(),
@@ -29,6 +37,7 @@ export default async function Home({
         catalog={preparationCatalog}
         savedReadyDocumentNames={savedReadyDocumentNames}
       />
+      <ChatLauncher surface="home" />
     </div>
   );
 }

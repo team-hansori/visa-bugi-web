@@ -7,5 +7,5 @@ export const metadata: Metadata = { title: "서류 사전 점검" };
 export default async function OcrPage() {
   const catalog = await getApplicationFormCatalog();
 
-  return <DocumentUpload forms={catalog.forms} catalogSource={catalog.source} />;
+  return <DocumentUpload forms={catalog.forms} />;
 }

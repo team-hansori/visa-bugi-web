@@ -52,6 +52,56 @@
       }
     }
   },
+  "Map": {
+    "title": "Yaqin atrofdagi muassasalar",
+    "description": "Joriy joylashuv sahifadan chiqilganda o‘chiriladi va saqlanmaydi. Joylashuvga ruxsat bermasangiz ham hududni qo‘lda tanlashingiz mumkin.",
+    "location": {
+      "initial": "Joylashuvga ruxsat bering yoki hududni qo‘lda tanlang.",
+      "checking": "Joriy joylashuv aniqlanmoqda…",
+      "nearby": "Joriy joylashuv yaqinidagi muassasalar ko‘rsatilmoqda.",
+      "failed": "Joylashuvni aniqlab bo‘lmadi. Quyidan hududni qo‘lda tanlang.",
+      "unsupported": "Bu brauzer joylashuv funksiyasini qo‘llab-quvvatlamaydi. Hududni qo‘lda tanlang.",
+      "invalidRegion": "Qo‘llab-quvvatlanmaydigan hudud. Ro‘yxatdan qayta tanlang.",
+      "selectedRegion": "{region} yaqinidagi muassasalar ko‘rsatilmoqda.",
+      "searchLabel": "Qidiruv joylashuvini sozlash",
+      "selectRegion": "Hududni qo‘lda tanlash",
+      "useCurrent": "Joriy joylashuvdan foydalanish",
+      "checkingButton": "Tekshirilmoqda"
+    },
+    "regions": {
+      "cheongju": "Cheongju shahri",
+      "chungju": "Chungju shahri",
+      "jincheon": "Jincheon tumani",
+      "eumseong": "Eumseong tumani"
+    },
+    "filters": {
+      "label": "Muassasa turi filtri",
+      "all": "Barchasi",
+      "communityCenter": "Mahalla markazi",
+      "administrativeAgency": "Ma’muriy idora",
+      "universityDeptOffice": "Universitet bo‘limi",
+      "foreignSupportCenter": "Chet elliklarni qo‘llab-quvvatlash markazi",
+      "other": "Boshqa"
+    },
+    "loading": "Muassasalar ma’lumotlari yuklanmoqda…",
+    "errors": {
+      "notConfigured": "Muassasalar ma’lumotlari sozlanmagan.",
+      "loadFailed": "Muassasalar ma’lumotlarini yuklab bo‘lmadi. Keyinroq qayta urinib ko‘ring."
+    },
+    "empty": "Bu hudud va turga mos muassasa topilmadi. Boshqa hududni yoki “Barchasi”ni tanlang.",
+    "agencyListLabel": "Xaritadagi muassasalar ro‘yxati",
+    "mapLabel": "Muassasalar xaritasi",
+    "directions": "Yo‘nalish",
+    "details": {
+      "address": "Manzil",
+      "phone": "Telefon",
+      "hours": "Ish vaqti",
+      "addressUnavailable": "Manzil mavjud emas",
+      "phoneUnavailable": "Telefon raqami mavjud emas",
+      "hoursUnavailable": "Ish vaqti mavjud emas",
+      "call": "Qo‘ng‘iroq qilish"
+    }
+  },
   "NotFound": {
     "title": "페이지를 찾을 수 없어요",
     "description": "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해 주세요.",
@@ -62,31 +112,6 @@
     "heroTitle": "오늘 준비할 일을 한눈에 확인하세요",
     "heroDescription": "현재 화면은 반응형 UI 확인용 예시입니다. 공식 비자 요건과 사용자 진행상황은 검수된 데이터 연결 후 표시됩니다.",
     "heroCta": "내 정보 설정하기",
-    "quota": {
-      "sectionAriaLabel": "Har bir viza bo‘yicha qolgan o‘rinlar",
-      "eyebrow": "Viza kvotalari holati",
-      "remaining": "Qolgan o‘rinlar",
-      "people": "kishi",
-      "unlimited": "Kvota cheklovi yo‘q",
-      "unavailable": "Qolgan o‘rinlar e’lon qilinmagan",
-      "allocated": "Jami {count} o‘rindan qolgan ulush",
-      "round": "{round}-e’lon",
-      "asOf": "{date} holatiga",
-      "dateUnavailable": "Sana tekshirilmoqda",
-      "municipalityScope": "Chungbukdagi {count} ta shahar va tuman jami",
-      "provinceScope": "Butun Chungcheongbuk-do",
-      "singleScope": "E’londa ko‘rsatilgan qabul birligi",
-      "policyScope": "Viza kvotasi siyosati",
-      "notice": "Bu e’londagi ma’lumot bo‘lib, real vaqtdagi qolgan o‘rinlardan farq qilishi mumkin.",
-      "supabaseBadge": "Supabase’dagi so‘nggi e’lon",
-      "previewBadge": "Tekshirilgan ma’lumot namunasi",
-      "cta": "E’lonning asl nusxasini ko‘rish",
-      "previous": "Oldingi vizani ko‘rish",
-      "next": "Keyingi vizani ko‘rish",
-      "pagination": "Viza slaydini tanlash",
-      "goTo": "{visa} qolgan o‘rinlarini ko‘rish",
-      "position": "{current}/{total}"
-    },
     "progress": {
       "sectionAriaLabel": "비자 진행 현황",
       "ariaLabel": "전체 요건 충족률 예시 68퍼센트",
@@ -135,29 +160,6 @@
     },
     "tasks": {
       "heading": "Hujjatlar tayyorgarligi",
-      "pendingHeading": "Topshirilmagan majburiy hujjatlar",
-      "pendingDescription": "Topshirilmagan majburiy hujjatlardan tasodifiy 5 tagacha ko‘rsatiladi.",
-      "requiredSummary": "Majburiy hujjatlar {checked}/{total} topshirildi",
-      "sampleHint": "To‘liq ro‘yxatni hujjatlar holatida bosqichma-bosqich ko‘ring",
-      "allRequiredChecked": "Barcha majburiy hujjatlar tekshirildi",
-      "noPendingRequired": "Topshirilmagan majburiy hujjat yo‘q.",
-      "viewAll": "Barcha hujjatlarni ko‘rish",
-      "stageDescription": "{stage} bosqichi uchun kerakli hujjatlar.",
-      "checkedSummary": "{checked}/{total} ta tekshirildi",
-      "checkAriaLabel": "{document} hujjatini tayyor deb belgilash",
-      "allChecked": "Ko‘rsatilgan barcha hujjatlar tekshirildi",
-      "checkAllHint": "Hujjatlarni birma-bir tekshiring",
-      "advance": "Keyingi bosqichga o‘tish",
-      "advanced": "Tashkilotga borish bosqichiga o‘tildi",
-      "sourceSupabase": "Supabase document_requirements ma’lumotlari asosida ko‘rsatiladi.",
-      "sourcePreview": "Bu Supabase ulanishidan oldingi namunaviy ro‘yxat.",
-      "empty": "Hozir ko‘rsatiladigan hujjatlar yo‘q.",
-      "status": {
-        "required": "Majburiy",
-        "optional": "Ixtiyoriy",
-        "conditional": "Shartli",
-        "alternative": "Bittasini tanlang"
-      },
       "items": {
         "passport": {
           "label": "여권 사본 상태 확인",
@@ -186,6 +188,29 @@
           "label": "{document}: topshirishdan oldin yakuniy tekshiruv",
           "meta": "OCR natijasi · tayyor"
         }
+      },
+      "pendingHeading": "Topshirilmagan majburiy hujjatlar",
+      "pendingDescription": "Topshirilmagan majburiy hujjatlardan tasodifiy 5 tagacha ko‘rsatiladi.",
+      "requiredSummary": "Majburiy hujjatlar {checked}/{total} topshirildi",
+      "sampleHint": "To‘liq ro‘yxatni hujjatlar holatida bosqichma-bosqich ko‘ring",
+      "allRequiredChecked": "Barcha majburiy hujjatlar tekshirildi",
+      "noPendingRequired": "Topshirilmagan majburiy hujjat yo‘q.",
+      "viewAll": "Barcha hujjatlarni ko‘rish",
+      "stageDescription": "{stage} bosqichi uchun kerakli hujjatlar.",
+      "checkedSummary": "{checked}/{total} ta tekshirildi",
+      "checkAriaLabel": "{document} hujjatini tayyor deb belgilash",
+      "allChecked": "Ko‘rsatilgan barcha hujjatlar tekshirildi",
+      "checkAllHint": "Hujjatlarni birma-bir tekshiring",
+      "advance": "Keyingi bosqichga o‘tish",
+      "advanced": "Tashkilotga borish bosqichiga o‘tildi",
+      "sourceSupabase": "Supabase document_requirements ma’lumotlari asosida ko‘rsatiladi.",
+      "sourcePreview": "Bu Supabase ulanishidan oldingi namunaviy ro‘yxat.",
+      "empty": "Hozir ko‘rsatiladigan hujjatlar yo‘q.",
+      "status": {
+        "required": "Majburiy",
+        "optional": "Ixtiyoriy",
+        "conditional": "Shartli",
+        "alternative": "Bittasini tanlang"
       }
     },
     "agencies": {
@@ -195,39 +220,162 @@
       "eyebrow": "Yaqin atrofdagi muassasalar"
     },
     "savedBadge": "Saqlangan jarayon",
-    "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi."
-  },
-  "DocumentsHub": {
-    "eyebrow": "Hujjat yordamchisi",
-    "title": "Qaysi hujjat ishini bajarmoqchisiz?",
-    "description": "Ariza maydonlarini OCR orqali tekshiring yoki tanlangan viza hujjatlarini bosqichma-bosqich boshqaring.",
-    "ocr": {
-      "title": "Viza arizasi maydonlarini tekshirish",
-      "description": "Ariza rasmi, PDF yoki HWPX faylini tahlil qilib, to‘ldiriladigan va qayta tekshiriladigan joylarni ko‘rsatadi."
-    },
-    "status": {
-      "title": "Viza topshirish hujjatlari holati",
-      "description": "Tanlangan viza uchun barcha hujjatlarni jarayon bosqichlari bo‘yicha ko‘ring va belgilang."
+    "savedHeroDescription": "Saqlangan {count} hujjatning OCR natijalari asosida tayyorgarlik holati va keyingi ishlar ko‘rsatiladi.",
+    "quota": {
+      "sectionAriaLabel": "Har bir viza bo‘yicha qolgan o‘rinlar",
+      "eyebrow": "Viza kvotalari holati",
+      "remaining": "Qolgan o‘rinlar",
+      "people": "kishi",
+      "unlimited": "Kvota cheklovi yo‘q",
+      "unavailable": "Qolgan o‘rinlar e’lon qilinmagan",
+      "allocated": "Jami {count} o‘rindan qolgan ulush",
+      "round": "{round}-e’lon",
+      "asOf": "{date} holatiga",
+      "dateUnavailable": "Sana tekshirilmoqda",
+      "municipalityScope": "Chungbukdagi {count} ta shahar va tuman jami",
+      "provinceScope": "Butun Chungcheongbuk-do",
+      "singleScope": "E’londa ko‘rsatilgan qabul birligi",
+      "policyScope": "Viza kvotasi siyosati",
+      "notice": "Bu e’londagi ma’lumot bo‘lib, real vaqtdagi qolgan o‘rinlardan farq qilishi mumkin.",
+      "supabaseBadge": "Supabase’dagi so‘nggi e’lon",
+      "previewBadge": "Tekshirilgan ma’lumot namunasi",
+      "cta": "E’lonning asl nusxasini ko‘rish",
+      "previous": "Oldingi vizani ko‘rish",
+      "next": "Keyingi vizani ko‘rish",
+      "pagination": "Viza slaydini tanlash",
+      "goTo": "{visa} qolgan o‘rinlarini ko‘rish",
+      "position": "{current}/{total}"
     }
   },
-  "DocumentStatus": {
-    "back": "Hujjatlar menyusiga qaytish",
-    "eyebrow": "Bosqichlar bo‘yicha to‘liq ro‘yxat",
-    "title": "Viza topshirish hujjatlari holati",
-    "description": "Majburiy, shartli va ixtiyoriy hujjatlarni topshirish bosqichlari bo‘yicha tekshiring.",
-    "requiredProgress": "Majburiy hujjatlar topshirish jarayoni",
-    "requiredSummary": "{checked}/{total}",
-    "allSummary": "Jami {total} hujjatdan {checked} tasi belgilandi",
-    "actorFlow": "{from} → {to}",
-    "stageNumber": "Batafsil bosqich {current}/{total}",
-    "stageComplete": "Majburiy hujjatlar tayyor",
-    "stageRequiredSummary": "Majburiy {checked}/{total}",
-    "checkAriaLabel": "{document} hujjatini topshirilgan deb belgilash",
-    "readyTitle": "Barcha majburiy hujjatlar tekshirildi",
-    "remainingTitle": "Hali topshirilmagan majburiy hujjatlar bor",
-    "readyDescription": "Keyingi bosqichda bosh sahifadagi toshbaqa va foiz ham yangilanadi.",
-    "remainingDescription": "Davom etish uchun har bosqichdagi majburiy hujjatlarni belgilang.",
-    "advance": "Tashkilotga borish bosqichiga o‘tish"
+  "Onboarding": {
+    "privacyNotice": "Bu yerdagi ma'lumot faqat ma'lumot uchun bo'lib, yakuniy huquqiy qaror tegishli immigratsiya idorasida tasdiqlanishi kerak.",
+    "questionLabel": "Savol {index}",
+    "previous": "Oldingi",
+    "next": "Keyingi",
+    "submit": "Sozlashni yakunlash",
+    "submitting": "Saqlanmoqda...",
+    "saveSuccess": "Sozlamalar saqlandi.",
+    "addressLabel": "Yashash (istalgan) manzili",
+    "addressPlaceholder": "Ko'cha nomi yoki uy raqamini kiriting",
+    "addressEligible": "{region} hududga xos viza uchun mos hudud hisoblanadi.",
+    "addressNotEligible": "{region} hududga xos viza (F-2-R·E-7-4R·F-4-R) uchun mos hudud emas. Bu faqat ma'lumot uchun, yakuniy qarorni tegishli immigratsiya idorasida tasdiqlang.",
+    "searchResultCount": "{count} ta qidiruv natijasi",
+    "searchNoResult": "Qidiruv natijasi topilmadi.",
+    "searchError": "Manzilni yuklab bo'lmadi. Birozdan so'ng qayta urinib ko'ring.",
+    "saveError": "Vaqtinchalik xatolik tufayli saqlanmadi. Birozdan so'ng qayta urinib ko'ring.",
+    "consentNotice": "<terms>Foydalanish shartlari</terms> va <privacy>Maxfiylik siyosati</privacy> tayyorlanmoqda. E'lon qilingach shu yerda ko'rishingiz mumkin.",
+    "welcomeTitle": "Visa-bugi bilan boshlaymiz",
+    "welcomeDescription": "Viza talablaringiz va keyingi bosqichni kuzatib boramiz.",
+    "googleStart": "Google orqali boshlash",
+    "googleComingSoon": "Google orqali kirish tayyorlanmoqda. Quyidagi tugma orqali darhol foydalanishingiz mumkin.",
+    "continueWithoutLogin": "Kirishsiz boshlash",
+    "addressManualPrompt": "Topilmadimi? Qo'lda kiritaman",
+    "addressManualRoadLabel": "Manzil (ko'cha nomi yoki uy raqami)",
+    "addressManualRoadPlaceholder": "Masalan: Chungbuk, Jecheon-si, Naeto-ro 295",
+    "addressManualSigunguLabel": "Yashaydigan shahar/tuman",
+    "addressManualSigunguPlaceholder": "Masalan: Jecheon-si",
+    "addressManualBack": "Manzil qidiruviga qaytish",
+    "addressManualSubmit": "Ushbu manzilni belgilash",
+    "birthdateLabel": "Tug'ilgan sana",
+    "koreanTopikLabel": "TOPIK",
+    "koreanTopikDescription": "Koreys tili bilimi darajasi",
+    "koreanKiipLabel": "Ijtimoiy integratsiya dasturi",
+    "koreanKiipDescription": "Bosqichi",
+    "koreanNoneLabel": "Hali yo'q",
+    "koreanTopikSelectLabel": "TOPIK darajasi",
+    "koreanKiipSelectLabel": "Ijtimoiy integratsiya dasturi bosqichi",
+    "koreanSelectPlaceholder": "Tanlang",
+    "koreanTopikUnit": "-daraja",
+    "koreanKiipUnit": "-bosqich",
+    "d2UniversityLabel": "O'qiyotgan universitet",
+    "d2DepartmentLabel": "Mutaxassislik",
+    "d2AcademicStatusLabel": "Hozirgi bosqich",
+    "d2ProgramStartDateLabel": "Qabul (yoki til kursi boshlanish) sanasi",
+    "d2SelectPlaceholder": "Tanlang",
+    "stepTitles": {
+      "locale": "Qaysi til qulay?",
+      "nationality": "Fuqarolikni tanlang",
+      "gender": "Jinsni tanlang",
+      "birthdate": "Tug'ilgan sanangiz qachon?",
+      "currentVisa": "Hozirgi turar joy maqomingiz nima?",
+      "address": "Qayerda yashaysiz?",
+      "koreanLevel": "Koreys tili sertifikatingiz bormi?",
+      "targetVisa": "Qanday turar joy maqomiga tayyorlanyapsiz?",
+      "f2rDetail": "Koreyada kollej darajasidan yuqori diplomingiz bormi?",
+      "e74rDetail": "So'nggi 10 yil ichida E-9·E-10·H-2 bilan necha yil turdingiz?",
+      "f4rDetail": "Quyidagilardan qaysi biri sizga yaqinroq?",
+      "d2Detail": "O'qish ma'lumotlarini kiriting"
+    },
+    "stepDescriptions": {
+      "locale": "Ekranda ko'rsatiladigan tilni tanlang.",
+      "nationality": "Shaxsiylashtirilgan ko'rsatma tayyorlash uchun ishlatiladi.",
+      "gender": "Tanlamasangiz ham keyingi bosqichga o'tishingiz mumkin.",
+      "birthdate": "Yosh talabini tekshirish uchun ishlatiladi.",
+      "currentVisa": "Bu javob orqali tayyorlanishi mumkin bo'lgan maqomlar torayadi.",
+      "address": "Hududga xos viza aholisi kamayayotgan hududda yashash (yoki yashashni xohlash) shartini talab qiladi.",
+      "koreanLevel": "Mos keladigan barcha sertifikatlarni tanlang. TOPIK va ijtimoiy integratsiya dasturi ikkalasiga ham ega bo'lsangiz muammo emas.",
+      "targetVisa": "Hozirgi turar joy maqomingizga asoslanib faqat tayyorlanishi mumkin bo'lgan maqomlar ko'rsatiladi.",
+      "f2rDetail": "Diplom yoki minimal yashash maoshi talablaridan birini qondirsangiz yetarli.",
+      "e74rDetail": "Taxminiy muddat yetarli.",
+      "f4rDetail": "Ko'chish turiga qarab kerakli hujjatlar farq qiladi.",
+      "d2Detail": "Kengaytirilgan hududiy viza uchun mos mutaxassislik ekanini tekshirish uchun ishlatiladi."
+    },
+    "genderOptions": {
+      "female": "Ayol",
+      "male": "Erkak",
+      "unspecified": "Tanlamayman"
+    },
+    "nationalityOptions": {
+      "VN": "Vyetnam",
+      "UZ": "O'zbekiston",
+      "NP": "Nepal",
+      "KH": "Kambodja",
+      "CN": "Xitoy",
+      "OT": "Boshqa"
+    },
+    "currentVisaOptions": {
+      "D-2": "D-2 (Talaba)",
+      "D-10": "D-10 (Ish qidiruvchi)",
+      "E-9": "E-9 (Malakasiz ishchi)",
+      "E-10": "E-10 (Dengizchi)",
+      "H-2": "H-2 (Tashrif-ish)",
+      "F-4": "F-4 (Xorijdagi vatandosh)",
+      "OTHER": "Boshqa turar joy maqomi",
+      "UNKNOWN": "Aniq bilmayman"
+    },
+    "targetVisaOptions": {
+      "F-2-R": "F-2-R (Hududga xos yuqori malakali mutaxassis)",
+      "E-7-4R": "E-7-4R (Hududga xos malakali ishchi kuchi)",
+      "F-4-R": "F-4-R (Hududga xos xorijdagi vatandosh)",
+      "D-2": "D-2 (Chungbuk kengaytirilgan hududiy talaba)"
+    },
+    "educationOptions": {
+      "ASSOCIATE_OR_ABOVE": "Kollej darajasidan yuqori diplom bor",
+      "BELOW_ASSOCIATE": "Yo'q"
+    },
+    "residenceYearOptions": {
+      "1": "1 yildan kam",
+      "2": "2 yildan ko'p",
+      "3": "3 yildan ko'p",
+      "4": "4 yildan ko'p"
+    },
+    "migrationTypeLabels": {
+      "EXISTING_RESIDENT": "Mavjud aholi",
+      "DOMESTIC_TRANSFER": "Mamlakat ichida ko'chib kelgan",
+      "OVERSEAS_TRANSFER": "Xorijdan ko'chib kelgan"
+    },
+    "migrationTypeDescriptions": {
+      "EXISTING_RESIDENT": "Aholisi kamayayotgan hududda 2 yildan ortiq yashagan",
+      "DOMESTIC_TRANSFER": "Mamlakat ichidagi boshqa hududdan oila bilan ko'chib kelgan",
+      "OVERSEAS_TRANSFER": "Xorijdan oila bilan ko'chib kelgan"
+    },
+    "academicStatusOptions": {
+      "LANGUAGE_COURSE": "Til kursi",
+      "ASSOCIATE": "Kollej",
+      "BACHELOR_1_2": "Bakalavr 1-2 kurs",
+      "BACHELOR_3_4": "Bakalavr 3-4 kurs",
+      "GRADUATE": "Magistr·Doktorantura"
+    }
   },
   "Chat": {
     "title": "Viza bo‘yicha maslahat",
@@ -246,7 +394,11 @@
     "verifiedAtLabel": "Tasdiqlangan sana",
     "contactsLabel": "Yo‘naltiriladigan tashkilotlar",
     "unverifiedNotice": "Bu ma’lumot migrant ishchilar uchun tasdiqlangan. Vaziyatga qarab farq qilishi mumkin, shuning uchun tashkilot bilan bevosita tasdiqlang.",
-    "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin."
+    "outOfScopeContacts": "Quyidagi tashkilotlardan yordam olishingiz mumkin.",
+    "open": "Maslahatni ochish",
+    "close": "Yopish",
+    "ocrLauncherHint": "Yuklagan hujjatingiz haqida so‘rang",
+    "ocrIntegrationNotice": "Yuklangan hujjatga asoslangan javob xizmati tayyorlanmoqda. Umumiy viza maslahatidan foydalanishingiz mumkin."
   },
   "My": {
     "eyebrow": "MY",
@@ -436,6 +588,11 @@
     },
     "tips": {
       "eyebrow": "Rasmga olish bo‘yicha maslahat",
+      "captureAction": "Rasmga olishga o‘tish",
+      "attachmentEyebrow": "Fayl biriktirish bo‘yicha yordam",
+      "attachmentType": "Asl PDF yoki HWPX faylini tanlang.",
+      "attachmentCheck": "Fayl odatdagidek ochilishi va mazmuni aniq ekanini tekshiring.",
+      "attachmentNext": "Faylni biriktirgach, tahlilni boshlang.",
       "edges": "Hujjatning to‘rt burchagi ham ko‘rinsin.",
       "light": "Matn aniq chiqishi uchun yorug‘lik aksi va soyadan saqlaning.",
       "onePage": "Ko‘p sahifali arizani har bir sahifa bo‘yicha tartib bilan tekshiring."
@@ -512,5 +669,37 @@
       "demoData": "Bepul sinov rejimida namuna natijasi ko‘rsatilmoqda. OpenAI API chaqirilmagan va bu haqiqiy aniqlangan ma’lumot emas.",
       "unknown": "Asl ariza va aniqlangan natijani qayta solishtiring."
     }
+  },
+  "DocumentsHub": {
+    "eyebrow": "Hujjat yordamchisi",
+    "title": "Qaysi hujjat ishini bajarmoqchisiz?",
+    "description": "Ariza maydonlarini OCR orqali tekshiring yoki tanlangan viza hujjatlarini bosqichma-bosqich boshqaring.",
+    "ocr": {
+      "title": "Viza arizasi maydonlarini tekshirish",
+      "description": "Ariza rasmi, PDF yoki HWPX faylini tahlil qilib, to‘ldiriladigan va qayta tekshiriladigan joylarni ko‘rsatadi."
+    },
+    "status": {
+      "title": "Viza topshirish hujjatlari holati",
+      "description": "Tanlangan viza uchun barcha hujjatlarni jarayon bosqichlari bo‘yicha ko‘ring va belgilang."
+    }
+  },
+  "DocumentStatus": {
+    "back": "Hujjatlar menyusiga qaytish",
+    "eyebrow": "Bosqichlar bo‘yicha to‘liq ro‘yxat",
+    "title": "Viza topshirish hujjatlari holati",
+    "description": "Majburiy, shartli va ixtiyoriy hujjatlarni topshirish bosqichlari bo‘yicha tekshiring.",
+    "requiredProgress": "Majburiy hujjatlar topshirish jarayoni",
+    "requiredSummary": "{checked}/{total}",
+    "allSummary": "Jami {total} hujjatdan {checked} tasi belgilandi",
+    "actorFlow": "{from} → {to}",
+    "stageNumber": "Batafsil bosqich {current}/{total}",
+    "stageComplete": "Majburiy hujjatlar tayyor",
+    "stageRequiredSummary": "Majburiy {checked}/{total}",
+    "checkAriaLabel": "{document} hujjatini topshirilgan deb belgilash",
+    "readyTitle": "Barcha majburiy hujjatlar tekshirildi",
+    "remainingTitle": "Hali topshirilmagan majburiy hujjatlar bor",
+    "readyDescription": "Keyingi bosqichda bosh sahifadagi toshbaqa va foiz ham yangilanadi.",
+    "remainingDescription": "Davom etish uchun har bosqichdagi majburiy hujjatlarni belgilang.",
+    "advance": "Tashkilotga borish bosqichiga o‘tish"
   }
 }

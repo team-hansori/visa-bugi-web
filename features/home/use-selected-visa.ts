@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getOnboardingProfile } from "@/lib/onboarding/profile";
 import { resolveStoredTargetVisaCode } from "@/lib/onboarding/target-visa";
 import type { HomeVisaPreparationCatalog } from "./preparation-model";
 
-const UNRESOLVED_VISA_VALUES = new Set(["OTHER", "UNKNOWN"]);
 const DEFAULT_VISA_CODE = "E-7-4R";
 
 export function useSelectedVisa(catalog: HomeVisaPreparationCatalog) {
@@ -20,13 +18,7 @@ export function useSelectedVisa(catalog: HomeVisaPreparationCatalog) {
     let cancelled = false;
 
     async function loadSelectedVisa() {
-      const storedVisaCode = await resolveStoredTargetVisaCode();
-      const profile = getOnboardingProfile();
-      const browserFallbackCode =
-        profile?.visa && !UNRESOLVED_VISA_VALUES.has(profile.visa)
-          ? profile.visa
-          : null;
-      const nextVisaCode = storedVisaCode ?? browserFallbackCode;
+      const nextVisaCode = await resolveStoredTargetVisaCode();
 
       if (
         !cancelled &&

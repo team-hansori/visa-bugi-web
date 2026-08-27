@@ -29,6 +29,14 @@ vi.mock("@/features/auth/auth-form", () => ({
   AuthForm: () => <div data-testid="auth-form" />,
 }));
 
+let authStatus: "loading" | "guest" | "authenticated" = "guest";
+vi.mock("@/lib/auth/use-auth-state", () => ({
+  useAuthState: () =>
+    authStatus === "authenticated"
+      ? { status: "authenticated", userId: "u1" }
+      : { status: authStatus },
+}));
+
 vi.mock("next-intl", () => ({
   useTranslations: (namespace: string) => createTestTranslator(namespace),
 }));
@@ -51,6 +59,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   ensureAnonymousSession.mockResolvedValue({ id: "anon-1" });
   searchParams = new URLSearchParams();
+  authStatus = "guest";
   window.sessionStorage.clear();
 });
 
@@ -65,7 +74,7 @@ describe("OnboardingForm", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("시작 화면에서 로그인 없이 시작하기를 누르면 첫 스텝으로 이동한다", async () => {
+  it("시작 화면에서 비회원 조회를 누르면 첫 스텝으로 이동한다", async () => {
     const user = userEvent.setup();
     render(<OnboardingForm />);
 
@@ -74,6 +83,27 @@ describe("OnboardingForm", () => {
     await waitFor(() =>
       expect(push).toHaveBeenCalledWith(expect.stringContaining("step=locale")),
     );
+  });
+
+  it("인증된 사용자가 step 없이 진입하면 시작 화면 대신 첫 스텝으로 보낸다", async () => {
+    authStatus = "authenticated";
+    render(<OnboardingForm />);
+
+    await waitFor(() =>
+      expect(push).toHaveBeenCalledWith(expect.stringContaining("step=locale")),
+    );
+    expect(
+      screen.queryByRole("button", { name: "비회원 조회" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("인증 상태 확인 중에는 로그인 화면을 보여주지 않는다", () => {
+    authStatus = "loading";
+    render(<OnboardingForm />);
+
+    expect(
+      screen.queryByRole("button", { name: "비회원 조회" }),
+    ).not.toBeInTheDocument();
   });
 
   it("진행률을 표시한다", () => {

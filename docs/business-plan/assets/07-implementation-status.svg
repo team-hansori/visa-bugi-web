@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+  <rect width="1400" height="560" fill="#fff"/>
+  <g font-family="휴먼명조, Nanum Myeongjo, serif" fill="#000">
+    <text x="50" y="45" font-size="27" font-weight="700">그림 6. 현재 구현 상태와 다음 단계</text>
+    <rect x="50" y="70" width="1300" height="440" fill="#fff" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="125" x2="1350" y2="125" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="180" x2="1350" y2="180" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="325" x2="1350" y2="325" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="420" x2="1350" y2="420" stroke="#000" stroke-width="1.5"/>
+    <line x1="230" y1="125" x2="230" y2="510" stroke="#000" stroke-width="1.5"/>
+    <line x1="603" y1="125" x2="603" y2="420" stroke="#000" stroke-width="1.5"/>
+    <line x1="976" y1="125" x2="976" y2="420" stroke="#000" stroke-width="1.5"/>
+    <text x="700" y="105" text-anchor="middle" font-size="22" font-weight="700">구현 완료 항목과 로드맵을 구분해 표시</text>
+    <g text-anchor="middle" font-size="19" font-weight="700">
+      <text x="140" y="158">구분</text><text x="416" y="158">데이터 기반</text><text x="789" y="158">서비스 기능</text><text x="1163" y="158">로드맵</text>
+    </g>
+    <g text-anchor="middle" font-size="18">
+      <text x="140" y="255" font-weight="700">주요 범위</text>
+      <text x="416" y="210">공통 데이터 구조 13개 테이블</text><text x="416" y="238">AND/OR 자격조건 논리</text><text x="416" y="266">온보딩·마이허브 화면</text><text x="416" y="294">Supabase 연동</text>
+      <text x="789" y="210">채팅형 상황별 대화 안내</text><text x="789" y="238">체류자격 요건·쿼터 트래커</text><text x="789" y="266">캘린더·지도 기반 기관 연결</text><text x="789" y="294">OCR→서식 필드 추출·검토</text>
+      <text x="1163" y="210">단계별 피드백 집계</text><text x="1163" y="238">→ 정책진단 데이터 전달</text>
+      <text x="140" y="375" font-weight="700">현재 수준</text>
+      <text x="416" y="365">설계·검수 확정</text><text x="416" y="393"></text>
+      <text x="789" y="365">구현 완료</text><text x="789" y="393"></text>
+      <text x="1163" y="365">구현 예정</text><text x="1163" y="393"></text>
+    </g>
+    <text x="140" y="468" text-anchor="middle" font-size="18" font-weight="700">2차 발표평가</text>
+    <text x="790" y="468" text-anchor="middle" font-size="19">이주노동자 × E-7-4R 체류자격 트래커를 중심으로 시연</text>
+  </g>
+</svg>

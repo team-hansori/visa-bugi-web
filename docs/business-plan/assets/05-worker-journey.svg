@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="610" viewBox="0 0 1400 610">
+  <rect width="1400" height="610" fill="#fff"/>
+  <g font-family="휴먼명조, Nanum Myeongjo, serif" fill="#000">
+    <text x="50" y="45" font-size="27" font-weight="700">그림 4. 이주노동자의 E-7-4R 준비 과정</text>
+    <rect x="50" y="70" width="1300" height="490" fill="#fff" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="125" x2="1350" y2="125" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="175" x2="1350" y2="175" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="250" x2="1350" y2="250" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="350" x2="1350" y2="350" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="465" x2="1350" y2="465" stroke="#000" stroke-width="1.5"/>
+    <line x1="190" y1="125" x2="190" y2="560" stroke="#000" stroke-width="1.5"/>
+    <line x1="422" y1="125" x2="422" y2="465" stroke="#000" stroke-width="1.5"/>
+    <line x1="654" y1="125" x2="654" y2="465" stroke="#000" stroke-width="1.5"/>
+    <line x1="886" y1="125" x2="886" y2="465" stroke="#000" stroke-width="1.5"/>
+    <line x1="1118" y1="125" x2="1118" y2="465" stroke="#000" stroke-width="1.5"/>
+    <text x="700" y="105" text-anchor="middle" font-size="21" font-weight="700">응우옌 반 A · 27세 · 베트남 · E-9 · 음성군 제조업체 근무 2년 차</text>
+    <g text-anchor="middle" font-size="19" font-weight="700">
+      <text x="120" y="157">구분</text><text x="306" y="157">1. 상황 파악</text><text x="538" y="157">2. 요건 대조</text><text x="770" y="157">3. 일정 관리</text><text x="1002" y="157">4. 위험 확인</text><text x="1234" y="157">5. 전문기관 연결</text>
+    </g>
+    <g text-anchor="middle" font-size="18">
+      <text x="120" y="218" font-weight="700">사용자 행동</text>
+      <text x="306" y="207">체류기간·근무처</text><text x="306" y="233">연봉·한국어등급 입력</text>
+      <text x="538" y="207">공식 E-7-4R 기준과</text><text x="538" y="233">현재 조건 비교</text>
+      <text x="770" y="207">동의한 경우에만</text><text x="770" y="233">방문·제출 일정 추가</text>
+      <text x="1002" y="207">계약조건 불일치 등</text><text x="1002" y="233">위험 신호 확인</text>
+      <text x="1234" y="207">관할 전문기관의</text><text x="1234" y="233">연락처·위치 확인</text>
+      <text x="120" y="306" font-weight="700">비자부기 지원</text>
+      <text x="306" y="286">입력할 조건을</text><text x="306" y="314">질문 순서로 안내</text><text x="306" y="342">검토 필요 항목 분리</text>
+      <text x="538" y="286">AND/OR 규칙으로</text><text x="538" y="314">충족·미충족·검토</text><text x="538" y="342">필요 결과를 구분</text>
+      <text x="770" y="286">근거 없는 상대일정을</text><text x="770" y="314">추정하지 않고</text><text x="770" y="342">확정 일정만 관리</text>
+      <text x="1002" y="286">일반 답변을 중단하고</text><text x="1002" y="314">AI의 임의 판단 없이</text><text x="1002" y="342">위험 유형을 분류</text>
+      <text x="1234" y="286">노동·행정·긴급지원</text><text x="1234" y="314">기관으로 즉시</text><text x="1234" y="342">연결</text>
+      <text x="120" y="414" font-weight="700">판정·제출 주체</text>
+      <text x="306" y="395">사용자 입력</text><text x="306" y="423">필요 시 고용주 확인</text>
+      <text x="538" y="395">규칙 기반 사전 점검</text><text x="538" y="423">공식 결정은 아님</text>
+      <text x="770" y="395">사용자 선택·관리</text><text x="770" y="423">좌표·일정 최소 수집</text>
+      <text x="1002" y="395">AI 자동 판정 금지</text><text x="1002" y="423">전문기관 상담 권고</text>
+      <text x="1234" y="395">관할 노동·행정기관의</text><text x="1234" y="423">최종 안내·처리</text>
+    </g>
+    <text x="120" y="516" text-anchor="middle" font-size="18" font-weight="700">책임 경계</text>
+    <text x="770" y="516" text-anchor="middle" font-size="19">자가진단·준비는 비자부기에서 지원하고 신청·판정은 공식기관에서 수행</text>
+  </g>
+</svg>

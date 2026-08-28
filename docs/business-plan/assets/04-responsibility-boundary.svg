@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="530" viewBox="0 0 1400 530">
+  <rect width="1400" height="530" fill="#fff"/>
+  <g font-family="휴먼명조, Nanum Myeongjo, serif" fill="#000">
+    <text x="50" y="45" font-size="27" font-weight="700">그림 3. 비자 여정 단계별 서비스 책임 경계</text>
+    <rect x="50" y="70" width="1300" height="410" fill="#fff" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="125" x2="1350" y2="125" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="180" x2="1350" y2="180" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="285" x2="1350" y2="285" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="380" x2="1350" y2="380" stroke="#000" stroke-width="1.5"/>
+    <line x1="220" y1="125" x2="220" y2="480" stroke="#000" stroke-width="1.5"/>
+    <line x1="502" y1="125" x2="502" y2="480" stroke="#000" stroke-width="1.5"/>
+    <line x1="784" y1="125" x2="784" y2="480" stroke="#000" stroke-width="3"/>
+    <line x1="1066" y1="125" x2="1066" y2="480" stroke="#000" stroke-width="1.5"/>
+    <text x="700" y="105" text-anchor="middle" font-size="22" font-weight="700">준비까지는 비자부기가 지원하고 제출·판정은 공식기관에서 수행</text>
+    <g text-anchor="middle" font-size="19" font-weight="700">
+      <text x="135" y="158">구분</text><text x="361" y="158">1. 추적</text><text x="643" y="158">2. 준비</text><text x="925" y="158">3. 제출</text><text x="1208" y="158">4. 판정</text>
+    </g>
+    <g text-anchor="middle" font-size="18">
+      <text x="135" y="235" font-weight="700">주요 기능</text>
+      <text x="361" y="213">요건 충족도 확인</text><text x="361" y="241">규칙 기반 자가진단</text><text x="361" y="269">진행 현황 관리</text>
+      <text x="643" y="213">단계별 체크리스트</text><text x="643" y="241">OCR 사전 점검</text><text x="643" y="269">확정 일정 관리</text>
+      <text x="925" y="213">제출 절차 안내</text><text x="925" y="241">공식 링크·제출처</text><text x="925" y="269">실제 접수에는 미관여</text>
+      <text x="1208" y="213">공식 승인·불허</text><text x="1208" y="241">보완 요구·결과 통지</text><text x="1208" y="269">AI 판단 금지</text>
+      <text x="135" y="335" font-weight="700">처리 주체</text>
+      <text x="361" y="325">비자부기</text><text x="361" y="353">+ 사용자</text>
+      <text x="643" y="325">비자부기</text><text x="643" y="353">+ 사용자·고용주</text>
+      <text x="925" y="325">사용자·고용주</text><text x="925" y="353">+ 공식 접수기관</text>
+      <text x="1208" y="325">법무부 출입국·</text><text x="1208" y="353">외국인관서 등</text>
+      <text x="135" y="435" font-weight="700">책임 범위</text>
+      <text x="361" y="425">근거 있는 사전 점검</text><text x="361" y="453">공식 결정 대체 아님</text>
+      <text x="643" y="425">준비 과정 지원</text><text x="643" y="453">최종 제출 전 사용자 확인</text>
+      <text x="925" y="425">공식 채널에서 접수</text><text x="925" y="453">비자부기 책임 범위 밖</text>
+      <text x="1208" y="425">법령·행정 기준에 따른</text><text x="1208" y="453">최종 판단</text>
+    </g>
+  </g>
+</svg>

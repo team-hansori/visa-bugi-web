@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="610" viewBox="0 0 1400 610">
+  <rect width="1400" height="610" fill="#fff"/>
+  <g font-family="휴먼명조, Nanum Myeongjo, serif" fill="#000">
+    <text x="50" y="45" font-size="27" font-weight="700">그림 1. 비자부기 전체 서비스 흐름</text>
+    <rect x="50" y="70" width="1300" height="490" fill="#fff" stroke="#000" stroke-width="3"/>
+    <line x1="50" y1="125" x2="1350" y2="125" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="180" x2="1350" y2="180" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="270" x2="1350" y2="270" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="380" x2="1350" y2="380" stroke="#000" stroke-width="1.5"/>
+    <line x1="50" y1="485" x2="1350" y2="485" stroke="#000" stroke-width="1.5"/>
+    <line x1="230" y1="125" x2="230" y2="560" stroke="#000" stroke-width="1.5"/>
+    <line x1="454" y1="125" x2="454" y2="485" stroke="#000" stroke-width="1.5"/>
+    <line x1="678" y1="125" x2="678" y2="485" stroke="#000" stroke-width="1.5"/>
+    <line x1="902" y1="125" x2="902" y2="485" stroke="#000" stroke-width="1.5"/>
+    <line x1="1126" y1="125" x2="1126" y2="485" stroke="#000" stroke-width="1.5"/>
+    <text x="700" y="105" text-anchor="middle" font-size="22" font-weight="700">사용자 상황을 확인하고 근거 있는 다음 행동으로 연결</text>
+    <g text-anchor="middle" font-size="19" font-weight="700">
+      <text x="140" y="158">구분</text><text x="342" y="158">1. 사용자 확인</text><text x="566" y="158">2. 상황 입력</text><text x="790" y="158">3. 규칙 처리</text><text x="1014" y="158">4. 행동 안내</text><text x="1238" y="158">5. 기관 연결</text>
+    </g>
+    <g text-anchor="middle" font-size="18">
+      <text x="140" y="230" font-weight="700">입력</text>
+      <text x="342" y="218">언어·국적·지역</text><text x="342" y="244">관심 체류자격</text>
+      <text x="566" y="218">대화형 질문</text><text x="566" y="244">공문서 사진·일정</text>
+      <text x="790" y="218">구조화된 조건과</text><text x="790" y="244">사용자 입력 대조</text>
+      <text x="1014" y="218">부족 요건·서류</text><text x="1014" y="244">다음 할 일 제시</text>
+      <text x="1238" y="218">지역·지원 분야에</text><text x="1238" y="244">맞는 기관 선택</text>
+      <text x="140" y="330" font-weight="700">처리 원칙</text>
+      <text x="342" y="306">로그인 전 선택값은</text><text x="342" y="334">현재 세션에만 보관</text><text x="342" y="362">최소 정보만 사용</text>
+      <text x="566" y="306">질문을 한 번에</text><text x="566" y="334">하나씩 제시하고</text><text x="566" y="362">불명확 항목 분리</text>
+      <text x="790" y="306">자격·점수는</text><text x="790" y="334">AND/OR 규칙으로</text><text x="790" y="362">결정론적으로 계산</text>
+      <text x="1014" y="306">근거 없는 날짜와</text><text x="1014" y="334">미확인 조건을</text><text x="1014" y="362">임의로 추정하지 않음</text>
+      <text x="1238" y="306">위험 신호에는</text><text x="1238" y="334">일반 답변을 중단하고</text><text x="1238" y="362">전문기관으로 연결</text>
+      <text x="140" y="438" font-weight="700">결과</text>
+      <text x="342" y="420">개인화된 홈</text><text x="342" y="448">준비 현황</text>
+      <text x="566" y="420">확인된 사용자 상황</text><text x="566" y="448">검토 필요 항목</text>
+      <text x="790" y="420">충족·미충족</text><text x="790" y="448">검토 필요 구분</text>
+      <text x="1014" y="420">서류 체크리스트</text><text x="1014" y="448">확정 일정 관리</text>
+      <text x="1238" y="420">전화·길찾기</text><text x="1238" y="448">공식 문의 경로</text>
+    </g>
+    <text x="140" y="530" text-anchor="middle" font-size="18" font-weight="700">공통 원칙</text>
+    <text x="790" y="530" text-anchor="middle" font-size="19">공식 근거·적용기간·마지막 검증일을 표시하고 사용자가 동의한 정보만 저장</text>
+  </g>
+</svg>
